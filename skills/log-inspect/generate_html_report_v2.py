@@ -41,8 +41,16 @@ def generate_error_category_table(summary):
         
         # 根据分类名称匹配建议（从 ERROR_CATEGORIES）
         suggestion = "需要查看详细日志进行分析"
-        if '空指针' in category:
+        if '业务逻辑' in category:
+            suggestion = "检查业务逻辑、数据完整性和上下游业务约束"
+        elif '配置' in category or '兼容' in category:
+            suggestion = "检查配置项、接口契约和版本兼容性；如已确认不影响业务可降低优先级"
+        elif '空指针' in category:
             suggestion = "检查对象是否为空，添加空值校验"
+        elif '数据格式' in category:
+            suggestion = "检查入参格式、字段类型和返回内容格式是否符合预期"
+        elif '下游服务' in category:
+            suggestion = "检查下游服务状态、路由、网关和接口返回内容"
         elif '认证' in category or '权限' in category:
             suggestion = "检查token是否过期，确认用户权限配置"
         elif 'SQL' in category:

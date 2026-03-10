@@ -58,70 +58,88 @@ ERROR_CATEGORIES = {
         'keywords': [
             '批次冻结失败', '库存不足', '操作失败', '数据校验失败',
             '业务处理失败', '保存失败', '删除失败', '更新失败',
-            '标签算法', 'buildData失败', '消息处理事件', '冻结失败',
-            '库存', '业务异常'
+            'buildData失败', '消息处理事件', '冻结失败', '库存', '业务异常',
+            '未查询到就诊记录', '在区查询下需传入科室ID或病区ID'
         ],
         'priority': 0,
         'suggestion': '检查业务逻辑、输入数据完整性及上下游业务约束'
     },
+    'config_warning': {
+        'name': '配置/兼容性问题',
+        'keywords': ['标签算法', 'initForceContextData', 'initForce 方法已过时', '已过时', 'deprecated'],
+        'priority': 1,
+        'suggestion': '检查配置项、接口契约和版本兼容性；如对业务无影响可降级关注'
+    },
     'null_pointer': {
         'name': '空指针异常',
         'keywords': ['NullPointerException', 'NPE', '空指针'],
-        'priority': 1,
+        'priority': 2,
         'suggestion': '检查对象是否为空，添加空值校验'
+    },
+    'data_format_error': {
+        'name': '数据格式错误',
+        'keywords': ['NumberFormatException', 'For input string', 'syntax error', 'column 2<html>', 'BINARY'],
+        'priority': 2,
+        'suggestion': '检查入参格式、字段类型和下游返回内容是否符合预期'
+    },
+    'downstream_service_error': {
+        'name': '下游服务异常',
+        'keywords': ['404 Not Found', 'RPC调用错误', '<html>', '远程服务调用失败', 'FeignException'],
+        'priority': 2,
+        'suggestion': '检查下游服务状态、路由、网关和接口返回格式'
     },
     'auth_error': {
         'name': '认证/权限问题',
         'keywords': ['认证失败', '过期', 'token', 'Token', '权限不足', 'unauthorized', '未授权', '认证'],
-        'priority': 2,
+        'priority': 3,
         'suggestion': '检查token是否过期，确认用户权限配置'
     },
     'sql_error': {
         'name': 'SQL错误',
         'keywords': ['ORA-', 'SQLException', 'SQL Error', '数据库错误', 'SQL语法'],
-        'priority': 2,
+        'priority': 3,
         'suggestion': '检查SQL语句语法，确认数据库连接正常'
     },
     'timeout': {
         'name': '超时异常',
         'keywords': ['timeout', 'Timeout', '超时', 'timed out'],
-        'priority': 3,
+        'priority': 4,
         'suggestion': '检查网络连接，增加超时时间或优化接口性能'
     },
     'connection_error': {
         'name': '连接异常',
         'keywords': ['Connection', '连接失败', 'refused', 'reset', '连接超时', '连接'],
-        'priority': 2,
+        'priority': 4,
         'suggestion': '检查网络连接，确认目标服务是否正常'
     },
     'plugin_error': {
         'name': '插件配置问题',
         'keywords': ['找不到插件', 'plugin', '插件未找到', '事件管道'],
-        'priority': 3,
+        'priority': 5,
         'suggestion': '检查插件配置文件，确认插件是否正确安装'
     },
     'validation_error': {
         'name': '参数校验失败',
         'keywords': ['参数错误', '校验失败', 'validation', 'Validation', '参数不能为空', '参数'],
-        'priority': 4,
+        'priority': 5,
         'suggestion': '检查请求参数是否完整，确认参数格式正确'
     },
     'json_parse_error': {
         'name': 'JSON解析错误',
         'keywords': ['JSON', 'parse', '解析失败', 'JsonParseException'],
-        'priority': 4,
+        'priority': 5,
         'suggestion': '检查JSON格式是否正确，确认数据结构'
     },
     'memory_error': {
         'name': '内存溢出',
         'keywords': ['OutOfMemory', 'OOM', '内存不足', 'heap space', '内存'],
-        'priority': 1,
+        'priority': 2,
         'suggestion': '增加JVM内存配置，检查是否有内存泄漏'
     },
     'file_not_found': {
         'name': '文件不存在',
         'keywords': ['FileNotFoundException', '文件不存在', 'No such file'],
-        'priority': 3,
+        'priority': 5,
         'suggestion': '检查文件路径是否正确，确认文件是否存在'
     },
     'unknown': {
@@ -191,6 +209,57 @@ def categorize_error(content: str) -> dict:
     """根据日志内容分类错误类型（改进版：提取真正原因）"""
     error_reason = extract_error_reason(content)
     content_lower = content.lower()
+
+    # 精细规则优先：让分类更贴近稳定性视角
+    if '标签算法' in content_lower or 'initforce' in content_lower or '已过时' in content_lower:
+        category_info = ERROR_CATEGORIES['config_warning']
+        return {
+            'category': 'config_warning',
+            'name': category_info['name'],
+            'matched_keyword': '标签算法' if '标签算法' in content else '兼容性/过时配置',
+            'suggestion': category_info['suggestion'],
+            'error_reason': error_reason or content[:200]
+        }
+
+    if 'numberformatexception' in content_lower or 'for input string' in content_lower:
+        category_info = ERROR_CATEGORIES['data_format_error']
+        return {
+            'category': 'data_format_error',
+            'name': category_info['name'],
+            'matched_keyword': 'NumberFormatException',
+            'suggestion': category_info['suggestion'],
+            'error_reason': error_reason or content[:200]
+        }
+
+    if 'syntax error' in content_lower and '<html>' in content_lower:
+        category_info = ERROR_CATEGORIES['downstream_service_error']
+        return {
+            'category': 'downstream_service_error',
+            'name': category_info['name'],
+            'matched_keyword': 'syntax error + <html>',
+            'suggestion': category_info['suggestion'],
+            'error_reason': error_reason or content[:200]
+        }
+
+    if '404 not found' in content_lower or 'rpc调用错误' in content_lower or '远程服务调用失败' in content_lower:
+        category_info = ERROR_CATEGORIES['downstream_service_error']
+        return {
+            'category': 'downstream_service_error',
+            'name': category_info['name'],
+            'matched_keyword': '下游服务调用异常',
+            'suggestion': category_info['suggestion'],
+            'error_reason': error_reason or content[:200]
+        }
+
+    if '未查询到就诊记录' in content or '在区查询下需传入科室id或病区id' in content_lower:
+        category_info = ERROR_CATEGORIES['business_error']
+        return {
+            'category': 'business_error',
+            'name': category_info['name'],
+            'matched_keyword': '业务数据缺失/参数约束',
+            'suggestion': category_info['suggestion'],
+            'error_reason': error_reason or content[:200]
+        }
 
     sorted_categories = sorted(
         ERROR_CATEGORIES.items(),
