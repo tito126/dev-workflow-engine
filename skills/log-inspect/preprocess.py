@@ -205,10 +205,22 @@ def extract_error_reason(content: str) -> Optional[str]:
     return clean_error_reason(content[:300])
 
 
-def categorize_error(content: str) -> dict:
+def categorize_error(content: str, class_name: str = '') -> dict:
     """根据日志内容分类错误类型（改进版：提取真正原因）"""
     error_reason = extract_error_reason(content)
     content_lower = content.lower()
+    class_lower = (class_name or '').lower()
+
+    # 组件级归并：同一组件的配置类问题不要拆散
+    if 'autotagalgorithmserviceimpl' in class_lower:
+        category_info = ERROR_CATEGORIES['config_warning']
+        return {
+            'category': 'config_warning',
+            'name': category_info['name'],
+            'matched_keyword': 'AutoTagAlgorithmServiceImpl',
+            'suggestion': category_info['suggestion'],
+            'error_reason': error_reason or content[:200]
+        }
 
     # 精细规则优先：让分类更贴近稳定性视角
     if '标签算法' in content_lower or 'initforce' in content_lower or '已过时' in content_lower:
@@ -232,19 +244,21 @@ def categorize_error(content: str) -> dict:
         }
 
     if 'syntax error' in content_lower and '<html>' in content_lower:
-        category_info = ERROR_CATEGORIES['downstream_service_error']
+        category_info = ERROR_CATEGORIES['config_warning'] if 'autotagalgorithmserviceimpl' in class_lower else ERROR_CATEGORIES['downstream_service_error']
+        category_id = 'config_warning' if 'autotagalgorithmserviceimpl' in class_lower else 'downstream_service_error'
         return {
-            'category': 'downstream_service_error',
+            'category': category_id,
             'name': category_info['name'],
-            'matched_keyword': 'syntax error + <html>',
+            'matched_keyword': '返回HTML页面',
             'suggestion': category_info['suggestion'],
             'error_reason': error_reason or content[:200]
         }
 
     if '404 not found' in content_lower or 'rpc调用错误' in content_lower or '远程服务调用失败' in content_lower:
-        category_info = ERROR_CATEGORIES['downstream_service_error']
+        category_info = ERROR_CATEGORIES['config_warning'] if 'autotagalgorithmserviceimpl' in class_lower else ERROR_CATEGORIES['downstream_service_error']
+        category_id = 'config_warning' if 'autotagalgorithmserviceimpl' in class_lower else 'downstream_service_error'
         return {
-            'category': 'downstream_service_error',
+            'category': category_id,
             'name': category_info['name'],
             'matched_keyword': '下游服务调用异常',
             'suggestion': category_info['suggestion'],
@@ -448,7 +462,7 @@ def process_file(
                     if trace_id and trace_id not in seen_error_traces:
                         seen_error_traces.add(trace_id)
                         
-                        category_info = categorize_error(content)
+                        category_info = categorize_error(content, parsed['class_name'])
                         stats['error_categories'][category_info['name']] += 1
                         stats['error_count'] += 1
                         
@@ -467,7 +481,7 @@ def process_file(
                             })
                     elif not trace_id:
                         # 没有 traceId 的错误也要统计（但可能重复）
-                        category_info = categorize_error(content)
+                        category_info = categorize_error(content, parsed['class_name'])
                         stats['error_categories'][category_info['name']] += 1
                         stats['error_count'] += 1
                         
@@ -519,6 +533,31 @@ def process_file(
     stats['slow_apis'].extend(slow_apis)
     stats['internal_timings'].extend(internal_timings)
     stats['files_processed'].append(str(file_path))
+
+
+def aggregate_feedback_items(feedback_items: List[Dict]) -> List[Dict]:
+    """按同类问题归总日志反哺项"""
+    grouped = {}
+    for item in feedback_items:
+        key = item.get('group_key') or f"{item.get('name')}|{item.get('class')}"
+        if key not in grouped:
+            grouped[key] = {
+                'name': item.get('name'),
+                'class': item.get('class'),
+                'count': 0,
+                'suggestion': item.get('suggestion'),
+                'samples': []
+            }
+        grouped[key]['count'] += 1
+        if len(grouped[key]['samples']) < 5:
+            grouped[key]['samples'].append({
+                'timestamp': item.get('timestamp'),
+                'trace_id': item.get('trace_id'),
+                'content': item.get('content'),
+                'user': item.get('user')
+            })
+
+    return sorted(grouped.values(), key=lambda x: x['count'], reverse=True)
 
 
 def aggregate_slow_apis(slow_apis: List[Dict]) -> List[Dict]:
@@ -671,6 +710,7 @@ def should_feedback_not_error(parsed: Dict, content: str) -> Optional[Dict]:
         return {
             'type': 'null_response_feedback',
             'name': '对象直接返回null',
+            'group_key': f'{class_name}|null',
             'class': class_name,
             'trace_id': trace_id,
             'user': user_name,
@@ -751,7 +791,7 @@ def process_file_with_filter(
                     if trace_id and trace_id not in seen_error_traces:
                         seen_error_traces.add(trace_id)
 
-                        category_info = categorize_error(content)
+                        category_info = categorize_error(content, parsed['class_name'])
                         stats['error_categories'][category_info['name']] += 1
                         stats['error_count'] += 1
 
@@ -770,7 +810,7 @@ def process_file_with_filter(
                                 'content_preview': category_info.get('content_preview')
                             })
                     elif not trace_id:
-                        category_info = categorize_error(content)
+                        category_info = categorize_error(content, parsed['class_name'])
                         stats['error_categories'][category_info['name']] += 1
                         stats['error_count'] += 1
 
@@ -961,7 +1001,7 @@ def main():
             'feedback_categories': dict(stats['feedback_categories']),
         },
         'errors': aggregate_errors(stats['error_samples']),
-        'feedback_items': stats['feedback_samples'][:50],
+        'feedback_items': aggregate_feedback_items(stats['feedback_samples']),
         'slow_apis': enhanced_slow_apis,
         'internal_timings': stats['internal_timings'][:50],  # 限制数量
         'warn_samples': stats['warn_samples'][:50],
