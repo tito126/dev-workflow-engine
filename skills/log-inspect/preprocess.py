@@ -53,6 +53,15 @@ INTERNAL_TIMING_PATTERN = re.compile(r'(.{0,50})耗时\s*(\d+)\s*(?:毫秒|ms)')
 
 # 错误分类配置（中文化 + 细化）
 ERROR_CATEGORIES = {
+    'message_processing_error': {
+        'name': '消息处理异常',
+        'keywords': [
+            'receiveEventBuildTask失败', '调用receiveEventBuildTask失败',
+            'MQReceiverImpl', '消息消费失败', '事件消费失败'
+        ],
+        'priority': 0,
+        'suggestion': '检查消息消费链路、事件构建逻辑、入参完整性及下游依赖是否可用'
+    },
     'business_error': {
         'name': '业务逻辑错误',
         'keywords': [
@@ -61,7 +70,7 @@ ERROR_CATEGORIES = {
             'buildData失败', '消息处理事件', '冻结失败', '库存', '业务异常',
             '未查询到就诊记录', '在区查询下需传入科室ID或病区ID'
         ],
-        'priority': 0,
+        'priority': 1,
         'suggestion': '检查业务逻辑、输入数据完整性及上下游业务约束'
     },
     'config_warning': {
@@ -174,9 +183,12 @@ def clean_error_reason(reason: str) -> Optional[str]:
 def extract_error_reason(content: str) -> Optional[str]:
     """提取错误的真正原因"""
     patterns = [
+        r'(调用receiveEventBuildTask失败[^\n]*)',
         r'(批次冻结失败[^\n]*)',
         r'(执行Fhir消息处理事件\d+[^\n]*?buildData失败[^\n]*)',
         r'(标签算法[^\n]*)',
+        r'(For input string:\s*"[^"]+")',
+        r'(NumberFormatException[^\n]*)',
         r'原因[：:]\s*(.+?)(?:$|[,，。；;])',
         r'失败[：:]\s*(.+?)(?:$|[,，。；;])',
         r'错误[：:]\s*(.+?)(?:$|[,，。；;])',
@@ -202,6 +214,12 @@ def extract_error_reason(content: str) -> Optional[str]:
             if reason:
                 return reason
 
+    if 'real exception message:' in content.lower():
+        tail = content.split('real exception message:', 1)[1].strip()
+        reason = clean_error_reason(tail)
+        if reason:
+            return reason
+
     return clean_error_reason(content[:300])
 
 
@@ -210,6 +228,16 @@ def categorize_error(content: str, class_name: str = '') -> dict:
     error_reason = extract_error_reason(content)
     content_lower = content.lower()
     class_lower = (class_name or '').lower()
+
+    if 'mqreceiverimpl' in class_lower or 'receiveeventbuildtask失败' in content_lower or '调用receiveeventbuildtask失败' in content_lower:
+        category_info = ERROR_CATEGORIES['message_processing_error']
+        return {
+            'category': 'message_processing_error',
+            'name': category_info['name'],
+            'matched_keyword': 'receiveEventBuildTask失败',
+            'suggestion': category_info['suggestion'],
+            'error_reason': error_reason or content[:200]
+        }
 
     # 组件级归并：同一组件的配置类问题不要拆散
     if 'autotagalgorithmserviceimpl' in class_lower:
