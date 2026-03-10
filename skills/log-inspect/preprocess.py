@@ -661,6 +661,27 @@ def extract_error_trace_ids(
     return error_trace_ids
 
 
+def should_feedback_not_error(parsed: Dict, content: str) -> Optional[Dict]:
+    """识别应进入日志反哺、而不是异常统计的场景"""
+    class_name = parsed.get('class_name', '') or ''
+    trace_id = parsed.get('trace_id')
+    user_name = parsed.get('user_name')
+
+    if class_name.endswith('ParamMdmSdkHelper') and content.strip().lower() == 'null':
+        return {
+            'type': 'null_response_feedback',
+            'name': '对象直接返回null',
+            'class': class_name,
+            'trace_id': trace_id,
+            'user': user_name,
+            'timestamp': parsed.get('timestamp_str'),
+            'content': content[:200],
+            'suggestion': '建议增加上下文日志（入参、对象类型、查询条件、数据源返回状态），并评估改为 INFO/WARN 或显式空结果日志'
+        }
+
+    return None
+
+
 def process_file_with_filter(
     file_path: Path,
     start_time: Optional[datetime],
@@ -716,6 +737,13 @@ def process_file_with_filter(
                 
                 # 提取 ERROR/WARN
                 if level in ('ERROR', 'FATAL'):
+                    feedback_info = should_feedback_not_error(parsed, content)
+                    if feedback_info:
+                        stats['feedback_categories'][feedback_info['name']] += 1
+                        if len(stats['feedback_samples']) < 200:
+                            stats['feedback_samples'].append(feedback_info)
+                        continue
+
                     if skip_no_trace and not trace_id:
                         continue
 
@@ -869,6 +897,8 @@ def main():
         'slow_apis': [],
         'internal_timings': [],
         'files_processed': [],
+        'feedback_categories': defaultdict(int),
+        'feedback_samples': [],
     }
     
     # 处理每个文件
@@ -927,8 +957,11 @@ def main():
             'error_count': stats['error_count'],
             'warn_count': stats['warn_count'],
             'error_categories': dict(stats['error_categories']),
+            'feedback_count': len(stats['feedback_samples']),
+            'feedback_categories': dict(stats['feedback_categories']),
         },
         'errors': aggregate_errors(stats['error_samples']),
+        'feedback_items': stats['feedback_samples'][:50],
         'slow_apis': enhanced_slow_apis,
         'internal_timings': stats['internal_timings'][:50],  # 限制数量
         'warn_samples': stats['warn_samples'][:50],

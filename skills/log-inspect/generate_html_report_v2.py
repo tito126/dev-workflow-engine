@@ -165,6 +165,7 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
     meta = digest['meta']
     summary = digest['summary']
     errors = digest['errors']
+    feedback_items = digest.get('feedback_items', [])
     slow_apis = digest.get('slow_apis', [])
     
     # 计算总慢接口调用次数
@@ -356,6 +357,10 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
                         <div class="stat-number">{len(slow_apis)}</div>
                         <div class="stat-label">慢接口类型</div>
                     </div>
+                    <div class="stat-card warning">
+                        <div class="stat-number">{summary.get('feedback_count', 0)}</div>
+                        <div class="stat-label">日志反哺项</div>
+                    </div>
                 </div>
                 
                 <!-- 错误分类详细表格 -->
@@ -367,6 +372,50 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
             <div class="section">
                 <h2 class="section-title">详细异常分析</h2>
 {generate_error_details(errors)}
+            </div>
+
+            <!-- 日志反哺建议 -->
+            <div class="section">
+                <h2 class="section-title">日志反哺建议</h2>
+                <p style="margin-bottom: 20px; color: #666;">以下内容建议优化日志设计或调整日志级别，不纳入核心异常判断。</p>
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>类型</th>
+                            <th>类名</th>
+                            <th>时间</th>
+                            <th>traceId</th>
+                            <th>建议</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                <p style="margin-bottom: 20px; color: #666;">共发现 {len(slow_apis)} 种慢接口，累计 {total_slow_calls} 次慢调用</p>
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>接口路径</th>
+                            <th>调用次数</th>
+                            <th>最大耗时</th>
+                            <th>平均耗时</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+"""
+    
+    for item in feedback_items[:20]:
+        html += f"""
+                        <tr>
+                            <td>{item.get('name', '')}</td>
+                            <td><code>{item.get('class', '')}</code></td>
+                            <td>{item.get('timestamp', '')}</td>
+                            <td><span class="trace-id">{item.get('trace_id', '') or '-'}</span></td>
+                            <td>{item.get('suggestion', '')}</td>
+                        </tr>
+"""
+
+    html += """
+                    </tbody>
+                </table>
             </div>
 
             <!-- 慢接口分析 -->
@@ -384,7 +433,7 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
                     </thead>
                     <tbody>
 """
-    
+
     for api in slow_apis[:20]:
         html += f"""
                         <tr>
