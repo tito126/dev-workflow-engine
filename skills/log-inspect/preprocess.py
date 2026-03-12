@@ -1349,6 +1349,51 @@ def main():
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(digest, f, ensure_ascii=False, indent=2)
     
+    # 输出代表 traces 列表（供第二阶段拉取使用）
+    representative_traces_list = []
+    
+    # 1. 异常分类的代表 traces（每个分组的第一个 traceId）
+    for error_group in aggregated_errors:
+        samples = error_group.get('samples', [])
+        if samples:
+            first_sample = samples[0]
+            trace_id = first_sample.get('trace_id')
+            timestamp = first_sample.get('timestamp')
+            if trace_id and timestamp:
+                representative_traces_list.append({
+                    'trace_id': trace_id,
+                    'timestamp': timestamp,
+                    'type': 'error',
+                    'category': error_group.get('category'),
+                    'root_class': error_group.get('root_class'),
+                    'api_entry': error_group.get('api_entry'),
+                })
+    
+    # 2. 慢接口的 top 10 traces（每个 API 取最慢的）
+    if slow_api_summary:
+        for api in slow_api_summary[:10]:
+            top_traces = api.get('top_traces', [])
+            if top_traces:
+                slowest_trace = top_traces[0]  # 第一个就是最慢的
+                trace_id = slowest_trace.get('trace_id')
+                timestamp = slowest_trace.get('timestamp')
+                if trace_id and timestamp:
+                    representative_traces_list.append({
+                        'trace_id': trace_id,
+                        'timestamp': timestamp,
+                        'type': 'slow_api',
+                        'api': api.get('api'),
+                        'duration_ms': slowest_trace.get('duration_ms'),
+                    })
+    
+    # 输出代表 traces 列表
+    traces_output_path = output_path.parent / (output_path.stem + '_traces.json')
+    with open(traces_output_path, 'w', encoding='utf-8') as f:
+        json.dump({
+            'traces': representative_traces_list,
+            'count': len(representative_traces_list)
+        }, f, ensure_ascii=False, indent=2)
+    
     print(f"\n处理完成!")
     print(f"- 总行数: {stats['total_lines']:,}")
     print(f"- ERROR: {stats['error_count']:,}")
@@ -1357,6 +1402,7 @@ def main():
     if args.filter_by_error_trace and filter_trace_ids:
         print(f"- 过滤模式: 只分析了 {len(filter_trace_ids)} 个有问题的 traceId")
     print(f"- 输出: {output_path}")
+    print(f"- 代表 traces: {traces_output_path} ({len(representative_traces_list)} 个)")
 
 
 if __name__ == '__main__':

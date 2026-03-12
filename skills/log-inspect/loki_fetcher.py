@@ -138,7 +138,7 @@ def query_loki_adaptive(grafana_url: str, datasource_id: int, query: str, start:
     return left + right
 
 
-def build_query(app: Optional[str] = None, namespace: Optional[str] = None, pod: Optional[str] = None, level_filter: Optional[str] = None) -> str:
+def build_query(app: Optional[str] = None, namespace: Optional[str] = None, pod: Optional[str] = None, level_filter: Optional[str] = None, trace_id: Optional[str] = None) -> str:
     labels = []
     if app:
         labels.append(f'app="{app}"')
@@ -152,7 +152,37 @@ def build_query(app: Optional[str] = None, namespace: Optional[str] = None, pod:
     query = '{' + ', '.join(labels) + '}'
     if level_filter:
         query += f' |~ "{level_filter}"'
+    if trace_id:
+        query += f' |= "{trace_id}"'
     return query
+
+
+def fetch_trace_full_context(grafana_url: str, datasource_id: int, app: str, trace_id: str, trace_time: datetime, time_window_seconds: int = 30, limit: int = 5000) -> list:
+    """拉取指定 traceId 的完整链路日志
+    
+    Args:
+        grafana_url: Grafana URL
+        datasource_id: 数据源 ID
+        app: 应用名
+        trace_id: traceId
+        trace_time: trace 的时间戳
+        time_window_seconds: 时间窗口（秒），默认 ±30s
+        limit: 单次查询限制
+    
+    Returns:
+        完整链路日志列表
+    """
+    # 时间范围：trace_time ± time_window_seconds
+    start = trace_time - timedelta(seconds=time_window_seconds)
+    end = trace_time + timedelta(seconds=time_window_seconds)
+    
+    query = build_query(app=app, trace_id=trace_id)
+    
+    print(f"[完整链路] 拉取 trace {trace_id[:8]}... 时间窗口: {start.strftime('%H:%M:%S')}~{end.strftime('%H:%M:%S')}", flush=True)
+    
+    lines = query_loki(grafana_url, datasource_id, query, start, end, limit)
+    
+    return lines
 
 
 def main():
@@ -164,13 +194,15 @@ def main():
     parser.add_argument('--pod', '-p')
     parser.add_argument('--start', '-s', required=True)
     parser.add_argument('--end', '-e', required=True)
-    parser.add_argument('--level', '-l', default='ERROR|WARN')
+    parser.add_argument('--level', '-l', default='ERROR|业务处理耗时')
     parser.add_argument('--output', '-o', default='loki_logs.log')
     parser.add_argument('--limit', type=int, default=5000)
     parser.add_argument('--min-chunk', type=float, default=1.0)
     parser.add_argument('--with-context', action='store_true')
     parser.add_argument('--fallback-window-seconds', type=int, default=15)
     parser.add_argument('--saturation-threshold', type=int, default=4)
+    parser.add_argument('--stage2-traces', help='第二阶段：拉取指定 traces 的完整链路（JSON 文件路径）')
+    parser.add_argument('--time-window', type=int, default=30, help='第二阶段时间窗口（秒）')
     args = parser.parse_args()
 
     try:
@@ -180,6 +212,49 @@ def main():
         print(f"时间格式错误: {e}", flush=True)
         sys.exit(1)
 
+    # 第二阶段：拉取完整链路
+    if args.stage2_traces:
+        print("=" * 60, flush=True)
+        print("第二阶段：拉取代表 traces 的完整链路", flush=True)
+        print("=" * 60, flush=True)
+        
+        with open(args.stage2_traces, 'r', encoding='utf-8') as f:
+            traces_data = json.load(f)
+        
+        traces = traces_data.get('traces', [])
+        print(f"需要拉取 {len(traces)} 个 trace 的完整链路", flush=True)
+        
+        all_full_lines = []
+        for i, trace_info in enumerate(traces, 1):
+            trace_id = trace_info['trace_id']
+            trace_time_str = trace_info['timestamp']
+            trace_time = datetime.strptime(trace_time_str, '%Y-%m-%d %H:%M:%S,%f')
+            
+            print(f"\n[{i}/{len(traces)}] trace: {trace_id[:8]}...", flush=True)
+            
+            lines = fetch_trace_full_context(
+                grafana_url=args.grafana.rstrip('/'),
+                datasource_id=args.datasource,
+                app=args.app,
+                trace_id=trace_id,
+                trace_time=trace_time,
+                time_window_seconds=args.time_window,
+                limit=args.limit
+            )
+            
+            all_full_lines.extend(lines)
+        
+        # 追加到原日志文件
+        output_path = Path(args.output)
+        with open(output_path, 'a', encoding='utf-8') as f:
+            f.write('\n# ========== 完整链路日志 ==========\n')
+            for line in all_full_lines:
+                f.write(line + '\n')
+        
+        print(f"\n完成! 共拉取 {len(all_full_lines)} 条完整链路日志，已追加到 {output_path}", flush=True)
+        return
+
+    # 第一阶段：拉取 ERROR | 业务处理耗时 日志
     try:
         query = build_query(
             app=args.app,

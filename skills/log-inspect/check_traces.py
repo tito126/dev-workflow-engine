@@ -1,17 +1,22 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 import json
 
-with open(r'C:\Users\pc\.openclaw\workspace\skills\log-inspect\logs_20260311_163218_reanalyzed_v3', encoding='utf-8') as f:
+with open('test_digest_stage1_traces.json', encoding='utf-8') as f:
     d = json.load(f)
 
-# 查找这两个traceId
-target_traces = ['04ca3ff6a7b44e7a829716d56953065b', '03d8d9c89797413ebbd371624789a3c4']
+print(f'总数: {d["count"]}')
+print(f'异常类: {sum(1 for t in d["traces"] if t["type"] == "error")}')
+print(f'慢接口: {sum(1 for t in d["traces"] if t["type"] == "slow_api")}')
 
-print("查找目标traceId的分类：\n")
-for error_group in d['errors']:
-    for sample in error_group['samples']:
-        if sample.get('trace_id') in target_traces:
-            print(f"TraceId: {sample['trace_id']}")
-            print(f"Category: {sample['category']}")
-            print(f"Content: {sample['content'][:150]}")
-            print(f"Error Reason: {sample.get('error_reason', 'N/A')}")
-            print("-" * 80)
+print('\n前5个:')
+for i, t in enumerate(d['traces'][:5], 1):
+    print(f"\n{i}. {t['type']}")
+    print(f"   trace_id: {t['trace_id'][:8]}...")
+    print(f"   timestamp: {t['timestamp']}")
+    if t['type'] == 'error':
+        print(f"   category: {t.get('category')}")
+        print(f"   api_entry: {t.get('api_entry')}")
+    else:
+        print(f"   api: {t.get('api')}")
+        print(f"   duration_ms: {t.get('duration_ms')}")
