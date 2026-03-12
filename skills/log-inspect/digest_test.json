@@ -1,0 +1,1369 @@
+{
+  "meta": {
+    "generated_at": "2026-02-27T11:34:22.181376",
+    "files_processed": [
+      "D:\\现场支持\\省中\\ms_all.log.2026-02-12.152"
+    ],
+    "time_range": {
+      "start": null,
+      "end": null
+    },
+    "slow_threshold_ms": 1000
+  },
+  "summary": {
+    "total_lines": 209425,
+    "error_count": 221,
+    "warn_count": 9076,
+    "error_categories": {
+      "NullPointerException": 54,
+      "Other": 121,
+      "SQLException": 18,
+      "AuthException": 28
+    }
+  },
+  "errors": [
+    {
+      "category": "Other",
+      "class": "c.w.b.a.l.s.AksoLoggerAppender",
+      "count": 51,
+      "users": [
+        "刘晨",
+        "刘俊",
+        "褚一鸣",
+        "王舒洁",
+        "丁彩姣"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:11,215",
+          "class": "c.w.b.a.l.s.AksoLoggerAppender",
+          "user": null,
+          "content": "--->>>> 业务日志 <<<<--- 发送终端 失败",
+          "category": "Other",
+          "trace_id": "b8549f8ceeac4308b846bbdc5caf6c98"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:15,943",
+          "class": "c.w.b.a.l.s.AksoLoggerAppender",
+          "user": null,
+          "content": "--->>>> 业务日志 <<<<--- 发送终端 失败",
+          "category": "Other",
+          "trace_id": "36aa416b25b84d2bb56953d9c825d5e2"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:15,964",
+          "class": "c.w.b.a.l.s.AksoLoggerAppender",
+          "user": "徐利",
+          "content": "--->>>> 业务日志 <<<<--- 发送终端 失败",
+          "category": "Other",
+          "trace_id": "d00c62d7a64c4408aa4659a85491a76f"
+        }
+      ]
+    },
+    {
+      "category": "Other",
+      "class": "c.w.a.e.i.d.InpatEncDomain",
+      "count": 32,
+      "users": [
+        "张新政"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:12,080",
+          "class": "c.w.a.e.i.d.InpatEncDomain",
+          "user": null,
+          "content": "WB2153100004:在区查询下需传入科室ID或病区ID",
+          "category": "Other",
+          "trace_id": "f4c5c94f46b1415c8f6f8aea79d81d4e"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:12,080",
+          "class": "c.w.a.e.i.d.InpatEncDomain",
+          "user": null,
+          "content": "WB2153100004:在区查询下需传入科室ID或病区ID",
+          "category": "Other",
+          "trace_id": "f4c5c94f46b1415c8f6f8aea79d81d4e"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:12,080",
+          "class": "c.w.a.e.i.d.InpatEncDomain",
+          "user": null,
+          "content": "WB2153100004:在区查询下需传入科室ID或病区ID",
+          "category": "Other",
+          "trace_id": "f4c5c94f46b1415c8f6f8aea79d81d4e"
+        }
+      ]
+    },
+    {
+      "category": "Other",
+      "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+      "count": 28,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:21,975",
+          "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+          "user": null,
+          "content": "没有获取到远程服务",
+          "category": "Other",
+          "trace_id": "6462130c72624a2e81228c2e43702519"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:36,916",
+          "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+          "user": null,
+          "content": "没有获取到远程服务",
+          "category": "Other",
+          "trace_id": "d6980b9f7c304c3faa4d6a7e2a712911"
+        },
+        {
+          "timestamp": "2026-02-12 14:26:32,571",
+          "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+          "user": null,
+          "content": "没有获取到远程服务",
+          "category": "Other",
+          "trace_id": "37a4ccda29cd488f8d3658b24d3a30d3"
+        }
+      ]
+    },
+    {
+      "category": "NullPointerException",
+      "class": "c.w.a.e.i.d.InpatEncDomain",
+      "count": 23,
+      "users": [
+        "王舒洁",
+        "丁彩姣"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:11,214",
+          "class": "c.w.a.e.i.d.InpatEncDomain",
+          "user": null,
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "b8549f8ceeac4308b846bbdc5caf6c98"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:15,942",
+          "class": "c.w.a.e.i.d.InpatEncDomain",
+          "user": null,
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "36aa416b25b84d2bb56953d9c825d5e2"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:22,865",
+          "class": "c.w.a.e.i.d.InpatEncDomain",
+          "user": null,
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "248c76150bf9453ea888404e6f234e5d"
+        }
+      ]
+    },
+    {
+      "category": "AuthException",
+      "class": "c.w.r.f.HttpCharacterEncodingFilter",
+      "count": 23,
+      "users": [
+        "刁苗苗",
+        "章宇杰",
+        "李欣峰",
+        "吴泽云",
+        "查婷艳"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:13,578",
+          "class": "c.w.r.f.HttpCharacterEncodingFilter",
+          "user": "韩丽娟",
+          "content": "认证过期,请重新刷新",
+          "category": "AuthException",
+          "trace_id": ""
+        },
+        {
+          "timestamp": "2026-02-12 14:25:17,777",
+          "class": "c.w.r.f.HttpCharacterEncodingFilter",
+          "user": "李欣峰",
+          "content": "认证过期,请重新刷新",
+          "category": "AuthException",
+          "trace_id": ""
+        },
+        {
+          "timestamp": "2026-02-12 14:25:34,844",
+          "class": "c.w.r.f.HttpCharacterEncodingFilter",
+          "user": "刁苗苗",
+          "content": "认证过期,请重新刷新",
+          "category": "AuthException",
+          "trace_id": ""
+        }
+      ]
+    },
+    {
+      "category": "NullPointerException",
+      "class": "c.w.a.e.i.p.q.b.QueryListPluginObject",
+      "count": 10,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:21,187",
+          "class": "c.w.a.e.i.p.q.b.QueryListPluginObject",
+          "user": null,
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "15077af5dd4446c49d544b97809d3c6e"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:24,196",
+          "class": "c.w.a.e.i.p.q.b.QueryListPluginObject",
+          "user": null,
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "a471697c54a24d23865b8c0c520c5756"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:25,758",
+          "class": "c.w.a.e.i.p.q.b.QueryListPluginObject",
+          "user": null,
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "3658fc6186e94fd79fa2c9bcc8362d6b"
+        }
+      ]
+    },
+    {
+      "category": "SQLException",
+      "class": "DruidLoggerFilter",
+      "count": 6,
+      "users": [
+        "王舒洁",
+        "张静"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:11,309",
+          "class": "DruidLoggerFilter",
+          "user": null,
+          "content": "=======> [错误信息:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "SQLException",
+          "trace_id": "b8549f8ceeac4308b846bbdc5caf6c98"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:12,170",
+          "class": "DruidLoggerFilter",
+          "user": null,
+          "content": "=======> [错误信息:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "SQLException",
+          "trace_id": "f4c5c94f46b1415c8f6f8aea79d81d4e"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:18,687",
+          "class": "DruidLoggerFilter",
+          "user": "张静",
+          "content": "=======> [错误信息:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "SQLException",
+          "trace_id": "ed6e508b95034efd89286ae20485aef7"
+        }
+      ]
+    },
+    {
+      "category": "SQLException",
+      "class": "o.h.e.j.s.SqlExceptionHelper",
+      "count": 6,
+      "users": [
+        "王舒洁",
+        "张静"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:11,310",
+          "class": "o.h.e.j.s.SqlExceptionHelper",
+          "user": null,
+          "content": "ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "SQLException",
+          "trace_id": "b8549f8ceeac4308b846bbdc5caf6c98"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:12,171",
+          "class": "o.h.e.j.s.SqlExceptionHelper",
+          "user": null,
+          "content": "ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "SQLException",
+          "trace_id": "f4c5c94f46b1415c8f6f8aea79d81d4e"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:18,691",
+          "class": "o.h.e.j.s.SqlExceptionHelper",
+          "user": "张静",
+          "content": "ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "SQLException",
+          "trace_id": "ed6e508b95034efd89286ae20485aef7"
+        }
+      ]
+    },
+    {
+      "category": "SQLException",
+      "class": "c.w.a.e.i.d.InpatEncDomain",
+      "count": 6,
+      "users": [
+        "王舒洁",
+        "张静"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:11,311",
+          "class": "c.w.a.e.i.d.InpatEncDomain",
+          "user": null,
+          "content": "ES0060001:[ES0060001]$core{could not extract ResultSet:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "SQLException",
+          "trace_id": "b8549f8ceeac4308b846bbdc5caf6c98"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:12,172",
+          "class": "c.w.a.e.i.d.InpatEncDomain",
+          "user": null,
+          "content": "ES0060001:[ES0060001]$core{could not extract ResultSet:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "SQLException",
+          "trace_id": "f4c5c94f46b1415c8f6f8aea79d81d4e"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:18,693",
+          "class": "c.w.a.e.i.d.InpatEncDomain",
+          "user": "张静",
+          "content": "ES0060001:[ES0060001]$core{could not extract ResultSet:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "SQLException",
+          "trace_id": "ed6e508b95034efd89286ae20485aef7"
+        }
+      ]
+    },
+    {
+      "category": "NullPointerException",
+      "class": "c.w.a.e.i.s.InpatientEncounterService",
+      "count": 6,
+      "users": [
+        "刘俊",
+        "褚一鸣",
+        "邬贤德",
+        "张爱春",
+        "徐利"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:15,963",
+          "class": "c.w.a.e.i.s.InpatientEncounterService",
+          "user": "徐利",
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "d00c62d7a64c4408aa4659a85491a76f"
+        },
+        {
+          "timestamp": "2026-02-12 14:26:01,993",
+          "class": "c.w.a.e.i.s.InpatientEncounterService",
+          "user": "夏婷婷",
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "08d3950a0f9a4c53ae0163c7e14d0dba"
+        },
+        {
+          "timestamp": "2026-02-12 14:26:26,196",
+          "class": "c.w.a.e.i.s.InpatientEncounterService",
+          "user": "张爱春",
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "de7530d1888148faad8ef5053f81028b"
+        }
+      ]
+    },
+    {
+      "category": "NullPointerException",
+      "class": "c.w.a.c.i.e.w.h.i.BannerInfoHelperImpl",
+      "count": 5,
+      "users": [
+        "章琦",
+        "童佳欢",
+        "杨珺"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:44,042",
+          "class": "c.w.a.c.i.e.w.h.i.BannerInfoHelperImpl",
+          "user": "童佳欢",
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "cbe7285590114202b86b9ece99e61cfa"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:44,089",
+          "class": "c.w.a.c.i.e.w.h.i.BannerInfoHelperImpl",
+          "user": "童佳欢",
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "f29e627ea67e4dfc8351e6d8d746a1e8"
+        },
+        {
+          "timestamp": "2026-02-12 14:27:24,535",
+          "class": "c.w.a.c.i.e.w.h.i.BannerInfoHelperImpl",
+          "user": "章琦",
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "64b005f426624ebe9e57c6fdb2aef77e"
+        }
+      ]
+    },
+    {
+      "category": "NullPointerException",
+      "class": "c.w.c.p.e.o.p.t.TagEventPostData",
+      "count": 5,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:26:51,415",
+          "class": "c.w.c.p.e.o.p.t.TagEventPostData",
+          "user": null,
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "3f068ab9ca834366b964344d892038ef"
+        },
+        {
+          "timestamp": "2026-02-12 14:26:51,593",
+          "class": "c.w.c.p.e.o.p.t.TagEventPostData",
+          "user": null,
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "40086972f8fa4dd1b54984e18a40e728"
+        },
+        {
+          "timestamp": "2026-02-12 14:26:51,624",
+          "class": "c.w.c.p.e.o.p.t.TagEventPostData",
+          "user": null,
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "75ee384edf8c460db6551129f628c411"
+        }
+      ]
+    },
+    {
+      "category": "Other",
+      "class": "c.w.b.a.r.r.RestAop",
+      "count": 4,
+      "users": [
+        "徐利霞"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:26:00,364",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": null,
+          "content": "real exception message:[tid:4c4750489e6e43fe96641a424fc0a7eb,9380:winning-winex-ipt-ward-pbc,sid:129.10.26.3:9380]:java.lang.NumberFormatException:For input string: \"临床服务标识\"",
+          "category": "Other",
+          "trace_id": "4c4750489e6e43fe96641a424fc0a7eb"
+        },
+        {
+          "timestamp": "2026-02-12 14:26:19,876",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": null,
+          "content": "real exception message:[tid:8e10dd66a20645a19c5025c591daa6ed,9380:winning-winex-ipt-ward-pbc,sid:129.10.26.3:9380]:java.lang.NumberFormatException:For input string: \"临床服务标识\"",
+          "category": "Other",
+          "trace_id": "8e10dd66a20645a19c5025c591daa6ed"
+        },
+        {
+          "timestamp": "2026-02-12 14:27:20,787",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": null,
+          "content": "real exception message:WB3151100004:更新住院档案根据患者标识--未查询到就诊记录，患者标识：1000007586505",
+          "category": "Other",
+          "trace_id": "8170000372fd4cd18f1f3fd87b1d98d5"
+        }
+      ]
+    },
+    {
+      "category": "Other",
+      "class": "c.w.c.p.e.o.p.t.TagEventPostData",
+      "count": 3,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:21,823",
+          "class": "c.w.c.p.e.o.p.t.TagEventPostData",
+          "user": null,
+          "content": "mq接收标签事件接口异常 data:{\"hospitalSOID\":\"991827\",\"cliOrderList\":[{\"actionByDeptId\":\"286922208570273795\",\"orderTypeCode\":\"256198\",\"encounterId\":\"481840728692281345\",\"actionByDoctorId\":\"286924057553694720\",\"cliOrderId\":\"481858157669619713\"}],\"soid\":[\"991827\"]}",
+          "category": "Other",
+          "trace_id": "cbb475878927475eb3c15b64d1755e9e"
+        },
+        {
+          "timestamp": "2026-02-12 14:25:21,828",
+          "class": "c.w.c.p.e.o.p.t.TagEventPostData",
+          "user": null,
+          "content": "mq接收标签事件接口异常 data:{\"hospitalSOID\":\"991827\",\"cliOrderList\":[{\"actionByDeptId\":\"286922208570273795\",\"orderTypeCode\":\"256198\",\"encounterId\":\"482210860384030720\",\"actionByDoctorId\":\"286924044668792833\",\"cliOrderId\":\"482217354374164481\"},{\"actionByDeptId\":\"286922208570273795\",\"orderTypeCode\":\"256198\",\"encounterId\":\"482210860384030720\",\"actionByDoctorId\":\"286924044668792833\",\"cliOrderId\":\"482217356521648134\"},{\"actionByDeptId\":\"286922208570273795\",\"orderTypeCode\":\"384030\",\"encounterId\":\"48221086038403",
+          "category": "Other",
+          "trace_id": "dcdf612ffbdc4ec9a1b243392a496339"
+        },
+        {
+          "timestamp": "2026-02-12 14:28:05,299",
+          "class": "c.w.c.p.e.o.p.t.TagEventPostData",
+          "user": null,
+          "content": "mq接收标签事件接口异常 data:{\"hospitalSOID\":\"991827\",\"soid\":[\"991827\"],\"deptId\":\"0\",\"orderList\":[{\"cliOrderTypeCode\":\"256199\",\"cliOrderScenarioCode\":\"399201963\",\"orderId\":\"482244081955647488\",\"approvedBy\":\"286923346736607236\",\"bizEventId\":\"951962\",\"execOrderId\":\"482244081955647488\",\"cliOrderChangeReqId\":\"482244212952494081\",\"encounterId\":\"474635180171319297\"},{\"cliOrderTypeCode\":\"256194\",\"cliOrderScenarioCode\":\"399201963\",\"orderId\":\"482244096988399617\",\"approvedBy\":\"286923346736607236\",\"bizEventId\":\"95196",
+          "category": "Other",
+          "trace_id": "a6deec82443c40f6b8133c5f813a13d9"
+        }
+      ]
+    },
+    {
+      "category": "NullPointerException",
+      "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+      "count": 3,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:26:33,856",
+          "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+          "user": null,
+          "content": "interceptor com.winning.amts.encounter.inpatient.util.HttpToPost$OkhttpInterceptor@4bab99cd returned null",
+          "category": "NullPointerException",
+          "trace_id": "37a4ccda29cd488f8d3658b24d3a30d3"
+        },
+        {
+          "timestamp": "2026-02-12 14:26:53,111",
+          "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+          "user": null,
+          "content": "interceptor com.winning.amts.encounter.inpatient.util.HttpToPost$OkhttpInterceptor@4bab99cd returned null",
+          "category": "NullPointerException",
+          "trace_id": "67011e6223b143b3b43b77b0c2b5c4c6"
+        },
+        {
+          "timestamp": "2026-02-12 14:27:24,410",
+          "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+          "user": null,
+          "content": "interceptor com.winning.amts.encounter.inpatient.util.HttpToPost$OkhttpInterceptor@4bab99cd returned null",
+          "category": "NullPointerException",
+          "trace_id": "2cd0bdee1bda496588d58c03e96de58d"
+        }
+      ]
+    },
+    {
+      "category": "AuthException",
+      "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+      "count": 3,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:26:34,524",
+          "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+          "user": null,
+          "content": "标签算法远程服务调用失败，{\"fixMsg\":\"临床通用标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:9380],[appName:winning-winex-ipt-ward-pbc]-------------------------------    at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:170    at com.winning.akso.biz.webmvc.security.AuthTokenHeaderFilter.doFilter:75    at com.winning.runtime.filter.HttpCharacterEncodingFilter.doFilter:92[tid:e9889def4c784df6ab3dcf6855f4167b,9380:winning-winex-ipt-ward-pbc,sid:129.10.26.106:9380]:java.lang.NumberForm",
+          "category": "AuthException",
+          "trace_id": "37a4ccda29cd488f8d3658b24d3a30d3"
+        },
+        {
+          "timestamp": "2026-02-12 14:26:53,479",
+          "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+          "user": null,
+          "content": "标签算法远程服务调用失败，{\"fixMsg\":\"临床通用标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:9380],[appName:winning-winex-ipt-ward-pbc]-------------------------------    at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:170    at com.winning.akso.biz.webmvc.security.AuthTokenHeaderFilter.doFilter:75    at com.winning.runtime.filter.HttpCharacterEncodingFilter.doFilter:92[tid:65e77e19ce054f6abe906de0313f6071,9380:winning-winex-ipt-ward-pbc,sid:129.10.26.105:9380]:java.lang.NumberForm",
+          "category": "AuthException",
+          "trace_id": "67011e6223b143b3b43b77b0c2b5c4c6"
+        },
+        {
+          "timestamp": "2026-02-12 14:27:24,758",
+          "class": "c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl",
+          "user": null,
+          "content": "标签算法远程服务调用失败，{\"fixMsg\":\"临床通用标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:9380],[appName:winning-winex-ipt-ward-pbc]-------------------------------    at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:170    at com.winning.akso.biz.webmvc.security.AuthTokenHeaderFilter.doFilter:75    at com.winning.runtime.filter.HttpCharacterEncodingFilter.doFilter:92[tid:3b23a3a9f2c94004bd4448cd4251d8c5,9380:winning-winex-ipt-ward-pbc,sid:129.10.26.42:9380]:java.lang.NumberForma",
+          "category": "AuthException",
+          "trace_id": "2cd0bdee1bda496588d58c03e96de58d"
+        }
+      ]
+    },
+    {
+      "category": "NullPointerException",
+      "class": "c.w.a.e.i.s.InpatientEmrFilingService",
+      "count": 2,
+      "users": [
+        "刘晨",
+        "江立斌"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:24,139",
+          "class": "c.w.a.e.i.s.InpatientEmrFilingService",
+          "user": "江立斌",
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "6e18ca8c6b8e494f823a3dbf5c23bbfa"
+        },
+        {
+          "timestamp": "2026-02-12 14:26:04,892",
+          "class": "c.w.a.e.i.s.InpatientEmrFilingService",
+          "user": "刘晨",
+          "content": "null",
+          "category": "NullPointerException",
+          "trace_id": "5f0f3aaa629d4ce498460e2b5224b11b"
+        }
+      ]
+    },
+    {
+      "category": "Other",
+      "class": "c.w.c.p.e.o.s.EncPersonFileUpdateService",
+      "count": 2,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:25,570",
+          "class": "c.w.c.p.e.o.s.EncPersonFileUpdateService",
+          "user": null,
+          "content": "【推送住院更新患者档案信息】错误：msg=WB3151100004:更新住院档案根据患者标识--未查询到就诊记录，患者标识：1000011635139",
+          "category": "Other",
+          "trace_id": "7dc6e346c3f146ceb5114c3088449a8f"
+        },
+        {
+          "timestamp": "2026-02-12 14:28:05,024",
+          "class": "c.w.c.p.e.o.s.EncPersonFileUpdateService",
+          "user": null,
+          "content": "【推送住院更新患者档案信息】错误：msg=WB3151100004:更新住院档案根据患者标识--未查询到就诊记录，患者标识：1000008161874",
+          "category": "Other",
+          "trace_id": "8402671ac8444d27b1b90c351f5e7974"
+        }
+      ]
+    },
+    {
+      "category": "AuthException",
+      "class": "c.w.a.e.i.p.q.b.QueryListPluginObject",
+      "count": 2,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:25:32,770",
+          "class": "c.w.a.e.i.p.q.b.QueryListPluginObject",
+          "user": null,
+          "content": "[appid:9180],[appName:winning-winex-finance-inp-aaio]-------------------------------    at com.winning.base.finance.common.util.WinRpcResponseUtils.success:86    at com.winning.amts.finance.fee.inp.service.service.PrepayAmountsService.getInpPrePaySubAccountTypeSetting:1545    at com.winning.amts.finance.fee.inp.service.service.PrepayAmountsService.lambda$findEncounterBasicExpendByEncounterIds$28:1123    at com.winning.base.akso.cloud.client.util.CompletableFutureBuilder.lambda$getRpcSupplyAsync$",
+          "category": "AuthException",
+          "trace_id": "e8f13146a46341ee80a71ca71347d591"
+        },
+        {
+          "timestamp": "2026-02-12 14:26:55,717",
+          "class": "c.w.a.e.i.p.q.b.QueryListPluginObject",
+          "user": null,
+          "content": "[appid:9180],[appName:winning-winex-finance-inp-aaio]-------------------------------    at com.winning.base.finance.common.util.WinRpcResponseUtils.success:86    at com.winning.amts.finance.fee.inp.service.service.PrepayAmountsService.getInpPrePaySubAccountTypeSetting:1545    at com.winning.amts.finance.fee.inp.service.service.PrepayAmountsService.lambda$findEncounterBasicExpendByEncounterIds$28:1123    at com.winning.base.akso.cloud.client.util.CompletableFutureBuilder.lambda$getRpcSupplyAsync$",
+          "category": "AuthException",
+          "trace_id": "74b0c21952074225a220ea83baf6ba9b"
+        }
+      ]
+    },
+    {
+      "category": "Other",
+      "class": "L.TRANSACTION",
+      "count": 1,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-02-12 14:26:37,593",
+          "class": "L.TRANSACTION",
+          "user": null,
+          "content": "ES6004001|执行计划|撤销执行确认刷新医嘱单状态|5|执行申请刷新医嘱单状态失败;params={\"deptId\":287254978341400580,\"hospitalSOID\":991827,\"list\":[{\"cliOrderId\":482064376229015560,\"execActionRecordId\":482069787888154635,\"execOrderId\":482064376229015560,\"execPlanId\":482066502238224403}],\"operatedAt\":1770877597133,\"operatedBy\":288877874683867137,\"soid\":[991827]}",
+          "category": "Other",
+          "trace_id": "530f2df3314b4c1bbc14d9d484833152"
+        }
+      ]
+    }
+  ],
+  "slow_apis": [
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/inpatient_exchange_bed/query/by_example",
+      "count": 3,
+      "max_ms": 17152,
+      "avg_ms": 16334,
+      "users": [
+        "王梦娇"
+      ],
+      "samples": [
+        {
+          "duration_ms": 17152,
+          "api_path": "/api/v1/app_inpatient_encounter/inpatient_exchange_bed/query/by_example",
+          "timestamp": "2026-02-12 14:28:08,130",
+          "user": "王梦娇",
+          "trace_id": "5a4dae0cb96b49259ac5e3800fdb5e58"
+        },
+        {
+          "duration_ms": 17024,
+          "api_path": "/api/v1/app_inpatient_encounter/inpatient_exchange_bed/query/by_example",
+          "timestamp": "2026-02-12 14:28:10,309",
+          "user": "王梦娇",
+          "trace_id": "87acdc284f9440b9b1da6b10a0a08c26"
+        },
+        {
+          "duration_ms": 14826,
+          "api_path": "/api/v1/app_inpatient_encounter/inpatient_exchange_bed/query/by_example",
+          "timestamp": "2026-02-12 14:28:25,143",
+          "user": "王梦娇",
+          "trace_id": "89f0ad2952ed438385833c008586b44e"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/encounter_inpatient/encounter_tag_data/refresh",
+      "count": 3,
+      "max_ms": 2525,
+      "avg_ms": 2363,
+      "users": [],
+      "samples": [
+        {
+          "duration_ms": 2525,
+          "api_path": "/api/v1/encounter_inpatient/encounter_tag_data/refresh",
+          "timestamp": "2026-02-12 14:26:34,894",
+          "user": null,
+          "trace_id": "37a4ccda29cd488f8d3658b24d3a30d3"
+        },
+        {
+          "duration_ms": 2213,
+          "api_path": "/api/v1/encounter_inpatient/encounter_tag_data/refresh",
+          "timestamp": "2026-02-12 14:26:53,813",
+          "user": null,
+          "trace_id": "67011e6223b143b3b43b77b0c2b5c4c6"
+        },
+        {
+          "duration_ms": 2352,
+          "api_path": "/api/v1/encounter_inpatient/encounter_tag_data/refresh",
+          "timestamp": "2026-02-12 14:27:25,121",
+          "user": null,
+          "trace_id": "2cd0bdee1bda496588d58c03e96de58d"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/current_doctor_nurse/query/by_example",
+      "count": 1,
+      "max_ms": 2257,
+      "avg_ms": 2257,
+      "users": [
+        "张祥"
+      ],
+      "samples": [
+        {
+          "duration_ms": 2257,
+          "api_path": "/api/v1/app_inpatient_encounter/current_doctor_nurse/query/by_example",
+          "timestamp": "2026-02-12 14:25:25,061",
+          "user": "张祥",
+          "trace_id": "0d871965897e4c05b2137eeb3c95f0d8"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v2/nis/cli_order_doc/query/by_encounter_ids",
+      "count": 1,
+      "max_ms": 2083,
+      "avg_ms": 2083,
+      "users": [
+        "李萍"
+      ],
+      "samples": [
+        {
+          "duration_ms": 2083,
+          "api_path": "/api/v2/nis/cli_order_doc/query/by_encounter_ids",
+          "timestamp": "2026-02-12 14:26:16,243",
+          "user": "李萍",
+          "trace_id": "8fefab5383cb42109bffd5b64ab7634c"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/inpat_basics_expense/query/by_encounter_id",
+      "count": 13,
+      "max_ms": 1556,
+      "avg_ms": 1158,
+      "users": [
+        "金晓东",
+        "刘俊",
+        "徐利霞",
+        "章子怡",
+        "安馨"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1017,
+          "api_path": "/api/v1/app_inpatient_encounter/inpat_basics_expense/query/by_encounter_id",
+          "timestamp": "2026-02-12 14:25:10,265",
+          "user": "后精芩",
+          "trace_id": "e2a3068eebb84488b24af6ac413c54eb"
+        },
+        {
+          "duration_ms": 1147,
+          "api_path": "/api/v1/app_inpatient_encounter/inpat_basics_expense/query/by_encounter_id",
+          "timestamp": "2026-02-12 14:25:12,467",
+          "user": "章子怡",
+          "trace_id": "e4c539c135364f2bac5f54a4d23e2e89"
+        },
+        {
+          "duration_ms": 1090,
+          "api_path": "/api/v1/app_inpatient_encounter/inpat_basics_expense/query/by_encounter_id",
+          "timestamp": "2026-02-12 14:25:26,929",
+          "user": "许莉莉",
+          "trace_id": "2b1cb173ad374d7686f378e2bdf4ea83"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/banner_info/query/by_id",
+      "count": 4,
+      "max_ms": 1480,
+      "avg_ms": 1329,
+      "users": [
+        "毛诗昊",
+        "夏婷婷"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1480,
+          "api_path": "/api/v1/app_inpatient_encounter/banner_info/query/by_id",
+          "timestamp": "2026-02-12 14:26:10,447",
+          "user": "夏婷婷",
+          "trace_id": "ebb18c7da9484727b918cebfffd780f9"
+        },
+        {
+          "duration_ms": 1250,
+          "api_path": "/api/v1/app_inpatient_encounter/banner_info/query/by_id",
+          "timestamp": "2026-02-12 14:26:19,877",
+          "user": "毛诗昊",
+          "trace_id": "b90ed34d81234369a764869d458491ca"
+        },
+        {
+          "duration_ms": 1423,
+          "api_path": "/api/v1/app_inpatient_encounter/banner_info/query/by_id",
+          "timestamp": "2026-02-12 14:27:45,631",
+          "user": "夏婷婷",
+          "trace_id": "c5575fff5e9e4f29a081808b0f8e253d"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/nis/cli_order_def/query/by_encounter_ids",
+      "count": 2,
+      "max_ms": 1453,
+      "avg_ms": 1435,
+      "users": [
+        "吴泽云",
+        "李萍"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1453,
+          "api_path": "/api/v1/nis/cli_order_def/query/by_encounter_ids",
+          "timestamp": "2026-02-12 14:25:46,840",
+          "user": "李萍",
+          "trace_id": "988478707dd04deaaec51dd5361ab57b"
+        },
+        {
+          "duration_ms": 1418,
+          "api_path": "/api/v1/nis/cli_order_def/query/by_encounter_ids",
+          "timestamp": "2026-02-12 14:26:00,794",
+          "user": "吴泽云",
+          "trace_id": "c0ac906ff7454e0ebb83b0256b4095a4"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/encounter_bed_list_new_count/query/by_example",
+      "count": 2,
+      "max_ms": 1272,
+      "avg_ms": 1200,
+      "users": [
+        "周丽亚",
+        "张静"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1272,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_bed_list_new_count/query/by_example",
+          "timestamp": "2026-02-12 14:25:13,316",
+          "user": "张静",
+          "trace_id": "f4c5c94f46b1415c8f6f8aea79d81d4e"
+        },
+        {
+          "duration_ms": 1129,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_bed_list_new_count/query/by_example",
+          "timestamp": "2026-02-12 14:26:35,155",
+          "user": "周丽亚",
+          "trace_id": "cded11060140492a99882149d5bab0c2"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id",
+      "count": 4,
+      "max_ms": 1256,
+      "avg_ms": 1158,
+      "users": [
+        "毛诗昊",
+        "张梦雪",
+        "高润娣",
+        "金凯凯"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1117,
+          "api_path": "/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id",
+          "timestamp": "2026-02-12 14:25:19,258",
+          "user": "高润娣",
+          "trace_id": "f54a73f82f78407fbf95951629839e12"
+        },
+        {
+          "duration_ms": 1117,
+          "api_path": "/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id",
+          "timestamp": "2026-02-12 14:25:22,114",
+          "user": "毛诗昊",
+          "trace_id": "85935461734f43598fcd1bfbf19d42d1"
+        },
+        {
+          "duration_ms": 1144,
+          "api_path": "/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id",
+          "timestamp": "2026-02-12 14:26:01,616",
+          "user": "张梦雪",
+          "trace_id": "dc48a597b45041d586d2c8a086a039f0"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/app_finance_fee_nurse/bill_plan/timing_billing/by_encounter_ids",
+      "count": 1,
+      "max_ms": 1185,
+      "avg_ms": 1185,
+      "users": [
+        "毛小丹"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1185,
+          "api_path": "/api/v1/app_finance_fee_nurse/bill_plan/timing_billing/by_encounter_ids",
+          "timestamp": "2026-02-12 14:26:52,893",
+          "user": "毛小丹",
+          "trace_id": "408dc37c1c2f4ef6ba87479210a795aa"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/patient_list/query/by_example",
+      "count": 1,
+      "max_ms": 1155,
+      "avg_ms": 1155,
+      "users": [
+        "林思思"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1155,
+          "api_path": "/api/v1/app_inpatient_encounter/patient_list/query/by_example",
+          "timestamp": "2026-02-12 14:25:26,794",
+          "user": "林思思",
+          "trace_id": "3658fc6186e94fd79fa2c9bcc8362d6b"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/app_finance_fee_nurse/non_billed_medical/query/by_encounter_id",
+      "count": 1,
+      "max_ms": 1127,
+      "avg_ms": 1127,
+      "users": [
+        "沈琴琴"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1127,
+          "api_path": "/api/v1/app_finance_fee_nurse/non_billed_medical/query/by_encounter_id",
+          "timestamp": "2026-02-12 14:27:59,099",
+          "user": "沈琴琴",
+          "trace_id": "53c23b44a31b441f9e61696b89df22c9"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/app_finance_fee_nurse/inpatient_bill/bill",
+      "count": 1,
+      "max_ms": 1101,
+      "avg_ms": 1101,
+      "users": [
+        "占盼盼"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1101,
+          "api_path": "/api/v1/app_finance_fee_nurse/inpatient_bill/bill",
+          "timestamp": "2026-02-12 14:25:36,538",
+          "user": "占盼盼",
+          "trace_id": "e266841d6cbf435c956a188200a1a580"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/nis/exec_linkage/query/by_execOrderId",
+      "count": 1,
+      "max_ms": 1089,
+      "avg_ms": 1089,
+      "users": [
+        "薛燕锦"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1089,
+          "api_path": "/api/v1/nis/exec_linkage/query/by_execOrderId",
+          "timestamp": "2026-02-12 14:27:49,712",
+          "user": "薛燕锦",
+          "trace_id": "65d48090432947bba8ec691c42d83fa7"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/nis/exec_order/check/by_exec_order_ids",
+      "count": 1,
+      "max_ms": 1064,
+      "avg_ms": 1064,
+      "users": [
+        "陈莉萍"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1064,
+          "api_path": "/api/v1/nis/exec_order/check/by_exec_order_ids",
+          "timestamp": "2026-02-12 14:26:51,803",
+          "user": "陈莉萍",
+          "trace_id": "1f65de9414c0416a8a41c0a2cab11849"
+        }
+      ]
+    },
+    {
+      "api_path": "/api/v1/app_finance_fee_nurse/daygroup_inp_expense_records/query/by_example",
+      "count": 1,
+      "max_ms": 1052,
+      "avg_ms": 1052,
+      "users": [
+        "常攀攀"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1052,
+          "api_path": "/api/v1/app_finance_fee_nurse/daygroup_inp_expense_records/query/by_example",
+          "timestamp": "2026-02-12 14:25:25,965",
+          "user": "常攀攀",
+          "trace_id": "a958e189a6c04d4aaacb597b39d589d3"
+        }
+      ]
+    }
+  ],
+  "internal_timings": [
+    {
+      "context": "调用费用域接口查询账户余额，",
+      "duration_ms": 1116,
+      "timestamp": "2026-02-12 14:25:19,257",
+      "trace_id": "f54a73f82f78407fbf95951629839e12"
+    },
+    {
+      "context": "调用费用域接口查询账户余额，",
+      "duration_ms": 1117,
+      "timestamp": "2026-02-12 14:25:22,114",
+      "trace_id": "85935461734f43598fcd1bfbf19d42d1"
+    },
+    {
+      "context": "调用费用域接口查询账户余额，",
+      "duration_ms": 1144,
+      "timestamp": "2026-02-12 14:26:01,616",
+      "trace_id": "dc48a597b45041d586d2c8a086a039f0"
+    },
+    {
+      "context": "查询banner方法，总",
+      "duration_ms": 1479,
+      "timestamp": "2026-02-12 14:26:10,447",
+      "trace_id": "ebb18c7da9484727b918cebfffd780f9"
+    },
+    {
+      "context": "查询banner方法，总",
+      "duration_ms": 1250,
+      "timestamp": "2026-02-12 14:26:19,877",
+      "trace_id": "b90ed34d81234369a764869d458491ca"
+    },
+    {
+      "context": "调用费用域接口查询账户余额，",
+      "duration_ms": 1256,
+      "timestamp": "2026-02-12 14:26:25,625",
+      "trace_id": "294149e64feb4110976762e1c99fe9ca"
+    },
+    {
+      "context": "查询banner方法，总",
+      "duration_ms": 1422,
+      "timestamp": "2026-02-12 14:27:45,630",
+      "trace_id": "c5575fff5e9e4f29a081808b0f8e253d"
+    },
+    {
+      "context": "调用住院中台获取可交换床位，共",
+      "duration_ms": 17116,
+      "timestamp": "2026-02-12 14:28:08,094",
+      "trace_id": "5a4dae0cb96b49259ac5e3800fdb5e58"
+    },
+    {
+      "context": "调用住院中台获取可交换床位，共",
+      "duration_ms": 16992,
+      "timestamp": "2026-02-12 14:28:10,278",
+      "trace_id": "87acdc284f9440b9b1da6b10a0a08c26"
+    },
+    {
+      "context": "查询banner方法，总",
+      "duration_ms": 1162,
+      "timestamp": "2026-02-12 14:28:17,338",
+      "trace_id": "d3ab3538f54344c8a32b787c7561b011"
+    },
+    {
+      "context": "调用住院中台获取可交换床位，共",
+      "duration_ms": 14789,
+      "timestamp": "2026-02-12 14:28:25,107",
+      "trace_id": "89f0ad2952ed438385833c008586b44e"
+    }
+  ],
+  "warn_samples": [
+    {
+      "timestamp": "2026-02-12 14:25:04,970",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:380毫秒:/api/v3/mobile_nurse_app/exec_order/exec_with_detail"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,020",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:2毫秒:/api/v1/encounter_inpatient/inpat_referral_ward_list/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,057",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:24毫秒:/api/v1/app_inpatient_encounter/inpat_banner_participant/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,078",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:96毫秒:/api/v2/app_inpatient_encounter/encounter_bed_detail/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,110",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:2毫秒:/api/v1/execution/ipt/exec_order/query/by_exec_order_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,115",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:609毫秒:/api/v1/app_inpatient_encounter/banner_info/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,144",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:59毫秒:/api/v1/inpatient_encounter/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,159",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:201毫秒:/api/v1/app_inpatient_encounter/patient_list/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,163",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:4毫秒:/api/v1/app_inpatient_encounter/inpat_banner_diagnosis/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,164",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:5毫秒:/api/v1/app_inpatient_encounter/inpat_banner_diagnosis/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,184",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:34毫秒:/api/v1/inpatient_encounter/bed_change/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,186",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:3毫秒:/api/v2/mobile_nurse_app/message/query/by_ward"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,213",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:1毫秒:/api/v2/mobile_nurse_app/message/query/by_ward"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,254",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:3毫秒:/api/v1/app_inpatient_encounter/inpat_banner_display_item/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,255",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:96毫秒:/api/v2/app_inpatient_encounter/encounter_bed_detail/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,306",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:168毫秒:/api/v1/finance_aggregate_nurse/inpatient_bill/calculate/bill"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,318",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:4毫秒:/api/v1/app_execute_mdm/inpatient/encounter_general_config/get/by_code"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,331",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:2毫秒:/api/v1/inpatient_encounter/health_condition/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,334",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:24毫秒:/api/v1/app_inpatient_encounter/inpat_banner_participant/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,335",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:1毫秒:/api/v1/inpatient_encounter/inpat_encounter_newborn/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,338",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:92毫秒:/api/v1/app_inpatient_encounter/patient_list/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,349",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:11毫秒:/api/v1/app_inpatient_encounter/enc_dept_list/query/by_ward_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,355",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:6毫秒:/api/v1/encounter_component/value_set/query/by_concept_domain_ids"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,383",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:4毫秒:/api/v1/execution/ipt/exec_order_plan/query/by_exec_order_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,390",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:219毫秒:/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,395",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:531毫秒:/api/v1/nis/encounter_available_balance/query"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,397",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:3毫秒:/api/v1/inpatient_encounter/encounter_hospitalization_days/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,399",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:10毫秒:/api/v1/app_inpatient_encounter/cli_path_execution/query/by_encounterId"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,421",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:14毫秒:/api/v1/app_finance_fee_nurse/integration_mode/query"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,442",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:232毫秒:/api/v1/app_inpatient_encounter/encounter_bed_list_new_count/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,453",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:2毫秒:/api/v1/app_inpatient_encounter/inpat_banner_display_item/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,456",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:5毫秒:/api/v1/app_inpatient_encounter/inpat_banner_diagnosis/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,482",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:3毫秒:/api/v1/app_inpatient_encounter/inpat_banner_display_item/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,502",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:3毫秒:/api/v1/inpatient_encounter/inpat_encounter_backlog/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,513",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:604毫秒:/api/v1/app_inpatient_encounter/banner_info/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,534",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:67毫秒:/api/v1/inpatient_encounter/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,556",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:240毫秒:/api/v1/app_inpatient_encounter/medical_advice/check"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,570",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:95毫秒:/api/v1/app_inpatient_encounter/patient_list/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,599",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:1毫秒:/api/v2/mobile_nurse_app/message/query/by_ward"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,680",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:92毫秒:/api/v1/app_inpatient_encounter/patient_list/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,693",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:662毫秒:/api/v1/app_inpatient_encounter/banner_info/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,703",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:3毫秒:/api/v1/app_inpatient_encounter/inpat_banner_display_item/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,719",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:2毫秒:/api/v1/app_execute_mdm/inpatient/mdm_params/query/by_param_ids"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,739",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:2毫秒:/api/v1/app_pmts_finance/order_detail_approval_info/query/by_order_item_ids"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,747",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:236毫秒:/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,757",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:1毫秒:/api/v1/app_pmts_finance/order_detail_approval_info/query/by_order_item_ids"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,781",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:2毫秒:/api/v1/app_pmts_finance/parameter_setting/query/by_nos"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,810",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:7毫秒:/api/v1/inpatient_encounter/ipt_dept_trace/query/by_example"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,839",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:608毫秒:/api/v1/app_inpatient_encounter/banner_info/query/by_id"
+    },
+    {
+      "timestamp": "2026-02-12 14:25:05,841",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:245毫秒:/api/v1/app_inpatient_encounter/encounter_info/get/by_id"
+    }
+  ]
+}

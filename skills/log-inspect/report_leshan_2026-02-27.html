@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日志分析报告 - 乐山市人民医院 2026-02-27</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .subtitle { font-size: 1.1em; opacity: 0.8; }
+        .header .env-tag {
+            display: inline-block;
+            background: #27ae60;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section-title {
+            font-size: 1.8em;
+            color: #1a1a2e;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+        .info-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table td { padding: 12px 15px; border-bottom: 1px solid #e0e0e0; }
+        .info-table td:first-child { font-weight: bold; color: #1a1a2e; width: 180px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-card.danger { border-left: 5px solid #e74c3c; }
+        .stat-card.warning { border-left: 5px solid #f39c12; }
+        .stat-card.info { border-left: 5px solid #3498db; }
+        .stat-number { font-size: 2.5em; font-weight: bold; margin-bottom: 10px; }
+        .stat-card.danger .stat-number { color: #e74c3c; }
+        .stat-card.warning .stat-number { color: #f39c12; }
+        .stat-card.info .stat-number { color: #3498db; }
+        .stat-label { color: #666; font-size: 0.95em; }
+        .error-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #e74c3c;
+        }
+        .error-item.warning { border-left-color: #f39c12; }
+        .error-item.info { border-left-color: #3498db; }
+        .error-title {
+            font-size: 1.2em;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .severity-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: bold;
+        }
+        .severity-high { background: #fee; color: #e74c3c; }
+        .severity-medium { background: #fff3cd; color: #856404; }
+        .severity-low { background: #d4edda; color: #155724; }
+        .error-meta { color: #666; margin-bottom: 10px; font-size: 0.95em; }
+        .error-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .trace-list {
+            background: #fff3cd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .trace-list h5 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        .trace-list ul {
+            list-style: none;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85em;
+        }
+        .trace-list li {
+            padding: 5px 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        .trace-list li:last-child { border-bottom: none; }
+        .trace-id {
+            color: #d63384;
+            font-weight: bold;
+        }
+        .trace-time {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .suggestion-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        .suggestion-box h4 { color: #2e7d32; margin-bottom: 10px; }
+        .suggestion-box ul { margin-left: 20px; color: #555; }
+        .suggestion-box li { margin-bottom: 8px; }
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .performance-table th, .performance-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .performance-table th {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+        }
+        .performance-table tr:hover { background: #f5f5f5; }
+        .time-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .time-critical { background: #f8d7da; color: #721c24; }
+        .time-warning { background: #fff3cd; color: #856404; }
+        .improvement-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .improvement-box h4 { color: #1565c0; margin-bottom: 10px; }
+        .summary-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        .summary-box h3 { margin-bottom: 20px; font-size: 1.5em; }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .summary-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .summary-item h4 { color: #f39c12; margin-bottom: 15px; }
+        .summary-item ul { margin-left: 20px; }
+        .summary-item li { margin-bottom: 10px; line-height: 1.6; }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 日志分析报告</h1>
+            <p class="subtitle">乐山市人民医院 | 2026-02-27 12:57 ~ 14:57</p>
+            <span class="env-tag">🐳 K8s 环境 (Loki)</span>
+        </div>
+        
+        <div class="content">
+            <!-- 基本信息 -->
+            <div class="section">
+                <h2 class="section-title">基本信息</h2>
+                <div class="info-card">
+                    <table class="info-table">
+                        <tr><td>医院名称</td><td>乐山市人民医院</td></tr>
+                        <tr><td>环境类型</td><td>K8s (Loki 日志)</td></tr>
+                        <tr><td>应用标识</td><td>winning-winex-ipt-ward-pbc</td></tr>
+                        <tr><td>日志时间范围</td><td>2026-02-27 12:57:00 ~ 14:57:00 (2小时)</td></tr>
+                        <tr><td>分析日志量</td><td>20,000 条 (ERROR/WARN 级别)</td></tr>
+                        <tr><td>慢接口阈值</td><td>1000ms</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 异常统计概览 -->
+            <div class="section">
+                <h2 class="section-title">异常统计概览</h2>
+                <div class="stats-grid">
+                    <div class="stat-card danger">
+                        <div class="stat-number">228</div>
+                        <div class="stat-label">ERROR 级别</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-number">120</div>
+                        <div class="stat-label">认证/权限错误</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-number">91</div>
+                        <div class="stat-label">其他错误</div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-number">17</div>
+                        <div class="stat-label">空指针异常</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-number">10</div>
+                        <div class="stat-label">慢接口 (>1s)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 详细异常分析 -->
+            <div class="section">
+                <h2 class="section-title">详细异常分析</h2>
+                
+                <!-- 1. 费用服务调用失败 -->
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 1. 费用服务调用失败</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 108 次 (FinanceHelperImpl + BannerInfoService)</p>
+                    <p class="error-meta"><strong>错误码:</strong> ES0990004</p>
+                    <div class="error-details">medicalRecordAmtsRpcService.customQueryByEncounterId:
+依据住院就诊标识获取病案项目费用信息(自定义查询) 调用失败
+[appid:9180],[appName:winning-winex-finance-inp-aaio]</div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+                            <li><span class="trace-id">8AB0D4C8F2ACF99C3C4F322CE5B752E6</span> <span class="trace-time">12:57:02</span></li>
+                            <li><span class="trace-id">390BC2ABAA9E2957A89272B2BF788EA0</span> <span class="trace-time">12:57:07</span></li>
+                            <li><span class="trace-id">239982BF1262D3DDB842931C5A8ED082</span> <span class="trace-time">12:57:09</span></li>
+                        </ul>
+                    </div>
+                    <div class="suggestion-box">
+                        <h4>💡 建议</h4>
+                        <ul>
+                            <li>检查 winning-winex-finance-inp-aaio 服务的运行状态</li>
+                            <li>确认费用服务的 Pod 是否正常、资源是否充足</li>
+                            <li>排查服务间网络连通性问题</li>
+                            <li>检查费用服务的日志，定位根本原因</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 2. 标签算法服务异常 -->
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 2. 标签算法服务异常</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 70 次</p>
+                    <p class="error-meta"><strong>位置:</strong> AutoTagAlgorithmServiceImpl</p>
+                    <div class="error-details">错误类型1: syntax error, pos 1, line 1, column 2&lt;html&gt;
+（服务返回了 HTML 页面而非 JSON，可能是网关错误或服务不可用）
+
+错误类型2: 服务INPDEV-BMTS未找到,主线版本号为null
+（服务注册中心找不到目标服务）
+
+错误类型3: Cannot invoke "JSONArray.toJavaList" because return value is null
+（返回数据结构异常）</div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例</h5>
+                        <ul>
+                            <li><span class="trace-id">ACB6E8F93EE40FEA6ED20887EB379B82</span> <span class="trace-time">12:57:02</span></li>
+                            <li><span class="trace-id">F6994ABE087F2B81CD2089E781357E9B</span> <span class="trace-time">13:27:10</span></li>
+                            <li><span class="trace-id">94AFB222AB5FAC2AA6A8DCC47F9DE831</span> <span class="trace-time">14:27:16</span></li>
+                        </ul>
+                    </div>
+                    <div class="suggestion-box">
+                        <h4>💡 建议</h4>
+                        <ul>
+                            <li>检查 INPDEV-BMTS 服务是否正常注册到服务中心</li>
+                            <li>排查返回 HTML 的原因（可能是 Nginx/网关配置问题）</li>
+                            <li>确认标签算法服务的版本兼容性</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 3. FHIR 医嘱签署出错 -->
+                <div class="error-item warning">
+                    <div class="error-title">
+                        <span>🟡 3. FHIR 医嘱签署调用失败</span>
+                        <span class="severity-badge severity-medium">中严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 20 次</p>
+                    <p class="error-meta"><strong>位置:</strong> OrderExecHelperImpl / ClinicalOrderSplitRetryServiceImpl</p>
+                    <div class="error-details">RPC调用错误: Cannot construct instance of ExecutionOperateOutputDTO
+(although at least one Creator exists): no String-argument constructor
+
+====>>>>异步调用fhir医嘱签署出错</div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例</h5>
+                        <ul>
+                            <li><span class="trace-id">6363c61c4af14c42ad8e89011b9c4abf</span> <span class="trace-time">12:57:10</span></li>
+                            <li><span class="trace-id">f5e3805514fe40a5bfc7e1ddba2d3ba0</span> <span class="trace-time">12:57:11</span></li>
+                            <li><span class="trace-id">afd71dcc0aff4590afa3652312229562</span> <span class="trace-time">12:57:07</span></li>
+                        </ul>
+                    </div>
+                    <div class="suggestion-box">
+                        <h4>💡 建议</h4>
+                        <ul>
+                            <li>检查 FHIR 服务返回的数据结构是否与 DTO 定义一致</li>
+                            <li>可能是 FHIR 服务版本升级导致的接口不兼容</li>
+                            <li>建议检查 ExecutionOperateOutputDTO 的反序列化配置</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 4. 认证过期 -->
+                <div class="error-item info">
+                    <div class="error-title">
+                        <span>🔵 4. 认证过期</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 9 次</p>
+                    <div class="error-details">认证过期,请重新刷新</div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例</h5>
+                        <ul>
+                            <li><span class="trace-time">12:57:03</span> (traceId 为空)</li>
+                            <li><span class="trace-time">13:27:07</span> (traceId 为空)</li>
+                        </ul>
+                    </div>
+                    <div class="suggestion-box">
+                        <h4>💡 建议</h4>
+                        <ul>
+                            <li>属于正常业务场景，用户 Token 过期后需重新登录</li>
+                            <li>如频繁出现，可考虑延长 Token 有效期或实现自动刷新</li>
+                            <li>注意：认证过期日志缺少 traceId，建议补充</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 5. 参数校验错误 -->
+                <div class="error-item info">
+                    <div class="error-title">
+                        <span>🔵 5. 参数校验错误</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 8 次</p>
+                    <div class="error-details">ES11310008: [inpatBedServiceIds] 住院病床标识不能为空</div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例</h5>
+                        <ul>
+                            <li><span class="trace-id">68CAFC6C8FD15EF1155FB6309DB05F51</span> <span class="trace-time">12:57:05</span></li>
+                            <li><span class="trace-id">D2B6E0F1F6D1D4CF653CB3B953B8438E</span> <span class="trace-time">13:27:11</span></li>
+                            <li><span class="trace-id">BFC6A744B07CDC61245C4F30805D578E</span> <span class="trace-time">13:27:13</span></li>
+                        </ul>
+                    </div>
+                    <div class="suggestion-box">
+                        <h4>💡 建议</h4>
+                        <ul>
+                            <li>检查前端调用时是否正确传递病床标识参数</li>
+                            <li>可能是特定操作场景下的参数缺失</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 性能问题分析 -->
+            <div class="section">
+                <h2 class="section-title">性能问题分析</h2>
+                <p style="margin-bottom: 20px; color: #666;">以下接口响应时间超过 1 秒，需要关注性能优化：</p>
+                
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>接口路径</th>
+                            <th>最大耗时</th>
+                            <th>平均耗时</th>
+                            <th>次数</th>
+                            <th>traceId 样例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/api/v1/.../sync_call_order_split</td>
+                            <td><span class="time-badge time-critical">10,402ms</span></td>
+                            <td>10,334ms</td>
+                            <td>4次</td>
+                            <td><span class="trace-id" style="font-size:0.8em;">6363c61c4af14c42ad8e89011b9c4abf</span></td>
+                        </tr>
+                        <tr>
+                            <td>/api/v1/.../patient_list/query/by_example</td>
+                            <td><span class="time-badge time-warning">1,097ms</span></td>
+                            <td>1,045ms</td>
+                            <td>6次</td>
+                            <td><span class="trace-id" style="font-size:0.8em;">914A486169B61F0A34020812D37C7A06</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="suggestion-box" style="margin-top: 20px;">
+                    <h4>💡 性能优化建议</h4>
+                    <ul>
+                        <li><strong>sync_call_order_split 接口（10秒+）：</strong>医嘱拆分同步调用耗时严重超标，建议：
+                            <ul style="margin-top: 5px;">
+                                <li>检查 FHIR 服务响应时间</li>
+                                <li>考虑改为异步处理模式</li>
+                                <li>排查是否有数据库慢查询</li>
+                            </ul>
+                        </li>
+                        <li><strong>patient_list 接口：</strong>患者列表查询略超阈值，建议检查查询条件和索引</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 日志改进建议 -->
+            <div class="section">
+                <h2 class="section-title">📋 日志改进建议</h2>
+                <div class="improvement-box">
+                    <h4>🔧 以下改进将提升日志分析价值</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>用户信息缺失：</strong>K8s 环境下大部分错误日志没有关联用户信息，难以定位受影响的具体用户。建议在关键业务操作的日志中增加用户标识</li>
+                        <li><strong>traceId 部分为空：</strong>认证过期等错误的 traceId 为空字符串，影响调用链追踪。建议检查 Filter 层的上下文传递</li>
+                        <li><strong>错误堆栈被截断：</strong>部分错误日志的堆栈信息不完整，建议调整日志配置保留完整堆栈</li>
+                        <li><strong>服务间调用缺少入参：</strong>RPC 调用失败时没有记录请求参数，排查困难</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 总结与建议 -->
+            <div class="section">
+                <h2 class="section-title">总结与建议</h2>
+                <div class="summary-box">
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <h4>🔴 高优先级问题</h4>
+                            <ul>
+                                <li><strong>费用服务不可用：</strong>108 次调用失败，影响病案费用查询功能，需紧急排查 winning-winex-finance-inp-aaio 服务</li>
+                                <li><strong>标签算法服务异常：</strong>70 次错误，服务返回 HTML 或找不到服务，检查服务注册和网关配置</li>
+                                <li><strong>医嘱拆分接口超时：</strong>10 秒+ 响应时间严重影响用户体验</li>
+                            </ul>
+                        </div>
+                        <div class="summary-item">
+                            <h4>🟡 中优先级问题</h4>
+                            <ul>
+                                <li><strong>FHIR 医嘱签署失败：</strong>20 次，DTO 反序列化问题，需检查接口兼容性</li>
+                                <li><strong>患者列表查询偏慢：</strong>略超 1 秒阈值，建议优化</li>
+                            </ul>
+                        </div>
+                        <div class="summary-item">
+                            <h4>📊 监控建议</h4>
+                            <ul>
+                                <li>对费用服务和标签算法服务增加健康检查告警</li>
+                                <li>对 sync_call_order_split 接口增加超时监控</li>
+                                <li>建议每日生成日志分析报告，跟踪问题收敛</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>报告生成时间: 2026-02-27 15:57 | 数据来源: Loki (K8s) | 日志分析系统 v1.0</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日志分析报告 - 乐山市人民医院 2026-03-12</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .subtitle { font-size: 1.1em; opacity: 0.8; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section-title {
+            font-size: 1.8em;
+            color: #1a1a2e;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+        .info-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table td { padding: 12px 15px; border-bottom: 1px solid #e0e0e0; }
+        .info-table td:first-child { font-weight: bold; color: #1a1a2e; width: 180px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .stat-card.danger { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .stat-card.warning { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333; }
+        .stat-number { font-size: 2.5em; font-weight: bold; margin-bottom: 10px; }
+        .stat-label { font-size: 1em; opacity: 0.9; }
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .performance-table th, .performance-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .performance-table th {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+        }
+        .performance-table tr:hover { background: #f5f5f5; }
+        .error-item {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .error-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+        }
+        .severity-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+        .severity-high { background: #f8d7da; color: #721c24; }
+        .severity-medium { background: #fff3cd; color: #856404; }
+        .severity-low { background: #d4edda; color: #155724; }
+        .error-meta { margin: 8px 0; color: #666; }
+        .error-details {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+        .trace-list {
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .trace-list h5 { color: #1565c0; margin-bottom: 10px; }
+        .trace-list ul { list-style: none; }
+        .trace-list li { margin: 8px 0; }
+        .trace-id {
+            background: #fff;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #1565c0;
+        }
+        .trace-time { color: #666; font-size: 0.9em; margin-left: 10px; }
+        .suggestion-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        .suggestion-box h4 { color: #1565c0; margin-bottom: 10px; }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        /* 导航栏样式 */
+        .nav-sidebar {
+            position: fixed;
+            left: 20px;
+            top: 100px;
+            width: 180px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 16px;
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        .nav-sidebar h3 {
+            font-size: 1em;
+            color: #1a1a2e;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+        }
+        .nav-sidebar ul {
+            list-style: none;
+        }
+        .nav-sidebar li {
+            margin-bottom: 6px;
+        }
+        .nav-sidebar a {
+            color: #555;
+            text-decoration: none;
+            font-size: 0.88em;
+            display: block;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .nav-sidebar a:hover {
+            background: #f0f0f0;
+            color: #667eea;
+            padding-left: 14px;
+        }
+        @media (max-width: 1400px) {
+            .nav-sidebar { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 左侧导航栏 -->
+    <div class="nav-sidebar">
+        <h3>📑 目录</h3>
+        <ul>
+            <li><a href="#basic-info">基本信息</a></li>
+            <li><a href="#log-quality">日志质量分析</a></li>
+            <li><a href="#error-stats">异常统计概览</a></li>
+            <li><a href="#error-details">详细异常分析</a></li>
+            <li><a href="#log-feedback">日志反哺建议</a></li>
+            <li><a href="#slow-apis">慢接口 Trace 详情</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>📊 日志分析报告</h1>
+            <p class="subtitle">乐山市人民医院 | 2026-03-12</p>
+        </div>
+        
+        <div class="content">
+            <!-- 基本信息 -->
+            <div class="section" id="basic-info">
+                <h2 class="section-title">基本信息</h2>
+                <div class="info-card">
+                    <table class="info-table">
+                        <tr><td>医院名称</td><td>乐山市人民医院</td></tr>
+                        <tr><td>服务名称</td><td>病区护士站</td></tr>
+
+                        <tr><td>拉取时间范围</td><td>2026-03-12 23:42:46 ~ 2026-03-12 23:52:46</td></tr>
+
+                        <tr><td>拉取耗时</td><td>66 秒</td></tr>
+
+                        <tr><td>分析日志量</td><td>77,984 条</td></tr>
+                        <tr><td>慢接口阈值</td><td>1000ms</td></tr>
+                        <tr><td>生成时间</td><td>2026-03-12 23:54:19</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 日志质量分析 -->
+            <div class="section" id="log-quality">
+                <h2 class="section-title">📊 日志质量分析</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                    <div style="background: #fff8e1; border-radius: 8px; padding: 16px;">
+                        <div style="font-size: 1.8em; font-weight: bold; color: #f57c00;">1.8%</div>
+                        <div style="color: #666; margin-top: 4px;">缺少 API 入口（6/328 条）</div>
+                        <div style="color: #999; font-size: 0.85em; margin-top: 6px;">来自后台任务或异步调用，无 HTTP 请求上下文</div>
+                    </div>
+                    <div style="background: #fce4ec; border-radius: 8px; padding: 16px;">
+                        <div style="font-size: 1.8em; font-weight: bold; color: #c62828;">11.6%</div>
+                        <div style="color: #666; margin-top: 4px;">异常信息只有 null（38/328 条）</div>
+                        <div style="color: #999; font-size: 0.85em; margin-top: 6px;">日志记录不完整，建议研发改进异常捕获</div>
+                    </div>
+                </div>
+                <div style="background: #f5f5f5; border-radius: 8px; padding: 16px;">
+                    <div style="font-weight: bold; margin-bottom: 10px;">异常影响级别分布（共 22 类）</div>
+                    <div style="display: flex; height: 24px; border-radius: 4px; overflow: hidden; margin-bottom: 8px;">
+                        <div style="width: 54.54545454545454%; background: #ef5350;" title="影响主流程: 12类"></div>
+                        <div style="width: 22.727272727272727%; background: #ffa726;" title="可能影响: 5类"></div>
+                        <div style="width: 22.727272727272727%; background: #66bb6a;" title="不影响主流程: 5类"></div>
+                    </div>
+                    <div style="display: flex; gap: 20px; font-size: 0.85em; color: #666;">
+                        <span>🔴 影响主流程 12 类</span>
+                        <span>🟡 可能影响 5 类</span>
+                        <span>🟢 不影响主流程 5 类</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 异常统计概览 -->
+            <div class="section" id="error-stats">
+                <h2 class="section-title">异常统计概览</h2>
+                <div class="stats-grid">
+
+                    <div class="stat-card warning">
+                        <div class="stat-number">118</div>
+                        <div class="stat-label">空指针异常</div>
+                    </div>
+
+                    <div class="stat-card warning">
+                        <div class="stat-number">65</div>
+                        <div class="stat-label">参数校验失败</div>
+                    </div>
+
+                    <div class="stat-card warning">
+                        <div class="stat-number">48</div>
+                        <div class="stat-label">其他异常</div>
+                    </div>
+
+                    <div class="stat-card danger">
+                        <div class="stat-number">25</div>
+                        <div class="stat-label">慢接口类型</div>
+                    </div>
+                </div>
+                
+                <!-- 错误分类详细表格 -->
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #1a1a2e;">错误分类详情</h3>
+
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>错误类型</th>
+                            <th>出现次数</th>
+                            <th>占比</th>
+                            <th>优化建议</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><strong>空指针异常</strong></td>
+                            <td>118</td>
+                            <td>36.0%</td>
+                            <td><span style="color: #1565c0;">💡 检查对象是否为空，添加空值校验</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>参数校验失败</strong></td>
+                            <td>65</td>
+                            <td>19.8%</td>
+                            <td><span style="color: #1565c0;">💡 检查请求参数是否完整，确认参数格式正确</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>其他异常</strong></td>
+                            <td>48</td>
+                            <td>14.6%</td>
+                            <td><span style="color: #1565c0;">💡 需要查看详细日志进行分析</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>标签配置问题</strong></td>
+                            <td>44</td>
+                            <td>13.4%</td>
+                            <td><span style="color: #1565c0;">💡 需要查看详细日志进行分析</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>第三方调用异常</strong></td>
+                            <td>34</td>
+                            <td>10.4%</td>
+                            <td><span style="color: #1565c0;">💡 需要查看详细日志进行分析</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>JSON解析错误</strong></td>
+                            <td>17</td>
+                            <td>5.2%</td>
+                            <td><span style="color: #1565c0;">💡 检查JSON格式是否正确，确认数据结构</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>SQL错误</strong></td>
+                            <td>2</td>
+                            <td>0.6%</td>
+                            <td><span style="color: #1565c0;">💡 检查SQL语句语法，确认数据库连接正常</span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- 详细异常分析 -->
+            <div class="section" id="error-details">
+                <h2 class="section-title">详细异常分析</h2>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 1. 空指针异常</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 46 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.b.a.r.r.RestAop</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/encounter_inpatient/encounter_info/get/by_id</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> charting</p>
+
+                    <p class="error-meta"><strong>线程:</strong> winning-winex-ipt-charting-pbc_Jetty-Worker_8080-Thread-642</p>
+
+                    <div class="error-details">real exception message:[tid:0d6b261a1eac4b4fb6fb383a02e38968,9380:winning-winex-ipt-ward-pbc,sid:10.233.20.52:8080]:NullPointerException </div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">0d6b261a1eac4b4fb6fb383a02e38968</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                            <li><span class="trace-id">e48818a7964b47e59e5507463609ede0</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                            <li><span class="trace-id">44ce29275a114661a2c6054dbd2d2ae8</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查对象是否为空，添加空值校验</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 2. 参数校验失败</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 46 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.b.a.r.r.RestAop</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/inpatient_encounter/bed_change/query/by_example</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> charting</p>
+
+                    <p class="error-meta"><strong>线程:</strong> winning-winex-ipt-charting-pbc_Jetty-Worker_8080-Thread-691</p>
+
+                    <div class="error-details">real exception message:WB2153100002:找不到就诊记录</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">6f4fee1fcae241c1b0d438e46d6277a1</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                            <li><span class="trace-id">f3c0a4d37f9e4f3389e50d0e855ab580</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                            <li><span class="trace-id">0f2d8c30581d43429a8f677908b1d8e2</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查请求参数是否完整，确认参数格式正确</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 3. 标签配置问题</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 43 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/encounter_inpatient/encounter_tag_data/refresh</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> charting</p>
+
+                    <p class="error-meta"><strong>线程:</strong> winning-winex-ipt-charting-pbc_Jetty-Worker_8080-Thread-198</p>
+
+                    <div class="error-details">没有获取到远程服务</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">655064dda9914183b69464cf6f7d7575</span> <span class="trace-time">2026-03-12 23:42</span></li>
+
+                            <li><span class="trace-id">935d22322e084e0fbb211a2fe8fbc741</span> <span class="trace-time">2026-03-12 23:42</span></li>
+
+                            <li><span class="trace-id">bf0ada6da61a489687c7e07bacba0fbb</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查标签配置，确认标签服务是否正常</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 4. 其他异常</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 39 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.p.p.s.d.s.i.StockModifySdkImpl</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/nis/exec_order_plan/advance_apply/by_end_time</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> RPC调用</p>
+
+                    <p class="error-meta"><strong>线程:</strong> rpc-exec-164</p>
+
+                    <div class="error-details">批次冻结失败的药品库存：[]</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">84b3105f48c84c2f829c00a6b6bd75d7</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">ae1bfca1ed0e4c16887b638d90d8c809</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">08460bbce8794bbeac9c84cd4c05725f</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>需要查看详细日志进行分析</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 5. 空指针异常</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 31 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.i.s.InpatientEncounterService</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 本服务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> Jetty-Worker_8080-Thread-572</p>
+
+                    <div class="error-details">[appid:9430],[appName:winning-winex-ipt-pbc]-------------------------------    at com.winning.clinical.diagnosis.inpatient.persistence.repository.CliDiagnosisQueryRepoImpl.queryPatientsDiagnosis:132    at com.winning.clinical.diagnosis.inpatient.domain.service.CliPatientDiagnosisQueryService.queryPatientsDiagnosis:216    at com.winning.clinical.diagnosis.inpatient.rest.CliPatientDiagnosisQueryRpcServiceImpl.queryDiagnosisByExample:82    at com.winning.clinical.diagnosis.inpatient.rest.aop.Databa</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">bac78e47f8f0451ab74f43b382fab947</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">24b76729ea144bccba53b33c939fe7b8</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">175d169fd3b2420a9db31207d2cd4754</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查对象是否为空，添加空值校验</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 6. 第三方调用异常</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 31 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.c.i.e.w.h.i.InpatientEncounterQueryHelperImpl</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/app_inpatient_encounter/inpat_basics_expense/query/by_encounter_id</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 本服务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> Jetty-Worker_8080-Thread-392</p>
+
+                    <div class="error-details">查询费用信息错误，encounterId=408442464880117765</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">9252f5aba95a49ffaabb460a86a03991</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">44f191f57dfa4020b767f5a2755dba61</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">ae401364c882422abe606ac710264633</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查第三方服务状态，确认接口调用参数</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟡 7. 空指针异常</span>
+                        <span class="severity-badge severity-medium">中等严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 25 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.i.d.InpatEncDomain</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/app_inpatient_encounter/encounter_bed_list_new_count/query/by_example</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 本服务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> Jetty-Worker_8080-Thread-305</p>
+
+                    <div class="error-details">null</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">6653eda9702943e9b56c209ec6596a2a</span> <span class="trace-time">2026-03-12 23:42</span></li>
+
+                            <li><span class="trace-id">b3f6a46255314d96a29e3f8db88c1fa8</span> <span class="trace-time">2026-03-12 23:42</span></li>
+
+                            <li><span class="trace-id">436f35214fda431b88276ae55b7db8f6</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查对象是否为空，添加空值校验</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟡 8. JSON解析错误</span>
+                        <span class="severity-badge severity-medium">中等严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 17 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.c.i.e.w.h.i.InpatientEncounterLiteHelperImpl</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v2/app_inpatient_encounter/encounter_bed_detail/query/by_id</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 本服务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> Jetty-Worker_8080-Thread-536</p>
+
+                    <div class="error-details">Unparseable date: 1989-01-09 00:00</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">9e3c897423444551806cea28266df0e1</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">8019db0ef07e465ca70dde238178c430</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">1967ca0d9e674e208f54bdda4407e444</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查JSON格式是否正确，确认数据结构</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟡 9. 空指针异常</span>
+                        <span class="severity-badge severity-medium">中等严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 11 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.b.e.i.p.q.b.QueryCountPluginObject</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/app_inpatient_encounter/invited_received/check</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 本服务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> Jetty-Worker_8080-Thread-617</p>
+
+                    <div class="error-details">null</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">0e0ea90448b84671b10eb3be75ad3300</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">58f88207c12d42ca835cc9226a09e7e7</span> <span class="trace-time">2026-03-12 23:45</span></li>
+
+                            <li><span class="trace-id">a24d59ba684a460693b89bec0959a077</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查对象是否为空，添加空值校验</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟡 10. 参数校验失败</span>
+                        <span class="severity-badge severity-medium">中等严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 11 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.i.d.InpatEncDomain</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/app_inpatient_encounter/encounter_bed_list_new_count/query/by_example</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 本服务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> Jetty-Worker_8080-Thread-577</p>
+
+                    <div class="error-details">WB2153100004:在区查询下需传入科室ID或病区ID</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">6f941a4c41434b2b93ad5f2d9eb3de6f</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">e13e4e8aa55c4bb5ae729b6606e298eb</span> <span class="trace-time">2026-03-12 23:45</span></li>
+
+                            <li><span class="trace-id">0057b56a6f974fd582cd52e71c9ffa24</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查请求参数是否完整，确认参数格式正确</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 11. 参数校验失败</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 7 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.b.a.c.c.u.CompletableFutureBuilder</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v2/nis/cli_order_doc/query/by_encounter_ids</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> RPC调用</p>
+
+                    <p class="error-meta"><strong>线程:</strong> rpc-exec-91</p>
+
+                    <div class="error-details">com.winning.pts.exception.WinningRuntimeException: ES21140008:WS0990001:[orgIds] must not be empty;$core{参数检验不通过.详细请查错误明细}core$</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">8c8d1ac3af3e4b7eb51aff577324b41d</span> <span class="trace-time">2026-03-12 23:44</span></li>
+
+                            <li><span class="trace-id">db660283c89f4f6f8d9e6805a2f57f52</span> <span class="trace-time">2026-03-12 23:44</span></li>
+
+                            <li><span class="trace-id">b94023e11f9c48c08a2e4930c77e1929</span> <span class="trace-time">2026-03-12 23:45</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查请求参数是否完整，确认参数格式正确</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 12. 其他异常</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 4 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.f.f.n.s.i.T.ZcyyStockService</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/app_finance_fee_nurse/inpatient_bill/bill_by_encounter_id</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 本服务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> Jetty-Worker_8080-Thread-76</p>
+
+                    <div class="error-details">组装报文失败：EB11200005:北京至诚库存扣减失败:User-Defined Exceptionerror,记账单，调用后台保存操作失败，使用单明细信息保存失败！|10<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><soap:Body><UploadSingle_SCResponse xmlns="http://tempuri.org/"><UploadSingle_SCResult>0</UploadSingle_SCResult><message>使用单明细信息保存失败！</message></UploadSingle_SCResponse></soap:Body></soap:Envelope></div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">2fa31474b93c4bdda754d2cceef2b1bc</span> <span class="trace-time">2026-03-12 23:50</span></li>
+
+                            <li><span class="trace-id">c683a9e84f67407c8fee4abc03693112</span> <span class="trace-time">2026-03-12 23:50</span></li>
+
+                            <li><span class="trace-id">0bbafbb30d38408e8b9d618f96ea764f</span> <span class="trace-time">2026-03-12 23:50</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>需要查看详细日志进行分析</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 13. 其他异常</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 3 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.o.i.s.i.p.CliOrderPrintServiceImpl</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v2/nis/cli_order_doc/query/by_encounter_ids</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 本服务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> Jetty-Worker_8080-Thread-411</p>
+
+                    <div class="error-details">获取执行频次的执行时间次数统计信息出错</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">c0f91ed3b43e4f6ba96d80548cdfd2ef</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">666c708b15a644ab80c25ebeafe43861</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">dc76eaa0f25040528c06f7431f40ce58</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>需要查看详细日志进行分析</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 14. 空指针异常</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 3 次</p>
+                    <p class="error-meta"><strong>位置:</strong> o.h.e.j.s.SqlExceptionHelper</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/nis/order_ca/save</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 本服务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> Jetty-Worker_8080-Thread-280</p>
+
+                    <div class="error-details">ORA-01400: 无法将 NULL 插入 ("WINDBA_NEW"."NIS_MOBILE_EXE_CA"."NIS_MOBILE_EXE_ID")</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">25d140a5d4804931aba752572b64c138</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">b17e23801a1a469cb0be9d5180f7dfa1</span> <span class="trace-time">2026-03-12 23:45</span></li>
+
+                            <li><span class="trace-id">699b9260e0224c07ab8e1d0ebfdb2ab6</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查对象是否为空，添加空值校验</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 15. 其他异常</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 2 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.b.i.c.s.i.OrganizationCacheServiceImpl</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/app_inpatient_encounter/patient_list/query/by_example</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 异步任务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> enc-73</p>
+
+                    <div class="error-details">调用主数据获取组织信息失败</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">f27f29b2a6424957a31e90671e4a2c17</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                            <li><span class="trace-id">c3e01bcbf5fc48d18caa5e3b18ad8256</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>需要查看详细日志进行分析</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 16. 第三方调用异常</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 2 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl</p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 异步任务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> enc-833</p>
+
+                    <div class="error-details">没有获取到远程服务</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">61af4f19d0f24c30a752f10fa398782e</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                            <li><span class="trace-id">32a19b915dc646d8a301b35a8618ef65</span> <span class="trace-time">2026-03-12 23:51</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查第三方服务状态，确认接口调用参数</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 17. SQL错误</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 2 次</p>
+                    <p class="error-meta"><strong>位置:</strong> o.h.e.j.s.SqlExceptionHelper</p>
+
+                    <p class="error-meta"><strong>线程:</strong> ex2ENPOINT-25</p>
+
+                    <div class="error-details">ORA-00904: "NISTRANSFE0_"."EXEC_PLAN_ID": 标识符无效</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">0f7400902ae64dc5be0031abf4e0935c</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                            <li><span class="trace-id">ca60fc13c30b4583ab4911a14469226d</span> <span class="trace-time">2026-03-12 23:51</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查SQL语句语法，确认数据库连接正常</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 18. 参数校验失败</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 1 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.c.p.e.o.s.EncPersonFileUpdateService</p>
+
+                    <p class="error-meta"><strong>线程:</strong> encENPOINT-27</p>
+
+                    <div class="error-details">【推送住院更新患者档案信息】错误：msg=WB3151100004:更新住院档案根据患者标识--未查询到就诊记录，患者标识：3333334411108</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">93caa34b79954c9aaf754524215ca3fc</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查请求参数是否完整，确认参数格式正确</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 19. 空指针异常</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 1 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.c.i.e.w.h.i.InpatientEncounterHelperImpl</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 异步任务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> enc-486</p>
+
+                    <div class="error-details">null</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">1716007595954e868980360c2f51ebd0</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查对象是否为空，添加空值校验</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 20. 第三方调用异常</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 1 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.c.i.e.w.h.i.InpatientEncounterQueryHelperImpl</p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 本服务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> Jetty-Worker_8080-Thread-545</p>
+
+                    <div class="error-details">查询费用信息错误，encounterId=408442462732634131</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">baded8dccd234146bcdc5831701a28f9</span> <span class="trace-time">2026-03-12 23:43</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查第三方服务状态，确认接口调用参数</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 21. 空指针异常</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 1 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.b.a.c.c.u.CompletableFutureBuilder</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/nis/exec_order/query/by_encounter_ids</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> 异步任务</p>
+
+                    <p class="error-meta"><strong>线程:</strong> exe-6577</p>
+
+                    <div class="error-details">java.lang.IllegalStateException: Duplicate key FrequencyNewOutputDTO(freqId=142412, freqNo=05, executedTimesPerWeek=null, freqName=QD, freqNameSl=null, freqDisplayName=QD, freqNameCn=每日一次, shortcut=qd, seqNo=1, freqTypeCode=98567, freqTimes=1, freqPeriod=1, freqPeriodUnit=152225, freqUseScope=138128, enabledFlag=98360, effectiveRule=DefaultOrderEffectiveRuleOutputDTO(freqId=142412, orderStartDateRuleCode=null, medicationEffectiveRuleCode=960009, deferredTime=null, timeUnitCode=null, roundingMeth</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">7bd7aba8d48c4890a3e6c1e34b251527</span> <span class="trace-time">2026-03-12 23:46</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查对象是否为空，添加空值校验</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 22. 标签配置问题</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 1 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl</p>
+
+                    <p class="error-meta"><strong>API入口:</strong> <code style="color: #1565c0;">/api/v1/encounter_inpatient/encounter_tag_data/refresh</code></p>
+
+                    <p class="error-meta"><strong>调用方:</strong> emr</p>
+
+                    <p class="error-meta"><strong>线程:</strong> winning-winex-ipt-emr-pbc_Jetty-Worker_8080-Thread-108</p>
+
+                    <div class="error-details">没有获取到远程服务</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">a0186f58f89c4be9bb0562e75c7983a8</span> <span class="trace-time">2026-03-12 23:50</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查标签配置，确认标签服务是否正常</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 日志反哺模块 -->
+            <div class="section" id="log-feedback">
+                <h2 class="section-title">📝 日志反哺建议</h2>
+                <p style="margin-bottom: 20px; color: #666;">以下异常的日志内容不够明确，建议开发团队改进日志输出</p>
+
+                <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; margin: 20px 0; border-radius: 8px;">
+                    <h4 style="color: #856404; margin-bottom: 10px;">⚠️ 问题：日志内容只有"null"</h4>
+                    <p style="color: #666; margin-bottom: 15px;">
+                        <strong>受影响分类：</strong>空指针异常(3个), 空指针异常(3个), 空指针异常(1个)<br>
+                        <strong>总计：</strong>7 个样本
+                    </p>
+                    <div style="background: white; border-radius: 8px; padding: 15px; margin-top: 10px;">
+                        <h5 style="color: #1a1a2e; margin-bottom: 10px;">样本示例：</h5>
+                        <table class="performance-table">
+                            <thead>
+                                <tr>
+                                    <th>分类</th>
+                                    <th>类名</th>
+                                    <th>内容</th>
+                                    <th>traceId</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>空指针异常</td>
+                                    <td><code>c.w.a.e.i.d.InpatEncDomain</code></td>
+                                    <td>null</td>
+                                    <td><code>6653eda9702943e9b56c...</code></td>
+                                </tr>
+
+                                <tr>
+                                    <td>空指针异常</td>
+                                    <td><code>c.w.a.e.i.d.InpatEncDomain</code></td>
+                                    <td>null</td>
+                                    <td><code>b3f6a46255314d96a29e...</code></td>
+                                </tr>
+
+                                <tr>
+                                    <td>空指针异常</td>
+                                    <td><code>c.w.b.e.i.p.q.b.QueryCountPluginObject</code></td>
+                                    <td>null</td>
+                                    <td><code>0e0ea90448b84671b10e...</code></td>
+                                </tr>
+
+                                <tr>
+                                    <td>空指针异常</td>
+                                    <td><code>c.w.b.e.i.p.q.b.QueryCountPluginObject</code></td>
+                                    <td>null</td>
+                                    <td><code>58f88207c12d42ca835c...</code></td>
+                                </tr>
+
+                                <tr>
+                                    <td>空指针异常</td>
+                                    <td><code>c.w.a.c.i.e.w.h.i.InpatientEncounterHelperImpl</code></td>
+                                    <td>null</td>
+                                    <td><code>1716007595954e868980...</code></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p style="margin-top: 15px; padding: 10px; background: #e8f5e9; border-radius: 5px; color: #2e7d32;">
+                        <strong>💡 改进建议：</strong>在代码中添加详细的错误信息，避免只输出"null"。建议格式：log.error("操作失败，参数={}, 原因={}", param, e.getMessage())
+                    </p>
+                </div>
+
+                <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; margin: 20px 0; border-radius: 8px;">
+                    <h4 style="color: #856404; margin-bottom: 10px;">⚠️ 问题：日志内容过短</h4>
+                    <p style="color: #666; margin-bottom: 15px;">
+                        <strong>受影响分类：</strong>标签配置问题(3个), 其他异常(3个), 其他异常(3个), 其他异常(2个), 第三方调用异常(2个)<br>
+                        <strong>总计：</strong>14 个样本
+                    </p>
+                    <div style="background: white; border-radius: 8px; padding: 15px; margin-top: 10px;">
+                        <h5 style="color: #1a1a2e; margin-bottom: 10px;">样本示例：</h5>
+                        <table class="performance-table">
+                            <thead>
+                                <tr>
+                                    <th>分类</th>
+                                    <th>类名</th>
+                                    <th>内容</th>
+                                    <th>traceId</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>标签配置问题</td>
+                                    <td><code>c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl</code></td>
+                                    <td>没有获取到远程服务</td>
+                                    <td><code>655064dda9914183b694...</code></td>
+                                </tr>
+
+                                <tr>
+                                    <td>标签配置问题</td>
+                                    <td><code>c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl</code></td>
+                                    <td>没有获取到远程服务</td>
+                                    <td><code>935d22322e084e0fbb21...</code></td>
+                                </tr>
+
+                                <tr>
+                                    <td>其他异常</td>
+                                    <td><code>c.w.p.p.s.d.s.i.StockModifySdkImpl</code></td>
+                                    <td>批次冻结失败的药品库存：[]</td>
+                                    <td><code>84b3105f48c84c2f829c...</code></td>
+                                </tr>
+
+                                <tr>
+                                    <td>其他异常</td>
+                                    <td><code>c.w.p.p.s.d.s.i.StockModifySdkImpl</code></td>
+                                    <td>批次冻结失败的药品库存：[]</td>
+                                    <td><code>ae1bfca1ed0e4c16887b...</code></td>
+                                </tr>
+
+                                <tr>
+                                    <td>其他异常</td>
+                                    <td><code>c.w.a.e.o.i.s.i.p.CliOrderPrintServiceImpl</code></td>
+                                    <td>获取执行频次的执行时间次数统计信息出错</td>
+                                    <td><code>c0f91ed3b43e4f6ba96d...</code></td>
+                                </tr>
+
+                                <tr>
+                                    <td>其他异常</td>
+                                    <td><code>c.w.a.e.o.i.s.i.p.CliOrderPrintServiceImpl</code></td>
+                                    <td>获取执行频次的执行时间次数统计信息出错</td>
+                                    <td><code>666c708b15a644ab80c2...</code></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p style="margin-top: 15px; padding: 10px; background: #e8f5e9; border-radius: 5px; color: #2e7d32;">
+                        <strong>💡 改进建议：</strong>增加日志的上下文信息，包括关键参数、操作对象、错误原因等
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- 慢接口分析 -->
+            <div class="section">
+                <h2 class="section-title">慢接口分析</h2>
+                <p style="margin-bottom: 20px; color: #666;">共发现 25 种慢接口，累计 325 次慢调用</p>
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>接口路径</th>
+                            <th>调用次数</th>
+                            <th>最大耗时</th>
+                            <th>平均耗时</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><code>/api/v1/app_finance_fee_nurse/inpatient_bill/bill_by_encounter_id</code></td>
+                            <td>50</td>
+                            <td><span class="time-badge time-critical">23328ms</span></td>
+                            <td><span class="time-badge time-warning">16047ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/fill_dispense_list/query/by_example</code></td>
+                            <td>4</td>
+                            <td><span class="time-badge time-critical">5568ms</span></td>
+                            <td><span class="time-badge time-warning">5547ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v2/nis/cli_order_doc/query/by_encounter_ids</code></td>
+                            <td>25</td>
+                            <td><span class="time-badge time-critical">5229ms</span></td>
+                            <td><span class="time-badge time-warning">2115ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/nis/cli_order_def/query/by_encounter_ids</code></td>
+                            <td>30</td>
+                            <td><span class="time-badge time-critical">4878ms</span></td>
+                            <td><span class="time-badge time-warning">2548ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/nis/exec_order_plan/advance_apply/by_end_time</code></td>
+                            <td>66</td>
+                            <td><span class="time-badge time-critical">2842ms</span></td>
+                            <td><span class="time-badge time-warning">1534ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v3/mobile_nurse_app/order_specimen_blood_in_band_first/query/by_barcode</code></td>
+                            <td>2</td>
+                            <td><span class="time-badge time-critical">2759ms</span></td>
+                            <td><span class="time-badge time-warning">2758ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/specimen_info_list/query/by_example</code></td>
+                            <td>30</td>
+                            <td><span class="time-badge time-critical">2134ms</span></td>
+                            <td><span class="time-badge time-warning">1639ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split</code></td>
+                            <td>2</td>
+                            <td><span class="time-badge time-critical">2028ms</span></td>
+                            <td><span class="time-badge time-warning">2027ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/exec_order_list_pageable/query/by_example</code></td>
+                            <td>27</td>
+                            <td><span class="time-badge time-critical">1842ms</span></td>
+                            <td><span class="time-badge time-warning">1402ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/nis/exec_order/check/by_exec_order_ids</code></td>
+                            <td>4</td>
+                            <td><span class="time-badge time-critical">1567ms</span></td>
+                            <td><span class="time-badge time-warning">1312ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/nis/exec_order/query/by_encounter_ids</code></td>
+                            <td>18</td>
+                            <td><span class="time-badge time-critical">1504ms</span></td>
+                            <td><span class="time-badge time-warning">1267ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/personal_specimen_info_list/query/by_barcode</code></td>
+                            <td>2</td>
+                            <td><span class="time-badge time-critical">1451ms</span></td>
+                            <td><span class="time-badge time-warning">1438ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_inpatient_encounter/inpat_basics_expense/query/by_encounter_id</code></td>
+                            <td>5</td>
+                            <td><span class="time-badge time-critical">1394ms</span></td>
+                            <td><span class="time-badge time-warning">1211ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/encounter_inpatient/encounter_list_count/query/by_example_clini</code></td>
+                            <td>4</td>
+                            <td><span class="time-badge time-critical">1378ms</span></td>
+                            <td><span class="time-badge time-warning">1254ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/encounter_inpatient/encounter_tag_data/refresh</code></td>
+                            <td>10</td>
+                            <td><span class="time-badge time-critical">1372ms</span></td>
+                            <td><span class="time-badge time-warning">1279ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id</code></td>
+                            <td>7</td>
+                            <td><span class="time-badge time-critical">1354ms</span></td>
+                            <td><span class="time-badge time-warning">1259ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_inpatient_encounter/exec_nurse_message/select/by_ward_id</code></td>
+                            <td>8</td>
+                            <td><span class="time-badge time-critical">1300ms</span></td>
+                            <td><span class="time-badge time-warning">1204ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/nis/ward_nis_order/query_step1/by_encounter_ids</code></td>
+                            <td>3</td>
+                            <td><span class="time-badge time-critical">1294ms</span></td>
+                            <td><span class="time-badge time-warning">1207ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/exe_class_tree/query</code></td>
+                            <td>6</td>
+                            <td><span class="time-badge time-critical">1263ms</span></td>
+                            <td><span class="time-badge time-warning">1186ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/encounter_inpatient/encounter_info/get/by_id</code></td>
+                            <td>9</td>
+                            <td><span class="time-badge time-critical">1202ms</span></td>
+                            <td><span class="time-badge time-warning">1077ms</span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 慢接口 Trace 详情 -->
+            <div class="section" id="slow-apis">
+                <h2 class="section-title">慢接口 Trace 详情</h2>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 1. <code>/api/v1/app_finance_fee_nurse/inpatient_bill/bill_by_encounter_id</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 50 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 23328ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 16047ms</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">e3d16a0527df43f8bea533f270131599</span>
+                                <span class="trace-time">2026-03-12 23:48:13 / 23326ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">347e2cb77f0d406ca2d209d59b67bce6</span>
+                                <span class="trace-time">2026-03-12 23:48:13 / 22894ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">f24b67d274be41ee87d7396762a14eaf</span>
+                                <span class="trace-time">2026-03-12 23:48:12 / 22324ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">a9a29caa692f416ea842a7e1263db035</span>
+                                <span class="trace-time">2026-03-12 23:48:37 / 22194ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">913aaef08c6c4f3180bc6c482f8b6b62</span>
+                                <span class="trace-time">2026-03-12 23:48:11 / 21810ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 2. <code>/api/v1/mobile_nurse_app/fill_dispense_list/query/by_example</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 4 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 5568ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 5547ms</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">5d3ef83eb55641028f3ca85dd6b8a717</span>
+                                <span class="trace-time">2026-03-12 23:44:05 / 5562ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">ef2b1ab103914e22b5f4386a77339b1a</span>
+                                <span class="trace-time">2026-03-12 23:44:05 / 5527ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 3. <code>/api/v2/nis/cli_order_doc/query/by_encounter_ids</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 25 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 5229ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 2115ms</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">db660283c89f4f6f8d9e6805a2f57f52</span>
+                                <span class="trace-time">2026-03-12 23:44:36 / 5227ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">fcc6df252bd64f8c81ec90b63d0fbc73</span>
+                                <span class="trace-time">2026-03-12 23:44:05 / 5018ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">666c708b15a644ab80c25ebeafe43861</span>
+                                <span class="trace-time">2026-03-12 23:43:18 / 2365ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">c0f91ed3b43e4f6ba96d80548cdfd2ef</span>
+                                <span class="trace-time">2026-03-12 23:43:19 / 2290ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">dc76eaa0f25040528c06f7431f40ce58</span>
+                                <span class="trace-time">2026-03-12 23:43:31 / 1937ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 4. <code>/api/v1/nis/cli_order_def/query/by_encounter_ids</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 30 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 4878ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 2548ms</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">866ca7c72cbb4f2db68b73d5da39c7e1</span>
+                                <span class="trace-time">2026-03-12 23:45:59 / 4876ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">0d257b58ae444fb2a96e98c0e012d9bc</span>
+                                <span class="trace-time">2026-03-12 23:43:48 / 4730ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">48c5aa43aebd4906ac8091702f93775f</span>
+                                <span class="trace-time">2026-03-12 23:43:50 / 4662ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">35571222ea6d40269a36d3cd378f7fd1</span>
+                                <span class="trace-time">2026-03-12 23:44:29 / 4620ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">bf832b1f8e294e3988501c013f024ce5</span>
+                                <span class="trace-time">2026-03-12 23:46:00 / 4410ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 5. <code>/api/v1/nis/exec_order_plan/advance_apply/by_end_time</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 66 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 2842ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 1534ms</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">ae1bfca1ed0e4c16887b638d90d8c809</span>
+                                <span class="trace-time">2026-03-12 23:43:24 / 2840ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">08460bbce8794bbeac9c84cd4c05725f</span>
+                                <span class="trace-time">2026-03-12 23:43:25 / 2489ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">12eecc07da9940b99d1c08a0edd32062</span>
+                                <span class="trace-time">2026-03-12 23:43:23 / 1829ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">34086d1f40be4dc6a79d373d962cdf50</span>
+                                <span class="trace-time">2026-03-12 23:43:17 / 1788ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">3537566c903643d7ad58387d56cd2c5c</span>
+                                <span class="trace-time">2026-03-12 23:43:17 / 1788ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 2 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 1704ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-12 23:43:23,039<br>
+                                <code>c.w.p.p.s.d.s.i.StockModifySdkImpl</code><br>
+                                <span style="color: #666;">批次冻结失败的药品库存：[]</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-12 23:43:24,743<br>
+                                <code>c.w.b.a.r.r.RestAop</code><br>
+                                <span style="color: #666;">业务处理耗时:2840毫秒:/api/v1/nis/exec_order_plan/advance_apply/by_end_time</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.p.p.s.d.s.i.StockModifySdkImpl</code> 和 <code>c.w.b.a.r.r.RestAop</code> 之间耗时 1704ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #2: 603ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-12 23:43:22,436<br>
+                                <code>c.w.p.p.s.d.s.i.StockQuerySdkImpl</code><br>
+                                <span style="color: #666;">未查询到冻结记录!</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-12 23:43:23,039<br>
+                                <code>c.w.p.p.s.d.s.i.StockModifySdkImpl</code><br>
+                                <span style="color: #666;">批次冻结失败的药品库存：[]</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.p.p.s.d.s.i.StockQuerySdkImpl</code> 和 <code>c.w.p.p.s.d.s.i.StockModifySdkImpl</code> 之间耗时 603ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 6. <code>/api/v3/mobile_nurse_app/order_specimen_blood_in_band_first/query/by_barcode</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 2 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 2759ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 2758ms</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">4e2ec3cbc760451fb70f1b12effa292a</span>
+                                <span class="trace-time">2026-03-12 23:46:39 / 2757ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 1 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 2738ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-12 23:46:37,007<br>
+                                <code>c.w.b.a.r.r.RestAop</code><br>
+                                <span style="color: #666;">业务处理耗时:2毫秒:/api/v1/nis_mobile_mdm/property/query/by_no</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-12 23:46:39,745<br>
+                                <code>c.w.b.a.r.r.RestAop</code><br>
+                                <span style="color: #666;">业务处理耗时:2757毫秒:/api/v3/mobile_nurse_app/order_specimen_blood_in_band_first/query/by_barcode</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.a.r.r.RestAop</code> 和 <code>c.w.b.a.r.r.RestAop</code> 之间耗时 2738ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 7. <code>/api/v1/mobile_nurse_app/specimen_info_list/query/by_example</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 30 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 2134ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 1639ms</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">3b1b40c6cab64e7caaaf162a4b7a0767</span>
+                                <span class="trace-time">2026-03-12 23:50:48 / 2107ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">ec0389239bf14ad3ad76887a738872c9</span>
+                                <span class="trace-time">2026-03-12 23:44:45 / 2018ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">1ee11f23f7234429a3d28109d82f761b</span>
+                                <span class="trace-time">2026-03-12 23:45:30 / 1959ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">708b2e5a1893465da90102ef50ee602e</span>
+                                <span class="trace-time">2026-03-12 23:50:41 / 1949ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">303d3bcad7fd4a7391111aa9608dd71a</span>
+                                <span class="trace-time">2026-03-12 23:45:25 / 1867ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 1 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 2095ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-12 23:50:46,305<br>
+                                <code>c.w.b.a.r.r.RestAop</code><br>
+                                <span style="color: #666;">业务处理耗时:1毫秒:/api/v1/nis_mobile_mdm/property/query/by_no</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-12 23:50:48,400<br>
+                                <code>c.w.b.a.r.r.RestAop</code><br>
+                                <span style="color: #666;">业务处理耗时:2107毫秒:/api/v1/mobile_nurse_app/specimen_info_list/query/by_example</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.a.r.r.RestAop</code> 和 <code>c.w.b.a.r.r.RestAop</code> 之间耗时 2095ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 8. <code>/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 2 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 2028ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 2027ms</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">fa4331ff8631471986fd4ab306bd2528</span>
+                                <span class="trace-time">2026-03-12 23:48:32 / 2026ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 9. <code>/api/v1/mobile_nurse_app/exec_order_list_pageable/query/by_example</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 27 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 1842ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 1402ms</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">34791770710d442886facb5a1aaa7f0d</span>
+                                <span class="trace-time">2026-03-12 23:45:27 / 1830ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">ceef677b7f044953863367a69d6f285e</span>
+                                <span class="trace-time">2026-03-12 23:45:51 / 1757ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">95d83af543ec48dfa1b24161bea3cfaa</span>
+                                <span class="trace-time">2026-03-12 23:47:25 / 1654ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">785c69b1135f426982de827753073fbb</span>
+                                <span class="trace-time">2026-03-12 23:45:53 / 1636ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">e82af9d57ae5439ca971ef6c8fa8b847</span>
+                                <span class="trace-time">2026-03-12 23:47:42 / 1574ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 10. <code>/api/v1/nis/exec_order/check/by_exec_order_ids</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 4 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 1567ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 1312ms</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">6f63ebaf40d04fe9ad21d856a4a2c77d</span>
+                                <span class="trace-time">2026-03-12 23:51:05 / 1564ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">bdcaa7297a1f44a9ade066d2e4347aa5</span>
+                                <span class="trace-time">2026-03-12 23:49:35 / 1058ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+        </div>
+        
+        <div class="footer">
+            <p>报告生成时间: 2026-03-12 23:55:48</p>
+            <p>日志巡检工具 v2.0 | 支持中文分类和智能建议</p>
+        </div>
+    </div>
+</body>
+</html>

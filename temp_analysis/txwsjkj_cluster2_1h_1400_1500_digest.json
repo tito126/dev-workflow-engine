@@ -1,0 +1,4519 @@
+{
+  "meta": {
+    "generated_at": "2026-03-10T16:06:14.574979",
+    "files_processed": [
+      "temp_analysis\\txwsjkj_cluster2_1h_1400_1500.log"
+    ],
+    "time_range": {
+      "start": null,
+      "end": null
+    },
+    "slow_threshold_ms": 1000,
+    "filter_mode": "error_trace",
+    "filtered_trace_count": 70225,
+    "skip_no_trace": true
+  },
+  "summary": {
+    "total_lines": 320000,
+    "error_count": 500,
+    "warn_count": 80058,
+    "error_categories": {
+      "消息处理异常": 145,
+      "配置/兼容性问题": 117,
+      "数据格式错误": 97,
+      "业务逻辑错误": 75,
+      "空指针异常": 30,
+      "其他异常": 15,
+      "认证/权限问题": 17,
+      "参数校验失败": 2,
+      "JSON解析错误": 1,
+      "下游服务异常": 1
+    },
+    "feedback_count": 200,
+    "feedback_categories": {
+      "对象直接返回null": 292
+    }
+  },
+  "errors": [
+    {
+      "category": "消息处理异常",
+      "class": "c.w.a.c.m.i.MQReceiverImpl",
+      "count": 145,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:00:04,749",
+          "class": "c.w.a.c.m.i.MQReceiverImpl",
+          "user": null,
+          "content": "调用receiveEventBuildTask失败",
+          "category": "消息处理异常",
+          "category_id": "message_processing_error",
+          "matched_keyword": "receiveEventBuildTask失败",
+          "suggestion": "检查消息消费链路、事件构建逻辑、入参完整性及下游依赖是否可用",
+          "trace_id": "954b5fa1b76a4a32a51004e1dc067a61",
+          "error_reason": "调用receiveEventBuildTask失败",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": [
+              "[954b5fa1b76a4a32a51004e1dc067a61,954b5fa1b76a4a32a51004e1dc067a61,] [10.233.151.233:8080] [] 2026-03-10 14:00:04,749 [encENPOINT-45] ERROR c.w.a.c.m.i.MQReceiverImpl (?:?) -- 调用receiveEventBuildTask失败 调用receiveEventBuildTask失败"
+            ]
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:00:10,674",
+          "class": "c.w.a.c.m.i.MQReceiverImpl",
+          "user": null,
+          "content": "调用receiveEventBuildTask失败",
+          "category": "消息处理异常",
+          "category_id": "message_processing_error",
+          "matched_keyword": "receiveEventBuildTask失败",
+          "suggestion": "检查消息消费链路、事件构建逻辑、入参完整性及下游依赖是否可用",
+          "trace_id": "05d0b917a7df4a5db02980f919d3ce92",
+          "error_reason": "调用receiveEventBuildTask失败",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": [
+              "[05d0b917a7df4a5db02980f919d3ce92,05d0b917a7df4a5db02980f919d3ce92,] [10.233.151.233:8080] [] 2026-03-10 14:00:10,674 [encENPOINT-42] ERROR c.w.a.c.m.i.MQReceiverImpl (?:?) -- 调用receiveEventBuildTask失败 调用receiveEventBuildTask失败"
+            ]
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:00:14,861",
+          "class": "c.w.a.c.m.i.MQReceiverImpl",
+          "user": null,
+          "content": "调用receiveEventBuildTask失败",
+          "category": "消息处理异常",
+          "category_id": "message_processing_error",
+          "matched_keyword": "receiveEventBuildTask失败",
+          "suggestion": "检查消息消费链路、事件构建逻辑、入参完整性及下游依赖是否可用",
+          "trace_id": "5eca0a340afb40a293a84f645a63792e",
+          "error_reason": "调用receiveEventBuildTask失败",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": [
+              "[5eca0a340afb40a293a84f645a63792e,5eca0a340afb40a293a84f645a63792e,] [10.233.151.233:8080] [] 2026-03-10 14:00:14,861 [encENPOINT-56] ERROR c.w.a.c.m.i.MQReceiverImpl (?:?) -- 调用receiveEventBuildTask失败 调用receiveEventBuildTask失败"
+            ]
+          }
+        }
+      ],
+      "suggestion": "检查消息消费链路、事件构建逻辑、入参完整性及下游依赖是否可用",
+      "matched_keywords": [
+        "receiveEventBuildTask失败"
+      ]
+    },
+    {
+      "category": "配置/兼容性问题",
+      "class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+      "count": 113,
+      "users": [
+        "陈升佳",
+        "李谱友",
+        "许佳宸",
+        "陆婷",
+        "朱佳栋"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:00:10,874",
+          "class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+          "user": "陈升佳",
+          "content": "服务INP-BMTS未找到,主线版本号为null",
+          "category": "配置/兼容性问题",
+          "category_id": "config_warning",
+          "matched_keyword": "AutoTagAlgorithmServiceImpl",
+          "suggestion": "检查配置项、接口契约和版本兼容性；如对业务无影响可降级关注",
+          "trace_id": "817FEB02C46ED69CD25994FDB28038FF",
+          "error_reason": "服务INP-BMTS未找到,主线版本号为null | 落点: com.winning.ward.tags.application.service.impl.tags.MedicalInsuranceExpireTagAlgorithmServiceImpl.lambda$match$2:87",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": "com.winning.ward.tags.application.service.impl.tags.MedicalInsuranceExpireTagAlgorithmServiceImpl.lambda$match$2:87",
+            "stack_summary": [
+              "10.233.162.8:8080",
+              "com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176",
+              "com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doFilter:117",
+              "com.winning.runtime.filter.TenancyFilter.doFilter:74",
+              "com.winning.runtime.filter.HttpCharacterEncodingFilter.doFilter:92",
+              "com.winning.ward.tags.application.service.impl.tags.MedicalInsuranceExpireTagAlgorithmServiceImpl.lambda$match$2:87"
+            ],
+            "evidence": [
+              "[817FEB02C46ED69CD25994FDB28038FF,1c9f5cb3516a45638639526bfec0c0ce,f4ee71ae11bf4aafb11fdd9b22457369] [10.233.162.8:8080] [陈升佳(436277686236117034)] 2026-03-10 14:00:12,207 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-23] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{\"fixMsg\":\"医保超期标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFil",
+              "[817FEB02C46ED69CD25994FDB28038FF,1c9f5cb3516a45638639526bfec0c0ce,f4ee71ae11bf4aafb11fdd9b22457369] [10.233.162.8:8080] [陈升佳(436277686236117034)] 2026-03-10 14:00:12,268 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-23] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{\"fixMsg\":\"病危标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilte",
+              "[817FEB02C46ED69CD25994FDB28038FF,1c9f5cb3516a45638639526bfec0c0ce,f4ee71ae11bf4aafb11fdd9b22457369] [10.233.162.8:8080] [陈升佳(436277686236117034)] 2026-03-10 14:00:12,272 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-23] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{\"fixMsg\":\"病重标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilte"
+            ]
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:01:00,617",
+          "class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+          "user": null,
+          "content": "服务INP-BMTS未找到,主线版本号为null",
+          "category": "配置/兼容性问题",
+          "category_id": "config_warning",
+          "matched_keyword": "AutoTagAlgorithmServiceImpl",
+          "suggestion": "检查配置项、接口契约和版本兼容性；如对业务无影响可降级关注",
+          "trace_id": "9517981BDD22E04AB090B1602441AB8A",
+          "error_reason": "服务INP-BMTS未找到,主线版本号为null | 落点: com.winning.ward.tags.application.service.impl.tags.MedicalInsuranceExpireTagAlgorithmServiceImpl.lambda$match$2:87",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": "com.winning.ward.tags.application.service.impl.tags.MedicalInsuranceExpireTagAlgorithmServiceImpl.lambda$match$2:87",
+            "stack_summary": [
+              "10.233.151.233:8080",
+              "com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176",
+              "com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doFilter:117",
+              "com.winning.runtime.filter.TenancyFilter.doFilter:74",
+              "com.winning.runtime.filter.HttpCharacterEncodingFilter.doFilter:92",
+              "com.winning.ward.tags.application.service.impl.tags.MedicalInsuranceExpireTagAlgorithmServiceImpl.lambda$match$2:87"
+            ],
+            "evidence": [
+              "[9517981BDD22E04AB090B1602441AB8A,0454e7c9625c49fda0311058e898f993,bb3d50f69a394613bf527a490840f921] [10.233.151.233:8080] [] 2026-03-10 14:01:02,059 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-91] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{\"fixMsg\":\"医保超期标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195 at co",
+              "[9517981BDD22E04AB090B1602441AB8A,0454e7c9625c49fda0311058e898f993,bb3d50f69a394613bf527a490840f921] [10.233.151.233:8080] [] 2026-03-10 14:01:02,103 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-91] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{\"fixMsg\":\"病危标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195 at com.",
+              "[9517981BDD22E04AB090B1602441AB8A,0454e7c9625c49fda0311058e898f993,bb3d50f69a394613bf527a490840f921] [10.233.151.233:8080] [] 2026-03-10 14:01:02,108 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-91] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{\"fixMsg\":\"病重标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195 at com."
+            ]
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:01:53,055",
+          "class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+          "user": null,
+          "content": "服务INPDEV-BMTS未找到,主线版本号为null",
+          "category": "配置/兼容性问题",
+          "category_id": "config_warning",
+          "matched_keyword": "AutoTagAlgorithmServiceImpl",
+          "suggestion": "检查配置项、接口契约和版本兼容性；如对业务无影响可降级关注",
+          "trace_id": "24E1D1B477322F7BDFF1C1452C788FB6",
+          "error_reason": "服务INPDEV-BMTS未找到,主线版本号为null | 落点: com.winning.ward.tags.application.service.impl.tags.MedicalInsuranceExpireTagAlgorithmServiceImpl.lambda$match$2:87",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": "com.winning.ward.tags.application.service.impl.tags.MedicalInsuranceExpireTagAlgorithmServiceImpl.lambda$match$2:87",
+            "stack_summary": [
+              "10.233.151.233:8080",
+              "com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176",
+              "com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doFilter:117",
+              "com.winning.runtime.filter.TenancyFilter.doFilter:74",
+              "com.winning.runtime.filter.HttpCharacterEncodingFilter.doFilter:92",
+              "com.winning.ward.tags.application.service.impl.tags.MedicalInsuranceExpireTagAlgorithmServiceImpl.lambda$match$2:87"
+            ],
+            "evidence": [
+              "[24E1D1B477322F7BDFF1C1452C788FB6,5a42861ca47e44a1961fd09a205f35be,537ddf7d8b89473bb38744b3f05895f4] [10.233.151.233:8080] [] 2026-03-10 14:01:53,752 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-29] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{\"fixMsg\":\"医保超期标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195 at co",
+              "[24E1D1B477322F7BDFF1C1452C788FB6,5a42861ca47e44a1961fd09a205f35be,537ddf7d8b89473bb38744b3f05895f4] [10.233.151.233:8080] [] 2026-03-10 14:01:53,792 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-29] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{\"fixMsg\":\"病危标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195 at com.",
+              "[24E1D1B477322F7BDFF1C1452C788FB6,5a42861ca47e44a1961fd09a205f35be,537ddf7d8b89473bb38744b3f05895f4] [10.233.151.233:8080] [] 2026-03-10 14:01:53,797 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-29] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{\"fixMsg\":\"病重标签算法服务\",\"code\":\"ES0999999\",\"detailMsg\":\"[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195 at com."
+            ]
+          }
+        }
+      ],
+      "suggestion": "检查配置项、接口契约和版本兼容性；如对业务无影响可降级关注",
+      "matched_keywords": [
+        "AutoTagAlgorithmServiceImpl"
+      ]
+    },
+    {
+      "category": "数据格式错误",
+      "class": "c.w.b.a.r.r.RestAop",
+      "count": 72,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:00:12,250",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": null,
+          "content": "real exception message:[tid:cbbd4483835341efa88ddb2aa9719682,6265:winning-winex-ward-akso5-pbc,sid:10.233.151.233:8080]:java.lang.NumberFormatException:For input string: \"422721418690582531,443119721612783616\"",
+          "category": "数据格式错误",
+          "category_id": "data_format_error",
+          "matched_keyword": "NumberFormatException",
+          "suggestion": "检查入参格式、字段类型和下游返回内容是否符合预期",
+          "trace_id": "cbbd4483835341efa88ddb2aa9719682",
+          "error_reason": "For input string: \"422721418690582531,443119721612783616\"",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": [
+              "[cbbd4483835341efa88ddb2aa9719682,cbbd4483835341efa88ddb2aa9719682,] [10.233.151.233:8080] [] 2026-03-10 14:00:12,250 [Jetty-Worker_8080-Thread-47] ERROR c.w.b.a.r.r.RestAop (?:?) -- real exception message:[tid:cbbd4483835341efa88ddb2aa9719682,6265:winning-winex-ward-akso5-pbc,sid:10.233.151.233:8080]:java.lang.NumberFormatException:For input string: \"422721418690582531,443119721612783616\" real exception message:[tid:cbbd4483835341efa88ddb2aa9719682,6265:winning-winex-ward-akso5-pbc,sid:10.233.1"
+            ]
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:00:12,271",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": null,
+          "content": "real exception message:[tid:f61bd7a7d623484c8611202c825c86ff,6265:winning-winex-ward-akso5-pbc,sid:10.233.162.8:8080]:java.lang.NumberFormatException:For input string: \"436294009259325442,443119723761913856\"",
+          "category": "数据格式错误",
+          "category_id": "data_format_error",
+          "matched_keyword": "NumberFormatException",
+          "suggestion": "检查入参格式、字段类型和下游返回内容是否符合预期",
+          "trace_id": "f61bd7a7d623484c8611202c825c86ff",
+          "error_reason": "For input string: \"436294009259325442,443119723761913856\"",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": [
+              "[f61bd7a7d623484c8611202c825c86ff,f61bd7a7d623484c8611202c825c86ff,] [10.233.162.8:8080] [] 2026-03-10 14:00:12,271 [Jetty-Worker_8080-Thread-17] ERROR c.w.b.a.r.r.RestAop (?:?) -- real exception message:[tid:f61bd7a7d623484c8611202c825c86ff,6265:winning-winex-ward-akso5-pbc,sid:10.233.162.8:8080]:java.lang.NumberFormatException:For input string: \"436294009259325442,443119723761913856\" real exception message:[tid:f61bd7a7d623484c8611202c825c86ff,6265:winning-winex-ward-akso5-pbc,sid:10.233.162.8"
+            ]
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:01:02,106",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": null,
+          "content": "real exception message:[tid:a240eb759d5a4def9b0e6bcf07d5b080,6265:winning-winex-ward-akso5-pbc,sid:10.233.151.233:8080]:java.lang.NumberFormatException:For input string: \"436294009259325442,443119723761913856\"",
+          "category": "数据格式错误",
+          "category_id": "data_format_error",
+          "matched_keyword": "NumberFormatException",
+          "suggestion": "检查入参格式、字段类型和下游返回内容是否符合预期",
+          "trace_id": "a240eb759d5a4def9b0e6bcf07d5b080",
+          "error_reason": "For input string: \"436294009259325442,443119723761913856\"",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": [
+              "[a240eb759d5a4def9b0e6bcf07d5b080,a240eb759d5a4def9b0e6bcf07d5b080,] [10.233.151.233:8080] [] 2026-03-10 14:01:02,106 [Jetty-Worker_8080-Thread-103] ERROR c.w.b.a.r.r.RestAop (?:?) -- real exception message:[tid:a240eb759d5a4def9b0e6bcf07d5b080,6265:winning-winex-ward-akso5-pbc,sid:10.233.151.233:8080]:java.lang.NumberFormatException:For input string: \"436294009259325442,443119723761913856\" real exception message:[tid:a240eb759d5a4def9b0e6bcf07d5b080,6265:winning-winex-ward-akso5-pbc,sid:10.233."
+            ]
+          }
+        }
+      ],
+      "suggestion": "检查入参格式、字段类型和下游返回内容是否符合预期",
+      "matched_keywords": [
+        "NumberFormatException"
+      ]
+    },
+    {
+      "category": "业务逻辑错误",
+      "class": "c.w.w.p.a.p.u.PerUpdateFilePostData",
+      "count": 37,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:03:59,458",
+          "class": "c.w.w.p.a.p.u.PerUpdateFilePostData",
+          "user": null,
+          "content": "【推送住院更新患者档案信息】错误：msg=ES0990004:更新住院档案根据患者标识--未查询到就诊记录，患者标识：3333335465031",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "业务数据缺失/参数约束",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "c8bdf54fbf7444b5afcbdeeeb1c1df87",
+          "error_reason": "msg=ES0990004:更新住院档案根据患者标识--未查询到就诊记录",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:06:42,747",
+          "class": "c.w.w.p.a.p.u.PerUpdateFilePostData",
+          "user": null,
+          "content": "【推送住院更新患者档案信息】错误：msg=ES0990004:更新住院档案根据患者标识--未查询到就诊记录，患者标识：3333335885377",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "业务数据缺失/参数约束",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "0f9cf73d88744780ae189445d6d6617e",
+          "error_reason": "msg=ES0990004:更新住院档案根据患者标识--未查询到就诊记录",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:07:36,134",
+          "class": "c.w.w.p.a.p.u.PerUpdateFilePostData",
+          "user": null,
+          "content": "【推送住院更新患者档案信息】错误：msg=ES0990004:更新住院档案根据患者标识--未查询到就诊记录，患者标识：3333335395264",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "业务数据缺失/参数约束",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "f2f08fc985e548c3a5fc2de1382528a9",
+          "error_reason": "msg=ES0990004:更新住院档案根据患者标识--未查询到就诊记录",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+      "matched_keywords": [
+        "业务数据缺失/参数约束"
+      ]
+    },
+    {
+      "category": "空指针异常",
+      "class": "c.w.b.a.r.r.RestAop",
+      "count": 28,
+      "users": [
+        "谢秀萍",
+        "方燕",
+        "费俊杰"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:00:12,205",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": null,
+          "content": "real exception message:[tid:96213440855b425e94f9a99f73d2fd6b,6265:winning-winex-ward-akso5-pbc,sid:10.233.162.8:8080]:NullPointerException ",
+          "category": "空指针异常",
+          "category_id": "null_pointer",
+          "matched_keyword": "NullPointerException",
+          "suggestion": "检查对象是否为空，添加空值校验",
+          "trace_id": "96213440855b425e94f9a99f73d2fd6b",
+          "error_reason": "[tid:96213440855b425e94f9a99f73d2fd6b",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": [
+              "[96213440855b425e94f9a99f73d2fd6b,96213440855b425e94f9a99f73d2fd6b,] [10.233.162.8:8080] [] 2026-03-10 14:00:12,205 [Jetty-Worker_8080-Thread-67] ERROR c.w.b.a.r.r.RestAop (?:?) -- real exception message:[tid:96213440855b425e94f9a99f73d2fd6b,6265:winning-winex-ward-akso5-pbc,sid:10.233.162.8:8080]:NullPointerException real exception message:[tid:96213440855b425e94f9a99f73d2fd6b,6265:winning-winex-ward-akso5-pbc,sid:10.233.162.8:8080]:NullPointerException"
+            ]
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:01:02,057",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": null,
+          "content": "real exception message:[tid:910224a8f4804ed6ac4220614f206cec,6265:winning-winex-ward-akso5-pbc,sid:10.233.151.233:8080]:NullPointerException ",
+          "category": "空指针异常",
+          "category_id": "null_pointer",
+          "matched_keyword": "NullPointerException",
+          "suggestion": "检查对象是否为空，添加空值校验",
+          "trace_id": "910224a8f4804ed6ac4220614f206cec",
+          "error_reason": "[tid:910224a8f4804ed6ac4220614f206cec",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": [
+              "[910224a8f4804ed6ac4220614f206cec,910224a8f4804ed6ac4220614f206cec,] [10.233.151.233:8080] [] 2026-03-10 14:01:02,057 [Jetty-Worker_8080-Thread-87] ERROR c.w.b.a.r.r.RestAop (?:?) -- real exception message:[tid:910224a8f4804ed6ac4220614f206cec,6265:winning-winex-ward-akso5-pbc,sid:10.233.151.233:8080]:NullPointerException real exception message:[tid:910224a8f4804ed6ac4220614f206cec,6265:winning-winex-ward-akso5-pbc,sid:10.233.151.233:8080]:NullPointerException"
+            ]
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:01:53,748",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": null,
+          "content": "real exception message:[tid:dd97a357d25242fb98ab6b6e02df9c4b,6265:winning-winex-ward-akso5-pbc,sid:10.233.117.160:8080]:NullPointerException ",
+          "category": "空指针异常",
+          "category_id": "null_pointer",
+          "matched_keyword": "NullPointerException",
+          "suggestion": "检查对象是否为空，添加空值校验",
+          "trace_id": "dd97a357d25242fb98ab6b6e02df9c4b",
+          "error_reason": "[tid:dd97a357d25242fb98ab6b6e02df9c4b",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.117.160:8080"
+            ],
+            "evidence": [
+              "[dd97a357d25242fb98ab6b6e02df9c4b,dd97a357d25242fb98ab6b6e02df9c4b,] [10.233.117.160:8080] [] 2026-03-10 14:01:53,748 [Jetty-Worker_8080-Thread-10] ERROR c.w.b.a.r.r.RestAop (?:?) -- real exception message:[tid:dd97a357d25242fb98ab6b6e02df9c4b,6265:winning-winex-ward-akso5-pbc,sid:10.233.117.160:8080]:NullPointerException real exception message:[tid:dd97a357d25242fb98ab6b6e02df9c4b,6265:winning-winex-ward-akso5-pbc,sid:10.233.117.160:8080]:NullPointerException"
+            ]
+          }
+        }
+      ],
+      "suggestion": "检查对象是否为空，添加空值校验",
+      "matched_keywords": [
+        "NullPointerException"
+      ]
+    },
+    {
+      "category": "数据格式错误",
+      "class": "c.w.w.b.a.r.i.BedCardDomainServiceRepository",
+      "count": 25,
+      "users": [
+        "屠诗英",
+        "周思敏",
+        "陈晓燕",
+        "张莹",
+        "朱贤"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:00:16,079",
+          "class": "c.w.w.b.a.r.i.BedCardDomainServiceRepository",
+          "user": "屠诗英",
+          "content": "ES0060001:[ES0060001]$core{could not extract ResultSet:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "数据格式错误",
+          "category_id": "data_format_error",
+          "matched_keyword": "BINARY",
+          "suggestion": "检查入参格式、字段类型和下游返回内容是否符合预期",
+          "trace_id": "76e27b3affd94ae0bf0f9fe78656677c",
+          "error_reason": "ES0060001:[ES0060001]$core{could not extract ResultSet:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:01:01,475",
+          "class": "c.w.w.b.a.r.i.BedCardDomainServiceRepository",
+          "user": "朱贤",
+          "content": "ES0060001:[ES0060001]$core{could not extract ResultSet:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "数据格式错误",
+          "category_id": "data_format_error",
+          "matched_keyword": "BINARY",
+          "suggestion": "检查入参格式、字段类型和下游返回内容是否符合预期",
+          "trace_id": "0534d9ef945e44a58243019aff2ec423",
+          "error_reason": "ES0060001:[ES0060001]$core{could not extract ResultSet:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.117.160:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:04:49,380",
+          "class": "c.w.w.b.a.r.i.BedCardDomainServiceRepository",
+          "user": "郑惠芬",
+          "content": "ES0060001:[ES0060001]$core{could not extract ResultSet:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "category": "数据格式错误",
+          "category_id": "data_format_error",
+          "matched_keyword": "BINARY",
+          "suggestion": "检查入参格式、字段类型和下游返回内容是否符合预期",
+          "trace_id": "a16d361f665846a983d62359abf9eb83",
+          "error_reason": "ES0060001:[ES0060001]$core{could not extract ResultSet:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "检查入参格式、字段类型和下游返回内容是否符合预期",
+      "matched_keywords": [
+        "BINARY"
+      ]
+    },
+    {
+      "category": "业务逻辑错误",
+      "class": "c.w.p.p.s.d.s.i.StockModifySdkImpl",
+      "count": 22,
+      "users": [
+        "曹朕鹤",
+        "平芳婷",
+        "顾森超",
+        "郑锶琪",
+        "商晓丹"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:07:42,494",
+          "class": "c.w.p.p.s.d.s.i.StockModifySdkImpl",
+          "user": "顾森超",
+          "content": "批次冻结失败的药品库存：[]",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "批次冻结失败",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "4EF9BA9FDF15B189100901ECFDDBEE92",
+          "error_reason": "批次冻结失败的药品库存：[]",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:10:34,131",
+          "class": "c.w.p.p.s.d.s.i.StockModifySdkImpl",
+          "user": "冯鸿伟",
+          "content": "批次冻结失败的药品库存：[]",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "批次冻结失败",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "F9A5FB303B84D6660B562E87CA434201",
+          "error_reason": "批次冻结失败的药品库存：[]",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:10:34,292",
+          "class": "c.w.p.p.s.d.s.i.StockModifySdkImpl",
+          "user": "冯鸿伟",
+          "content": "批次冻结失败的药品库存：[]",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "批次冻结失败",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "595D84B0799F8CAB1E916FB6BA44B56F",
+          "error_reason": "批次冻结失败的药品库存：[]",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+      "matched_keywords": [
+        "批次冻结失败"
+      ]
+    },
+    {
+      "category": "其他异常",
+      "class": "c.w.n.m.p.a.i.ExecPlanRevokeApplyPostServiceImpl",
+      "count": 11,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:00:07,855",
+          "class": "c.w.n.m.p.a.i.ExecPlanRevokeApplyPostServiceImpl",
+          "user": null,
+          "content": "删除导管医嘱提醒记录--异常结束",
+          "category": "其他异常",
+          "category_id": "unknown",
+          "matched_keyword": null,
+          "suggestion": "需要查看详细日志进行分析",
+          "trace_id": "237a3b02151742899cd1f08b31dfda9a",
+          "error_reason": "删除导管医嘱提醒记录--异常结束",
+          "content_preview": "删除导管医嘱提醒记录--异常结束",
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:09:27,983",
+          "class": "c.w.n.m.p.a.i.ExecPlanRevokeApplyPostServiceImpl",
+          "user": null,
+          "content": "删除导管医嘱提醒记录--异常结束",
+          "category": "其他异常",
+          "category_id": "unknown",
+          "matched_keyword": null,
+          "suggestion": "需要查看详细日志进行分析",
+          "trace_id": "ae2e821048524c9c958cf7976086ad6c",
+          "error_reason": "删除导管医嘱提醒记录--异常结束",
+          "content_preview": "删除导管医嘱提醒记录--异常结束",
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:15:02,404",
+          "class": "c.w.n.m.p.a.i.ExecPlanRevokeApplyPostServiceImpl",
+          "user": null,
+          "content": "删除导管医嘱提醒记录--异常结束",
+          "category": "其他异常",
+          "category_id": "unknown",
+          "matched_keyword": null,
+          "suggestion": "需要查看详细日志进行分析",
+          "trace_id": "fcd88eb2499a48e286fa8fa3f80c79ca",
+          "error_reason": "删除导管医嘱提醒记录--异常结束",
+          "content_preview": "删除导管医嘱提醒记录--异常结束",
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.117.160:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "需要查看详细日志进行分析",
+      "matched_keywords": []
+    },
+    {
+      "category": "业务逻辑错误",
+      "class": "c.w.w.p.a.p.e.f.ExecutionFhirRoute",
+      "count": 11,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:00:07,821",
+          "class": "c.w.w.p.a.p.e.f.ExecutionFhirRoute",
+          "user": null,
+          "content": "执行Fhir消息处理事件399202393，buildData失败",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "buildData失败",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "219c6e798f7b4b4c814348cb497b8a24",
+          "error_reason": "执行Fhir消息处理事件399202393，buildData失败",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.117.160:8080"
+            ],
+            "evidence": [
+              "[219c6e798f7b4b4c814348cb497b8a24,219c6e798f7b4b4c814348cb497b8a24,] [10.233.117.160:8080] [] 2026-03-10 14:00:07,821 [task-143] ERROR c.w.w.p.a.p.e.f.ExecutionFhirRoute (?:?) -- 执行Fhir消息处理事件399202393，buildData失败 执行Fhir消息处理事件399202393，buildData失败"
+            ]
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:09:27,979",
+          "class": "c.w.w.p.a.p.e.f.ExecutionFhirRoute",
+          "user": null,
+          "content": "执行Fhir消息处理事件399202393，buildData失败",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "buildData失败",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "c52600cb9f85483ebacd5cf8f94f3694",
+          "error_reason": "执行Fhir消息处理事件399202393，buildData失败",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.117.160:8080"
+            ],
+            "evidence": [
+              "[c52600cb9f85483ebacd5cf8f94f3694,c52600cb9f85483ebacd5cf8f94f3694,] [10.233.117.160:8080] [] 2026-03-10 14:09:27,979 [task-141] ERROR c.w.w.p.a.p.e.f.ExecutionFhirRoute (?:?) -- 执行Fhir消息处理事件399202393，buildData失败 执行Fhir消息处理事件399202393，buildData失败"
+            ]
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:15:02,351",
+          "class": "c.w.w.p.a.p.e.f.ExecutionFhirRoute",
+          "user": null,
+          "content": "执行Fhir消息处理事件399202393，buildData失败",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "buildData失败",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "6fbd5519903b4c3bb9c64ffe637d8967",
+          "error_reason": "执行Fhir消息处理事件399202393，buildData失败",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": [
+              "[6fbd5519903b4c3bb9c64ffe637d8967,6fbd5519903b4c3bb9c64ffe637d8967,] [10.233.162.8:8080] [] 2026-03-10 14:15:02,351 [task-142] ERROR c.w.w.p.a.p.e.f.ExecutionFhirRoute (?:?) -- 执行Fhir消息处理事件399202393，buildData失败 执行Fhir消息处理事件399202393，buildData失败"
+            ]
+          }
+        }
+      ],
+      "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+      "matched_keywords": [
+        "buildData失败"
+      ]
+    },
+    {
+      "category": "认证/权限问题",
+      "class": "c.w.w.e.a.s.InpatientEncounterRecordService",
+      "count": 9,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:13:25,943",
+          "class": "c.w.w.e.a.s.InpatientEncounterRecordService",
+          "user": null,
+          "content": "ES0990004:outpatientService.queryPatientByRoleIdV3 -> [appid:6110],[appName:winning-winex-bmts-akso5]-------------------------------    at com.winning.base.akso.validation.WinAksoValidator.validator:68    at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195    at com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176    at com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108    at com.winning.akso.b",
+          "category": "认证/权限问题",
+          "category_id": "auth_error",
+          "matched_keyword": "token",
+          "suggestion": "检查token是否过期，确认用户权限配置",
+          "trace_id": "717f50c5a6e54447ab11a14688dbf2b4",
+          "error_reason": "ES0990004:outpatientService.queryPatientByRoleIdV3 -> [appid:6110],[appName:winning-winex-bmts-akso5]------------------------------- at com.winning.base.akso.validation.WinAksoValidator.validator:68 at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195 at com.",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": "outpatientService.queryPatientByRoleIdV3",
+            "stack_summary": [
+              "com.winning.base.akso.validation.WinAksoValidator.validator:68",
+              "com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176",
+              "com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doFilter:117",
+              "com.winning.runtime.filter.TenancyFilter.doFilter:74",
+              "com.winning.runtime.filter.HttpCharacterEncodingFilter.doFilter:92",
+              "10.233.117.160:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:16:53,122",
+          "class": "c.w.w.e.a.s.InpatientEncounterRecordService",
+          "user": null,
+          "content": "ES0990004:outpatientService.queryPatientByRoleIdV3 -> [appid:6110],[appName:winning-winex-bmts-akso5]-------------------------------    at com.winning.base.akso.validation.WinAksoValidator.validator:68    at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195    at com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176    at com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108    at com.winning.akso.b",
+          "category": "认证/权限问题",
+          "category_id": "auth_error",
+          "matched_keyword": "token",
+          "suggestion": "检查token是否过期，确认用户权限配置",
+          "trace_id": "4e2991e85d6b4eebaad75786adcbce88",
+          "error_reason": "ES0990004:outpatientService.queryPatientByRoleIdV3 -> [appid:6110],[appName:winning-winex-bmts-akso5]------------------------------- at com.winning.base.akso.validation.WinAksoValidator.validator:68 at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195 at com.",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": "outpatientService.queryPatientByRoleIdV3",
+            "stack_summary": [
+              "com.winning.base.akso.validation.WinAksoValidator.validator:68",
+              "com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176",
+              "com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doFilter:117",
+              "com.winning.runtime.filter.TenancyFilter.doFilter:74",
+              "com.winning.runtime.filter.HttpCharacterEncodingFilter.doFilter:92",
+              "10.233.162.8:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:19:42,653",
+          "class": "c.w.w.e.a.s.InpatientEncounterRecordService",
+          "user": null,
+          "content": "ES0990004:outpatientService.queryPatientByRoleIdV3 -> [appid:6110],[appName:winning-winex-bmts-akso5]-------------------------------    at com.winning.base.akso.validation.WinAksoValidator.validator:68    at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195    at com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176    at com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108    at com.winning.akso.b",
+          "category": "认证/权限问题",
+          "category_id": "auth_error",
+          "matched_keyword": "token",
+          "suggestion": "检查token是否过期，确认用户权限配置",
+          "trace_id": "0b80ef853e244753b0c1ae96c2d8d4de",
+          "error_reason": "ES0990004:outpatientService.queryPatientByRoleIdV3 -> [appid:6110],[appName:winning-winex-bmts-akso5]------------------------------- at com.winning.base.akso.validation.WinAksoValidator.validator:68 at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195 at com.",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": "outpatientService.queryPatientByRoleIdV3",
+            "stack_summary": [
+              "com.winning.base.akso.validation.WinAksoValidator.validator:68",
+              "com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176",
+              "com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108",
+              "com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doFilter:117",
+              "com.winning.runtime.filter.TenancyFilter.doFilter:74",
+              "com.winning.runtime.filter.HttpCharacterEncodingFilter.doFilter:92",
+              "10.233.162.8:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "检查token是否过期，确认用户权限配置",
+      "matched_keywords": [
+        "token"
+      ]
+    },
+    {
+      "category": "认证/权限问题",
+      "class": "c.w.w.b.a.h.ClinicalMdmRpcHelper",
+      "count": 6,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:01:11,939",
+          "class": "c.w.w.b.a.h.ClinicalMdmRpcHelper",
+          "user": null,
+          "content": "[appid:8820],[appName:winning-winex-his-config-pbc]-------------------------------    at com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666    at com.winning.base.finance.common.util.CollectionsUtils.convertList:46    at com.winning.finance.mdm.service.service.MedInstiChargingItemService.chargeItemUseModeCheck:4653    at com.winning.finance.mdm.service.service.AbstractMsConvertService.getChargingItemPrescribedMap:333    at com.winning.finan",
+          "category": "认证/权限问题",
+          "category_id": "auth_error",
+          "matched_keyword": "token",
+          "suggestion": "检查token是否过期，确认用户权限配置",
+          "trace_id": "DD9970DA2084D69EA773D4021AB887D4",
+          "error_reason": "[appid:8820],[appName:winning-winex-his-config-pbc]------------------------------- at com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666 at com.winning.base.finance.common.util.CollectionsUtils.convertList:46 at com.winning.finance.mdm",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": "com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666",
+            "stack_summary": [
+              "com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666",
+              "com.winning.base.finance.common.util.CollectionsUtils.convertList:46",
+              "com.winning.finance.mdm.service.service.MedInstiChargingItemService.chargeItemUseModeCheck:4653",
+              "com.winning.finance.mdm.service.service.AbstractMsConvertService.getChargingItemPrescribedMap:333",
+              "com.winning.finance.mdm.service.service.AbstractMsConvertService.convert:138",
+              "com.winning.finance.mdm.service.service.impl.CsxBillingStrategyServiceImpl.queryBillingStrategyByMsIds:1248",
+              "com.winning.base.finance.common.util.TenancyContextUtils.lambda$apply$2:126",
+              "com.winning.base.akso.utils.tenancy.TenancyContext.getWithSoid:484"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:00:58,865",
+          "class": "c.w.w.b.a.h.ClinicalMdmRpcHelper",
+          "user": null,
+          "content": "[appid:8820],[appName:winning-winex-his-config-pbc]-------------------------------    at com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666    at com.winning.base.finance.common.util.CollectionsUtils.convertList:46    at com.winning.finance.mdm.service.service.MedInstiChargingItemService.chargeItemUseModeCheck:4653    at com.winning.finance.mdm.service.service.AbstractMsConvertService.getChargingItemPrescribedMap:333    at com.winning.finan",
+          "category": "认证/权限问题",
+          "category_id": "auth_error",
+          "matched_keyword": "token",
+          "suggestion": "检查token是否过期，确认用户权限配置",
+          "trace_id": "B56ABF5A6ACE5B74AAFA0B148BD39095",
+          "error_reason": "[appid:8820],[appName:winning-winex-his-config-pbc]------------------------------- at com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666 at com.winning.base.finance.common.util.CollectionsUtils.convertList:46 at com.winning.finance.mdm",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": "com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666",
+            "stack_summary": [
+              "com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666",
+              "com.winning.base.finance.common.util.CollectionsUtils.convertList:46",
+              "com.winning.finance.mdm.service.service.MedInstiChargingItemService.chargeItemUseModeCheck:4653",
+              "com.winning.finance.mdm.service.service.AbstractMsConvertService.getChargingItemPrescribedMap:333",
+              "com.winning.finance.mdm.service.service.AbstractMsConvertService.convert:138",
+              "com.winning.finance.mdm.service.service.impl.CsxBillingStrategyServiceImpl.queryBillingStrategyByMsIds:1248",
+              "com.winning.base.finance.common.util.TenancyContextUtils.lambda$apply$2:126",
+              "com.winning.base.akso.utils.tenancy.TenancyContext.getWithSoid:484"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:03:52,876",
+          "class": "c.w.w.b.a.h.ClinicalMdmRpcHelper",
+          "user": null,
+          "content": "[appid:8820],[appName:winning-winex-his-config-pbc]-------------------------------    at com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666    at com.winning.base.finance.common.util.CollectionsUtils.convertList:46    at com.winning.finance.mdm.service.service.MedInstiChargingItemService.chargeItemUseModeCheck:4653    at com.winning.finance.mdm.service.service.AbstractMsConvertService.getChargingItemPrescribedMap:333    at com.winning.finan",
+          "category": "认证/权限问题",
+          "category_id": "auth_error",
+          "matched_keyword": "token",
+          "suggestion": "检查token是否过期，确认用户权限配置",
+          "trace_id": "A2C3FEA9E16F74DCB1E864F2E74B4C3E",
+          "error_reason": "[appid:8820],[appName:winning-winex-his-config-pbc]------------------------------- at com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666 at com.winning.base.finance.common.util.CollectionsUtils.convertList:46 at com.winning.finance.mdm",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": "com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666",
+            "stack_summary": [
+              "com.winning.finance.mdm.service.service.MedInstiChargingItemService.lambda$chargeItemUseModeCheck$174:4666",
+              "com.winning.base.finance.common.util.CollectionsUtils.convertList:46",
+              "com.winning.finance.mdm.service.service.MedInstiChargingItemService.chargeItemUseModeCheck:4653",
+              "com.winning.finance.mdm.service.service.AbstractMsConvertService.getChargingItemPrescribedMap:333",
+              "com.winning.finance.mdm.service.service.AbstractMsConvertService.convert:138",
+              "com.winning.finance.mdm.service.service.impl.CsxBillingStrategyServiceImpl.queryBillingStrategyByMsIds:1248",
+              "com.winning.base.finance.common.util.TenancyContextUtils.lambda$apply$2:126",
+              "com.winning.base.akso.utils.tenancy.TenancyContext.getWithSoid:484"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "检查token是否过期，确认用户权限配置",
+      "matched_keywords": [
+        "token"
+      ]
+    },
+    {
+      "category": "业务逻辑错误",
+      "class": "c.w.w.b.a.r.i.BedCardDomainServiceRepository",
+      "count": 5,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:00:57,674",
+          "class": "c.w.w.b.a.r.i.BedCardDomainServiceRepository",
+          "user": null,
+          "content": "ES0990004:在区查询下需传入科室ID或病区ID",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "业务数据缺失/参数约束",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "889d227cd5504a2b99b0ad937b9d9fce",
+          "error_reason": "ES0990004:在区查询下需传入科室ID或病区ID",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:07:39,233",
+          "class": "c.w.w.b.a.r.i.BedCardDomainServiceRepository",
+          "user": null,
+          "content": "ES0990004:在区查询下需传入科室ID或病区ID",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "业务数据缺失/参数约束",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "09f24d2ba2e54154a09879c4d02be933",
+          "error_reason": "ES0990004:在区查询下需传入科室ID或病区ID",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:24:30,288",
+          "class": "c.w.w.b.a.r.i.BedCardDomainServiceRepository",
+          "user": null,
+          "content": "ES0990004:在区查询下需传入科室ID或病区ID",
+          "category": "业务逻辑错误",
+          "category_id": "business_error",
+          "matched_keyword": "业务数据缺失/参数约束",
+          "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+          "trace_id": "7cb5b15180ad433bbb5951588b2f1ac5",
+          "error_reason": "ES0990004:在区查询下需传入科室ID或病区ID",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.117.160:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "检查业务逻辑、输入数据完整性及上下游业务约束",
+      "matched_keywords": [
+        "业务数据缺失/参数约束"
+      ]
+    },
+    {
+      "category": "配置/兼容性问题",
+      "class": "c.w.b.a.c.c.c.FeignClientContext",
+      "count": 4,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:43:13,433",
+          "class": "c.w.b.a.c.c.c.FeignClientContext",
+          "user": null,
+          "content": "initForce 方法已过时，请尽快替换为 initForceContextData，调用方：class com.winning.base.material.util.log.DistributedTraceUtil",
+          "category": "配置/兼容性问题",
+          "category_id": "config_warning",
+          "matched_keyword": "兼容性/过时配置",
+          "suggestion": "检查配置项、接口契约和版本兼容性；如对业务无影响可降级关注",
+          "trace_id": "ce53cd2a1ebb43c4b7a97a386ecac22c",
+          "error_reason": "initForce 方法已过时，请尽快替换为 initForceContextData，调用方：class com.winning.base.material.util.log.DistributedTraceUtil",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:43:13,434",
+          "class": "c.w.b.a.c.c.c.FeignClientContext",
+          "user": null,
+          "content": "initForce 方法已过时，请尽快替换为 initForceContextData，调用方：class com.winning.base.material.util.log.DistributedTraceUtil",
+          "category": "配置/兼容性问题",
+          "category_id": "config_warning",
+          "matched_keyword": "兼容性/过时配置",
+          "suggestion": "检查配置项、接口契约和版本兼容性；如对业务无影响可降级关注",
+          "trace_id": "af9fdbbb84974bdcb80fd5d4344b4245",
+          "error_reason": "initForce 方法已过时，请尽快替换为 initForceContextData，调用方：class com.winning.base.material.util.log.DistributedTraceUtil",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:43:13,435",
+          "class": "c.w.b.a.c.c.c.FeignClientContext",
+          "user": null,
+          "content": "initForce 方法已过时，请尽快替换为 initForceContextData，调用方：class com.winning.base.material.util.log.DistributedTraceUtil",
+          "category": "配置/兼容性问题",
+          "category_id": "config_warning",
+          "matched_keyword": "兼容性/过时配置",
+          "suggestion": "检查配置项、接口契约和版本兼容性；如对业务无影响可降级关注",
+          "trace_id": "28293c64a0f74237b4bdf50d6ba6b58b",
+          "error_reason": "initForce 方法已过时，请尽快替换为 initForceContextData，调用方：class com.winning.base.material.util.log.DistributedTraceUtil",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "检查配置项、接口契约和版本兼容性；如对业务无影响可降级关注",
+      "matched_keywords": [
+        "兼容性/过时配置"
+      ]
+    },
+    {
+      "category": "空指针异常",
+      "class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "count": 2,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:03:57,241",
+          "class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+          "user": null,
+          "content": "java.lang.NullPointerException: Cannot invoke \"com.winning.ward.order.application.bo.execplan.ExecPlanV2BO.getExecPlanStatus()\" because \"execPlanDto\" is null",
+          "category": "空指针异常",
+          "category_id": "null_pointer",
+          "matched_keyword": "NullPointerException",
+          "suggestion": "检查对象是否为空，添加空值校验",
+          "trace_id": "bc5460da70174c55a600ed8b82ac2cc0",
+          "error_reason": "java.lang.NullPointerException: Cannot invoke \"com.winning.ward.order.application.bo.execplan.ExecPlanV2BO.getExecPlanStatus()\" because \"execPlanDto\" is null",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": [
+              "[bc5460da70174c55a600ed8b82ac2cc0,3a2b0948ff4449f09383c5679e770a8b,bc5460da70174c55a600ed8b82ac2cc0] [] [] 2026-03-10 14:03:57,241 [default-exec-58] ERROR c.w.b.a.c.c.u.CompletableFutureBuilder (?:?) -- java.lang.NullPointerException: Cannot invoke \"com.winning.ward.order.application.bo.execplan.ExecPlanV2BO.getExecPlanStatus()\" because \"execPlanDto\" is null java.lang.NullPointerException: Cannot invoke \"com.winning.ward.order.application.bo.execplan.ExecPlanV2BO.getExecPlanStatus()\" because \"ex"
+            ]
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:24:28,054",
+          "class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+          "user": null,
+          "content": "java.lang.NullPointerException: Cannot invoke \"com.winning.ward.order.application.bo.execplan.ExecPlanV2BO.getExecPlanStatus()\" because \"execPlanDto\" is null",
+          "category": "空指针异常",
+          "category_id": "null_pointer",
+          "matched_keyword": "NullPointerException",
+          "suggestion": "检查对象是否为空，添加空值校验",
+          "trace_id": "7c32d8f4b0a942a592eb6dfe6b1055f0",
+          "error_reason": "java.lang.NullPointerException: Cannot invoke \"com.winning.ward.order.application.bo.execplan.ExecPlanV2BO.getExecPlanStatus()\" because \"execPlanDto\" is null",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": [
+              "[7c32d8f4b0a942a592eb6dfe6b1055f0,ab53c4277a2044d29ea5cbee9603eb04,7c32d8f4b0a942a592eb6dfe6b1055f0] [] [] 2026-03-10 14:24:28,054 [default-exec-88] ERROR c.w.b.a.c.c.u.CompletableFutureBuilder (?:?) -- java.lang.NullPointerException: Cannot invoke \"com.winning.ward.order.application.bo.execplan.ExecPlanV2BO.getExecPlanStatus()\" because \"execPlanDto\" is null java.lang.NullPointerException: Cannot invoke \"com.winning.ward.order.application.bo.execplan.ExecPlanV2BO.getExecPlanStatus()\" because \"ex"
+            ]
+          }
+        }
+      ],
+      "suggestion": "检查对象是否为空，添加空值校验",
+      "matched_keywords": [
+        "NullPointerException"
+      ]
+    },
+    {
+      "category": "参数校验失败",
+      "class": "c.w.b.a.r.r.RestExceptionHandler",
+      "count": 2,
+      "users": [
+        "冯鸿伟"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:21:34,688",
+          "class": "c.w.b.a.r.r.RestExceptionHandler",
+          "user": "冯鸿伟",
+          "content": "不能读取请求参数：$core{不能读取请求参数,请查看详细错误}core$:I/O error while reading input message; nested exception is org.eclipse.jetty.io.EofException: Early EOF",
+          "category": "参数校验失败",
+          "category_id": "validation_error",
+          "matched_keyword": "参数",
+          "suggestion": "检查请求参数是否完整，确认参数格式正确",
+          "trace_id": "47A061D4CAC40B06AFD8C5C55952919D",
+          "error_reason": "不能读取请求参数：$core{不能读取请求参数,请查看详细错误}core$:I/O error while reading input message; nested exception is org.eclipse.jetty.io.EofException: Early EOF",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:21:36,746",
+          "class": "c.w.b.a.r.r.RestExceptionHandler",
+          "user": "冯鸿伟",
+          "content": "不能读取请求参数：$core{不能读取请求参数,请查看详细错误}core$:I/O error while reading input message; nested exception is org.eclipse.jetty.io.EofException: Early EOF",
+          "category": "参数校验失败",
+          "category_id": "validation_error",
+          "matched_keyword": "参数",
+          "suggestion": "检查请求参数是否完整，确认参数格式正确",
+          "trace_id": "FC895E6EE92C53181B992D3F4CC03C60",
+          "error_reason": "不能读取请求参数：$core{不能读取请求参数,请查看详细错误}core$:I/O error while reading input message; nested exception is org.eclipse.jetty.io.EofException: Early EOF",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.117.160:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "检查请求参数是否完整，确认参数格式正确",
+      "matched_keywords": [
+        "参数"
+      ]
+    },
+    {
+      "category": "认证/权限问题",
+      "class": "c.w.w.t.a.s.AutoTagAlgorithmService",
+      "count": 2,
+      "users": [
+        "沈林亚"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:37:30,296",
+          "class": "c.w.w.t.a.s.AutoTagAlgorithmService",
+          "user": null,
+          "content": "标签解析出错not close json text, token : errorPARAMS_STRING=\"{\\\"path\\\":\\\"/api/v1/encounter_inpatient/encounter_his_tag/query/by_example\\\",\\\"serviceName\\\": \\\"winning-amts-encounter-inpatient\\\",\\\"input\\\": \\\"399760604\\\"} \"",
+          "category": "认证/权限问题",
+          "category_id": "auth_error",
+          "matched_keyword": "token",
+          "suggestion": "检查token是否过期，确认用户权限配置",
+          "trace_id": "D9574E8CCC843649D3F4A8503E04A027",
+          "error_reason": "标签解析出错not close json text, token : errorPARAMS_STRING=\"{\\\"path\\\":\\\"/api/v1/encounter_inpatient/encounter_his_tag/query/by_example\\\",\\\"serviceName\\\": \\\"winning-amts-encounter-inpatient\\\",\\\"input\\\": \\\"399760604\\\"} \"",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:38:26,795",
+          "class": "c.w.w.t.a.s.AutoTagAlgorithmService",
+          "user": "沈林亚",
+          "content": "标签解析出错not close json text, token : errorPARAMS_STRING=\"{\\\"path\\\":\\\"/api/v1/encounter_inpatient/encounter_his_tag/query/by_example\\\",\\\"serviceName\\\": \\\"winning-amts-encounter-inpatient\\\",\\\"input\\\": \\\"399760604\\\"} \"",
+          "category": "认证/权限问题",
+          "category_id": "auth_error",
+          "matched_keyword": "token",
+          "suggestion": "检查token是否过期，确认用户权限配置",
+          "trace_id": "8CF5C6BC1EB8FB3D18C54FA169ACF8CE",
+          "error_reason": "标签解析出错not close json text, token : errorPARAMS_STRING=\"{\\\"path\\\":\\\"/api/v1/encounter_inpatient/encounter_his_tag/query/by_example\\\",\\\"serviceName\\\": \\\"winning-amts-encounter-inpatient\\\",\\\"input\\\": \\\"399760604\\\"} \"",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "检查token是否过期，确认用户权限配置",
+      "matched_keywords": [
+        "token"
+      ]
+    },
+    {
+      "category": "其他异常",
+      "class": "c.w.b.a.r.r.RestAop",
+      "count": 2,
+      "users": [
+        "钱琪群"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:39:33,831",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": "钱琪群",
+          "content": "real exception message:42900:未找到标本记录!",
+          "category": "其他异常",
+          "category_id": "unknown",
+          "matched_keyword": null,
+          "suggestion": "需要查看详细日志进行分析",
+          "trace_id": "7282c99339b44efa9b2acb936beecb3c",
+          "error_reason": "42900:未找到标本记录!",
+          "content_preview": "real exception message:42900:未找到标本记录!",
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.151.233:8080"
+            ],
+            "evidence": []
+          }
+        },
+        {
+          "timestamp": "2026-03-10 14:39:33,781",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": "钱琪群",
+          "content": "real exception message:42900:未找到标本记录!",
+          "category": "其他异常",
+          "category_id": "unknown",
+          "matched_keyword": null,
+          "suggestion": "需要查看详细日志进行分析",
+          "trace_id": "07c998927ace40a2a9a3da9d9012a261",
+          "error_reason": "42900:未找到标本记录!",
+          "content_preview": "real exception message:42900:未找到标本记录!",
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.117.160:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "需要查看详细日志进行分析",
+      "matched_keywords": []
+    },
+    {
+      "category": "其他异常",
+      "class": "c.w.r.f.TenancyFilter",
+      "count": 1,
+      "users": [
+        "李馨"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:03:05,178",
+          "class": "c.w.r.f.TenancyFilter",
+          "user": "李馨",
+          "content": "处理soid值异常,当前cookie(winning_soid)值:null",
+          "category": "其他异常",
+          "category_id": "unknown",
+          "matched_keyword": null,
+          "suggestion": "需要查看详细日志进行分析",
+          "trace_id": "bad8e622a29e41c584ad26eff3e6b2ce",
+          "error_reason": "处理soid值异常,当前cookie(winning_soid)值:null",
+          "content_preview": "处理soid值异常,当前cookie(winning_soid)值:null",
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.117.160:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "需要查看详细日志进行分析",
+      "matched_keywords": []
+    },
+    {
+      "category": "JSON解析错误",
+      "class": "c.w.b.a.r.r.RestAop",
+      "count": 1,
+      "users": [
+        "章嘉佳"
+      ],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:09:32,019",
+          "class": "c.w.b.a.r.r.RestAop",
+          "user": "章嘉佳",
+          "content": "real exception message:[tid:8F05A0CB9AF71BF79951F010A3C265D6,6265:winning-winex-ward-akso5-pbc,sid:10.233.117.160:8080]:com.alibaba.fastjson.JSONException:write javaBean error, fastjson version 1.2.83, class java.util.concurrent.CompletableFuture$AsyncSupply, fieldName : 0, class com.alibaba.fastjson.util.FieldInfo cannot access a member of class java.util.concurrent.CompletableFuture$AsyncSupply (in module java.base) with modifiers \"public final\"",
+          "category": "JSON解析错误",
+          "category_id": "json_parse_error",
+          "matched_keyword": "JSON",
+          "suggestion": "检查JSON格式是否正确，确认数据结构",
+          "trace_id": "8F05A0CB9AF71BF79951F010A3C265D6",
+          "error_reason": "[tid:8F05A0CB9AF71BF79951F010A3C265D6",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.117.160:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "检查JSON格式是否正确，确认数据结构",
+      "matched_keywords": [
+        "JSON"
+      ]
+    },
+    {
+      "category": "下游服务异常",
+      "class": "c.w.w.t.a.i.OrderExecHelperImpl",
+      "count": 1,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:45:08,922",
+          "class": "c.w.w.t.a.i.OrderExecHelperImpl",
+          "user": null,
+          "content": "$core{RPC调用错误[Error while extracting response for type [com.winning.base.akso.rpc.WinRpcResponse<com.winning.ias.fhir.facade.win60.dto.execution.ExecutionOperateOutputDTO>] and content type [application/json;charset=utf-8]; nested exception is org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot construct instance of `com.winning.ias.fhir.facade.win60.dto.execution.ExecutionOperateOutputDTO` (although at least one Creator exists): no String-argument constr",
+          "category": "下游服务异常",
+          "category_id": "downstream_service_error",
+          "matched_keyword": "下游服务调用异常",
+          "suggestion": "检查下游服务状态、路由、网关和接口返回格式",
+          "trace_id": "64d429a7f9dd4b05a022e95c05202468",
+          "error_reason": "$core{RPC调用错误[Error while extracting response for type [com.winning.base.akso.rpc.WinRpcResponse<com.winning.ias.fhir.facade.win60.dto.execution.ExecutionOperateOutputDTO>] and content type [application/json;charset=utf-8]; nested exception is org.springframework.http.converter.HttpMessageNotReadabl",
+          "content_preview": null,
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "least",
+              "10.233.151.233:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "检查下游服务状态、路由、网关和接口返回格式",
+      "matched_keywords": [
+        "下游服务调用异常"
+      ]
+    },
+    {
+      "category": "其他异常",
+      "class": "c.w.a.c.s.i.CoordinatorDoTaskServiceImpl",
+      "count": 1,
+      "users": [],
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:47:52,221",
+          "class": "c.w.a.c.s.i.CoordinatorDoTaskServiceImpl",
+          "user": null,
+          "content": "cid:[487070787622250498],dotask error ",
+          "category": "其他异常",
+          "category_id": "unknown",
+          "matched_keyword": null,
+          "suggestion": "需要查看详细日志进行分析",
+          "trace_id": "36b43cdd3b584d1e8c0aa47fa6547e2d",
+          "error_reason": "cid:[487070787622250498],dotask error",
+          "content_preview": "cid:[487070787622250498],dotask error ",
+          "trace_context": {
+            "root_hint": null,
+            "stack_summary": [
+              "10.233.162.8:8080"
+            ],
+            "evidence": []
+          }
+        }
+      ],
+      "suggestion": "需要查看详细日志进行分析",
+      "matched_keywords": []
+    }
+  ],
+  "feedback_items": [
+    {
+      "name": "对象直接返回null",
+      "class": "c.w.w.b.a.h.ParamMdmSdkHelper",
+      "count": 200,
+      "suggestion": "建议增加上下文日志（入参、对象类型、查询条件、数据源返回状态），并评估改为 INFO/WARN 或显式空结果日志",
+      "samples": [
+        {
+          "timestamp": "2026-03-10 14:02:05,861",
+          "trace_id": "952e782a6edb4a63b8f994213b4e23d4",
+          "content": "null",
+          "user": null
+        },
+        {
+          "timestamp": "2026-03-10 14:02:05,307",
+          "trace_id": "74f6c529765f4c2394eeaa84fa253a57",
+          "content": "null",
+          "user": null
+        },
+        {
+          "timestamp": "2026-03-10 14:03:08,677",
+          "trace_id": "b2d68a18535c45faa344a7cafc3b8745",
+          "content": "null",
+          "user": null
+        },
+        {
+          "timestamp": "2026-03-10 14:02:58,934",
+          "trace_id": "32b64628393d4f1b864239939c2156ac",
+          "content": "null",
+          "user": null
+        },
+        {
+          "timestamp": "2026-03-10 14:03:04,697",
+          "trace_id": "09a6a2139c584023b2460806b1aa1173",
+          "content": "null",
+          "user": null
+        }
+      ]
+    }
+  ],
+  "slow_apis": [
+    {
+      "api_path": "/api/v2/material_execution_supply/order_dispense_request_print/query/by_example",
+      "count": 1,
+      "max_ms": 25619,
+      "avg_ms": 25619,
+      "users": [
+        "许云蕾"
+      ],
+      "samples": [
+        {
+          "duration_ms": 25619,
+          "api_path": "/api/v2/material_execution_supply/order_dispense_request_print/query/by_example",
+          "timestamp": "2026-03-10 14:03:53,161",
+          "user": "许云蕾",
+          "trace_id": "5E937EF6F05987ACB868AA422AC8F07A"
+        }
+      ],
+      "trace_id": "5E937EF6F05987ACB868AA422AC8F07A",
+      "analysis_trace_id": "5E937EF6F05987ACB868AA422AC8F07A",
+      "analysis_sample": {
+        "duration_ms": 25619,
+        "api_path": "/api/v2/material_execution_supply/order_dispense_request_print/query/by_example",
+        "timestamp": "2026-03-10 14:03:53,161",
+        "user": "许云蕾",
+        "trace_id": "5E937EF6F05987ACB868AA422AC8F07A"
+      },
+      "analysis": {
+        "total_time": 25619,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 25619,
+            "location": "10.233.117.160:8080",
+            "log": "[5E937EF6F05987ACB868AA422AC8F07A,682e44e71a1e4cbd9571a437bd0941a4,5E937EF6F05987ACB868AA422AC8F07A] [10.233.117.160:8080] [许云蕾(440547506408910857)] 2026-03-10 14:03:53,161 [Jetty-Worker_8080-Thread-3",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 25619,
+          "location": "10.233.117.160:8080",
+          "log": "[5E937EF6F05987ACB868AA422AC8F07A,682e44e71a1e4cbd9571a437bd0941a4,5E937EF6F05987ACB868AA422AC8F07A] [10.233.117.160:8080] [许云蕾(440547506408910857)] 2026-03-10 14:03:53,161 [Jetty-Worker_8080-Thread-3",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 25619,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 25619ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 25619ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_finance_fee_nurse/billplan/timingbilling/by_exec_plan_ids",
+      "count": 2,
+      "max_ms": 3039,
+      "avg_ms": 2806,
+      "users": [
+        "蒋程程",
+        "章嘉佳"
+      ],
+      "samples": [
+        {
+          "duration_ms": 2574,
+          "api_path": "/api/v1/app_finance_fee_nurse/billplan/timingbilling/by_exec_plan_ids",
+          "timestamp": "2026-03-10 14:26:25,684",
+          "user": "章嘉佳",
+          "trace_id": "DB1787F12537455C3668995CD1904625"
+        },
+        {
+          "duration_ms": 3039,
+          "api_path": "/api/v1/app_finance_fee_nurse/billplan/timingbilling/by_exec_plan_ids",
+          "timestamp": "2026-03-10 14:38:41,027",
+          "user": "蒋程程",
+          "trace_id": "FDD83AF33D18AFC8660015C9883BDA30"
+        }
+      ],
+      "trace_id": "FDD83AF33D18AFC8660015C9883BDA30",
+      "analysis_trace_id": "FDD83AF33D18AFC8660015C9883BDA30",
+      "analysis_sample": {
+        "duration_ms": 3039,
+        "api_path": "/api/v1/app_finance_fee_nurse/billplan/timingbilling/by_exec_plan_ids",
+        "timestamp": "2026-03-10 14:38:41,027",
+        "user": "蒋程程",
+        "trace_id": "FDD83AF33D18AFC8660015C9883BDA30"
+      },
+      "analysis": {
+        "total_time": 3039,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 3039,
+            "location": "10.233.151.233:8080",
+            "log": "[FDD83AF33D18AFC8660015C9883BDA30,69fa080403334181a106954194d89382,FDD83AF33D18AFC8660015C9883BDA30] [10.233.151.233:8080] [蒋程程(436277623959091206)] 2026-03-10 14:38:41,027 [Jetty-Worker_8080-Thread-3",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 3039,
+          "location": "10.233.151.233:8080",
+          "log": "[FDD83AF33D18AFC8660015C9883BDA30,69fa080403334181a106954194d89382,FDD83AF33D18AFC8660015C9883BDA30] [10.233.151.233:8080] [蒋程程(436277623959091206)] 2026-03-10 14:38:41,027 [Jetty-Worker_8080-Thread-3",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 3039,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.151.233:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 3039ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 3039ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/banner_tripartite/query/by_id",
+      "count": 23,
+      "max_ms": 2505,
+      "avg_ms": 1526,
+      "users": [
+        "徐欢欢",
+        "钟鹏飞",
+        "聂志红",
+        "史伟力",
+        "叶子萌"
+      ],
+      "samples": [
+        {
+          "duration_ms": 2505,
+          "api_path": "/api/v1/app_inpatient_encounter/banner_tripartite/query/by_id",
+          "timestamp": "2026-03-10 14:08:41,583",
+          "user": "沈琳琳",
+          "trace_id": "ECFA3258C74A8AD2F414DE37046F55E0"
+        },
+        {
+          "duration_ms": 2286,
+          "api_path": "/api/v1/app_inpatient_encounter/banner_tripartite/query/by_id",
+          "timestamp": "2026-03-10 14:08:41,451",
+          "user": "沈琳琳",
+          "trace_id": "40BF8DB3E3039F6F3AE6CD85B8942DF7"
+        },
+        {
+          "duration_ms": 1192,
+          "api_path": "/api/v1/app_inpatient_encounter/banner_tripartite/query/by_id",
+          "timestamp": "2026-03-10 14:10:25,694",
+          "user": "聂志红",
+          "trace_id": "01AD8D1A73B7727BE81BE00CBEE43688"
+        },
+        {
+          "duration_ms": 1240,
+          "api_path": "/api/v1/app_inpatient_encounter/banner_tripartite/query/by_id",
+          "timestamp": "2026-03-10 14:17:08,504",
+          "user": "叶子萌",
+          "trace_id": "BBAC03F6CEEB048071A3938CCF244A55"
+        },
+        {
+          "duration_ms": 1213,
+          "api_path": "/api/v1/app_inpatient_encounter/banner_tripartite/query/by_id",
+          "timestamp": "2026-03-10 14:17:08,597",
+          "user": "叶子萌",
+          "trace_id": "B570A39835B8C28F0411BA1EE1E1FB20"
+        }
+      ],
+      "trace_id": "ECFA3258C74A8AD2F414DE37046F55E0",
+      "analysis_trace_id": "ECFA3258C74A8AD2F414DE37046F55E0",
+      "analysis_sample": {
+        "duration_ms": 2505,
+        "api_path": "/api/v1/app_inpatient_encounter/banner_tripartite/query/by_id",
+        "timestamp": "2026-03-10 14:08:41,583",
+        "user": "沈琳琳",
+        "trace_id": "ECFA3258C74A8AD2F414DE37046F55E0"
+      },
+      "analysis": {
+        "total_time": 2505,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 2505,
+            "location": "10.233.162.8:8080",
+            "log": "[ECFA3258C74A8AD2F414DE37046F55E0,26848563c6904b66a8e24bc09ce7e091,ECFA3258C74A8AD2F414DE37046F55E0] [10.233.162.8:8080] [沈琳琳(436277654023862287)] 2026-03-10 14:08:41,583 [Jetty-Worker_8080-Thread-62]",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          },
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 5,
+            "location": "10.233.117.160:8080",
+            "log": "[ECFA3258C74A8AD2F414DE37046F55E0,1e6c5e16ecb54641a9963d954ab83757,adc409da0b3a4b96bf727d52cce0889c] [10.233.117.160:8080] [沈琳琳(436277654023862287)] 2026-03-10 14:08:39,103 [winning-winex-finance-inp-",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 2505,
+          "location": "10.233.162.8:8080",
+          "log": "[ECFA3258C74A8AD2F414DE37046F55E0,26848563c6904b66a8e24bc09ce7e091,ECFA3258C74A8AD2F414DE37046F55E0] [10.233.162.8:8080] [沈琳琳(436277654023862287)] 2026-03-10 14:08:41,583 [Jetty-Worker_8080-Thread-62]",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 2505,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080",
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 2505ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 2510ms，占总耗时 100.2%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/encounter_inpatient/encounter_info/get/by_id",
+      "count": 72,
+      "max_ms": 2359,
+      "avg_ms": 1506,
+      "users": [
+        "叶露",
+        "周丽",
+        "姚琴花",
+        "陈芳园"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1984,
+          "api_path": "/api/v1/encounter_inpatient/encounter_info/get/by_id",
+          "timestamp": "2026-03-10 14:09:39,057",
+          "user": null,
+          "trace_id": "5994327f46f74f269252411fbb7369e2"
+        },
+        {
+          "duration_ms": 1829,
+          "api_path": "/api/v1/encounter_inpatient/encounter_info/get/by_id",
+          "timestamp": "2026-03-10 14:09:39,238",
+          "user": null,
+          "trace_id": "50a8459317874cb3ba0eb641bb5f72d0"
+        },
+        {
+          "duration_ms": 1198,
+          "api_path": "/api/v1/encounter_inpatient/encounter_info/get/by_id",
+          "timestamp": "2026-03-10 14:09:34,159",
+          "user": null,
+          "trace_id": "20c608c9a81d4900aa06333d19d842f2"
+        },
+        {
+          "duration_ms": 2001,
+          "api_path": "/api/v1/encounter_inpatient/encounter_info/get/by_id",
+          "timestamp": "2026-03-10 14:09:39,080",
+          "user": null,
+          "trace_id": "9c3d564b84bf493aa254adfc049a5108"
+        },
+        {
+          "duration_ms": 2034,
+          "api_path": "/api/v1/encounter_inpatient/encounter_info/get/by_id",
+          "timestamp": "2026-03-10 14:09:39,233",
+          "user": null,
+          "trace_id": "efae48230bd644888387b5ccff64af20"
+        }
+      ],
+      "trace_id": "efae48230bd644888387b5ccff64af20",
+      "analysis_trace_id": "efae48230bd644888387b5ccff64af20",
+      "analysis_sample": {
+        "duration_ms": 2034,
+        "api_path": "/api/v1/encounter_inpatient/encounter_info/get/by_id",
+        "timestamp": "2026-03-10 14:09:39,233",
+        "user": null,
+        "trace_id": "efae48230bd644888387b5ccff64af20"
+      },
+      "analysis": {
+        "total_time": 2034,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 2034,
+            "location": "10.233.162.8:8080",
+            "log": "[efae48230bd644888387b5ccff64af20,efae48230bd644888387b5ccff64af20,] [10.233.162.8:8080] [] 2026-03-10 14:09:39,233 [winning-winex-ipt-charting-pbc_Jetty-Worker_8080-Thread-1] WARN  c.w.b.a.r.r.RestAo",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 2034,
+          "location": "10.233.162.8:8080",
+          "log": "[efae48230bd644888387b5ccff64af20,efae48230bd644888387b5ccff64af20,] [10.233.162.8:8080] [] 2026-03-10 14:09:39,233 [winning-winex-ipt-charting-pbc_Jetty-Worker_8080-Thread-1] WARN  c.w.b.a.r.r.RestAo",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 2034,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 2034ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 2034ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_finance_fee_nurse/inpatient_bill/bill",
+      "count": 4,
+      "max_ms": 2350,
+      "avg_ms": 1450,
+      "users": [
+        "木雅婷",
+        "陈周琪",
+        "董雪"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1225,
+          "api_path": "/api/v1/app_finance_fee_nurse/inpatient_bill/bill",
+          "timestamp": "2026-03-10 14:15:03,730",
+          "user": "董雪",
+          "trace_id": "3B318FD5673BC0404B53114C69F8AC17"
+        },
+        {
+          "duration_ms": 1139,
+          "api_path": "/api/v1/app_finance_fee_nurse/inpatient_bill/bill",
+          "timestamp": "2026-03-10 14:16:00,749",
+          "user": "木雅婷",
+          "trace_id": "0FD103676C9FF27B6E5537977F73CAB0"
+        },
+        {
+          "duration_ms": 1086,
+          "api_path": "/api/v1/app_finance_fee_nurse/inpatient_bill/bill",
+          "timestamp": "2026-03-10 14:19:44,185",
+          "user": "陈周琪",
+          "trace_id": "7D32C29432AFE6B5A5655C171044F582"
+        },
+        {
+          "duration_ms": 2350,
+          "api_path": "/api/v1/app_finance_fee_nurse/inpatient_bill/bill",
+          "timestamp": "2026-03-10 14:20:50,856",
+          "user": "董雪",
+          "trace_id": "59AF25E7A46BBBA171294EB3F2737B76"
+        }
+      ],
+      "trace_id": "59AF25E7A46BBBA171294EB3F2737B76",
+      "analysis_trace_id": "59AF25E7A46BBBA171294EB3F2737B76",
+      "analysis_sample": {
+        "duration_ms": 2350,
+        "api_path": "/api/v1/app_finance_fee_nurse/inpatient_bill/bill",
+        "timestamp": "2026-03-10 14:20:50,856",
+        "user": "董雪",
+        "trace_id": "59AF25E7A46BBBA171294EB3F2737B76"
+      },
+      "analysis": {
+        "total_time": 2350,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 2350,
+            "location": "10.233.117.160:8080",
+            "log": "[59AF25E7A46BBBA171294EB3F2737B76,007b1416224f450bbe655fb5bdad8cac,59AF25E7A46BBBA171294EB3F2737B76] [10.233.117.160:8080] [董雪(436278734208137231)] 2026-03-10 14:20:50,856 [Jetty-Worker_8080-Thread-29",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 2350,
+          "location": "10.233.117.160:8080",
+          "log": "[59AF25E7A46BBBA171294EB3F2737B76,007b1416224f450bbe655fb5bdad8cac,59AF25E7A46BBBA171294EB3F2737B76] [10.233.117.160:8080] [董雪(436278734208137231)] 2026-03-10 14:20:50,856 [Jetty-Worker_8080-Thread-29",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 2350,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 2350ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 2350ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split",
+      "count": 10,
+      "max_ms": 2177,
+      "avg_ms": 1437,
+      "users": [],
+      "samples": [
+        {
+          "duration_ms": 1059,
+          "api_path": "/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split",
+          "timestamp": "2026-03-10 14:01:11,328",
+          "user": null,
+          "trace_id": "d16fdf25fe9a45f1a45bde1ca0a8a9df"
+        },
+        {
+          "duration_ms": 1125,
+          "api_path": "/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split",
+          "timestamp": "2026-03-10 14:03:58,146",
+          "user": null,
+          "trace_id": "5a425f9c13e74c39811449d65f2fdef7"
+        },
+        {
+          "duration_ms": 1133,
+          "api_path": "/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split",
+          "timestamp": "2026-03-10 14:13:20,042",
+          "user": null,
+          "trace_id": "0818831271c3476e83802a3377db7c58"
+        },
+        {
+          "duration_ms": 2177,
+          "api_path": "/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split",
+          "timestamp": "2026-03-10 14:31:56,415",
+          "user": null,
+          "trace_id": "b79af23a0399494ba4556c3eb12f609e"
+        },
+        {
+          "duration_ms": 1300,
+          "api_path": "/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split",
+          "timestamp": "2026-03-10 14:37:41,418",
+          "user": null,
+          "trace_id": "02c7252e71df431091aa7a62170366e8"
+        }
+      ],
+      "trace_id": "b79af23a0399494ba4556c3eb12f609e",
+      "analysis_trace_id": "b79af23a0399494ba4556c3eb12f609e",
+      "analysis_sample": {
+        "duration_ms": 2177,
+        "api_path": "/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split",
+        "timestamp": "2026-03-10 14:31:56,415",
+        "user": null,
+        "trace_id": "b79af23a0399494ba4556c3eb12f609e"
+      },
+      "analysis": {
+        "total_time": 2177,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 2177,
+            "location": "10.233.151.233:8080",
+            "log": "[b79af23a0399494ba4556c3eb12f609e,b79af23a0399494ba4556c3eb12f609e,] [10.233.151.233:8080] [] 2026-03-10 14:31:56,415 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-37] WARN  c.w.b.a.r.r.RestAop (?:?",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          },
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 37,
+            "location": "10.233.162.8:8080",
+            "log": "[b79af23a0399494ba4556c3eb12f609e,0d448f8df6014fa584028cbd730eac16,a746f46fe72e45138a0273e2d265e999] [10.233.162.8:8080] [] 2026-03-10 14:31:56,705 [winning-winex-ipt-std-fhir-pbc_Jetty-Worker_8080-Th",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 2177,
+          "location": "10.233.151.233:8080",
+          "log": "[b79af23a0399494ba4556c3eb12f609e,b79af23a0399494ba4556c3eb12f609e,] [10.233.151.233:8080] [] 2026-03-10 14:31:56,415 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-37] WARN  c.w.b.a.r.r.RestAop (?:?",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 2177,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.151.233:8080",
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 2177ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 2214ms，占总耗时 101.7%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/encounter_inpatient/encounter_tag_data/refresh",
+      "count": 34,
+      "max_ms": 2159,
+      "avg_ms": 1780,
+      "users": [
+        "沈林亚",
+        "陈升佳",
+        "李谱友",
+        "许佳宸",
+        "陆婷"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1829,
+          "api_path": "/api/v1/encounter_inpatient/encounter_tag_data/refresh",
+          "timestamp": "2026-03-10 14:00:12,423",
+          "user": "陈升佳",
+          "trace_id": "817FEB02C46ED69CD25994FDB28038FF"
+        },
+        {
+          "duration_ms": 1886,
+          "api_path": "/api/v1/encounter_inpatient/encounter_tag_data/refresh",
+          "timestamp": "2026-03-10 14:01:02,177",
+          "user": null,
+          "trace_id": "9517981BDD22E04AB090B1602441AB8A"
+        },
+        {
+          "duration_ms": 1767,
+          "api_path": "/api/v1/encounter_inpatient/encounter_tag_data/refresh",
+          "timestamp": "2026-03-10 14:01:53,857",
+          "user": null,
+          "trace_id": "24E1D1B477322F7BDFF1C1452C788FB6"
+        },
+        {
+          "duration_ms": 1709,
+          "api_path": "/api/v1/encounter_inpatient/encounter_tag_data/refresh",
+          "timestamp": "2026-03-10 14:03:55,758",
+          "user": null,
+          "trace_id": "5E666FC123E1AF74261D24DD2DDD0203"
+        },
+        {
+          "duration_ms": 1773,
+          "api_path": "/api/v1/encounter_inpatient/encounter_tag_data/refresh",
+          "timestamp": "2026-03-10 14:05:42,862",
+          "user": null,
+          "trace_id": "3EA9AF08BEFC70EB35CB45B047FD0068"
+        }
+      ],
+      "trace_id": "9517981BDD22E04AB090B1602441AB8A",
+      "analysis_trace_id": "9517981BDD22E04AB090B1602441AB8A",
+      "analysis_sample": {
+        "duration_ms": 1886,
+        "api_path": "/api/v1/encounter_inpatient/encounter_tag_data/refresh",
+        "timestamp": "2026-03-10 14:01:02,177",
+        "user": null,
+        "trace_id": "9517981BDD22E04AB090B1602441AB8A"
+      },
+      "analysis": {
+        "total_time": 1886,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 1886,
+            "location": "10.233.151.233:8080",
+            "log": "[9517981BDD22E04AB090B1602441AB8A,0454e7c9625c49fda0311058e898f993,bb3d50f69a394613bf527a490840f921] [10.233.151.233:8080] [] 2026-03-10 14:01:02,177 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-91",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 1886,
+          "location": "10.233.151.233:8080",
+          "log": "[9517981BDD22E04AB090B1602441AB8A,0454e7c9625c49fda0311058e898f993,bb3d50f69a394613bf527a490840f921] [10.233.151.233:8080] [] 2026-03-10 14:01:02,177 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-91",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 1886,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.151.233:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 1886ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 1886ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/material_execution_supply/dispense_request_ids/all/query_encounter",
+      "count": 3,
+      "max_ms": 2046,
+      "avg_ms": 1594,
+      "users": [
+        "蒋佳佳",
+        "商晓丹"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1737,
+          "api_path": "/api/v1/material_execution_supply/dispense_request_ids/all/query_encounter",
+          "timestamp": "2026-03-10 14:26:35,152",
+          "user": "蒋佳佳",
+          "trace_id": "CD583C30C1D3AB0A8FEFDE6FC9A68E69"
+        },
+        {
+          "duration_ms": 2046,
+          "api_path": "/api/v1/material_execution_supply/dispense_request_ids/all/query_encounter",
+          "timestamp": "2026-03-10 14:26:35,470",
+          "user": "蒋佳佳",
+          "trace_id": "29B685E5F6DCE54B9C9756FE95DD382D"
+        },
+        {
+          "duration_ms": 1001,
+          "api_path": "/api/v1/material_execution_supply/dispense_request_ids/all/query_encounter",
+          "timestamp": "2026-03-10 14:51:46,156",
+          "user": "商晓丹",
+          "trace_id": "0F71160AEEDB8C41828338C5FCE40096"
+        }
+      ],
+      "trace_id": "29B685E5F6DCE54B9C9756FE95DD382D",
+      "analysis_trace_id": "29B685E5F6DCE54B9C9756FE95DD382D",
+      "analysis_sample": {
+        "duration_ms": 2046,
+        "api_path": "/api/v1/material_execution_supply/dispense_request_ids/all/query_encounter",
+        "timestamp": "2026-03-10 14:26:35,470",
+        "user": "蒋佳佳",
+        "trace_id": "29B685E5F6DCE54B9C9756FE95DD382D"
+      },
+      "analysis": {
+        "total_time": 2046,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 2046,
+            "location": "10.233.117.160:8080",
+            "log": "[29B685E5F6DCE54B9C9756FE95DD382D,8b0068b3a6454eeaad69dcddab34ce88,29B685E5F6DCE54B9C9756FE95DD382D] [10.233.117.160:8080] [蒋佳佳(436277666908764171)] 2026-03-10 14:26:35,470 [Jetty-Worker_8080-Thread-5",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 2046,
+          "location": "10.233.117.160:8080",
+          "log": "[29B685E5F6DCE54B9C9756FE95DD382D,8b0068b3a6454eeaad69dcddab34ce88,29B685E5F6DCE54B9C9756FE95DD382D] [10.233.117.160:8080] [蒋佳佳(436277666908764171)] 2026-03-10 14:26:35,470 [Jetty-Worker_8080-Thread-5",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 2046,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 2046ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 2046ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/encounter_bed_list/query/by_example",
+      "count": 27,
+      "max_ms": 2016,
+      "avg_ms": 1643,
+      "users": [
+        "戚玉丽",
+        "徐正贞",
+        "沈霏",
+        "许晓梅",
+        "黄丽"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1733,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_bed_list/query/by_example",
+          "timestamp": "2026-03-10 14:01:10,129",
+          "user": "黄丽丽",
+          "trace_id": "c7e6806341474b97b7eb1249a7d9427b"
+        },
+        {
+          "duration_ms": 1924,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_bed_list/query/by_example",
+          "timestamp": "2026-03-10 14:01:59,663",
+          "user": "黄丽丽",
+          "trace_id": "dd31ce9c985249fea16cf30d7b5c3868"
+        },
+        {
+          "duration_ms": 1886,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_bed_list/query/by_example",
+          "timestamp": "2026-03-10 14:06:38,801",
+          "user": "潘雨馨",
+          "trace_id": "839a9c7a5f464864b9d1f981071c7355"
+        },
+        {
+          "duration_ms": 1703,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_bed_list/query/by_example",
+          "timestamp": "2026-03-10 14:08:29,544",
+          "user": "徐芳丽",
+          "trace_id": "1e57cd6c1865487e8404d3abf73e556c"
+        },
+        {
+          "duration_ms": 1797,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_bed_list/query/by_example",
+          "timestamp": "2026-03-10 14:11:23,828",
+          "user": "戚玉丽",
+          "trace_id": "43d6d41154ba4de5885e698cf3b14dfe"
+        }
+      ],
+      "trace_id": "dd31ce9c985249fea16cf30d7b5c3868",
+      "analysis_trace_id": "dd31ce9c985249fea16cf30d7b5c3868",
+      "analysis_sample": {
+        "duration_ms": 1924,
+        "api_path": "/api/v1/app_inpatient_encounter/encounter_bed_list/query/by_example",
+        "timestamp": "2026-03-10 14:01:59,663",
+        "user": "黄丽丽",
+        "trace_id": "dd31ce9c985249fea16cf30d7b5c3868"
+      },
+      "analysis": {
+        "total_time": 1924,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1924,
+            "location": "10.233.162.8:8080",
+            "log": "[dd31ce9c985249fea16cf30d7b5c3868,dd31ce9c985249fea16cf30d7b5c3868,] [10.233.162.8:8080] [黄丽丽(436277645433927715)] 2026-03-10 14:01:59,663 [Jetty-Worker_8080-Thread-53] WARN  c.w.b.a.r.r.RestAop (?:?)",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1924,
+          "location": "10.233.162.8:8080",
+          "log": "[dd31ce9c985249fea16cf30d7b5c3868,dd31ce9c985249fea16cf30d7b5c3868,] [10.233.162.8:8080] [黄丽丽(436277645433927715)] 2026-03-10 14:01:59,663 [Jetty-Worker_8080-Thread-53] WARN  c.w.b.a.r.r.RestAop (?:?)",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1924,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1924ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1924ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/encounter_inpatient/encounter_bed/refresh",
+      "count": 1,
+      "max_ms": 1987,
+      "avg_ms": 1987,
+      "users": [],
+      "samples": [
+        {
+          "duration_ms": 1987,
+          "api_path": "/api/v1/encounter_inpatient/encounter_bed/refresh",
+          "timestamp": "2026-03-10 14:07:42,627",
+          "user": null,
+          "trace_id": "2fa0dceaf0fa46fbaf43e4223e50672a"
+        }
+      ],
+      "trace_id": "2fa0dceaf0fa46fbaf43e4223e50672a",
+      "analysis_trace_id": "2fa0dceaf0fa46fbaf43e4223e50672a",
+      "analysis_sample": {
+        "duration_ms": 1987,
+        "api_path": "/api/v1/encounter_inpatient/encounter_bed/refresh",
+        "timestamp": "2026-03-10 14:07:42,627",
+        "user": null,
+        "trace_id": "2fa0dceaf0fa46fbaf43e4223e50672a"
+      },
+      "analysis": {
+        "total_time": 1987,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 1987,
+            "location": "10.233.162.8:8080",
+            "log": "[2fa0dceaf0fa46fbaf43e4223e50672a,2fa0dceaf0fa46fbaf43e4223e50672a,] [10.233.162.8:8080] [] 2026-03-10 14:07:42,627 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-17] WARN  c.w.b.a.r.r.RestAop (?:?) ",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 1987,
+          "location": "10.233.162.8:8080",
+          "log": "[2fa0dceaf0fa46fbaf43e4223e50672a,2fa0dceaf0fa46fbaf43e4223e50672a,] [10.233.162.8:8080] [] 2026-03-10 14:07:42,627 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-17] WARN  c.w.b.a.r.r.RestAop (?:?) ",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 1987,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 1987ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 1987ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id",
+      "count": 5,
+      "max_ms": 1982,
+      "avg_ms": 1552,
+      "users": [
+        "沈珍珠",
+        "徐正贞",
+        "屠小燕",
+        "曹晓燕"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1484,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id",
+          "timestamp": "2026-03-10 14:09:34,231",
+          "user": "徐正贞",
+          "trace_id": "78C01B4A868EC2A3A729365D217A4733"
+        },
+        {
+          "duration_ms": 1628,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id",
+          "timestamp": "2026-03-10 14:09:34,299",
+          "user": "曹晓燕",
+          "trace_id": "9B55C83B851AC618F2B31622741AFE7C"
+        },
+        {
+          "duration_ms": 1222,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id",
+          "timestamp": "2026-03-10 14:09:33,990",
+          "user": "徐正贞",
+          "trace_id": "4DE7580039DB0DC5459139DD9A85B32D"
+        },
+        {
+          "duration_ms": 1447,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id",
+          "timestamp": "2026-03-10 14:20:50,532",
+          "user": "屠小燕",
+          "trace_id": "66126713D0F906AE9023EEDED476798D"
+        },
+        {
+          "duration_ms": 1982,
+          "api_path": "/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id",
+          "timestamp": "2026-03-10 14:23:40,983",
+          "user": "沈珍珠",
+          "trace_id": "10BC99632F04785E7C2CE8759B92B7F4"
+        }
+      ],
+      "trace_id": "10BC99632F04785E7C2CE8759B92B7F4",
+      "analysis_trace_id": "10BC99632F04785E7C2CE8759B92B7F4",
+      "analysis_sample": {
+        "duration_ms": 1982,
+        "api_path": "/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id",
+        "timestamp": "2026-03-10 14:23:40,983",
+        "user": "沈珍珠",
+        "trace_id": "10BC99632F04785E7C2CE8759B92B7F4"
+      },
+      "analysis": {
+        "total_time": 1982,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 1982,
+            "location": "10.233.117.160:8080",
+            "log": "[10BC99632F04785E7C2CE8759B92B7F4,668d7adc47624cfebd0c2c0cfcedce40,10BC99632F04785E7C2CE8759B92B7F4] [10.233.117.160:8080] [沈珍珠(436199895725068337)] 2026-03-10 14:23:40,983 [Jetty-Worker_8080-Thread-2",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 1982,
+          "location": "10.233.117.160:8080",
+          "log": "[10BC99632F04785E7C2CE8759B92B7F4,668d7adc47624cfebd0c2c0cfcedce40,10BC99632F04785E7C2CE8759B92B7F4] [10.233.117.160:8080] [沈珍珠(436199895725068337)] 2026-03-10 14:23:40,983 [Jetty-Worker_8080-Thread-2",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 1982,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 1982ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 1982ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/nis/exec_order/check/by_exec_order_ids",
+      "count": 13,
+      "max_ms": 1914,
+      "avg_ms": 1317,
+      "users": [
+        "曹朕鹤",
+        "朱娅",
+        "顾森超",
+        "章嘉佳",
+        "沈霏"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1914,
+          "api_path": "/api/v1/nis/exec_order/check/by_exec_order_ids",
+          "timestamp": "2026-03-10 14:11:19,092",
+          "user": "章嘉佳",
+          "trace_id": "71D8FBA44603409DBBB94FF170B4DB71"
+        },
+        {
+          "duration_ms": 1084,
+          "api_path": "/api/v1/nis/exec_order/check/by_exec_order_ids",
+          "timestamp": "2026-03-10 14:17:51,228",
+          "user": "曹朕鹤",
+          "trace_id": "998863B564EED27CF54BCBADC85A83C9"
+        },
+        {
+          "duration_ms": 1109,
+          "api_path": "/api/v1/nis/exec_order/check/by_exec_order_ids",
+          "timestamp": "2026-03-10 14:25:23,393",
+          "user": "陈玫",
+          "trace_id": "027C1AF4B8F50A06904EF5102F2DC2F1"
+        },
+        {
+          "duration_ms": 1239,
+          "api_path": "/api/v1/nis/exec_order/check/by_exec_order_ids",
+          "timestamp": "2026-03-10 14:27:24,371",
+          "user": "朱娅",
+          "trace_id": "63626E957F4FF6209C4EC1D0DA1D0E44"
+        },
+        {
+          "duration_ms": 1302,
+          "api_path": "/api/v1/nis/exec_order/check/by_exec_order_ids",
+          "timestamp": "2026-03-10 14:36:45,317",
+          "user": "蒋宇威",
+          "trace_id": "6907C7212F1034EAEDC3FC9C429269ED"
+        }
+      ],
+      "trace_id": "71D8FBA44603409DBBB94FF170B4DB71",
+      "analysis_trace_id": "71D8FBA44603409DBBB94FF170B4DB71",
+      "analysis_sample": {
+        "duration_ms": 1914,
+        "api_path": "/api/v1/nis/exec_order/check/by_exec_order_ids",
+        "timestamp": "2026-03-10 14:11:19,092",
+        "user": "章嘉佳",
+        "trace_id": "71D8FBA44603409DBBB94FF170B4DB71"
+      },
+      "analysis": {
+        "total_time": 1914,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 1914,
+            "location": "10.233.117.160:8080",
+            "log": "[71D8FBA44603409DBBB94FF170B4DB71,b7c249dec59545d98ccf63b59a43546e,71D8FBA44603409DBBB94FF170B4DB71] [10.233.117.160:8080] [章嘉佳(440543598002468867)] 2026-03-10 14:11:19,092 [Jetty-Worker_8080-Thread-5",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 1914,
+          "location": "10.233.117.160:8080",
+          "log": "[71D8FBA44603409DBBB94FF170B4DB71,b7c249dec59545d98ccf63b59a43546e,71D8FBA44603409DBBB94FF170B4DB71] [10.233.117.160:8080] [章嘉佳(440543598002468867)] 2026-03-10 14:11:19,092 [Jetty-Worker_8080-Thread-5",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 1914,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 1914ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 1914ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/nis/exec_order_plan/advance_apply/by_end_time",
+      "count": 8,
+      "max_ms": 1815,
+      "avg_ms": 1388,
+      "users": [
+        "周丽",
+        "顾森超",
+        "於晚笑",
+        "张芳燕",
+        "沈奕晰"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1659,
+          "api_path": "/api/v1/nis/exec_order_plan/advance_apply/by_end_time",
+          "timestamp": "2026-03-10 14:07:43,460",
+          "user": "顾森超",
+          "trace_id": "4EF9BA9FDF15B189100901ECFDDBEE92"
+        },
+        {
+          "duration_ms": 1465,
+          "api_path": "/api/v1/nis/exec_order_plan/advance_apply/by_end_time",
+          "timestamp": "2026-03-10 14:11:28,802",
+          "user": "俞月",
+          "trace_id": "18FAD4DC3509A9EC5B9027AB223E744B"
+        },
+        {
+          "duration_ms": 1072,
+          "api_path": "/api/v1/nis/exec_order_plan/advance_apply/by_end_time",
+          "timestamp": "2026-03-10 14:12:13,111",
+          "user": "於晚笑",
+          "trace_id": "6F832EC0B9A53749F9C50D631861045B"
+        },
+        {
+          "duration_ms": 1815,
+          "api_path": "/api/v1/nis/exec_order_plan/advance_apply/by_end_time",
+          "timestamp": "2026-03-10 14:19:41,913",
+          "user": "董雪",
+          "trace_id": "93D2CFBF4914BB92679562804F0062B8"
+        },
+        {
+          "duration_ms": 1013,
+          "api_path": "/api/v1/nis/exec_order_plan/advance_apply/by_end_time",
+          "timestamp": "2026-03-10 14:24:30,789",
+          "user": "沈奕晰",
+          "trace_id": "976EE14CBD1A48E2D5992ED43C2654D1"
+        }
+      ],
+      "trace_id": "93D2CFBF4914BB92679562804F0062B8",
+      "analysis_trace_id": "93D2CFBF4914BB92679562804F0062B8",
+      "analysis_sample": {
+        "duration_ms": 1815,
+        "api_path": "/api/v1/nis/exec_order_plan/advance_apply/by_end_time",
+        "timestamp": "2026-03-10 14:19:41,913",
+        "user": "董雪",
+        "trace_id": "93D2CFBF4914BB92679562804F0062B8"
+      },
+      "analysis": {
+        "total_time": 1815,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 1815,
+            "location": "10.233.151.233:8080",
+            "log": "[93D2CFBF4914BB92679562804F0062B8,02f52c7d4e3c4e489b9e13dde370745b,93D2CFBF4914BB92679562804F0062B8] [10.233.151.233:8080] [董雪(436278734208137231)] 2026-03-10 14:19:41,913 [Jetty-Worker_8080-Thread-90",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 1815,
+          "location": "10.233.151.233:8080",
+          "log": "[93D2CFBF4914BB92679562804F0062B8,02f52c7d4e3c4e489b9e13dde370745b,93D2CFBF4914BB92679562804F0062B8] [10.233.151.233:8080] [董雪(436278734208137231)] 2026-03-10 14:19:41,913 [Jetty-Worker_8080-Thread-90",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 1815,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.151.233:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 1815ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 1815ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v2/nis/cli_order_change_doc/query/by_encounter_ids",
+      "count": 1,
+      "max_ms": 1720,
+      "avg_ms": 1720,
+      "users": [
+        "朱娅"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1720,
+          "api_path": "/api/v2/nis/cli_order_change_doc/query/by_encounter_ids",
+          "timestamp": "2026-03-10 14:12:16,383",
+          "user": "朱娅",
+          "trace_id": "6A89ED77610B85FEBBC598F0B6A12CB7"
+        }
+      ],
+      "trace_id": "6A89ED77610B85FEBBC598F0B6A12CB7",
+      "analysis_trace_id": "6A89ED77610B85FEBBC598F0B6A12CB7",
+      "analysis_sample": {
+        "duration_ms": 1720,
+        "api_path": "/api/v2/nis/cli_order_change_doc/query/by_encounter_ids",
+        "timestamp": "2026-03-10 14:12:16,383",
+        "user": "朱娅",
+        "trace_id": "6A89ED77610B85FEBBC598F0B6A12CB7"
+      },
+      "analysis": {
+        "total_time": 1720,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1720,
+            "location": "10.233.162.8:8080",
+            "log": "[6A89ED77610B85FEBBC598F0B6A12CB7,776c932d75e5490d9d82c73aae5fe2f4,6A89ED77610B85FEBBC598F0B6A12CB7] [10.233.162.8:8080] [朱娅(436199900020035609)] 2026-03-10 14:12:16,383 [Jetty-Worker_8080-Thread-73] ",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1720,
+          "location": "10.233.162.8:8080",
+          "log": "[6A89ED77610B85FEBBC598F0B6A12CB7,776c932d75e5490d9d82c73aae5fe2f4,6A89ED77610B85FEBBC598F0B6A12CB7] [10.233.162.8:8080] [朱娅(436199900020035609)] 2026-03-10 14:12:16,383 [Jetty-Worker_8080-Thread-73] ",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1720,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1720ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1720ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/patient_list/query/by_example",
+      "count": 66,
+      "max_ms": 1709,
+      "avg_ms": 1118,
+      "users": [
+        "周丽",
+        "顾森超",
+        "陈周琪",
+        "李谱友",
+        "陈以忻"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1113,
+          "api_path": "/api/v1/app_inpatient_encounter/patient_list/query/by_example",
+          "timestamp": "2026-03-10 14:01:00,004",
+          "user": "朱贤",
+          "trace_id": "c1b19f4414424987aa497ef7d495805d"
+        },
+        {
+          "duration_ms": 1180,
+          "api_path": "/api/v1/app_inpatient_encounter/patient_list/query/by_example",
+          "timestamp": "2026-03-10 14:01:08,383",
+          "user": "周丽",
+          "trace_id": "F80A55CF33B84DA4C7FDF20C8773542D"
+        },
+        {
+          "duration_ms": 1134,
+          "api_path": "/api/v1/app_inpatient_encounter/patient_list/query/by_example",
+          "timestamp": "2026-03-10 14:02:03,165",
+          "user": "李娟",
+          "trace_id": "0F36963621CB817FE6B577BA3696BE99"
+        },
+        {
+          "duration_ms": 1134,
+          "api_path": "/api/v1/app_inpatient_encounter/patient_list/query/by_example",
+          "timestamp": "2026-03-10 14:04:50,091",
+          "user": "许鉴媚",
+          "trace_id": "27933722A605B09D550E38AF706EDDE7"
+        },
+        {
+          "duration_ms": 1135,
+          "api_path": "/api/v1/app_inpatient_encounter/patient_list/query/by_example",
+          "timestamp": "2026-03-10 14:04:47,525",
+          "user": "郑惠芬",
+          "trace_id": "319fdbc5d4c94656b5721e80ed8a8fdf"
+        }
+      ],
+      "trace_id": "F80A55CF33B84DA4C7FDF20C8773542D",
+      "analysis_trace_id": "F80A55CF33B84DA4C7FDF20C8773542D",
+      "analysis_sample": {
+        "duration_ms": 1180,
+        "api_path": "/api/v1/app_inpatient_encounter/patient_list/query/by_example",
+        "timestamp": "2026-03-10 14:01:08,383",
+        "user": "周丽",
+        "trace_id": "F80A55CF33B84DA4C7FDF20C8773542D"
+      },
+      "analysis": {
+        "total_time": 1180,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1180,
+            "location": "10.233.117.160:8080",
+            "log": "[F80A55CF33B84DA4C7FDF20C8773542D,553d7366eb444a3cab2b5f4d58d9b945,F80A55CF33B84DA4C7FDF20C8773542D] [10.233.117.160:8080] [周丽(436277688383600676)] 2026-03-10 14:01:08,383 [Jetty-Worker_8080-Thread-6]",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1180,
+          "location": "10.233.117.160:8080",
+          "log": "[F80A55CF33B84DA4C7FDF20C8773542D,553d7366eb444a3cab2b5f4d58d9b945,F80A55CF33B84DA4C7FDF20C8773542D] [10.233.117.160:8080] [周丽(436277688383600676)] 2026-03-10 14:01:08,383 [Jetty-Worker_8080-Thread-6]",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1180,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1180ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1180ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v2/app_finance_fee_nurse/fee/query/by_order_id",
+      "count": 4,
+      "max_ms": 1660,
+      "avg_ms": 1480,
+      "users": [
+        "盛香维",
+        "董雪",
+        "陈玫"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1390,
+          "api_path": "/api/v2/app_finance_fee_nurse/fee/query/by_order_id",
+          "timestamp": "2026-03-10 14:15:05,309",
+          "user": "董雪",
+          "trace_id": "0BFFEC2B3E5D66063BD5D59E96C5898E"
+        },
+        {
+          "duration_ms": 1436,
+          "api_path": "/api/v2/app_finance_fee_nurse/fee/query/by_order_id",
+          "timestamp": "2026-03-10 14:26:38,706",
+          "user": "陈玫",
+          "trace_id": "FDD8917713896D9674F25DD008AB9132"
+        },
+        {
+          "duration_ms": 1437,
+          "api_path": "/api/v2/app_finance_fee_nurse/fee/query/by_order_id",
+          "timestamp": "2026-03-10 14:26:32,174",
+          "user": "陈玫",
+          "trace_id": "4AF145AF01666AAAA66D73DF805D15B8"
+        },
+        {
+          "duration_ms": 1660,
+          "api_path": "/api/v2/app_finance_fee_nurse/fee/query/by_order_id",
+          "timestamp": "2026-03-10 14:52:30,420",
+          "user": "盛香维",
+          "trace_id": "5CE956A5A2DC987ED9FB51C54F3819C0"
+        }
+      ],
+      "trace_id": "5CE956A5A2DC987ED9FB51C54F3819C0",
+      "analysis_trace_id": "5CE956A5A2DC987ED9FB51C54F3819C0",
+      "analysis_sample": {
+        "duration_ms": 1660,
+        "api_path": "/api/v2/app_finance_fee_nurse/fee/query/by_order_id",
+        "timestamp": "2026-03-10 14:52:30,420",
+        "user": "盛香维",
+        "trace_id": "5CE956A5A2DC987ED9FB51C54F3819C0"
+      },
+      "analysis": {
+        "total_time": 1660,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1660,
+            "location": "10.233.162.8:8080",
+            "log": "[5CE956A5A2DC987ED9FB51C54F3819C0,630b9516355049aaa18b0e0d19a67d60,5CE956A5A2DC987ED9FB51C54F3819C0] [10.233.162.8:8080] [盛香维(436277656171345952)] 2026-03-10 14:52:30,420 [Jetty-Worker_8080-Thread-3] ",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1660,
+          "location": "10.233.162.8:8080",
+          "log": "[5CE956A5A2DC987ED9FB51C54F3819C0,630b9516355049aaa18b0e0d19a67d60,5CE956A5A2DC987ED9FB51C54F3819C0] [10.233.162.8:8080] [盛香维(436277656171345952)] 2026-03-10 14:52:30,420 [Jetty-Worker_8080-Thread-3] ",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1660,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1660ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1660ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/mobile_nurse_app/employee_info/query/by_example",
+      "count": 1,
+      "max_ms": 1657,
+      "avg_ms": 1657,
+      "users": [
+        "王梦莹"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1657,
+          "api_path": "/api/v1/mobile_nurse_app/employee_info/query/by_example",
+          "timestamp": "2026-03-10 14:42:18,021",
+          "user": "王梦莹",
+          "trace_id": "E5603A19F40350441D2A59CA8A5A4A73"
+        }
+      ],
+      "trace_id": "E5603A19F40350441D2A59CA8A5A4A73",
+      "analysis_trace_id": "E5603A19F40350441D2A59CA8A5A4A73",
+      "analysis_sample": {
+        "duration_ms": 1657,
+        "api_path": "/api/v1/mobile_nurse_app/employee_info/query/by_example",
+        "timestamp": "2026-03-10 14:42:18,021",
+        "user": "王梦莹",
+        "trace_id": "E5603A19F40350441D2A59CA8A5A4A73"
+      },
+      "analysis": {
+        "total_time": 1657,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1657,
+            "location": "10.233.117.160:8080",
+            "log": "[E5603A19F40350441D2A59CA8A5A4A73,84ac8d584bb4423ab6987a16ee7e2875,E5603A19F40350441D2A59CA8A5A4A73] [10.233.117.160:8080] [王梦莹(436278734208137246)] 2026-03-10 14:42:18,021 [Jetty-Worker_8080-Thread-9",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1657,
+          "location": "10.233.117.160:8080",
+          "log": "[E5603A19F40350441D2A59CA8A5A4A73,84ac8d584bb4423ab6987a16ee7e2875,E5603A19F40350441D2A59CA8A5A4A73] [10.233.117.160:8080] [王梦莹(436278734208137246)] 2026-03-10 14:42:18,021 [Jetty-Worker_8080-Thread-9",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1657,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1657ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1657ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v2/app_finance_fee_nurse/daygroup_inp_expense_records/get/template_datasource",
+      "count": 1,
+      "max_ms": 1596,
+      "avg_ms": 1596,
+      "users": [
+        "钱佳炎"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1596,
+          "api_path": "/api/v2/app_finance_fee_nurse/daygroup_inp_expense_records/get/template_datasource",
+          "timestamp": "2026-03-10 14:54:28,426",
+          "user": "钱佳炎",
+          "trace_id": "4EA3877732279BD9E5B561FD2998719C"
+        }
+      ],
+      "trace_id": "4EA3877732279BD9E5B561FD2998719C",
+      "analysis_trace_id": "4EA3877732279BD9E5B561FD2998719C",
+      "analysis_sample": {
+        "duration_ms": 1596,
+        "api_path": "/api/v2/app_finance_fee_nurse/daygroup_inp_expense_records/get/template_datasource",
+        "timestamp": "2026-03-10 14:54:28,426",
+        "user": "钱佳炎",
+        "trace_id": "4EA3877732279BD9E5B561FD2998719C"
+      },
+      "analysis": {
+        "total_time": 1596,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 1596,
+            "location": "10.233.162.8:8080",
+            "log": "[4EA3877732279BD9E5B561FD2998719C,618ca821c1ce4373ba1288a1e4f0221f,4EA3877732279BD9E5B561FD2998719C] [10.233.162.8:8080] [钱佳炎(436277643286444069)] 2026-03-10 14:54:28,426 [Jetty-Worker_8080-Thread-45]",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 1596,
+          "location": "10.233.162.8:8080",
+          "log": "[4EA3877732279BD9E5B561FD2998719C,618ca821c1ce4373ba1288a1e4f0221f,4EA3877732279BD9E5B561FD2998719C] [10.233.162.8:8080] [钱佳炎(436277643286444069)] 2026-03-10 14:54:28,426 [Jetty-Worker_8080-Thread-45]",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 1596,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 1596ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 1596ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_finance_fee_nurse/inp_charge_detail/query/by_detail_ids",
+      "count": 11,
+      "max_ms": 1551,
+      "avg_ms": 1162,
+      "users": [
+        "曹晓燕",
+        "史伟力",
+        "商晓丹",
+        "许云蕾",
+        "蒋宇威"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1247,
+          "api_path": "/api/v1/app_finance_fee_nurse/inp_charge_detail/query/by_detail_ids",
+          "timestamp": "2026-03-10 14:11:34,598",
+          "user": "曹晓燕",
+          "trace_id": "5E3D5C5FB31AD16EE0D1CB6372635E6E"
+        },
+        {
+          "duration_ms": 1099,
+          "api_path": "/api/v1/app_finance_fee_nurse/inp_charge_detail/query/by_detail_ids",
+          "timestamp": "2026-03-10 14:25:25,926",
+          "user": "蒋宇威",
+          "trace_id": "3B60BCD48B06238E30994B3BE6C78628"
+        },
+        {
+          "duration_ms": 1083,
+          "api_path": "/api/v1/app_finance_fee_nurse/inp_charge_detail/query/by_detail_ids",
+          "timestamp": "2026-03-10 14:26:27,998",
+          "user": "许云蕾",
+          "trace_id": "A2DF6433A27AB2DB363155AD63BE160E"
+        },
+        {
+          "duration_ms": 1056,
+          "api_path": "/api/v1/app_finance_fee_nurse/inp_charge_detail/query/by_detail_ids",
+          "timestamp": "2026-03-10 14:27:27,901",
+          "user": "陈玫",
+          "trace_id": "C2BBDFD1FA5285195C1EB6F9A68595DE"
+        },
+        {
+          "duration_ms": 1147,
+          "api_path": "/api/v1/app_finance_fee_nurse/inp_charge_detail/query/by_detail_ids",
+          "timestamp": "2026-03-10 14:27:25,820",
+          "user": "陈玫",
+          "trace_id": "C495CA0B034A29DA07F213ED8F3EEC85"
+        }
+      ],
+      "trace_id": "5E3D5C5FB31AD16EE0D1CB6372635E6E",
+      "analysis_trace_id": "5E3D5C5FB31AD16EE0D1CB6372635E6E",
+      "analysis_sample": {
+        "duration_ms": 1247,
+        "api_path": "/api/v1/app_finance_fee_nurse/inp_charge_detail/query/by_detail_ids",
+        "timestamp": "2026-03-10 14:11:34,598",
+        "user": "曹晓燕",
+        "trace_id": "5E3D5C5FB31AD16EE0D1CB6372635E6E"
+      },
+      "analysis": {
+        "total_time": 1247,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1247,
+            "location": "10.233.117.160:8080",
+            "log": "[5E3D5C5FB31AD16EE0D1CB6372635E6E,97109d48380940a2844bdbb4e414bfdc,5E3D5C5FB31AD16EE0D1CB6372635E6E] [10.233.117.160:8080] [曹晓燕(436277647581411352)] 2026-03-10 14:11:34,598 [Jetty-Worker_8080-Thread-2",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1247,
+          "location": "10.233.117.160:8080",
+          "log": "[5E3D5C5FB31AD16EE0D1CB6372635E6E,97109d48380940a2844bdbb4e414bfdc,5E3D5C5FB31AD16EE0D1CB6372635E6E] [10.233.117.160:8080] [曹晓燕(436277647581411352)] 2026-03-10 14:11:34,598 [Jetty-Worker_8080-Thread-2",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1247,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1247ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1247ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_finance_fee_nurse/inp_charge_detail_ids/query/by_category_id",
+      "count": 1,
+      "max_ms": 1511,
+      "avg_ms": 1511,
+      "users": [
+        "沈明娟"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1511,
+          "api_path": "/api/v1/app_finance_fee_nurse/inp_charge_detail_ids/query/by_category_id",
+          "timestamp": "2026-03-10 14:46:56,889",
+          "user": "沈明娟",
+          "trace_id": "F4A8187F0C3931FBEA09835E02B86787"
+        }
+      ],
+      "trace_id": "F4A8187F0C3931FBEA09835E02B86787",
+      "analysis_trace_id": "F4A8187F0C3931FBEA09835E02B86787",
+      "analysis_sample": {
+        "duration_ms": 1511,
+        "api_path": "/api/v1/app_finance_fee_nurse/inp_charge_detail_ids/query/by_category_id",
+        "timestamp": "2026-03-10 14:46:56,889",
+        "user": "沈明娟",
+        "trace_id": "F4A8187F0C3931FBEA09835E02B86787"
+      },
+      "analysis": {
+        "total_time": 1511,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1511,
+            "location": "10.233.151.233:8080",
+            "log": "[F4A8187F0C3931FBEA09835E02B86787,0e57512353ef4db0a869d1ced632562a,F4A8187F0C3931FBEA09835E02B86787] [10.233.151.233:8080] [沈明娟(436277699121018929)] 2026-03-10 14:46:56,889 [Jetty-Worker_8080-Thread-7",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1511,
+          "location": "10.233.151.233:8080",
+          "log": "[F4A8187F0C3931FBEA09835E02B86787,0e57512353ef4db0a869d1ced632562a,F4A8187F0C3931FBEA09835E02B86787] [10.233.151.233:8080] [沈明娟(436277699121018929)] 2026-03-10 14:46:56,889 [Jetty-Worker_8080-Thread-7",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1511,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.151.233:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1511ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1511ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v2/app_finance_fee_nurse/fee/query/by_order_ids",
+      "count": 2,
+      "max_ms": 1483,
+      "avg_ms": 1351,
+      "users": [
+        "顾森超",
+        "俞月"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1219,
+          "api_path": "/api/v2/app_finance_fee_nurse/fee/query/by_order_ids",
+          "timestamp": "2026-03-10 14:12:19,620",
+          "user": "俞月",
+          "trace_id": "A91BA3AAAD99E7EDB6FA1BD292D4D4A7"
+        },
+        {
+          "duration_ms": 1483,
+          "api_path": "/api/v2/app_finance_fee_nurse/fee/query/by_order_ids",
+          "timestamp": "2026-03-10 14:43:11,963",
+          "user": "顾森超",
+          "trace_id": "521985BD616A6D6F3B7B50FCF11C16A4"
+        }
+      ],
+      "trace_id": "521985BD616A6D6F3B7B50FCF11C16A4",
+      "analysis_trace_id": "521985BD616A6D6F3B7B50FCF11C16A4",
+      "analysis_sample": {
+        "duration_ms": 1483,
+        "api_path": "/api/v2/app_finance_fee_nurse/fee/query/by_order_ids",
+        "timestamp": "2026-03-10 14:43:11,963",
+        "user": "顾森超",
+        "trace_id": "521985BD616A6D6F3B7B50FCF11C16A4"
+      },
+      "analysis": {
+        "total_time": 1483,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1483,
+            "location": "10.233.117.160:8080",
+            "log": "[521985BD616A6D6F3B7B50FCF11C16A4,c15d8fdb4014467ca64127efb54882d8,521985BD616A6D6F3B7B50FCF11C16A4] [10.233.117.160:8080] [顾森超(436277677646182403)] 2026-03-10 14:43:11,963 [Jetty-Worker_8080-Thread-5",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1483,
+          "location": "10.233.117.160:8080",
+          "log": "[521985BD616A6D6F3B7B50FCF11C16A4,c15d8fdb4014467ca64127efb54882d8,521985BD616A6D6F3B7B50FCF11C16A4] [10.233.117.160:8080] [顾森超(436277677646182403)] 2026-03-10 14:43:11,963 [Jetty-Worker_8080-Thread-5",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1483,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1483ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1483ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v2/app_finance_fee_nurse/non_billed_medical/query/by_encounter_id",
+      "count": 5,
+      "max_ms": 1423,
+      "avg_ms": 1297,
+      "users": [
+        "张芳燕",
+        "姚琴花",
+        "蒋程程",
+        "许云蕾"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1335,
+          "api_path": "/api/v2/app_finance_fee_nurse/non_billed_medical/query/by_encounter_id",
+          "timestamp": "2026-03-10 14:09:23,042",
+          "user": "张芳燕",
+          "trace_id": "B4C9B5881FE3208834BBC64C52CD7399"
+        },
+        {
+          "duration_ms": 1423,
+          "api_path": "/api/v2/app_finance_fee_nurse/non_billed_medical/query/by_encounter_id",
+          "timestamp": "2026-03-10 14:14:04,247",
+          "user": "姚琴花",
+          "trace_id": "04440496FC7F17451D116D472F3314FA"
+        },
+        {
+          "duration_ms": 1277,
+          "api_path": "/api/v2/app_finance_fee_nurse/non_billed_medical/query/by_encounter_id",
+          "timestamp": "2026-03-10 14:38:30,958",
+          "user": "蒋程程",
+          "trace_id": "971E4FBC976712FF313091404FD8AB95"
+        },
+        {
+          "duration_ms": 1311,
+          "api_path": "/api/v2/app_finance_fee_nurse/non_billed_medical/query/by_encounter_id",
+          "timestamp": "2026-03-10 14:38:33,924",
+          "user": "蒋程程",
+          "trace_id": "495620BAD53AD2F8FDA29D83DA08B960"
+        },
+        {
+          "duration_ms": 1142,
+          "api_path": "/api/v2/app_finance_fee_nurse/non_billed_medical/query/by_encounter_id",
+          "timestamp": "2026-03-10 14:55:46,568",
+          "user": "许云蕾",
+          "trace_id": "60C128A6DF0C86E2DDE102953FF68F8E"
+        }
+      ],
+      "trace_id": "04440496FC7F17451D116D472F3314FA",
+      "analysis_trace_id": "04440496FC7F17451D116D472F3314FA",
+      "analysis_sample": {
+        "duration_ms": 1423,
+        "api_path": "/api/v2/app_finance_fee_nurse/non_billed_medical/query/by_encounter_id",
+        "timestamp": "2026-03-10 14:14:04,247",
+        "user": "姚琴花",
+        "trace_id": "04440496FC7F17451D116D472F3314FA"
+      },
+      "analysis": {
+        "total_time": 1423,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1423,
+            "location": "10.233.162.8:8080",
+            "log": "[04440496FC7F17451D116D472F3314FA,d15683f87242430f95abca1688b6a876,04440496FC7F17451D116D472F3314FA] [10.233.162.8:8080] [姚琴花(436277692678567940)] 2026-03-10 14:14:04,247 [Jetty-Worker_8080-Thread-51]",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1423,
+          "location": "10.233.162.8:8080",
+          "log": "[04440496FC7F17451D116D472F3314FA,d15683f87242430f95abca1688b6a876,04440496FC7F17451D116D472F3314FA] [10.233.162.8:8080] [姚琴花(436277692678567940)] 2026-03-10 14:14:04,247 [Jetty-Worker_8080-Thread-51]",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1423,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1423ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1423ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/mobile_nurse_app/exec_order_list_pageable/query/by_example",
+      "count": 5,
+      "max_ms": 1418,
+      "avg_ms": 1127,
+      "users": [
+        "商晓丹",
+        "屠小燕",
+        "陈玫"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1418,
+          "api_path": "/api/v1/mobile_nurse_app/exec_order_list_pageable/query/by_example",
+          "timestamp": "2026-03-10 14:11:16,572",
+          "user": "陈玫",
+          "trace_id": "33F012DEEEE49B1B11A644119DFABA65"
+        },
+        {
+          "duration_ms": 1086,
+          "api_path": "/api/v1/mobile_nurse_app/exec_order_list_pageable/query/by_example",
+          "timestamp": "2026-03-10 14:11:18,412",
+          "user": "陈玫",
+          "trace_id": "92F548E3DE756898197311ED6505713D"
+        },
+        {
+          "duration_ms": 1032,
+          "api_path": "/api/v1/mobile_nurse_app/exec_order_list_pageable/query/by_example",
+          "timestamp": "2026-03-10 14:11:18,296",
+          "user": "陈玫",
+          "trace_id": "12095E28705B1DC7F7B603FA4B8868B7"
+        },
+        {
+          "duration_ms": 1093,
+          "api_path": "/api/v1/mobile_nurse_app/exec_order_list_pageable/query/by_example",
+          "timestamp": "2026-03-10 14:30:58,720",
+          "user": "屠小燕",
+          "trace_id": "F636992C987FAEC530FA0B4133720445"
+        },
+        {
+          "duration_ms": 1007,
+          "api_path": "/api/v1/mobile_nurse_app/exec_order_list_pageable/query/by_example",
+          "timestamp": "2026-03-10 14:51:46,180",
+          "user": "商晓丹",
+          "trace_id": "A0C7C9365459102787FEC1C4765AE14D"
+        }
+      ],
+      "trace_id": "33F012DEEEE49B1B11A644119DFABA65",
+      "analysis_trace_id": "33F012DEEEE49B1B11A644119DFABA65",
+      "analysis_sample": {
+        "duration_ms": 1418,
+        "api_path": "/api/v1/mobile_nurse_app/exec_order_list_pageable/query/by_example",
+        "timestamp": "2026-03-10 14:11:16,572",
+        "user": "陈玫",
+        "trace_id": "33F012DEEEE49B1B11A644119DFABA65"
+      },
+      "analysis": {
+        "total_time": 1418,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1418,
+            "location": "10.233.151.233:8080",
+            "log": "[33F012DEEEE49B1B11A644119DFABA65,bba95aec957b459fbcfc94b51ad28ea3,33F012DEEEE49B1B11A644119DFABA65] [10.233.151.233:8080] [陈玫(436277647581411348)] 2026-03-10 14:11:16,572 [Jetty-Worker_8080-Thread-78",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          },
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 135,
+            "location": "10.233.117.160:8080",
+            "log": "[33F012DEEEE49B1B11A644119DFABA65,a014854a3db94e28b8ab41ae27260901,bba95aec957b459fbcfc94b51ad28ea3] [10.233.117.160:8080] [陈玫(436277647581411348)] 2026-03-10 14:11:16,052 [winning-winex-ward-akso5-pb",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1418,
+          "location": "10.233.151.233:8080",
+          "log": "[33F012DEEEE49B1B11A644119DFABA65,bba95aec957b459fbcfc94b51ad28ea3,33F012DEEEE49B1B11A644119DFABA65] [10.233.151.233:8080] [陈玫(436277647581411348)] 2026-03-10 14:11:16,572 [Jetty-Worker_8080-Thread-78",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1418,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.151.233:8080",
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1418ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1553ms，占总耗时 109.5%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/material_execution_supply/page_element_permission/query/by_user_id_and_app_menu_id",
+      "count": 1,
+      "max_ms": 1301,
+      "avg_ms": 1301,
+      "users": [
+        "许云蕾"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1301,
+          "api_path": "/api/v1/material_execution_supply/page_element_permission/query/by_user_id_and_app_menu_id",
+          "timestamp": "2026-03-10 14:02:02,638",
+          "user": "许云蕾",
+          "trace_id": "889512B58A548F4B588EA159D147322D"
+        }
+      ],
+      "trace_id": "889512B58A548F4B588EA159D147322D",
+      "analysis_trace_id": "889512B58A548F4B588EA159D147322D",
+      "analysis_sample": {
+        "duration_ms": 1301,
+        "api_path": "/api/v1/material_execution_supply/page_element_permission/query/by_user_id_and_app_menu_id",
+        "timestamp": "2026-03-10 14:02:02,638",
+        "user": "许云蕾",
+        "trace_id": "889512B58A548F4B588EA159D147322D"
+      },
+      "analysis": {
+        "total_time": 1301,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1301,
+            "location": "10.233.162.8:8080",
+            "log": "[889512B58A548F4B588EA159D147322D,e64b15c35e364f4ea8f4384b84c4bef3,889512B58A548F4B588EA159D147322D] [10.233.162.8:8080] [许云蕾(440547506408910857)] 2026-03-10 14:02:02,638 [Jetty-Worker_8080-Thread-97]",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1301,
+          "location": "10.233.162.8:8080",
+          "log": "[889512B58A548F4B588EA159D147322D,e64b15c35e364f4ea8f4384b84c4bef3,889512B58A548F4B588EA159D147322D] [10.233.162.8:8080] [许云蕾(440547506408910857)] 2026-03-10 14:02:02,638 [Jetty-Worker_8080-Thread-97]",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1301,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1301ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1301ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/banner_person/query/by_id",
+      "count": 1,
+      "max_ms": 1261,
+      "avg_ms": 1261,
+      "users": [
+        "闻雄杰"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1261,
+          "api_path": "/api/v1/app_inpatient_encounter/banner_person/query/by_id",
+          "timestamp": "2026-03-10 14:13:07,678",
+          "user": "闻雄杰",
+          "trace_id": "659C84061AD9026E01BD8A0271356690"
+        }
+      ],
+      "trace_id": "659C84061AD9026E01BD8A0271356690",
+      "analysis_trace_id": "659C84061AD9026E01BD8A0271356690",
+      "analysis_sample": {
+        "duration_ms": 1261,
+        "api_path": "/api/v1/app_inpatient_encounter/banner_person/query/by_id",
+        "timestamp": "2026-03-10 14:13:07,678",
+        "user": "闻雄杰",
+        "trace_id": "659C84061AD9026E01BD8A0271356690"
+      },
+      "analysis": {
+        "total_time": 1261,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1261,
+            "location": "10.233.162.8:8080",
+            "log": "[659C84061AD9026E01BD8A0271356690,9985b63f93ab4d27b489e10faaef3b28,659C84061AD9026E01BD8A0271356690] [10.233.162.8:8080] [闻雄杰(436277656171345945)] 2026-03-10 14:13:07,678 [Jetty-Worker_8080-Thread-87]",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1261,
+          "location": "10.233.162.8:8080",
+          "log": "[659C84061AD9026E01BD8A0271356690,9985b63f93ab4d27b489e10faaef3b28,659C84061AD9026E01BD8A0271356690] [10.233.162.8:8080] [闻雄杰(436277656171345945)] 2026-03-10 14:13:07,678 [Jetty-Worker_8080-Thread-87]",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1261,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1261ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1261ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/leave_ward/check/fee",
+      "count": 10,
+      "max_ms": 1235,
+      "avg_ms": 1141,
+      "users": [
+        "杨国英",
+        "姚琴花",
+        "张芳燕",
+        "蒋程程",
+        "沈奕晰"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1151,
+          "api_path": "/api/v1/app_inpatient_encounter/leave_ward/check/fee",
+          "timestamp": "2026-03-10 14:00:59,805",
+          "user": "许云蕾",
+          "trace_id": "B56ABF5A6ACE5B74AAFA0B148BD39095"
+        },
+        {
+          "duration_ms": 1157,
+          "api_path": "/api/v1/app_inpatient_encounter/leave_ward/check/fee",
+          "timestamp": "2026-03-10 14:03:53,693",
+          "user": "杨国英",
+          "trace_id": "A2C3FEA9E16F74DCB1E864F2E74B4C3E"
+        },
+        {
+          "duration_ms": 1124,
+          "api_path": "/api/v1/app_inpatient_encounter/leave_ward/check/fee",
+          "timestamp": "2026-03-10 14:04:53,811",
+          "user": "沈奕晰",
+          "trace_id": "040B3C71D3F57293035E27FAE30D0F8D"
+        },
+        {
+          "duration_ms": 1204,
+          "api_path": "/api/v1/app_inpatient_encounter/leave_ward/check/fee",
+          "timestamp": "2026-03-10 14:09:26,720",
+          "user": "张芳燕",
+          "trace_id": "8B735871F3D11A5E555C34D58F8D37AA"
+        },
+        {
+          "duration_ms": 1228,
+          "api_path": "/api/v1/app_inpatient_encounter/leave_ward/check/fee",
+          "timestamp": "2026-03-10 14:14:03,853",
+          "user": "姚琴花",
+          "trace_id": "E7C47117FFE7FB5A7086AB921DD78328"
+        }
+      ],
+      "trace_id": "E7C47117FFE7FB5A7086AB921DD78328",
+      "analysis_trace_id": "E7C47117FFE7FB5A7086AB921DD78328",
+      "analysis_sample": {
+        "duration_ms": 1228,
+        "api_path": "/api/v1/app_inpatient_encounter/leave_ward/check/fee",
+        "timestamp": "2026-03-10 14:14:03,853",
+        "user": "姚琴花",
+        "trace_id": "E7C47117FFE7FB5A7086AB921DD78328"
+      },
+      "analysis": {
+        "total_time": 1228,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 1228,
+            "location": "10.233.151.233:8080",
+            "log": "[E7C47117FFE7FB5A7086AB921DD78328,9054343631c54996b01cb08d57cb5514,E7C47117FFE7FB5A7086AB921DD78328] [10.233.151.233:8080] [姚琴花(436277692678567940)] 2026-03-10 14:14:03,853 [Jetty-Worker_8080-Thread-1",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 1228,
+          "location": "10.233.151.233:8080",
+          "log": "[E7C47117FFE7FB5A7086AB921DD78328,9054343631c54996b01cb08d57cb5514,E7C47117FFE7FB5A7086AB921DD78328] [10.233.151.233:8080] [姚琴花(436277692678567940)] 2026-03-10 14:14:03,853 [Jetty-Worker_8080-Thread-1",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 1228,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.151.233:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 1228ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 1228ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_finance_fee_nurse/clinical_order/inpatient_bill/refund/by_resource_id",
+      "count": 5,
+      "max_ms": 1215,
+      "avg_ms": 1091,
+      "users": [
+        "蒋宇威",
+        "许云蕾"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1036,
+          "api_path": "/api/v1/app_finance_fee_nurse/clinical_order/inpatient_bill/refund/by_resource_id",
+          "timestamp": "2026-03-10 14:00:07,720",
+          "user": "许云蕾",
+          "trace_id": "59195B8D262801082AE15361D3B61FC6"
+        },
+        {
+          "duration_ms": 1046,
+          "api_path": "/api/v1/app_finance_fee_nurse/clinical_order/inpatient_bill/refund/by_resource_id",
+          "timestamp": "2026-03-10 14:09:28,025",
+          "user": "蒋宇威",
+          "trace_id": "9B2C416D7C68DF66976C1B6F2B9EC0B0"
+        },
+        {
+          "duration_ms": 1215,
+          "api_path": "/api/v1/app_finance_fee_nurse/clinical_order/inpatient_bill/refund/by_resource_id",
+          "timestamp": "2026-03-10 14:22:34,814",
+          "user": "蒋宇威",
+          "trace_id": "596E3B26A6ABF5E126C35150E5235965"
+        },
+        {
+          "duration_ms": 1022,
+          "api_path": "/api/v1/app_finance_fee_nurse/clinical_order/inpatient_bill/refund/by_resource_id",
+          "timestamp": "2026-03-10 14:23:51,206",
+          "user": "许云蕾",
+          "trace_id": "8C44F4E96AA8A98824EB2403E3FD4512"
+        },
+        {
+          "duration_ms": 1136,
+          "api_path": "/api/v1/app_finance_fee_nurse/clinical_order/inpatient_bill/refund/by_resource_id",
+          "timestamp": "2026-03-10 14:38:32,448",
+          "user": "许云蕾",
+          "trace_id": "806EDDFFA2C0D3DD14B2D00117545864"
+        }
+      ],
+      "trace_id": "596E3B26A6ABF5E126C35150E5235965",
+      "analysis_trace_id": "596E3B26A6ABF5E126C35150E5235965",
+      "analysis_sample": {
+        "duration_ms": 1215,
+        "api_path": "/api/v1/app_finance_fee_nurse/clinical_order/inpatient_bill/refund/by_resource_id",
+        "timestamp": "2026-03-10 14:22:34,814",
+        "user": "蒋宇威",
+        "trace_id": "596E3B26A6ABF5E126C35150E5235965"
+      },
+      "analysis": {
+        "total_time": 1215,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 1215,
+            "location": "10.233.162.8:8080",
+            "log": "[596E3B26A6ABF5E126C35150E5235965,17060f6030dc41c0891a0ddacfd1fb88,596E3B26A6ABF5E126C35150E5235965] [10.233.162.8:8080] [蒋宇威(436199897872551968)] 2026-03-10 14:22:34,814 [Jetty-Worker_8080-Thread-39]",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          },
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 117,
+            "location": "10.233.151.233:8080",
+            "log": "[596E3B26A6ABF5E126C35150E5235965,b2799285961a4aa6a7c4851d6e0c3500,d471ad12536c4f1b9579f1bfc26ab6bc] [10.233.151.233:8080] [蒋宇威(436199897872551968)] 2026-03-10 14:22:33,854 [winning-winex-finance-inp-",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 1215,
+          "location": "10.233.162.8:8080",
+          "log": "[596E3B26A6ABF5E126C35150E5235965,17060f6030dc41c0891a0ddacfd1fb88,596E3B26A6ABF5E126C35150E5235965] [10.233.162.8:8080] [蒋宇威(436199897872551968)] 2026-03-10 14:22:34,814 [Jetty-Worker_8080-Thread-39]",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 1215,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080",
+          "10.233.151.233:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 1215ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 1332ms，占总耗时 109.6%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v2/finance_aggregate_nurse/fee/query/by_order_id",
+      "count": 1,
+      "max_ms": 1194,
+      "avg_ms": 1194,
+      "users": [
+        "李谱友"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1194,
+          "api_path": "/api/v2/finance_aggregate_nurse/fee/query/by_order_id",
+          "timestamp": "2026-03-10 14:27:12,434",
+          "user": "李谱友",
+          "trace_id": "6302EE94B4A3582F83729E939FA53EDE"
+        }
+      ],
+      "trace_id": "6302EE94B4A3582F83729E939FA53EDE",
+      "analysis_trace_id": "6302EE94B4A3582F83729E939FA53EDE",
+      "analysis_sample": {
+        "duration_ms": 1194,
+        "api_path": "/api/v2/finance_aggregate_nurse/fee/query/by_order_id",
+        "timestamp": "2026-03-10 14:27:12,434",
+        "user": "李谱友",
+        "trace_id": "6302EE94B4A3582F83729E939FA53EDE"
+      },
+      "analysis": {
+        "total_time": 1194,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1194,
+            "location": "10.233.117.160:8080",
+            "log": "[6302EE94B4A3582F83729E939FA53EDE,5b40f5ba4200441abafdee0b078fffa3,b5b0212011084ae79c8248f77e413931] [10.233.117.160:8080] [李谱友(436277643286444046)] 2026-03-10 14:27:12,434 [winning-winex-ipt-pbc_Jett",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1194,
+          "location": "10.233.117.160:8080",
+          "log": "[6302EE94B4A3582F83729E939FA53EDE,5b40f5ba4200441abafdee0b078fffa3,b5b0212011084ae79c8248f77e413931] [10.233.117.160:8080] [李谱友(436277643286444046)] 2026-03-10 14:27:12,434 [winning-winex-ipt-pbc_Jett",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1194,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1194ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1194ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v2/nis/cli_order_doc/query/by_encounter_ids",
+      "count": 5,
+      "max_ms": 1177,
+      "avg_ms": 1110,
+      "users": [
+        "平芳婷",
+        "商晓丹",
+        "冯鸿伟",
+        "董雪",
+        "邱烨哲"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1087,
+          "api_path": "/api/v2/nis/cli_order_doc/query/by_encounter_ids",
+          "timestamp": "2026-03-10 14:11:33,140",
+          "user": "董雪",
+          "trace_id": "962EE29C7F0B9C15FEA2CE7DE1FE2919"
+        },
+        {
+          "duration_ms": 1119,
+          "api_path": "/api/v2/nis/cli_order_doc/query/by_encounter_ids",
+          "timestamp": "2026-03-10 14:20:49,881",
+          "user": "商晓丹",
+          "trace_id": "60519CDF3DA2E16D6A857E0B1349D2C5"
+        },
+        {
+          "duration_ms": 1177,
+          "api_path": "/api/v2/nis/cli_order_doc/query/by_encounter_ids",
+          "timestamp": "2026-03-10 14:37:30,946",
+          "user": "冯鸿伟",
+          "trace_id": "1911BA4ECAB225E85B8BAD57856E3A1D"
+        },
+        {
+          "duration_ms": 1166,
+          "api_path": "/api/v2/nis/cli_order_doc/query/by_encounter_ids",
+          "timestamp": "2026-03-10 14:48:46,414",
+          "user": "平芳婷",
+          "trace_id": "2A206405D900E93A8160912FA7DCD1B4"
+        },
+        {
+          "duration_ms": 1001,
+          "api_path": "/api/v2/nis/cli_order_doc/query/by_encounter_ids",
+          "timestamp": "2026-03-10 14:54:30,814",
+          "user": "邱烨哲",
+          "trace_id": "0C23A6684378E962AF4CED0949935213"
+        }
+      ],
+      "trace_id": "1911BA4ECAB225E85B8BAD57856E3A1D",
+      "analysis_trace_id": "1911BA4ECAB225E85B8BAD57856E3A1D",
+      "analysis_sample": {
+        "duration_ms": 1177,
+        "api_path": "/api/v2/nis/cli_order_doc/query/by_encounter_ids",
+        "timestamp": "2026-03-10 14:37:30,946",
+        "user": "冯鸿伟",
+        "trace_id": "1911BA4ECAB225E85B8BAD57856E3A1D"
+      },
+      "analysis": {
+        "total_time": 1177,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1177,
+            "location": "10.233.162.8:8080",
+            "log": "[1911BA4ECAB225E85B8BAD57856E3A1D,c7c21ffb31b747869057d4d2a4173713,1911BA4ECAB225E85B8BAD57856E3A1D] [10.233.162.8:8080] [冯鸿伟(442745056550041604)] 2026-03-10 14:37:30,946 [Jetty-Worker_8080-Thread-73]",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1177,
+          "location": "10.233.162.8:8080",
+          "log": "[1911BA4ECAB225E85B8BAD57856E3A1D,c7c21ffb31b747869057d4d2a4173713,1911BA4ECAB225E85B8BAD57856E3A1D] [10.233.162.8:8080] [冯鸿伟(442745056550041604)] 2026-03-10 14:37:30,946 [Jetty-Worker_8080-Thread-73]",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1177,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1177ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1177ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/inpatient_encounter/encounter_info/get/by_id",
+      "count": 2,
+      "max_ms": 1154,
+      "avg_ms": 1118,
+      "users": [
+        "沈功达"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1083,
+          "api_path": "/api/v1/inpatient_encounter/encounter_info/get/by_id",
+          "timestamp": "2026-03-10 14:09:33,832",
+          "user": null,
+          "trace_id": "4D98FEB4FDD3845B32D8AE7766097963"
+        },
+        {
+          "duration_ms": 1154,
+          "api_path": "/api/v1/inpatient_encounter/encounter_info/get/by_id",
+          "timestamp": "2026-03-10 14:11:29,255",
+          "user": "沈功达",
+          "trace_id": "4A18305CC2D91102114FACE3553A8349"
+        }
+      ],
+      "trace_id": "4A18305CC2D91102114FACE3553A8349",
+      "analysis_trace_id": "4A18305CC2D91102114FACE3553A8349",
+      "analysis_sample": {
+        "duration_ms": 1154,
+        "api_path": "/api/v1/inpatient_encounter/encounter_info/get/by_id",
+        "timestamp": "2026-03-10 14:11:29,255",
+        "user": "沈功达",
+        "trace_id": "4A18305CC2D91102114FACE3553A8349"
+      },
+      "analysis": {
+        "total_time": 1154,
+        "steps": [
+          {
+            "type": "controller_entry",
+            "category": "控制层入口",
+            "time": 1154,
+            "location": "10.233.162.8:8080",
+            "log": "[4A18305CC2D91102114FACE3553A8349,fe482c2b6d7a469a8d66bf59732ea742,fb434c9b663c475c931f5d66f496f37d] [10.233.162.8:8080] [沈功达(436277694826051610)] 2026-03-10 14:11:29,255 [winning-winex-ipt-emr-pbc_Je",
+            "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+          },
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 2,
+            "location": "10.233.162.8:8080",
+            "log": "[4A18305CC2D91102114FACE3553A8349,6c0f7ff40b31499f97fef7f757cbf5a4,fb434c9b663c475c931f5d66f496f37d] [10.233.162.8:8080] [] 2026-03-10 14:11:29,523 [winning-winex-ipt-emr-pbc_Jetty-Worker_8080-Thread-",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "controller_entry",
+          "category": "控制层入口",
+          "time": 1154,
+          "location": "10.233.162.8:8080",
+          "log": "[4A18305CC2D91102114FACE3553A8349,fe482c2b6d7a469a8d66bf59732ea742,fb434c9b663c475c931f5d66f496f37d] [10.233.162.8:8080] [沈功达(436277694826051610)] 2026-03-10 14:11:29,255 [winning-winex-ipt-emr-pbc_Je",
+          "suggestion": "检查接口入口是否存在串行等待、过多参数装配或统一切面开销"
+        },
+        "recognized_time": 1154,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.162.8:8080",
+          "10.233.162.8:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在控制层入口，单步耗时 1154ms，占总耗时 100.0%。",
+        "优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。",
+        "控制层入口累计耗时 1154ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id",
+      "count": 1,
+      "max_ms": 1146,
+      "avg_ms": 1146,
+      "users": [
+        "李谱友"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1146,
+          "api_path": "/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id",
+          "timestamp": "2026-03-10 14:33:48,117",
+          "user": "李谱友",
+          "trace_id": "7B317F61FC924D92133D3AAEA1724A9D"
+        }
+      ],
+      "trace_id": "7B317F61FC924D92133D3AAEA1724A9D",
+      "analysis_trace_id": "7B317F61FC924D92133D3AAEA1724A9D",
+      "analysis_sample": {
+        "duration_ms": 1146,
+        "api_path": "/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id",
+        "timestamp": "2026-03-10 14:33:48,117",
+        "user": "李谱友",
+        "trace_id": "7B317F61FC924D92133D3AAEA1724A9D"
+      },
+      "analysis": {
+        "total_time": 1146,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1146,
+            "location": "10.233.117.160:8080",
+            "log": "[7B317F61FC924D92133D3AAEA1724A9D,acdbecd6c4704b12ac26612e46d4a28c,7B317F61FC924D92133D3AAEA1724A9D] [10.233.117.160:8080] [李谱友(436277643286444046)] 2026-03-10 14:33:48,117 [Jetty-Worker_8080-Thread-5",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1146,
+          "location": "10.233.117.160:8080",
+          "log": "[7B317F61FC924D92133D3AAEA1724A9D,acdbecd6c4704b12ac26612e46d4a28c,7B317F61FC924D92133D3AAEA1724A9D] [10.233.117.160:8080] [李谱友(436277643286444046)] 2026-03-10 14:33:48,117 [Jetty-Worker_8080-Thread-5",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1146,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1146ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1146ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/nis/cli_order_def/query/by_encounter_ids",
+      "count": 7,
+      "max_ms": 1137,
+      "avg_ms": 1061,
+      "users": [
+        "蒋程程",
+        "陈周琪",
+        "冯鸿伟",
+        "董雪"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1137,
+          "api_path": "/api/v1/nis/cli_order_def/query/by_encounter_ids",
+          "timestamp": "2026-03-10 14:08:28,357",
+          "user": "陈周琪",
+          "trace_id": "BAE9FF33B59323A1B112B29485E3DA75"
+        },
+        {
+          "duration_ms": 1055,
+          "api_path": "/api/v1/nis/cli_order_def/query/by_encounter_ids",
+          "timestamp": "2026-03-10 14:11:15,658",
+          "user": "董雪",
+          "trace_id": "001DFAB061EC29183EDB5AE288FF2696"
+        },
+        {
+          "duration_ms": 1013,
+          "api_path": "/api/v1/nis/cli_order_def/query/by_encounter_ids",
+          "timestamp": "2026-03-10 14:11:17,782",
+          "user": "董雪",
+          "trace_id": "53D80FCB069F0E6017EB14A9993055A4"
+        },
+        {
+          "duration_ms": 1051,
+          "api_path": "/api/v1/nis/cli_order_def/query/by_encounter_ids",
+          "timestamp": "2026-03-10 14:11:16,733",
+          "user": "董雪",
+          "trace_id": "EC50751D2951486772781643C4E8BF97"
+        },
+        {
+          "duration_ms": 1084,
+          "api_path": "/api/v1/nis/cli_order_def/query/by_encounter_ids",
+          "timestamp": "2026-03-10 14:11:32,010",
+          "user": "董雪",
+          "trace_id": "5E2E2883B7AB66DAA7DB8E5DC9BD9859"
+        }
+      ],
+      "trace_id": "BAE9FF33B59323A1B112B29485E3DA75",
+      "analysis_trace_id": "BAE9FF33B59323A1B112B29485E3DA75",
+      "analysis_sample": {
+        "duration_ms": 1137,
+        "api_path": "/api/v1/nis/cli_order_def/query/by_encounter_ids",
+        "timestamp": "2026-03-10 14:08:28,357",
+        "user": "陈周琪",
+        "trace_id": "BAE9FF33B59323A1B112B29485E3DA75"
+      },
+      "analysis": {
+        "total_time": 1137,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1137,
+            "location": "10.233.151.233:8080",
+            "log": "[BAE9FF33B59323A1B112B29485E3DA75,9c864460655d4e2e844ac4bc1e24937c,BAE9FF33B59323A1B112B29485E3DA75] [10.233.151.233:8080] [陈周琪(436277634696509455)] 2026-03-10 14:08:28,357 [Jetty-Worker_8080-Thread-7",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1137,
+          "location": "10.233.151.233:8080",
+          "log": "[BAE9FF33B59323A1B112B29485E3DA75,9c864460655d4e2e844ac4bc1e24937c,BAE9FF33B59323A1B112B29485E3DA75] [10.233.151.233:8080] [陈周琪(436277634696509455)] 2026-03-10 14:08:28,357 [Jetty-Worker_8080-Thread-7",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1137,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.151.233:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1137ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1137ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/encounter_inpatient/encounter_list_count/query/by_example_clini",
+      "count": 3,
+      "max_ms": 1121,
+      "avg_ms": 1090,
+      "users": [
+        "庄佳漪",
+        "陈燕红",
+        "许晓梅"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1121,
+          "api_path": "/api/v1/encounter_inpatient/encounter_list_count/query/by_example_clini",
+          "timestamp": "2026-03-10 14:14:16,599",
+          "user": "庄佳漪",
+          "trace_id": "922EA88F5E4B33482BF5BCE731DB4BF8"
+        },
+        {
+          "duration_ms": 1032,
+          "api_path": "/api/v1/encounter_inpatient/encounter_list_count/query/by_example_clini",
+          "timestamp": "2026-03-10 14:16:14,945",
+          "user": "许晓梅",
+          "trace_id": "7F92FF78F3ABE8A760410C07135F6F46"
+        },
+        {
+          "duration_ms": 1119,
+          "api_path": "/api/v1/encounter_inpatient/encounter_list_count/query/by_example_clini",
+          "timestamp": "2026-03-10 14:22:49,551",
+          "user": "陈燕红",
+          "trace_id": "4C8F8B38307DDACB5F84DA05FCA862DF"
+        }
+      ],
+      "trace_id": "922EA88F5E4B33482BF5BCE731DB4BF8",
+      "analysis_trace_id": "922EA88F5E4B33482BF5BCE731DB4BF8",
+      "analysis_sample": {
+        "duration_ms": 1121,
+        "api_path": "/api/v1/encounter_inpatient/encounter_list_count/query/by_example_clini",
+        "timestamp": "2026-03-10 14:14:16,599",
+        "user": "庄佳漪",
+        "trace_id": "922EA88F5E4B33482BF5BCE731DB4BF8"
+      },
+      "analysis": {
+        "total_time": 1121,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1121,
+            "location": "10.233.117.160:8080",
+            "log": "[922EA88F5E4B33482BF5BCE731DB4BF8,464feb1dc155416792aa38f9fbf9e765,a981a211f2b44e98b6cd48cc142c77bd] [10.233.117.160:8080] [庄佳漪(436277664761280560)] 2026-03-10 14:14:16,599 [winning-winex-ipt-charting",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1121,
+          "location": "10.233.117.160:8080",
+          "log": "[922EA88F5E4B33482BF5BCE731DB4BF8,464feb1dc155416792aa38f9fbf9e765,a981a211f2b44e98b6cd48cc142c77bd] [10.233.117.160:8080] [庄佳漪(436277664761280560)] 2026-03-10 14:14:16,599 [winning-winex-ipt-charting",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1121,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1121ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1121ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v2/app_finance_fee_nurse/refundable_inpatient_bill_detail/query/by_example",
+      "count": 3,
+      "max_ms": 1063,
+      "avg_ms": 1049,
+      "users": [
+        "木雅婷",
+        "顾森超",
+        "蒋宇威"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1033,
+          "api_path": "/api/v2/app_finance_fee_nurse/refundable_inpatient_bill_detail/query/by_example",
+          "timestamp": "2026-03-10 14:01:02,234",
+          "user": "顾森超",
+          "trace_id": "F85844E33A97C0FDDEDEF215E50B93C3"
+        },
+        {
+          "duration_ms": 1063,
+          "api_path": "/api/v2/app_finance_fee_nurse/refundable_inpatient_bill_detail/query/by_example",
+          "timestamp": "2026-03-10 14:16:03,321",
+          "user": "木雅婷",
+          "trace_id": "C7E70545778341A5DA9CDC68F0C0709F"
+        },
+        {
+          "duration_ms": 1051,
+          "api_path": "/api/v2/app_finance_fee_nurse/refundable_inpatient_bill_detail/query/by_example",
+          "timestamp": "2026-03-10 14:44:06,953",
+          "user": "蒋宇威",
+          "trace_id": "0618DB03DB5196658C90FDC54021F30E"
+        }
+      ],
+      "trace_id": "C7E70545778341A5DA9CDC68F0C0709F",
+      "analysis_trace_id": "C7E70545778341A5DA9CDC68F0C0709F",
+      "analysis_sample": {
+        "duration_ms": 1063,
+        "api_path": "/api/v2/app_finance_fee_nurse/refundable_inpatient_bill_detail/query/by_example",
+        "timestamp": "2026-03-10 14:16:03,321",
+        "user": "木雅婷",
+        "trace_id": "C7E70545778341A5DA9CDC68F0C0709F"
+      },
+      "analysis": {
+        "total_time": 1063,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1063,
+            "location": "10.233.117.160:8080",
+            "log": "[C7E70545778341A5DA9CDC68F0C0709F,fffc381864ad424fa44e9c18dbdcde45,C7E70545778341A5DA9CDC68F0C0709F] [10.233.117.160:8080] [木雅婷(436199889282617365)] 2026-03-10 14:16:03,321 [Jetty-Worker_8080-Thread-3",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1063,
+          "location": "10.233.117.160:8080",
+          "log": "[C7E70545778341A5DA9CDC68F0C0709F,fffc381864ad424fa44e9c18dbdcde45,C7E70545778341A5DA9CDC68F0C0709F] [10.233.117.160:8080] [木雅婷(436199889282617365)] 2026-03-10 14:16:03,321 [Jetty-Worker_8080-Thread-3",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1063,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.117.160:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1063ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1063ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    },
+    {
+      "api_path": "/api/v1/nis/cli_order_req_order/exam_order_requisition/query_all/by_example",
+      "count": 1,
+      "max_ms": 1009,
+      "avg_ms": 1009,
+      "users": [
+        "徐欢欢"
+      ],
+      "samples": [
+        {
+          "duration_ms": 1009,
+          "api_path": "/api/v1/nis/cli_order_req_order/exam_order_requisition/query_all/by_example",
+          "timestamp": "2026-03-10 14:29:23,504",
+          "user": "徐欢欢",
+          "trace_id": "30943F8202C9F5AA3F1572F56C1EC158"
+        }
+      ],
+      "trace_id": "30943F8202C9F5AA3F1572F56C1EC158",
+      "analysis_trace_id": "30943F8202C9F5AA3F1572F56C1EC158",
+      "analysis_sample": {
+        "duration_ms": 1009,
+        "api_path": "/api/v1/nis/cli_order_req_order/exam_order_requisition/query_all/by_example",
+        "timestamp": "2026-03-10 14:29:23,504",
+        "user": "徐欢欢",
+        "trace_id": "30943F8202C9F5AA3F1572F56C1EC158"
+      },
+      "analysis": {
+        "total_time": 1009,
+        "steps": [
+          {
+            "type": "database",
+            "category": "数据库查询",
+            "time": 1009,
+            "location": "10.233.151.233:8080",
+            "log": "[30943F8202C9F5AA3F1572F56C1EC158,694cb0d523b64dc3a760175d83c4788e,30943F8202C9F5AA3F1572F56C1EC158] [10.233.151.233:8080] [徐欢欢(436277671203731468)] 2026-03-10 14:29:23,504 [Jetty-Worker_8080-Thread-7",
+            "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+          }
+        ],
+        "bottleneck": {
+          "type": "database",
+          "category": "数据库查询",
+          "time": 1009,
+          "location": "10.233.151.233:8080",
+          "log": "[30943F8202C9F5AA3F1572F56C1EC158,694cb0d523b64dc3a760175d83c4788e,30943F8202C9F5AA3F1572F56C1EC158] [10.233.151.233:8080] [徐欢欢(436277671203731468)] 2026-03-10 14:29:23,504 [Jetty-Worker_8080-Thread-7",
+          "suggestion": "检查SQL语句是否有优化空间，考虑添加索引或使用缓存"
+        },
+        "recognized_time": 1009,
+        "unrecognized_time": 0,
+        "unrecognized_ratio": 0.0,
+        "needs_feedback": false,
+        "locations": [
+          "10.233.151.233:8080"
+        ]
+      },
+      "suggestions": [
+        "主要瓶颈在数据库查询，单步耗时 1009ms，占总耗时 100.0%。",
+        "优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。",
+        "数据库查询累计耗时 1009ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。"
+      ],
+      "feedback_prompt": null
+    }
+  ],
+  "internal_timings": [],
+  "warn_samples": [
+    {
+      "timestamp": "2026-03-10 14:00:00,645",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:106毫秒:/api/v1/inpatient_encounter/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:00,689",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:106毫秒:/api/v1/app_inpatient_encounter/banner_info/query/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:01,192",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:369毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:01,203",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:353毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:01,231",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:387毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:01,240",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:447毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:01,268",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:430毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:01,559",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:123毫秒:/api/v1/inpatient_encounter/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:01,718",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:52毫秒:/api/v1/mobile_nurse_app/employee_info/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:01,989",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:446毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:02,014",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:118毫秒:/api/v2/app_finance_component/ms_search_component/query/valid_setting_info"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:02,015",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:203毫秒:/api/v1/encounter_inpatient/patient_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:02,155",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:434毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:02,186",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:457毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:02,363",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:30毫秒:/api/v1/app_finance_fee_nurse/inpatient_doctor_employee_info/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:02,570",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:674毫秒:/api/v1/app_inpatient_encounter/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:03,219",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:130毫秒:/api/v2/app_finance_component/ms_search_component/query/valid_setting_info"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:03,673",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:371毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:03,695",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:375毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:04,380",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:395毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:04,381",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:424毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:04,421",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:516毫秒:/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:04,491",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:386毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:04,805",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:376毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:04,968",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:519毫秒:/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:05,061",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:433毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:05,069",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:405毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:05,800",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:427毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:05,842",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:458毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:05,930",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:414毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:05,967",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:506毫秒:/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:06,295",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:113毫秒:/api/v1/inpatient_encounter/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:06,410",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:80毫秒:/api/v1/app_finance_fee_nurse/insurance_info/modify/by_encounter_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:06,453",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:398毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:06,596",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:415毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:06,876",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:121毫秒:/api/v1/inpatient_encounter/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:07,007",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:3毫秒:/api/v1/inpatient_encounter/inpatient_encounter_info/query/by_personId"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:07,146",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:394毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:07,150",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:397毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:07,205",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:385毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:07,219",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:4毫秒:/api/v1/inpatient_encounter/inpatient_encounter_info/query/by_personId"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:07,226",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:388毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:07,728",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:409毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:07,836",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:398毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:07,933",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:398毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:07,990",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:386毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:08,006",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:98毫秒:/api/v1/app_inpatient_encounter/banner_info/query/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:08,020",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:391毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:08,066",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:383毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    },
+    {
+      "timestamp": "2026-03-10 14:00:08,099",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:362毫秒:/api/v1/encounter_inpatient/encounter_info/get/by_id"
+    }
+  ]
+}

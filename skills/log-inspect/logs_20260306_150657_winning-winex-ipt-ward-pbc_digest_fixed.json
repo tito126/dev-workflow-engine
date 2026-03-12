@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "generated_at": "2026-03-06T15:51:29.159004",
+    "files_processed": [
+      "logs_20260306_150657_winning-winex-ipt-ward-pbc.log"
+    ],
+    "time_range": {
+      "start": null,
+      "end": null
+    },
+    "slow_threshold_ms": 1000
+  },
+  "summary": {
+    "total_lines": 1351018,
+    "error_count": 0,
+    "warn_count": 0,
+    "error_categories": {}
+  },
+  "errors": [],
+  "slow_apis": [],
+  "internal_timings": [],
+  "warn_samples": []
+}

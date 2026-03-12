@@ -1,0 +1,218 @@
+{
+  "summary": {
+    "total_lines": 1351018,
+    "parsed_lines": 926391,
+    "error_count": 5844,
+    "warn_count": 103853,
+    "error_categories": {
+      "TimeoutException": 48,
+      "NullPointerException": 660,
+      "Other": 3605,
+      "SQLException": 1531
+    }
+  },
+  "error_samples": [
+    {
+      "timestamp": "2026-03-06 13:46:29,577",
+      "class": "c.w.w.c.u.h.c.c.o.UnifiedOkHttpClient",
+      "content": "timeout"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,591",
+      "class": "c.w.w.c.u.h.WardNurseHttpClientUtil",
+      "content": "HTTP请求失败: timeout"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,591",
+      "class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+      "content": "HTTP请求失败: timeout"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:30,185",
+      "class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "content": "java.lang.NullPointerException: Cannot invoke \"java.lang.Iterable.iterator()\" because \"elements\" is null"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:30,787",
+      "class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+      "content": "服务BMTS未找到,主线版本号为null"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:35,258",
+      "class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "content": "java.lang.NullPointerException: Cannot invoke \"java.lang.Iterable.iterator()\" because \"elements\" is null"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:35,668",
+      "class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+      "content": "服务BMTS未找到,主线版本号为null"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:36,864",
+      "class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "content": "java.lang.NullPointerException: Cannot invoke \"java.lang.Iterable.iterator()\" because \"elements\" is null"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:39,332",
+      "class": "c.w.r.w.WebErrorHandler",
+      "content": "请求ip:172.16.7.108 请求错误url:/api/v1/app_execute_mdm/inpatient/encounter_general_config/get/by_code 错误码:401 错误原因:认证错误,未提供安全Token"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:39,505",
+      "class": "c.w.r.w.WebErrorHandler",
+      "content": "请求ip:172.16.7.108 请求错误url:/api/v1/app_inpatient_encounter/employee_login_log/query/by_example 错误码:401 错误原因:认证错误,未提供安全Token"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:39,614",
+      "class": "c.w.r.w.WebErrorHandler",
+      "content": "请求ip:172.16.7.108 请求错误url:/api/v1/app_execute_mdm/inpatient/encounter_general_config/get/by_code 错误码:401 错误原因:认证错误,未提供安全Token"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:40,785",
+      "class": "c.w.w.t.a.i.FinanceHelperImpl",
+      "content": "[appid:9180],[appName:winning-winex-finance-inp-aaio]-------------------------------    at com.winning.finance.basicdata.utils.CenterQueryUtils.lambda$queryData$0:52    at com.winning.finance.common.u"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:40,786",
+      "class": "c.w.w.b.a.s.BannerInfoService",
+      "content": "ES0990004:medicalRecordAmtsRpcService.customQueryByEncounterId:依据住院就诊标识获取病案项目费用信息(自定义查询) -> [appid:9180],[appName:winning-winex-finance-inp-aaio]-------------------------------    at com.winning.finan"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:48,880",
+      "class": "c.w.w.t.a.i.ClinicalHelperImpl",
+      "content": "$core{RPC调用错误[[404 Not Found] during [POST] to [http://winning-bmts-execution-charting/api/v1/execute_nis_mobile/catheter/extubate_appoint/query/count] [NisCatheterExtubateAppointBmtsApi#queryExtubate"
+    },
+    {
+      "timestamp": "2026-03-06 13:47:20,824",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "real exception message:WS0990001:[encounterId] must not be null;$core{参数检验不通过.详细请查错误明细}core$"
+    },
+    {
+      "timestamp": "2026-03-06 13:47:22,205",
+      "class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+      "content": "服务BMTS未找到,主线版本号为null"
+    },
+    {
+      "timestamp": "2026-03-06 13:47:27,520",
+      "class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "content": "java.lang.NullPointerException: Cannot invoke \"java.lang.Iterable.iterator()\" because \"elements\" is null"
+    },
+    {
+      "timestamp": "2026-03-06 13:47:28,025",
+      "class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+      "content": "服务BMTS未找到,主线版本号为null"
+    },
+    {
+      "timestamp": "2026-03-06 13:47:33,043",
+      "class": "c.w.w.c.u.h.c.c.o.UnifiedOkHttpClient",
+      "content": "timeout"
+    },
+    {
+      "timestamp": "2026-03-06 13:47:33,057",
+      "class": "c.w.w.c.u.h.WardNurseHttpClientUtil",
+      "content": "HTTP请求失败: timeout"
+    }
+  ],
+  "warn_samples": [
+    {
+      "timestamp": "2026-03-06 13:46:28,005",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:400毫秒:/api/v1/app_inpatient_encounter/patient_list/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:28,208",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:1243毫秒:/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:28,283",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:11毫秒:/api/v1/app_inpatient_encounter/inp_q_s_disp_settings/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:28,427",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:489毫秒:/api/v1/app_inpatient_encounter/encounter_bed_list_new_count/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:28,474",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:14毫秒:/api/v1/encounter_component/value_set/query/by_concept_domain_ids"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:28,558",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:120毫秒:/api/v1/nis/inpatient/clinical_order_dept_dict/load_by_clinical_orders"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:28,810",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:71毫秒:/api/v1/app_execute_mdm/inpatient/inpat_list_display_settings/query/all"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:28,915",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:439毫秒:/api/v1/app_inpatient_encounter/encounter_bed_list_new_count/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,609",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:28毫秒:/api/v1/app_execute_mdm/inpatient/exec_apply_class_def/only_query/by_condition"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,614",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:9毫秒:/api/v1/inpatient_encounter/encounter_operation_tag/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,623",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:47毫秒:/api/v1/app_execute_mdm/inpatient/ward_display_item/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,642",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:599毫秒:/api/v1/app_execute_mdm/inpatient/bed_card_display_scheme_detail/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,662",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:5364毫秒:/api/v1/encounter_inpatient/owing_money_cost_freeze_tag/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,665",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:9毫秒:/api/v1/inpatient_encounter/herb_cont_recipe/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,667",
+      "class": "o.s.w.s.m.s.DefaultHandlerExceptionResolver",
+      "content": "Resolved [org.springframework.web.context.request.async.AsyncRequestNotUsableException: ServletOutputStream failed to flush: null]"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,668",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:87毫秒:/api/v1/app_execute_mdm/inpatient/ward_display_item/query_list/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,686",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:9毫秒:/api/v1/app_execute_mdm/inpatient/inpat_widget_disp_settings/search"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,695",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:6毫秒:/api/v1/inpatient_encounter/encounter_severity_danger_by_order_tag/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:29,741",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:13毫秒:/api/v1/inpatient_encounter/encounter_prepare_leave_tag/query/by_example"
+    },
+    {
+      "timestamp": "2026-03-06 13:46:30,383",
+      "class": "c.w.b.a.r.r.RestAop",
+      "content": "业务处理耗时:10毫秒:/api/v1/inpatient_encounter/encounter_clinical_tag/query/by_example"
+    }
+  ]
+}

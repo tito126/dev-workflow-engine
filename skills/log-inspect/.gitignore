@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# 临时文件
+*.log
+*.zip
+*_digest.json
+*_report.html
+*.json.bak
+
+# 配置文件（包含敏感信息）
+config/environments.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 测试数据
+test_*.json
+logs_*/

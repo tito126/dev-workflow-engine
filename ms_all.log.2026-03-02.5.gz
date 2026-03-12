@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>技术中台</title>
+    <link rel='STYLESHEET' type='text/css' href='/cluster/cluster/login/css/login.css'/>
+    <link id="css_theme_link" rel='STYLESHEET' type='text/css' href='/cluster/res/theme/default/theme.css'/>
+    <link rel='STYLESHEET' type='text/css' href='/cluster/res/theme/include.css'/>
+    <link rel="shortcut icon" href="/cluster/cluster/login/images/wxp_cop_log.ico" type="image/x-icon"/>
+    <script type='text/javascript' src="/pango/res/script/global/jquery-latest.js"></script>
+    <script type='text/javascript' src='/cluster/res/script/global/ml_simpchn.js'></script>
+    <script type='text/javascript' src='/cluster/res/script/global/jszip.js'></script>
+    <script type='text/javascript' src='/cluster/res/script/global/jszip-deflate.js'></script>
+    <script type='text/javascript' src='/cluster/res/script/global/Json.js'></script>
+    <script type='text/javascript' src='/cluster/res/script/global/json2.js'></script>
+    <script type='text/javascript' src='/pango/res/script/pango.js'></script>
+    <script type='text/javascript' src='/cluster/cluster/login/js/jquery.base64.js'></script>
+    <script type='text/javascript' src='/cluster/cluster/login/js/marked.min.js'></script>
+    <script type='text/javascript' src='/cluster/cluster/login/js/login.js'></script>
+    <script type='text/javascript' src='/cluster/cluster/login/js/crypto-js.min.js'></script>
+    <script type="text/javascript">
+        var username = "annoyuser";
+        var isaes = false;
+        $.ajax({
+            url: '/cluster/action/cloud/isAes',
+            type: 'GET',
+            dataType: 'text',
+            success: function(data) {
+                isaes = data;
+            },
+        });
+
+        var isUseDynamicPassword = false // 是否强制使用动态密码
+    </script>
+</head>
+
+<body>
+<div class="login-wrap">
+    <div class="logo">
+        <div class="logo-title">
+                <span class="wxp-logo"></span>
+            <span class="split-line">|</span>
+            <span class="system-title">技术中台</span>
+        </div>
+        <div class="logo-abs"></div>
+    </div>
+    <div class="user-panel">
+        <div class="user-info">
+            <div class="title1"></div>
+            <div class="title2">一天的工作保持好心情哦~</div>
+            <div class="login-input">
+                <div class="login-user-icon"></div>
+                <input type="text" id="username" placeholder="在此键入您的工号/姓名/账号"/>
+            </div>
+            <div class="login-input" style="margin-top: 20px;">
+                <div class="login-pass-icon"></div>
+                <input type="password" id="password" placeholder="请输入您的密码"/>
+            </div>
+            <div class="login-input" id="sleep_well" style="margin-top: 20px;">
+                <div class="login-pass-icon"></div>
+                <input type="password" id="dynamic_password" placeholder="企微-卫宁服务-SleepWell密码"/>
+            </div>
+            <div>
+                <label>
+                    <input type="checkbox" id="checkbox">
+                    <span>使用动态密码</span>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="checkbox" id="agreeCheckbox">
+                    已阅读并同意<a href="#" id="pdf_link">《运维服务协议》</a>
+                </label>
+            </div>
+            <div class="login-button">登录</div>
+            <div>
+                <label>
+                    <span id='login_errormsg'
+                          style="font-size: 15px;color: #FF0033;margin-left: 34px;margin-top: 20px;"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="copyright">©2024 Winning Health 版权所有</div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="close">&times;</span>
+        <div id="markdown-content" style="max-height: 600px;overflow-y: auto"></div>
+        <div class="center">
+            <button id="agreeBtn">阅读并同意(10秒)</button>
+        </div>
+    </div>
+</div>
+</body>
+<style>
+    .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .overlay {
+        position: absolute;
+        /*background-color: #0e0e0e;*/
+        top: 290px;
+        /*left: 0;*/
+        width: 25px;
+        height: 25px;
+        background-color: transparent;
+        z-index: 10;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        color: #000;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 5px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    #agreeBtn {
+        background-color: #00b9ed; /* 设置背景颜色 */
+        color: white; /* 设置文字颜色 */
+        border: none; /* 移除边框 */
+        padding: 5px 10px; /* 设置内边距 */
+        text-align: center; /* 文字居中对齐 */
+        display: inline-block; /* 设置为行内块级元素 */
+        font-size: 14px; /* 设置字体大小 */
+        margin: 2px 1px; /* 设置外边距 */
+        cursor: pointer; /* 鼠标指针变为手形图标 */
+    }
+
+    #agreeBtn:disabled {
+        background-color: #cccccc; /* 禁用时的背景颜色 */
+        cursor: not-allowed; /* 鼠标指针变为禁止图标 */
+    }
+</style>
+</html>

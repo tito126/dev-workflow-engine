@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日志分析报告 - ms_all.log.2026-02-12.152</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .subtitle { font-size: 1.1em; opacity: 0.8; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section-title {
+            font-size: 1.8em;
+            color: #1a1a2e;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+        .info-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table td { padding: 12px 15px; border-bottom: 1px solid #e0e0e0; }
+        .info-table td:first-child { font-weight: bold; color: #1a1a2e; width: 150px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-card.danger { border-left: 5px solid #e74c3c; }
+        .stat-card.warning { border-left: 5px solid #f39c12; }
+        .stat-card.info { border-left: 5px solid #3498db; }
+        .stat-card.success { border-left: 5px solid #27ae60; }
+        .stat-number { font-size: 2.5em; font-weight: bold; margin-bottom: 10px; }
+        .stat-card.danger .stat-number { color: #e74c3c; }
+        .stat-card.warning .stat-number { color: #f39c12; }
+        .stat-card.info .stat-number { color: #3498db; }
+        .stat-card.success .stat-number { color: #27ae60; }
+        .stat-label { color: #666; font-size: 1em; }
+        .error-item {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #e74c3c;
+        }
+        .error-item.warning { border-left-color: #f39c12; }
+        .error-item.info { border-left-color: #3498db; }
+        .error-title {
+            font-size: 1.2em;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .severity-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: bold;
+        }
+        .severity-high { background: #fee; color: #e74c3c; }
+        .severity-medium { background: #fff3cd; color: #856404; }
+        .severity-low { background: #d4edda; color: #155724; }
+        .error-meta { color: #666; margin-bottom: 10px; font-size: 0.95em; }
+        .error-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+        .suggestion-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        .suggestion-box h4 { color: #2e7d32; margin-bottom: 10px; }
+        .suggestion-box ul { margin-left: 20px; color: #555; }
+        .suggestion-box li { margin-bottom: 8px; }
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .performance-table th, .performance-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .performance-table th {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+        }
+        .performance-table tr:hover { background: #f5f5f5; }
+        .time-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .time-critical { background: #f8d7da; color: #721c24; }
+        .time-warning { background: #fff3cd; color: #856404; }
+        .time-normal { background: #d4edda; color: #155724; }
+        .improvement-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .improvement-box h4 { color: #1565c0; margin-bottom: 10px; }
+        .summary-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        .summary-box h3 { margin-bottom: 20px; font-size: 1.5em; }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .summary-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .summary-item h4 { color: #f39c12; margin-bottom: 15px; }
+        .summary-item ul { margin-left: 20px; }
+        .summary-item li { margin-bottom: 10px; line-height: 1.6; }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        .user-list { color: #666; font-size: 0.9em; }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 20px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 日志分析报告</h1>
+            <p class="subtitle">ms_all.log.2026-02-12.152 | 分析时间: 2026-02-27</p>
+        </div>
+        
+        <div class="content">
+            <!-- 基本信息 -->
+            <div class="section">
+                <h2 class="section-title">基本信息</h2>
+                <div class="info-card">
+                    <table class="info-table">
+                        <tr><td>日志文件</td><td>ms_all.log.2026-02-12.152</td></tr>
+                        <tr><td>日志行数</td><td>209,425 行</td></tr>
+                        <tr><td>日志时间范围</td><td>2026-02-12 14:25:04 起</td></tr>
+                        <tr><td>服务地址</td><td>129.10.26.3:9380</td></tr>
+                        <tr><td>慢接口阈值</td><td>1000ms</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 异常统计概览 -->
+            <div class="section">
+                <h2 class="section-title">异常统计概览</h2>
+                <div class="stats-grid">
+                    <div class="stat-card danger">
+                        <div class="stat-number">221</div>
+                        <div class="stat-label">ERROR 级别日志</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-number">54</div>
+                        <div class="stat-label">空指针异常</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-number">18</div>
+                        <div class="stat-label">SQL 错误</div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-number">28</div>
+                        <div class="stat-label">认证相关错误</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-number">16</div>
+                        <div class="stat-label">慢接口 (>1s)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 详细异常分析 -->
+            <div class="section">
+                <h2 class="section-title">详细异常分析</h2>
+                
+                <!-- 1. 业务日志发送失败 -->
+                <div class="error-item warning">
+                    <div class="error-title">
+                        <span>🟡 1. 业务日志发送终端失败</span>
+                        <span class="severity-badge severity-medium">中严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 51 次 | <strong>位置:</strong> AksoLoggerAppender</p>
+                    <p class="user-list"><strong>涉及用户:</strong> 刘晨、刘俊、褚一鸣、王舒洁、丁彩姣 等</p>
+                    <div class="error-details">
+                        --->>>> 业务日志 <<<<--- 发送终端 失败
+                    </div>
+                    <div class="suggestion-box">
+                        <h4>💡 建议</h4>
+                        <ul>
+                            <li>检查日志收集终端（如 Kafka、ES）的连接状态</li>
+                            <li>确认网络连通性和终端服务是否正常运行</li>
+                            <li>此错误不影响业务功能，但会导致日志丢失，影响问题排查</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 2. 参数校验错误 -->
+                <div class="error-item warning">
+                    <div class="error-title">
+                        <span>🟡 2. 业务参数校验错误</span>
+                        <span class="severity-badge severity-medium">中严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>错误码:</strong> WB2153100004 | <strong>出现次数:</strong> 32 次</p>
+                    <p class="error-meta"><strong>位置:</strong> InpatEncDomain</p>
+                    <div class="error-details">
+                        WB2153100004: 在区查询下需传入科室ID或病区ID
+                    </div>
+                    <div class="suggestion-box">
+                        <h4>💡 建议</h4>
+                        <ul>
+                            <li>检查前端调用时是否正确传递科室ID或病区ID参数</li>
+                            <li>排查是否存在特定场景下参数丢失的情况</li>
+                            <li>考虑在接口层增加参数默认值或更友好的错误提示</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 3. 远程服务调用失败 -->
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 3. 远程服务调用失败</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 28 次 | <strong>位置:</strong> AutoTagAlgorithmServiceImpl</p>
+                    <div class="error-details">
+                        没有获取到远程服务<br>
+                        标签算法远程服务调用失败
+                    </div>
+                    <div class="suggestion-box">
+                        <h4>💡 建议</h4>
+                        <ul>
+                            <li>检查标签算法服务（临床通用标签算法服务）是否正常运行</li>
+                            <li>确认服务注册中心的连接状态</li>
+                            <li>排查是否存在服务实例不足或负载过高的情况</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 4. 空指针异常 -->
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 4. NullPointerException 空指针异常</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 54 次（分布在多个类）</p>
+                    <p class="user-list"><strong>涉及用户:</strong> 王舒洁、丁彩姣、童佳欢、章琦 等</p>
+                    <div class="error-details">
+                        主要位置：<br>
+                        • InpatEncDomain (23次)<br>
+                        • QueryListPluginObject (10次)<br>
+                        • InpatientEncounterService (6次)<br>
+                        • BannerInfoHelperImpl (5次)
+                    </div>
+                    <div class="suggestion-box">
+                        <h4>💡 建议</h4>
+                        <ul>
+                            <li>重点排查 InpatEncDomain 类的空值处理逻辑</li>
+                            <li>检查 QueryListPluginObject 插件的数据校验</li>
+                            <li>建议增加防御性编程，对可能为空的对象进行判空处理</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 5. SQL 错误 -->
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 5. Oracle SQL 数据类型不一致</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>错误码:</strong> ORA-00932 | <strong>出现次数:</strong> 6 次</p>
+                    <p class="user-list"><strong>涉及用户:</strong> 王舒洁、张静</p>
+                    <div class="error-details">
+                        ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY<br>
+                        ES0060001: could not extract ResultSet
+                    </div>
+                    <div class="suggestion-box">
+                        <h4>💡 建议</h4>
+                        <ul>
+                            <li>检查 SQL 查询中是否存在 BINARY 类型与 NUMBER 类型的比较</li>
+                            <li>排查 Hibernate 实体映射配置是否正确</li>
+                            <li>可能是某个字段类型在数据库和代码中定义不一致</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 6. 认证过期 -->
+                <div class="error-item warning">
+                    <div class="error-title">
+                        <span>🟡 6. 认证过期错误</span>
+                        <span class="severity-badge severity-medium">中严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 23 次</p>
+                    <p class="user-list"><strong>涉及用户:</strong> 韩丽娟、李欣峰、刁苗苗、章宇杰、吴泽云 等</p>
+                    <div class="error-details">
+                        认证过期,请重新刷新
+                    </div>
+                    <div class="suggestion-box">
+                        <h4>💡 建议</h4>
+                        <ul>
+                            <li>检查 Token 过期时间配置是否合理</li>
+                            <li>考虑实现 Token 自动刷新机制</li>
+                            <li>在前端增加 Token 过期的友好提示和自动跳转登录</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 性能问题分析 -->
+            <div class="section">
+                <h2 class="section-title">性能问题分析</h2>
+                <p style="margin-bottom: 20px; color: #666;">以下接口响应时间超过 1 秒，需要关注性能优化：</p>
+                
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>接口路径</th>
+                            <th>最大耗时</th>
+                            <th>平均耗时</th>
+                            <th>出现次数</th>
+                            <th>涉及用户</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/api/v1/.../inpatient_exchange_bed/query/by_example</td>
+                            <td><span class="time-badge time-critical">17,152ms</span></td>
+                            <td>16,334ms</td>
+                            <td>3次</td>
+                            <td>王梦娇</td>
+                        </tr>
+                        <tr>
+                            <td>/api/v1/.../encounter_tag_data/refresh</td>
+                            <td><span class="time-badge time-warning">2,525ms</span></td>
+                            <td>2,363ms</td>
+                            <td>3次</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>/api/v1/.../current_doctor_nurse/query/by_example</td>
+                            <td><span class="time-badge time-warning">2,257ms</span></td>
+                            <td>2,257ms</td>
+                            <td>1次</td>
+                            <td>张祥</td>
+                        </tr>
+                        <tr>
+                            <td>/api/v2/nis/cli_order_doc/query/by_encounter_ids</td>
+                            <td><span class="time-badge time-warning">2,083ms</span></td>
+                            <td>2,083ms</td>
+                            <td>1次</td>
+                            <td>李萍</td>
+                        </tr>
+                        <tr>
+                            <td>/api/v1/.../inpat_basics_expense/query/by_encounter_id</td>
+                            <td><span class="time-badge time-warning">1,556ms</span></td>
+                            <td>1,158ms</td>
+                            <td>13次</td>
+                            <td>金晓东、刘俊 等</td>
+                        </tr>
+                        <tr>
+                            <td>/api/v1/.../banner_info/query/by_id</td>
+                            <td><span class="time-badge time-warning">1,480ms</span></td>
+                            <td>1,329ms</td>
+                            <td>4次</td>
+                            <td>毛诗昊、夏婷婷</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="suggestion-box" style="margin-top: 20px;">
+                    <h4>💡 性能优化建议</h4>
+                    <ul>
+                        <li><strong>inpatient_exchange_bed 接口（17秒+）：</strong>严重超时，需紧急优化。内部日志显示"调用住院中台获取可交换床位"耗时 17116ms，瓶颈在中台调用</li>
+                        <li><strong>inpat_basics_expense 接口：</strong>出现 13 次超时，影响面较广，建议优先排查</li>
+                        <li><strong>banner_info 接口：</strong>查询 banner 信息耗时较长，可能存在 N+1 查询问题</li>
+                        <li>建议检查数据库索引、增加缓存、优化 SQL 查询</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 日志改进建议 -->
+            <div class="section">
+                <h2 class="section-title">📋 日志改进建议</h2>
+                <div class="improvement-box">
+                    <h4>🔧 以下改进将提升日志分析价值</h4>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>接口入参缺失：</strong>慢接口日志只记录了耗时和路径，没有请求参数。建议在 RestAop 中增加入参日志，便于分析"同一接口不同参数性能差异"（如 dataSourceType=1 vs dataSourceType=3）</li>
+                        <li><strong>错误日志缺少业务上下文：</strong>NullPointerException 只有堆栈，没有触发时的业务数据（患者ID、操作类型等），排查困难。建议在 catch 块中记录关键业务参数</li>
+                        <li><strong>traceId 部分缺失：</strong>部分错误日志的 traceId 为空，影响调用链追踪。建议检查异步线程的上下文传递</li>
+                        <li><strong>日志级别不统一：</strong>部分业务错误使用 ERROR 级别，部分使用 WARN，建议统一规范</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 总结与建议 -->
+            <div class="section">
+                <h2 class="section-title">总结与建议</h2>
+                <div class="summary-box">
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <h4>🔴 高优先级问题</h4>
+                            <ul>
+                                <li><strong>inpatient_exchange_bed 接口：</strong>响应时间 17 秒，严重影响用户体验，需紧急优化</li>
+                                <li><strong>远程服务调用失败：</strong>标签算法服务不可用，影响相关功能</li>
+                                <li><strong>ORA-00932 SQL 错误：</strong>数据类型不一致，需检查实体映射</li>
+                            </ul>
+                        </div>
+                        <div class="summary-item">
+                            <h4>🟡 中优先级问题</h4>
+                            <ul>
+                                <li><strong>空指针异常：</strong>54 次，分布在多个类，需逐一排查</li>
+                                <li><strong>参数校验错误：</strong>前端调用参数不完整</li>
+                                <li><strong>认证过期：</strong>Token 刷新机制待优化</li>
+                            </ul>
+                        </div>
+                        <div class="summary-item">
+                            <h4>📊 监控建议</h4>
+                            <ul>
+                                <li>对 ERROR 级别日志增加实时告警</li>
+                                <li>对响应时间 >1s 的接口进行监控</li>
+                                <li>定期生成日志分析报告，跟踪问题收敛情况</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>报告生成时间: 2026-02-27 | 日志分析系统 v1.0 | 基于 AI 智能分析</p>
+        </div>
+    </div>
+</body>
+</html>

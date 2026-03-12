@@ -1,0 +1,2083 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日志分析报告 - 乐山市人民医院 2026-03-11</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .subtitle { font-size: 1.1em; opacity: 0.8; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section-title {
+            font-size: 1.8em;
+            color: #1a1a2e;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+        .info-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table td { padding: 12px 15px; border-bottom: 1px solid #e0e0e0; }
+        .info-table td:first-child { font-weight: bold; color: #1a1a2e; width: 180px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .stat-card.danger { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .stat-card.warning { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333; }
+        .stat-number { font-size: 2.5em; font-weight: bold; margin-bottom: 10px; }
+        .stat-label { font-size: 1em; opacity: 0.9; }
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .performance-table th, .performance-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .performance-table th {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+        }
+        .performance-table tr:hover { background: #f5f5f5; }
+        .error-item {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .error-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+        }
+        .severity-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+        .severity-high { background: #f8d7da; color: #721c24; }
+        .severity-medium { background: #fff3cd; color: #856404; }
+        .severity-low { background: #d4edda; color: #155724; }
+        .error-meta { margin: 8px 0; color: #666; }
+        .error-details {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+        .trace-list {
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .trace-list h5 { color: #1565c0; margin-bottom: 10px; }
+        .trace-list ul { list-style: none; }
+        .trace-list li { margin: 8px 0; }
+        .trace-id {
+            background: #fff;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #1565c0;
+        }
+        .trace-time { color: #666; font-size: 0.9em; margin-left: 10px; }
+        .suggestion-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        .suggestion-box h4 { color: #1565c0; margin-bottom: 10px; }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 日志分析报告</h1>
+            <p class="subtitle">乐山市人民医院 | 2026-03-11 16:22~16:32</p>
+        </div>
+        
+        <div class="content">
+            <!-- 基本信息 -->
+            <div class="section">
+                <h2 class="section-title">基本信息</h2>
+                <div class="info-card">
+                    <table class="info-table">
+                        <tr><td>医院名称</td><td>乐山市人民医院</td></tr>
+                        <tr><td>服务名称</td><td>病区护士站</td></tr>
+                        <tr><td>分析日志量</td><td>98,924 条</td></tr>
+                        <tr><td>慢接口阈值</td><td>1000ms</td></tr>
+                        <tr><td>生成时间</td><td>2026-03-11T17:45:51.007724</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 异常统计概览 -->
+            <div class="section">
+                <h2 class="section-title">异常统计概览</h2>
+                <div class="stats-grid">
+                    <div class="stat-card danger">
+                        <div class="stat-number">1373</div>
+                        <div class="stat-label">ERROR 总数</div>
+                    </div>
+
+                    <div class="stat-card warning">
+                        <div class="stat-number">300</div>
+                        <div class="stat-label">空指针异常</div>
+                    </div>
+
+                    <div class="stat-card warning">
+                        <div class="stat-number">256</div>
+                        <div class="stat-label">认证/权限问题</div>
+                    </div>
+
+                    <div class="stat-card warning">
+                        <div class="stat-number">214</div>
+                        <div class="stat-label">连接异常</div>
+                    </div>
+
+                    <div class="stat-card danger">
+                        <div class="stat-number">48</div>
+                        <div class="stat-label">慢接口类型</div>
+                    </div>
+                </div>
+                
+                <!-- 错误分类详细表格 -->
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #1a1a2e;">错误分类详情</h3>
+
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>错误类型</th>
+                            <th>出现次数</th>
+                            <th>占比</th>
+                            <th>优化建议</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><strong>空指针异常</strong></td>
+                            <td>300</td>
+                            <td>21.8%</td>
+                            <td><span style="color: #1565c0;">💡 检查对象是否为空，添加空值校验</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>认证/权限问题</strong></td>
+                            <td>256</td>
+                            <td>18.6%</td>
+                            <td><span style="color: #1565c0;">💡 检查token是否过期，确认用户权限配置</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>连接异常</strong></td>
+                            <td>214</td>
+                            <td>15.6%</td>
+                            <td><span style="color: #1565c0;">💡 检查网络连接，确认目标服务是否正常</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>参数校验失败</strong></td>
+                            <td>211</td>
+                            <td>15.4%</td>
+                            <td><span style="color: #1565c0;">💡 检查请求参数是否完整，确认参数格式正确</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>业务逻辑错误</strong></td>
+                            <td>154</td>
+                            <td>11.2%</td>
+                            <td><span style="color: #1565c0;">💡 需要查看详细日志进行分析</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>其他异常</strong></td>
+                            <td>124</td>
+                            <td>9.0%</td>
+                            <td><span style="color: #1565c0;">💡 需要查看详细日志进行分析</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>JSON解析错误</strong></td>
+                            <td>87</td>
+                            <td>6.3%</td>
+                            <td><span style="color: #1565c0;">💡 检查JSON格式是否正确，确认数据结构</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>SQL错误</strong></td>
+                            <td>27</td>
+                            <td>2.0%</td>
+                            <td><span style="color: #1565c0;">💡 检查SQL语句语法，确认数据库连接正常</span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- 详细异常分析 -->
+            <div class="section">
+                <h2 class="section-title">详细异常分析</h2>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 1. 认证/权限问题</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 99 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.r.f.HttpCharacterEncodingFilter</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>认证</code></p>
+
+                    <div class="error-details">认证过期,请重新刷新</div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查token是否过期，确认用户权限配置</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 2. 连接异常</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 60 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.i.t.i.AutoTagAlgorithmServiceImpl</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>远程服务</code></p>
+
+                    <div class="error-details">没有获取到远程服务</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">00c582313f1c48e6b6695320108f9649</span> <span class="trace-time">2026-03-11 16:27</span></li>
+
+                            <li><span class="trace-id">00d8040f5ca44f5b88b48e0ee5ce18a1</span> <span class="trace-time">2026-03-11 16:26</span></li>
+
+                            <li><span class="trace-id">01c8f97fbb7a47abb7052ff9ecaf99e7</span> <span class="trace-time">2026-03-11 16:26</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查网络连接，确认目标服务是否正常</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 3. 参数校验失败</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 52 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.i.d.InpatEncDomain</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>需传入</code></p>
+
+                    <div class="error-details">WB2153100004:在区查询下需传入科室ID或病区ID</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">00d704eef93749e3b775df47404afe2b</span> <span class="trace-time">2026-03-11 16:23</span></li>
+
+                            <li><span class="trace-id">019034d2d8454dc0811a77deb88b902f</span> <span class="trace-time">2026-03-11 16:24</span></li>
+
+                            <li><span class="trace-id">01ded24e382e4dfa9f9aa1f8a2166597</span> <span class="trace-time">2026-03-11 16:29</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查请求参数是否完整，确认参数格式正确</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 4. 认证/权限问题</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 48 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.i.s.InpatientEncounterService</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>token</code></p>
+
+                    <div class="error-details">[appid:9430],[appName:winning-winex-ipt-pbc]-------------------------------    at com.winning.clinical.diagnosis.inpatient.persistence.repository.CliDiagnosisQueryRepoImpl.queryPatientsDiagnosis:132    at com.winning.clinical.diagnosis.inpatient.domain.service.CliPatientDiagnosisQueryService.queryPatientsDiagnosis:216    at com.winning.clinical.diagnosis.inpatient.rest.CliPatientDiagnosisQueryRpcServiceImpl.queryDiagnosisByExample:82    at com.winning.clinical.diagnosis.inpatient.rest.aop.Databa</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">04ca3ff6a7b44e7a829716d56953065b</span> <span class="trace-time">2026-03-11 16:31</span></li>
+
+                            <li><span class="trace-id">0590a1a36bc844b6990002e30dbf5acd</span> <span class="trace-time">2026-03-11 16:27</span></li>
+
+                            <li><span class="trace-id">0ba6d0b58e154f018816b735b6509ab7</span> <span class="trace-time">2026-03-11 16:31</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查token是否过期，确认用户权限配置</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 5. 业务逻辑错误</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 42 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.c.i.e.w.h.i.InpatientEncounterQueryHelperImpl</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>encounterId</code></p>
+
+                    <div class="error-details">查询费用信息错误，encounterId=408442460585150464</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">03d8d9c89797413ebbd371624789a3c4</span> <span class="trace-time">2026-03-11 16:28</span></li>
+
+                            <li><span class="trace-id">04f4687c7a9e4835932ef7ef65580e13</span> <span class="trace-time">2026-03-11 16:26</span></li>
+
+                            <li><span class="trace-id">0c940b596c04443aaf63aae99c075005</span> <span class="trace-time">2026-03-11 16:26</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查业务数据完整性，确认业务规则配置</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 6. 空指针异常</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 36 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.b.e.i.p.q.b.QueryCountPluginObject</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>\bnull\b</code></p>
+
+                    <div class="error-details">null</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">01b0779fd15d40b2ad0383cbb1735d27</span> <span class="trace-time">2026-03-11 16:31</span></li>
+
+                            <li><span class="trace-id">030c0716492c4271aec3f7c50651a3b9</span> <span class="trace-time">2026-03-11 16:26</span></li>
+
+                            <li><span class="trace-id">06acef02f12a48cea0f56dfb4b3efeec</span> <span class="trace-time">2026-03-11 16:27</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查对象是否为空，添加空值校验</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 7. JSON解析错误</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 36 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.c.i.e.w.h.i.InpatientEncounterLiteHelperImpl</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>unparseable</code></p>
+
+                    <div class="error-details">Unparseable date: 1943-02-01 00:00</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">0207454ec59f4e36980213c2f34e71bc</span> <span class="trace-time">2026-03-11 16:26</span></li>
+
+                            <li><span class="trace-id">0226b165fc5b439ea381097599bcad08</span> <span class="trace-time">2026-03-11 16:29</span></li>
+
+                            <li><span class="trace-id">02f1513d85c14502baa5d0d4bda1b728</span> <span class="trace-time">2026-03-11 16:25</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查JSON格式是否正确，确认数据结构</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 8. 空指针异常</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 33 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.i.d.InpatEncDomain</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>\bnull\b</code></p>
+
+                    <div class="error-details">null</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">02c71f608033467f848cd6234e8a4959</span> <span class="trace-time">2026-03-11 16:31</span></li>
+
+                            <li><span class="trace-id">03d7eb7b46ee4f8ebabed94fdf8211bd</span> <span class="trace-time">2026-03-11 16:28</span></li>
+
+                            <li><span class="trace-id">058d66b566514ed7aa81efcaabfaddce</span> <span class="trace-time">2026-03-11 16:31</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查对象是否为空，添加空值校验</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟡 9. 空指针异常</span>
+                        <span class="severity-badge severity-medium">中等严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 23 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.e.i.p.q.b.QueryListPluginObject</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>\bnull\b</code></p>
+
+                    <div class="error-details">null</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">00f087899f4e4a3792d55184f0f13f1f</span> <span class="trace-time">2026-03-11 16:25</span></li>
+
+                            <li><span class="trace-id">03395ee05aff4202b1c44805fb74de20</span> <span class="trace-time">2026-03-11 16:26</span></li>
+
+                            <li><span class="trace-id">078f67755be54a21975054bf604a84a5</span> <span class="trace-time">2026-03-11 16:25</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查对象是否为空，添加空值校验</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟡 10. 其他异常</span>
+                        <span class="severity-badge severity-medium">中等严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 18 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.b.a.l.s.AksoLoggerAppender</p>
+
+                    <div class="error-details">--->>>> 业务日志 <<<<--- 发送终端 失败</div>
+
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">01b9c0611d3c4b1184eee5d737693775</span> <span class="trace-time">2026-03-11 16:24</span></li>
+
+                            <li><span class="trace-id">0ba77b5f5466409bb1bd31255f6d1a63</span> <span class="trace-time">2026-03-11 16:29</span></li>
+
+                            <li><span class="trace-id">0e14fdd9b20b49bcbc7c81a6e77debf6</span> <span class="trace-time">2026-03-11 16:31</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>需要查看详细日志进行分析</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 慢接口分析 -->
+            <div class="section">
+                <h2 class="section-title">慢接口分析</h2>
+                <p style="margin-bottom: 20px; color: #666;">共发现 48 种慢接口，累计 507 次慢调用</p>
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>接口路径</th>
+                            <th>调用次数</th>
+                            <th>最大耗时</th>
+                            <th>平均耗时</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><code>/api/v1/execution_aggregate/ipt/clinical_order/sync_call_exec_order</code></td>
+                            <td>1</td>
+                            <td><span class="time-badge time-critical">30013ms</span></td>
+                            <td><span class="time-badge time-warning">30013ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_finance_fee_nurse/inpatient_bill/bill_by_encounter_id</code></td>
+                            <td>16</td>
+                            <td><span class="time-badge time-critical">13500ms</span></td>
+                            <td><span class="time-badge time-warning">5510ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v2/nis/cli_order_doc/query/by_encounter_ids</code></td>
+                            <td>15</td>
+                            <td><span class="time-badge time-critical">6046ms</span></td>
+                            <td><span class="time-badge time-warning">2428ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/nis/cli_order_def/query/by_encounter_ids</code></td>
+                            <td>34</td>
+                            <td><span class="time-badge time-critical">5495ms</span></td>
+                            <td><span class="time-badge time-warning">1994ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/fill_dispense_list/query/by_example</code></td>
+                            <td>10</td>
+                            <td><span class="time-badge time-critical">5426ms</span></td>
+                            <td><span class="time-badge time-warning">5134ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/ward_stats_mobile_exe/statistics</code></td>
+                            <td>2</td>
+                            <td><span class="time-badge time-critical">5363ms</span></td>
+                            <td><span class="time-badge time-warning">5353ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_finance_fee_nurse/clinical_order/inpatient_bill/cancel</code></td>
+                            <td>1</td>
+                            <td><span class="time-badge time-critical">3841ms</span></td>
+                            <td><span class="time-badge time-warning">3841ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id</code></td>
+                            <td>22</td>
+                            <td><span class="time-badge time-critical">3002ms</span></td>
+                            <td><span class="time-badge time-warning">1390ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v3/mobile_nurse_app/order_specimen_blood_in_band_first/query/by_barcode</code></td>
+                            <td>6</td>
+                            <td><span class="time-badge time-critical">2855ms</span></td>
+                            <td><span class="time-badge time-warning">2289ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_inpatient_encounter/encounter_bed_list_new_count/query/by_example</code></td>
+                            <td>7</td>
+                            <td><span class="time-badge time-critical">2847ms</span></td>
+                            <td><span class="time-badge time-warning">1350ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/execution_aggregate/ipt/cli_order_operate/validate</code></td>
+                            <td>1</td>
+                            <td><span class="time-badge time-critical">2844ms</span></td>
+                            <td><span class="time-badge time-warning">2844ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/exec_order_list_pageable/query/by_example</code></td>
+                            <td>20</td>
+                            <td><span class="time-badge time-critical">2784ms</span></td>
+                            <td><span class="time-badge time-warning">1350ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/specimen_info_list/query/by_example</code></td>
+                            <td>38</td>
+                            <td><span class="time-badge time-critical">2686ms</span></td>
+                            <td><span class="time-badge time-warning">1538ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/specimen/collect/batch</code></td>
+                            <td>2</td>
+                            <td><span class="time-badge time-critical">2686ms</span></td>
+                            <td><span class="time-badge time-warning">2112ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_inpatient_encounter/exec_nurse_message/select/by_ward_id</code></td>
+                            <td>25</td>
+                            <td><span class="time-badge time-critical">2591ms</span></td>
+                            <td><span class="time-badge time-warning">1552ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split</code></td>
+                            <td>19</td>
+                            <td><span class="time-badge time-critical">2456ms</span></td>
+                            <td><span class="time-badge time-warning">1412ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/receive_blood_List/query/by_example</code></td>
+                            <td>2</td>
+                            <td><span class="time-badge time-critical">2439ms</span></td>
+                            <td><span class="time-badge time-warning">2372ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_inpatient_encounter/patient_list/query/by_example</code></td>
+                            <td>45</td>
+                            <td><span class="time-badge time-critical">2369ms</span></td>
+                            <td><span class="time-badge time-warning">1239ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/encounter_inpatient/encounter_list_count/query/by_example_clini</code></td>
+                            <td>13</td>
+                            <td><span class="time-badge time-critical">2360ms</span></td>
+                            <td><span class="time-badge time-warning">1374ms</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/personal_specimen_info_list/query/by_barcode</code></td>
+                            <td>3</td>
+                            <td><span class="time-badge time-critical">2118ms</span></td>
+                            <td><span class="time-badge time-warning">1933ms</span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 慢接口 Trace 详情 -->
+            <div class="section">
+                <h2 class="section-title">慢接口 Trace 详情</h2>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 1. <code>/api/v1/execution_aggregate/ipt/clinical_order/sync_call_exec_order</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 1 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 30013ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 30013ms</p>
+                    <p class="error-meta"><strong>涉及 trace:</strong> 1 个</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">3c19f6cf520343ad9276d265056c48ed</span>
+                                <span class="trace-time">2026-03-11 16:31:44 / 30013ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 1 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 30000ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:31:14,792<br>
+                                <code>c.w.b.e.o.i.r.s.WardExecOrderItemRpcServiceImpl</code><br>
+                                <span style="color: #666;">查询执exec_order_item信息 执行时间=[2]ms</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:31:44,792<br>
+                                <code>c.w.a.e.o.i.s.i.ClinicalOrderSplitServiceImpl</code><br>
+                                <span style="color: #666;">医嘱同步撤回，执行单信息不存在，强制睡眠30秒，重新获取执行单信息，cliOrderId:[487269700423022592, 487269687538120710, 48726970042302</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.e.o.i.r.s.WardExecOrderItemRpcServiceImpl</code> 和 <code>c.w.a.e.o.i.s.i.ClinicalOrderSplitServiceImpl</code> 之间耗时 30000ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>调用链耗时拆解</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>外部接口：30013ms</li>
+
+                            <li>外部接口：712ms</li>
+
+                            <li>数据库查询：370ms</li>
+
+                            <li>外部接口：286ms</li>
+
+                            <li>数据库查询：38ms</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>主要瓶颈：外部接口耗时 30013ms (100.0%)</li>
+
+                            <li>建议：检查网络延迟，考虑异步调用或添加超时控制</li>
+
+                            <li>外部接口累计耗时 31013ms (103.3%)，出现 5 次，建议重点优化</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 2. <code>/api/v1/app_finance_fee_nurse/inpatient_bill/bill_by_encounter_id</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 16 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 13500ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 5510ms</p>
+                    <p class="error-meta"><strong>涉及 trace:</strong> 16 个</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">4f6083c1b16046efb59d1278ff61bf6b</span>
+                                <span class="trace-time">2026-03-11 16:22:22 / 13500ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">7c8a3891bd524a28b4d17ab3247a2c54</span>
+                                <span class="trace-time">2026-03-11 16:26:35 / 10024ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">8a239ef425a2496fac213881c268d9c5</span>
+                                <span class="trace-time">2026-03-11 16:22:56 / 8395ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">06a47999c37b4c8f9ee1d2563446a254</span>
+                                <span class="trace-time">2026-03-11 16:25:13 / 6456ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">ea62d5c674c94fafb0e1023620a9427f</span>
+                                <span class="trace-time">2026-03-11 16:23:25 / 4919ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 13 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 3290ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:13,765<br>
+                                <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code><br>
+                                <span style="color: #666;">调用北京至诚接口请求参数：<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bjz="</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:17,055<br>
+                                <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code><br>
+                                <span style="color: #666;">北京至诚库存扣减成功</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code> 和 <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code> 之间耗时 3290ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #2: 3123ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:09,584<br>
+                                <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code><br>
+                                <span style="color: #666;">调用北京至诚接口请求参数：<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bjz="</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:12,707<br>
+                                <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code><br>
+                                <span style="color: #666;">北京至诚库存扣减成功</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code> 和 <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code> 之间耗时 3123ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #3: 2007ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:18,304<br>
+                                <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code><br>
+                                <span style="color: #666;">调用北京至诚接口请求参数：<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bjz="</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:20,311<br>
+                                <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code><br>
+                                <span style="color: #666;">北京至诚库存扣减正常返回</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code> 和 <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code> 之间耗时 2007ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #4: 2001ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:20,648<br>
+                                <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code><br>
+                                <span style="color: #666;">调用北京至诚接口请求参数：<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bjz="</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:22,650<br>
+                                <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code><br>
+                                <span style="color: #666;">组装报文失败：EB11200005:北京至诚库存扣减失败:User-Defined Exceptionerror,条码号已全部使用：0000000722985,0000000722985,000000</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code> 和 <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code> 之间耗时 2001ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #5: 544ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:17,060<br>
+                                <code>c.w.e.c.ICacheMultiLevel</code><br>
+                                <span style="color: #666;">ICacheMultiLevel winningRedisLocalCacheTemplate 实例化success,获取本地画缓存数据 cacheKey =[encounter:general:co</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:17,604<br>
+                                <code>c.w.a.f.f.n.s.i.w.RepairInpBillImpl</code><br>
+                                <span style="color: #666;">++++++++++++组装更新费用明细号参数！</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.e.c.ICacheMultiLevel</code> 和 <code>c.w.a.f.f.n.s.i.w.RepairInpBillImpl</code> 之间耗时 544ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>调用链耗时拆解</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>外部接口：13500ms</li>
+
+                            <li>数据库查询：204ms</li>
+
+                            <li>数据库查询：141ms</li>
+
+                            <li>数据库查询：63ms</li>
+
+                            <li>数据库查询：50ms</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>主要瓶颈：外部接口耗时 13500ms (100.0%)</li>
+
+                            <li>建议：检查网络延迟，考虑异步调用或添加超时控制</li>
+
+                            <li>外部接口累计耗时 13504ms (100.0%)，出现 2 次，建议重点优化</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 3. <code>/api/v2/nis/cli_order_doc/query/by_encounter_ids</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 15 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 6046ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 2428ms</p>
+                    <p class="error-meta"><strong>涉及 trace:</strong> 15 个</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">94b5bd17110b4dc685a4cad3c4e395a2</span>
+                                <span class="trace-time">2026-03-11 16:22:35 / 6046ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">b5ef0dea402f4d9da753b52fc55302f1</span>
+                                <span class="trace-time">2026-03-11 16:22:52 / 5823ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">4116cebb37114676b6fbda6a33fa182f</span>
+                                <span class="trace-time">2026-03-11 16:22:35 / 5508ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">3e3ea29da1c84e97bb6dbe67dad9e511</span>
+                                <span class="trace-time">2026-03-11 16:30:07 / 2529ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">52103a6815c149258e5cdd266b270539</span>
+                                <span class="trace-time">2026-03-11 16:27:08 / 2387ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 12 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 704ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:30,360<br>
+                                <code>c.w.a.e.o.i.r.m.ExecClinicalMaterialMdmRpcService</code><br>
+                                <span style="color: #666;">查询药品信息 耗时= [518]</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:31,064<br>
+                                <code>L.TRANSACTION</code><br>
+                                <span style="color: #666;">SUCCESS|CompletableFuture.allOf|异步执行阻塞===>>>|1,223|</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.a.e.o.i.r.m.ExecClinicalMaterialMdmRpcService</code> 和 <code>L.TRANSACTION</code> 之间耗时 704ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #2: 583ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:32,547<br>
+                                <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code><br>
+                                <span style="color: #666;">根据发药计划标识查询实际发药生产批号列表发药计划标识：[487089891612065814,487089891612065813,487089891612065810,487089891612065</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:33,130<br>
+                                <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code><br>
+                                <span style="color: #666;">调用药房查询实际发药生产批号返回结果数据量：3372</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code> 和 <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code> 之间耗时 583ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #3: 582ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:34,489<br>
+                                <code>c.w.a.m.e.s.r.InpMedDispenseRequestEndPointImpl</code><br>
+                                <span style="color: #666;">根据执行计划标识查询领药申请明细V3数据量：837</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:35,071<br>
+                                <code>L.TRANSACTION</code><br>
+                                <span style="color: #666;">SUCCESS|com.winning.amts.execution.order.inpatient.service.impl.CliOrderDocServiceImpl:flatSourceDat</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.a.m.e.s.r.InpMedDispenseRequestEndPointImpl</code> 和 <code>L.TRANSACTION</code> 之间耗时 582ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #4: 467ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:29,178<br>
+                                <code>L.TRANSACTION</code><br>
+                                <span style="color: #666;">SUCCESS|===>>>ExecCliMdmRpcService#queryFrequency2 |方法执行时间 |64|</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:29,645<br>
+                                <code>c.w.a.e.o.i.r.c.ExecCliBmtsRpcService</code><br>
+                                <span style="color: #666;">============>>> 根据就诊号查询医嘱单号：执行时间 = [467] ms 医嘱数量 = [5393]</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>L.TRANSACTION</code> 和 <code>c.w.a.e.o.i.r.c.ExecCliBmtsRpcService</code> 之间耗时 467ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #5: 457ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:32,090<br>
+                                <code>c.w.b.m.e.s.r.d.s.i.DispensePlanDomainServiceImpl</code><br>
+                                <span style="color: #666;">========== query planRel end.</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:32,547<br>
+                                <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code><br>
+                                <span style="color: #666;">查询生产批号药品调用系统模式：60</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.m.e.s.r.d.s.i.DispensePlanDomainServiceImpl</code> 和 <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code> 之间耗时 457ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>调用链耗时拆解</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>外部接口：548ms</li>
+
+                            <li>数据库查询：529ms</li>
+
+                            <li>外部接口：484ms</li>
+
+                            <li>数据库查询：335ms</li>
+
+                            <li>外部接口：118ms</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>主要瓶颈：外部接口耗时 548ms (9.1%)</li>
+
+                            <li>建议：检查网络延迟，考虑异步调用或添加超时控制</li>
+
+                            <li>有 3876ms (64.1%) 的耗时未能识别，建议查看完整日志或提供反馈帮助改进分析</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 4. <code>/api/v1/nis/cli_order_def/query/by_encounter_ids</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 34 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 5495ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 1994ms</p>
+                    <p class="error-meta"><strong>涉及 trace:</strong> 34 个</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">e0b66254954a403d861ecc1f253de79f</span>
+                                <span class="trace-time">2026-03-11 16:22:26 / 5495ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">f2e04de3f2e34c008d902136d6b1a5fc</span>
+                                <span class="trace-time">2026-03-11 16:22:44 / 5063ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">7b20f261982d4daab731c1fed152377f</span>
+                                <span class="trace-time">2026-03-11 16:22:28 / 4863ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">3b4e01b7c95a4404b748dcecaa545c35</span>
+                                <span class="trace-time">2026-03-11 16:31:32 / 3229ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">a61e496ae983419a96c3d0155c32fba9</span>
+                                <span class="trace-time">2026-03-11 16:30:34 / 2341ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 7 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 1808ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:22,931<br>
+                                <code>c.w.b.e.i.c.u.MultiThreadExecBatchUtil</code><br>
+                                <span style="color: #666;">执行时间是 [339] ms</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:24,739<br>
+                                <code>c.w.b.m.e.s.r.d.s.i.DispensePlanDomainServiceImpl</code><br>
+                                <span style="color: #666;">========== query planEntity end.</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.e.i.c.u.MultiThreadExecBatchUtil</code> 和 <code>c.w.b.m.e.s.r.d.s.i.DispensePlanDomainServiceImpl</code> 之间耗时 1808ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #2: 849ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:24,942<br>
+                                <code>c.w.b.m.e.s.r.d.s.i.DispensePlanDomainServiceImpl</code><br>
+                                <span style="color: #666;">========== query planRel end.</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:25,791<br>
+                                <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code><br>
+                                <span style="color: #666;">查询生产批号药品调用系统模式：60</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.m.e.s.r.d.s.i.DispensePlanDomainServiceImpl</code> 和 <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code> 之间耗时 849ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #3: 729ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:25,791<br>
+                                <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code><br>
+                                <span style="color: #666;">根据发药计划标识查询实际发药生产批号列表发药计划标识：[487089891612065814,487089891612065813,487089891612065810,487089891612065</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:26,520<br>
+                                <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code><br>
+                                <span style="color: #666;">调用药房查询实际发药生产批号返回结果数据量：4733</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code> 和 <code>c.w.a.m.e.s.s.r.InpMedSpecialMedAmtsService</code> 之间耗时 729ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #4: 432ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:21,125<br>
+                                <code>c.w.e.c.ICacheMultiLevel</code><br>
+                                <span style="color: #666;">ICacheMultiLevel winningRedisLocalCacheTemplate 实例化success,获取本地画缓存数据 cacheKey =[encounter:general:co</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:21,557<br>
+                                <code>c.w.a.e.o.i.r.c.ExecCliBmtsRpcService</code><br>
+                                <span style="color: #666;">============>>> 根据就诊号查询医嘱单号：执行时间 = [432] ms 医嘱数量 = [5394]</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.e.c.ICacheMultiLevel</code> 和 <code>c.w.a.e.o.i.r.c.ExecCliBmtsRpcService</code> 之间耗时 432ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #5: 182ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:22:22,152<br>
+                                <code>c.w.b.e.i.c.u.MultiThreadExecBatchUtil</code><br>
+                                <span style="color: #666;">执行时间是 [347] ms</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:22:22,334<br>
+                                <code>c.w.b.e.o.i.p.h.c.s.ICacheMultiLevel</code><br>
+                                <span style="color: #666;">==========>>>ICacheMultiLevel 命中本地缓存</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.e.i.c.u.MultiThreadExecBatchUtil</code> 和 <code>c.w.b.e.o.i.p.h.c.s.ICacheMultiLevel</code> 之间耗时 182ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>调用链耗时拆解</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>数据库查询：5495ms</li>
+
+                            <li>数据库查询：445ms</li>
+
+                            <li>数据库查询：67ms</li>
+
+                            <li>数据库查询：63ms</li>
+
+                            <li>数据库查询：50ms</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>主要瓶颈：数据库查询耗时 5495ms (100.0%)</li>
+
+                            <li>建议：检查SQL语句是否有优化空间，考虑添加索引或使用缓存</li>
+
+                            <li>数据库查询累计耗时 6194ms (112.7%)，出现 12 次，建议重点优化</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 5. <code>/api/v1/mobile_nurse_app/fill_dispense_list/query/by_example</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 10 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 5426ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 5134ms</p>
+                    <p class="error-meta"><strong>涉及 trace:</strong> 10 个</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">5073b3f1cd0841c2a6595d0a22b47732</span>
+                                <span class="trace-time">2026-03-11 16:23:30 / 5426ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">e65ba34b8bc745c3bf38b22ce48b6a2f</span>
+                                <span class="trace-time">2026-03-11 16:22:39 / 5268ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">29d3514596414168a01dd811cd53470c</span>
+                                <span class="trace-time">2026-03-11 16:24:34 / 5259ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">a930c55181e143efb5838c7a5be81829</span>
+                                <span class="trace-time">2026-03-11 16:24:34 / 5209ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">5af526c18c7c4deab553248ed542cd53</span>
+                                <span class="trace-time">2026-03-11 16:23:30 / 5153ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 1 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 5115ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:23:25,470<br>
+                                <code>c.w.b.n.m.s.o.i.BmtsFillPresServiceImpl</code><br>
+                                <span style="color: #666;">分页查询摆药配药记录查询到开启了配药的移动执行分类ID:[402858472687910913, 416987517075556352, 417690081334099969, 40284842461</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:23:30,585<br>
+                                <code>c.w.a.e.i.s.InpatientEncounterService</code><br>
+                                <span style="color: #666;">查询床卡列表入参：{"appSystemCode":951678,"encounterIdList":[486430858973970432,484981247389542400,4861860093</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.n.m.s.o.i.BmtsFillPresServiceImpl</code> 和 <code>c.w.a.e.i.s.InpatientEncounterService</code> 之间耗时 5115ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>调用链耗时拆解</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>数据库查询：5426ms</li>
+
+                            <li>数据库查询：362ms</li>
+
+                            <li>数据库查询：253ms</li>
+
+                            <li>数据库查询：57ms</li>
+
+                            <li>数据库查询：55ms</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>主要瓶颈：数据库查询耗时 5426ms (100.0%)</li>
+
+                            <li>建议：检查SQL语句是否有优化空间，考虑添加索引或使用缓存</li>
+
+                            <li>数据库查询累计耗时 6199ms (114.2%)，出现 11 次，建议重点优化</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 6. <code>/api/v1/mobile_nurse_app/ward_stats_mobile_exe/statistics</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 2 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 5363ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 5353ms</p>
+                    <p class="error-meta"><strong>涉及 trace:</strong> 2 个</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">2f3ae4c6181140cf81a772b5c5c8d77d</span>
+                                <span class="trace-time">2026-03-11 16:31:47 / 5363ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">62c91ee8f55d4b988d5904cf436c2db5</span>
+                                <span class="trace-time">2026-03-11 16:25:34 / 5343ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 3 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 5001ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:31:42,385<br>
+                                <code>c.w.b.n.m.s.o.i.MobileExeStatisticServiceImpl</code><br>
+                                <span style="color: #666;">病区-医嘱执行统计-分类统计数据：{399581201:[417185401240987648,417688565196963841],399670002:[417651692890957825],3</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:31:47,386<br>
+                                <code>c.w.b.n.m.s.o.i.MobileExeStatisticServiceImpl</code><br>
+                                <span style="color: #666;">病区-医嘱执行统计-统计数据：[{"execCount":390,"manualExecCount":26,"nisMobileClassId":402848424611921920,"noExecC</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.n.m.s.o.i.MobileExeStatisticServiceImpl</code> 和 <code>c.w.b.n.m.s.o.i.MobileExeStatisticServiceImpl</code> 之间耗时 5001ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #2: 222ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:31:47,387<br>
+                                <code>c.w.b.n.m.s.o.i.MobileExeStatisticServiceImpl</code><br>
+                                <span style="color: #666;">病区-医嘱执行统计-统计结果：[{"classStatsList":[{"count":15234,"execCount":10743,"execRate":0.7052,"manualExecCou</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:31:47,609<br>
+                                <code>o.s.c.o.FeignClientFactoryBean</code><br>
+                                <span style="color: #666;">For 'winning-winex-mdm-aaio' URL not provided. Will try picking an instance via load-balancing.</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.n.m.s.o.i.MobileExeStatisticServiceImpl</code> 和 <code>o.s.c.o.FeignClientFactoryBean</code> 之间耗时 222ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #3: 126ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:31:47,609<br>
+                                <code>o.s.c.o.FeignClientFactoryBean</code><br>
+                                <span style="color: #666;">For 'winning-winex-mdm-aaio' URL not provided. Will try picking an instance via load-balancing.</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:31:47,735<br>
+                                <code>c.w.b.a.r.r.RestAop</code><br>
+                                <span style="color: #666;">业务处理耗时:5363毫秒:/api/v1/mobile_nurse_app/ward_stats_mobile_exe/statistics</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>o.s.c.o.FeignClientFactoryBean</code> 和 <code>c.w.b.a.r.r.RestAop</code> 之间耗时 126ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>调用链耗时拆解</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>外部接口：5363ms</li>
+
+                            <li>外部接口：43ms</li>
+
+                            <li>外部接口：42ms</li>
+
+                            <li>数据库查询：8ms</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>主要瓶颈：外部接口耗时 5363ms (100.0%)</li>
+
+                            <li>建议：检查网络延迟，考虑异步调用或添加超时控制</li>
+
+                            <li>外部接口累计耗时 5448ms (101.6%)，出现 3 次，建议重点优化</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 7. <code>/api/v1/app_finance_fee_nurse/clinical_order/inpatient_bill/cancel</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 1 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 3841ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 3841ms</p>
+                    <p class="error-meta"><strong>涉及 trace:</strong> 1 个</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">fccd65e475274605aea9086cdbccd78a</span>
+                                <span class="trace-time">2026-03-11 16:25:03 / 3841ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 4 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 2800ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:25:00,186<br>
+                                <code>c.w.e.c.ICacheMultiLevel</code><br>
+                                <span style="color: #666;">ICacheMultiLevel winningRedisLocalCacheTemplate 实例化success,获取本地画缓存数据 cacheKey =[encounter:general:co</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:25:02,986<br>
+                                <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code><br>
+                                <span style="color: #666;">北京至诚库存扣减成功</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.e.c.ICacheMultiLevel</code> 和 <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code> 之间耗时 2800ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #2: 369ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:24:59,316<br>
+                                <code>c.w.b.m.e.c.EmployeeCacheServiceImpl</code><br>
+                                <span style="color: #666;">com.winning.business.mdm.employee.cache.EmployeeCacheService.getEmployeeByIds的结果集[{"birthDate":72115</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:24:59,685<br>
+                                <code>c.w.b.e.i.c.a.PartitionAop</code><br>
+                                <span style="color: #666;">分批执行开始</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.m.e.c.EmployeeCacheServiceImpl</code> 和 <code>c.w.b.e.i.c.a.PartitionAop</code> 之间耗时 369ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #3: 366ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:24:59,820<br>
+                                <code>c.w.e.c.ICacheMultiLevel</code><br>
+                                <span style="color: #666;">ICacheMultiLevel winningRedisLocalCacheTemplate 实例化success,获取本地画缓存数据 cacheKey =[encounter:general:co</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:25:00,186<br>
+                                <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code><br>
+                                <span style="color: #666;">调用北京至诚接口请求参数：<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bjz="</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.e.c.ICacheMultiLevel</code> 和 <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code> 之间耗时 366ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #4: 116ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:25:02,986<br>
+                                <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code><br>
+                                <span style="color: #666;">调用北京至诚接口返回参数：<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns2:C</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:25:03,102<br>
+                                <code>c.w.b.a.l.r.RecordRender</code><br>
+                                <span style="color: #666;">链路日志：fccd65e475274605aea9086cdbccd78a ---------  采样:true</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.a.f.f.n.s.i.T.ZcyyStockService</code> 和 <code>c.w.b.a.l.r.RecordRender</code> 之间耗时 116ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>调用链耗时拆解</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>外部接口：3841ms</li>
+
+                            <li>数据库查询：2193ms</li>
+
+                            <li>数据库查询：653ms</li>
+
+                            <li>数据库查询：364ms</li>
+
+                            <li>数据库查询：210ms</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>主要瓶颈：外部接口耗时 3841ms (100.0%)</li>
+
+                            <li>建议：检查网络延迟，考虑异步调用或添加超时控制</li>
+
+                            <li>外部接口累计耗时 3842ms (100.0%)，出现 3 次，建议重点优化</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 8. <code>/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 22 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 3002ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 1390ms</p>
+                    <p class="error-meta"><strong>涉及 trace:</strong> 22 个</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">80f377e13d194070add6697802407333</span>
+                                <span class="trace-time">2026-03-11 16:29:14 / 3002ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">cf69d2feab2b4af3bd4412ca33fd8c6d</span>
+                                <span class="trace-time">2026-03-11 16:29:14 / 2945ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">27c2fd5eea994f599955eb78c6966ce4</span>
+                                <span class="trace-time">2026-03-11 16:24:36 / 1901ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">e95d0798d94f4af08bae41268bdb9c2e</span>
+                                <span class="trace-time">2026-03-11 16:22:31 / 1638ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">a62794b30aca44708b893184ebaafed6</span>
+                                <span class="trace-time">2026-03-11 16:23:51 / 1433ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 2 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 2580ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:29:11,983<br>
+                                <code>c.w.a.f.f.n.c.u.SubscriberRpcUtil</code><br>
+                                <span style="color: #666;">根据【IAS FHIR】配置返回的协议结果：{"appid":"9690","blockInWarn":false,"data":{"bizDomainCode":376694,"exceptionN</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:29:14,563<br>
+                                <code>c.w.b.a.l.r.RecordRender</code><br>
+                                <span style="color: #666;">链路日志：80f377e13d194070add6697802407333 ---------  采样:true</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.a.f.f.n.c.u.SubscriberRpcUtil</code> 和 <code>c.w.b.a.l.r.RecordRender</code> 之间耗时 2580ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #2: 115ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:29:11,852<br>
+                                <code>c.w.b.m.e.c.EmployeeCacheServiceImpl</code><br>
+                                <span style="color: #666;">com.winning.business.mdm.employee.cache.EmployeeCacheService.getEmployeeByIds的结果集[{"birthDate":14227</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:29:11,967<br>
+                                <code>c.w.b.e.i.c.a.PartitionAop</code><br>
+                                <span style="color: #666;">分批执行开始</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.m.e.c.EmployeeCacheServiceImpl</code> 和 <code>c.w.b.e.i.c.a.PartitionAop</code> 之间耗时 115ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>调用链耗时拆解</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>数据库查询：3002ms</li>
+
+                            <li>数据库查询：550ms</li>
+
+                            <li>外部接口：266ms</li>
+
+                            <li>外部接口：114ms</li>
+
+                            <li>数据库查询：44ms</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>主要瓶颈：数据库查询耗时 3002ms (100.0%)</li>
+
+                            <li>建议：检查SQL语句是否有优化空间，考虑添加索引或使用缓存</li>
+
+                            <li>数据库查询累计耗时 3663ms (122.0%)，出现 10 次，建议重点优化</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 9. <code>/api/v3/mobile_nurse_app/order_specimen_blood_in_band_first/query/by_barcode</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 6 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 2855ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 2289ms</p>
+                    <p class="error-meta"><strong>涉及 trace:</strong> 6 个</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">cb411e661b504c708262bcca21330f4a</span>
+                                <span class="trace-time">2026-03-11 16:26:36 / 2855ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">2815288ad9e244048ce220a9e6492c17</span>
+                                <span class="trace-time">2026-03-11 16:28:16 / 2478ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">5d91a1c6989d4910a2b80a22a9c5f7c5</span>
+                                <span class="trace-time">2026-03-11 16:24:26 / 2361ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">b6d4ed6b68fc45dc93166d44763e693a</span>
+                                <span class="trace-time">2026-03-11 16:30:23 / 2338ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">d98b763fe76646c59f209e36df5a8b25</span>
+                                <span class="trace-time">2026-03-11 16:29:34 / 2277ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 1 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 2799ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:26:33,703<br>
+                                <code>c.w.b.e.m.n.s.m.s.i.BasSpecimenServiceImpl</code><br>
+                                <span style="color: #666;">查询出来的标本列表数据:[]</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:26:36,502<br>
+                                <code>c.w.b.a.l.r.RecordRender</code><br>
+                                <span style="color: #666;">链路日志：cb411e661b504c708262bcca21330f4a ---------  采样:false</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.e.m.n.s.m.s.i.BasSpecimenServiceImpl</code> 和 <code>c.w.b.a.l.r.RecordRender</code> 之间耗时 2799ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>调用链耗时拆解</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>数据库查询：2855ms</li>
+
+                            <li>数据库查询：108ms</li>
+
+                            <li>数据库查询：42ms</li>
+
+                            <li>数据库查询：40ms</li>
+
+                            <li>外部接口：40ms</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>主要瓶颈：数据库查询耗时 2855ms (100.0%)</li>
+
+                            <li>建议：检查SQL语句是否有优化空间，考虑添加索引或使用缓存</li>
+
+                            <li>数据库查询累计耗时 3084ms (108.0%)，出现 11 次，建议重点优化</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🐌 10. <code>/api/v1/app_inpatient_encounter/encounter_bed_list_new_count/query/by_example</code></span>
+                        <span class="severity-badge severity-medium">Top 慢接口</span>
+                    </div>
+                    <p class="error-meta"><strong>调用次数:</strong> 7 次</p>
+                    <p class="error-meta"><strong>最大耗时:</strong> 2847ms</p>
+                    <p class="error-meta"><strong>平均耗时:</strong> 1350ms</p>
+                    <p class="error-meta"><strong>涉及 trace:</strong> 7 个</p>
+
+                    <div class="trace-list">
+                        <h5>🔍 代表 trace</h5>
+                        <ul>
+
+                            <li>
+                                <span class="trace-id">62539f1494384ca8800ee3da122d299b</span>
+                                <span class="trace-time">2026-03-11 16:24:11 / 2847ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">177e18b923084d01824d98ef86f3aa7c</span>
+                                <span class="trace-time">2026-03-11 16:30:59 / 1159ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">45464764c36d428da9b9f85850ea4b50</span>
+                                <span class="trace-time">2026-03-11 16:27:34 / 1133ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">1220781105dc47dab26993009cf7d8a4</span>
+                                <span class="trace-time">2026-03-11 16:26:37 / 1125ms</span>
+                            </li>
+
+                            <li>
+                                <span class="trace-id">42d0eff7e7844f64bc0653dd79514422</span>
+                                <span class="trace-time">2026-03-11 16:22:45 / 1081ms</span>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box" style="background: #fff3cd; border: 2px solid #ffc107;">
+                        <h4>⏱️ 时间间隔分析 (发现 3 个间隔 > 100ms)</h4>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #1: 1802ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:24:10,163<br>
+                                <code>c.w.b.e.i.p.q.b.QueryCountPluginObject</code><br>
+                                <span style="color: #666;">已出区和出院全部患者计数耗时:-1040ms</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:24:11,965<br>
+                                <code>c.w.a.e.i.d.InpatEncDomain</code><br>
+                                <span style="color: #666;">查询入参{"appSystemCode":951677,"bedNo":"","deptId":408442711840737291,"fullName":"","imrn":"","inpatEnc</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.e.i.p.q.b.QueryCountPluginObject</code> 和 <code>c.w.a.e.i.d.InpatEncDomain</code> 之间耗时 1802ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #2: 542ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:24:09,602<br>
+                                <code>c.w.b.e.i.c.a.PartitionAop</code><br>
+                                <span style="color: #666;">异步分批执行开始，time=1773217449602</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:24:10,144<br>
+                                <code>c.w.b.e.i.c.a.PartitionAop</code><br>
+                                <span style="color: #666;">异步分批执行结束，time=1773217450144</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.e.i.c.a.PartitionAop</code> 和 <code>c.w.b.e.i.c.a.PartitionAop</code> 之间耗时 542ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                        <div style="background: white; border-radius: 5px; padding: 15px; margin: 10px 0;">
+                            <div style="font-weight: bold; color: #d63031; font-size: 1.2em; margin-bottom: 10px;">
+                                间隔 #3: 455ms
+                            </div>
+                            <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
+                                <strong>前一条:</strong> 2026-03-11 16:24:09,134<br>
+                                <code>c.w.b.e.i.p.q.b.QueryCountPluginObject</code><br>
+                                <span style="color: #666;">出院借床患者数：0</span>
+                            </div>
+                            <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
+                                <strong>后一条:</strong> 2026-03-11 16:24:09,589<br>
+                                <code>c.w.b.e.i.p.q.b.QueryCountPluginObject</code><br>
+                                <span style="color: #666;">出院本病区患者数：14309</span>
+                            </div>
+                            <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
+                                <strong>分析:</strong> 在 <code>c.w.b.e.i.p.q.b.QueryCountPluginObject</code> 和 <code>c.w.b.e.i.p.q.b.QueryCountPluginObject</code> 之间耗时 455ms，
+                                可能是数据库查询、远程调用或复杂计算导致。
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>调用链耗时拆解</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>数据库查询：2847ms</li>
+
+                            <li>数据库查询：388ms</li>
+
+                            <li>外部接口：117ms</li>
+
+                            <li>外部接口：67ms</li>
+
+                            <li>数据库查询：64ms</li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <ul style="margin-left: 20px; color: #333;">
+
+                            <li>主要瓶颈：数据库查询耗时 2847ms (100.0%)</li>
+
+                            <li>建议：检查SQL语句是否有优化空间，考虑添加索引或使用缓存</li>
+
+                            <li>数据库查询累计耗时 3359ms (118.0%)，出现 6 次，建议重点优化</li>
+
+                        </ul>
+                    </div>
+
+                </div>
+
+        </div>
+        
+        <div class="footer">
+            <p>报告生成时间: 2026-03-11 18:07:58</p>
+            <p>日志巡检工具 v2.0 | 支持中文分类和智能建议</p>
+        </div>
+    </div>
+</body>
+</html>

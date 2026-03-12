@@ -1,0 +1,50 @@
+{
+  "_template_k8s": {
+    "name": "医院名称",
+    "type": "k8s",
+    "description": "K8s 部署，通过 Grafana/Loki 查询日志",
+    "grafana": {
+      "url": "http://your-grafana:3000",
+      "datasource_id": 1
+    },
+    "services": {
+      "服务显示名": "app-label-name"
+    }
+  },
+  "_template_k8s_multi_cluster": {
+    "name": "医院名称（多集群）",
+    "type": "k8s",
+    "description": "K8s 多集群部署",
+    "grafana": {
+      "clusters": [
+        {
+          "name": "第一集群",
+          "url": "http://cluster1-grafana:3000",
+          "datasource_id": 1
+        },
+        {
+          "name": "第二集群",
+          "url": "http://cluster2-grafana:3000",
+          "datasource_id": 1
+        }
+      ]
+    },
+    "services": {
+      "服务显示名": "app-label-name"
+    }
+  },
+  "_template_tool_api": {
+    "name": "医院名称（工具组 API）",
+    "type": "tool_api",
+    "description": "通过工具组 API 拉取日志",
+    "toolApi": {
+      "baseUrl": "http://your-api-server:8089",
+      "appId": "your-app-id",
+      "envId": "your-env-id",
+      "nodeId": "your-node-id"
+    },
+    "services": {
+      "服务显示名": "service-name"
+    }
+  }
+}

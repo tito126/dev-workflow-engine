@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日志分析报告 - 桐乡市卫生健康局健康云 2026-03-10</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; padding: 40px; text-align: center; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .subtitle { font-size: 1.1em; opacity: 0.8; }
+        .content { padding: 40px; }
+        .section { margin-bottom: 40px; }
+        .section-title { font-size: 1.8em; color: #1a1a2e; border-left: 5px solid #667eea; padding-left: 15px; margin-bottom: 25px; }
+        .info-card { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 12px; padding: 25px; margin-bottom: 25px; }
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table td { padding: 12px 15px; border-bottom: 1px solid #e0e0e0; }
+        .info-table td:first-child { font-weight: bold; color: #1a1a2e; width: 180px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: #fff; border-radius: 12px; padding: 25px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .stat-card.danger { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .stat-card.warning { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333; }
+        .stat-number { font-size: 2.5em; font-weight: bold; margin-bottom: 10px; }
+        .stat-label { font-size: 1em; opacity: 0.9; }
+        .performance-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .performance-table th, .performance-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+        .performance-table th { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; }
+        .performance-table tr:hover { background: #f5f5f5; }
+        .error-item { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .error-title { display: flex; justify-content: space-between; align-items: center; font-size: 1.3em; font-weight: bold; color: #1a1a2e; margin-bottom: 15px; }
+        .severity-badge { padding: 5px 15px; border-radius: 20px; font-size: 0.8em; }
+        .severity-high { background: #f8d7da; color: #721c24; }
+        .severity-medium { background: #fff3cd; color: #856404; }
+        .severity-low { background: #d4edda; color: #155724; }
+        .error-meta { margin: 8px 0; color: #666; }
+        .error-details { background: #f8f9fa; border-left: 4px solid #667eea; padding: 15px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.9em; overflow-x: auto; }
+        .trace-list { background: #e3f2fd; border-radius: 8px; padding: 15px; margin: 15px 0; }
+        .trace-list h5 { color: #1565c0; margin-bottom: 10px; }
+        .trace-list ul { list-style: none; }
+        .trace-list li { margin: 8px 0; }
+        .trace-id { background: #fff; padding: 4px 10px; border-radius: 5px; font-family: 'Courier New', monospace; font-size: 0.9em; color: #1565c0; display: inline-block; }
+        .trace-time { color: #666; font-size: 0.9em; margin-left: 10px; }
+        .suggestion-box { background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; padding: 20px; margin-top: 15px; }
+        .suggestion-box h4 { color: #1565c0; margin-bottom: 10px; }
+        .footer { background: #f8f9fa; padding: 20px; text-align: center; color: #666; border-top: 1px solid #e0e0e0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 日志分析报告</h1>
+            <p class="subtitle">桐乡市卫生健康局健康云 | 2026-03-10 14:00 ~ 15:00</p>
+        </div>
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">基本信息</h2>
+                <div class="info-card">
+                    <table class="info-table">
+                        <tr><td>医院名称</td><td>桐乡市卫生健康局健康云</td></tr>
+                        <tr><td>服务名称</td><td>病区护士站</td></tr>
+                        <tr><td>分析日志量</td><td>320,000 条</td></tr>
+                        <tr><td>慢接口阈值</td><td>1000ms</td></tr>
+                        <tr><td>生成时间</td><td>2026-03-10T16:06:14.574979</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">异常统计概览</h2>
+                <div class="stats-grid">
+                    <div class="stat-card danger"><div class="stat-number">500</div><div class="stat-label">ERROR 总数</div></div>
+
+                    <div class="stat-card warning">
+                        <div class="stat-number">145</div>
+                        <div class="stat-label">消息处理异常</div>
+                    </div>
+
+                    <div class="stat-card warning">
+                        <div class="stat-number">117</div>
+                        <div class="stat-label">配置/兼容性问题</div>
+                    </div>
+
+                    <div class="stat-card warning">
+                        <div class="stat-number">97</div>
+                        <div class="stat-label">数据格式错误</div>
+                    </div>
+
+                    <div class="stat-card danger"><div class="stat-number">35</div><div class="stat-label">慢接口类型</div></div>
+                    <div class="stat-card warning"><div class="stat-number">200</div><div class="stat-label">日志反哺项</div></div>
+                </div>
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #1a1a2e;">错误分类详情</h3>
+
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>错误类型</th>
+                            <th>出现次数</th>
+                            <th>占比</th>
+                            <th>优化建议</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><strong>消息处理异常</strong></td>
+                            <td>145</td>
+                            <td>29.0%</td>
+                            <td><span style="color: #1565c0;">💡 需要查看详细日志进行分析</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>配置/兼容性问题</strong></td>
+                            <td>117</td>
+                            <td>23.4%</td>
+                            <td><span style="color: #1565c0;">💡 检查配置项、接口契约和版本兼容性；如已确认不影响业务可降低优先级</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>数据格式错误</strong></td>
+                            <td>97</td>
+                            <td>19.4%</td>
+                            <td><span style="color: #1565c0;">💡 检查入参格式、字段类型和返回内容格式是否符合预期</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>业务逻辑错误</strong></td>
+                            <td>75</td>
+                            <td>15.0%</td>
+                            <td><span style="color: #1565c0;">💡 检查业务逻辑、数据完整性和上下游业务约束</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>空指针异常</strong></td>
+                            <td>30</td>
+                            <td>6.0%</td>
+                            <td><span style="color: #1565c0;">💡 检查对象是否为空，添加空值校验</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>认证/权限问题</strong></td>
+                            <td>17</td>
+                            <td>3.4%</td>
+                            <td><span style="color: #1565c0;">💡 检查token是否过期，确认用户权限配置</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>其他异常</strong></td>
+                            <td>15</td>
+                            <td>3.0%</td>
+                            <td><span style="color: #1565c0;">💡 需要查看详细日志进行分析</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>参数校验失败</strong></td>
+                            <td>2</td>
+                            <td>0.4%</td>
+                            <td><span style="color: #1565c0;">💡 需要查看详细日志进行分析</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>JSON解析错误</strong></td>
+                            <td>1</td>
+                            <td>0.2%</td>
+                            <td><span style="color: #1565c0;">💡 需要查看详细日志进行分析</span></td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>下游服务异常</strong></td>
+                            <td>1</td>
+                            <td>0.2%</td>
+                            <td><span style="color: #1565c0;">💡 检查下游服务状态、路由、网关和接口返回内容</span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">详细异常分析</h2>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 1. 消息处理异常</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 145 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.a.c.m.i.MQReceiverImpl</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>receiveEventBuildTask失败</code></p>
+
+                    <p class="error-meta"><strong>真正原因:</strong> <span style="color: #c62828;">调用receiveEventBuildTask失败</span></p>
+
+                    <div class="error-details">调用receiveEventBuildTask失败</div>
+
+                    <div class="trace-list">
+                        <h5>🧵 trace 关联上下文</h5>
+<p><strong>堆栈摘要：</strong></p><ul><li><code>10.233.151.233:8080</code></li></ul><p><strong>关联日志：</strong></p><ul><li>[954b5fa1b76a4a32a51004e1dc067a61,954b5fa1b76a4a32a51004e1dc067a61,] [10.233.151.233:8080] [] 2026-03-10 14:00:04,749 [encENPOINT-45] ERROR c.w.a.c.m.i.MQReceiverImpl (?:?) -- 调用receiveEventBuildTask失败 调用receiveEventBuildTask失败</li></ul></div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">954b5fa1b76a4a32a51004e1dc067a61</span> <span class="trace-time">2026-03-10 14:00</span></li>
+
+                            <li><span class="trace-id">05d0b917a7df4a5db02980f919d3ce92</span> <span class="trace-time">2026-03-10 14:00</span></li>
+
+                            <li><span class="trace-id">5eca0a340afb40a293a84f645a63792e</span> <span class="trace-time">2026-03-10 14:00</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查消息消费链路、事件构建逻辑、入参完整性及下游依赖是否可用</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 2. 配置/兼容性问题</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 113 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>AutoTagAlgorithmServiceImpl</code></p>
+
+                    <p class="error-meta"><strong>真正原因:</strong> <span style="color: #c62828;">服务INP-BMTS未找到,主线版本号为null | 落点: com.winning.ward.tags.application.service.impl.tags.MedicalInsuranceExpireTagAlgorithmServiceImpl.lambda$match$2:87</span></p>
+
+                    <div class="error-details">服务INP-BMTS未找到,主线版本号为null</div>
+
+                    <div class="trace-list">
+                        <h5>🧵 trace 关联上下文</h5>
+<p><strong>疑似落点：</strong><code>com.winning.ward.tags.application.service.impl.tags.MedicalInsuranceExpireTagAlgorithmServiceImpl.lambda$match$2:87</code></p><p><strong>堆栈摘要：</strong></p><ul><li><code>10.233.162.8:8080</code></li><li><code>com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195</code></li><li><code>com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176</code></li><li><code>com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108</code></li><li><code>com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doFilter:117</code></li></ul><p><strong>关联日志：</strong></p><ul><li>[817FEB02C46ED69CD25994FDB28038FF,1c9f5cb3516a45638639526bfec0c0ce,f4ee71ae11bf4aafb11fdd9b22457369] [10.233.162.8:8080] [陈升佳(436277686236117034)] 2026-03-10 14:00:12,207 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-23] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{&quot;fixMsg&quot;:&quot;医保超期标签算法服务&quot;,&quot;code&quot;:&quot;ES0999999&quot;,&quot;detailMsg&quot;:&quot;[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFil</li><li>[817FEB02C46ED69CD25994FDB28038FF,1c9f5cb3516a45638639526bfec0c0ce,f4ee71ae11bf4aafb11fdd9b22457369] [10.233.162.8:8080] [陈升佳(436277686236117034)] 2026-03-10 14:00:12,268 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-23] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{&quot;fixMsg&quot;:&quot;病危标签算法服务&quot;,&quot;code&quot;:&quot;ES0999999&quot;,&quot;detailMsg&quot;:&quot;[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilte</li><li>[817FEB02C46ED69CD25994FDB28038FF,1c9f5cb3516a45638639526bfec0c0ce,f4ee71ae11bf4aafb11fdd9b22457369] [10.233.162.8:8080] [陈升佳(436277686236117034)] 2026-03-10 14:00:12,272 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-23] ERROR c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl (?:?) -- 标签算法远程服务调用失败，{&quot;fixMsg&quot;:&quot;病重标签算法服务&quot;,&quot;code&quot;:&quot;ES0999999&quot;,&quot;detailMsg&quot;:&quot;[appid:6265],[appName:winning-winex-ward-akso5-pbc]------------------------------- at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilte</li></ul></div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">817FEB02C46ED69CD25994FDB28038FF</span> <span class="trace-time">2026-03-10 14:00</span></li>
+
+                            <li><span class="trace-id">9517981BDD22E04AB090B1602441AB8A</span> <span class="trace-time">2026-03-10 14:01</span></li>
+
+                            <li><span class="trace-id">24E1D1B477322F7BDFF1C1452C788FB6</span> <span class="trace-time">2026-03-10 14:01</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查配置项、接口契约和版本兼容性；如对业务无影响可降级关注</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 3. 数据格式错误</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 72 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.b.a.r.r.RestAop</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>NumberFormatException</code></p>
+
+                    <p class="error-meta"><strong>真正原因:</strong> <span style="color: #c62828;">For input string: &quot;422721418690582531,443119721612783616&quot;</span></p>
+
+                    <div class="error-details">real exception message:[tid:cbbd4483835341efa88ddb2aa9719682,6265:winning-winex-ward-akso5-pbc,sid:10.233.151.233:8080]:java.lang.NumberFormatException:For input string: &quot;422721418690582531,443119721612783616&quot;</div>
+
+                    <div class="trace-list">
+                        <h5>🧵 trace 关联上下文</h5>
+<p><strong>堆栈摘要：</strong></p><ul><li><code>10.233.151.233:8080</code></li></ul><p><strong>关联日志：</strong></p><ul><li>[cbbd4483835341efa88ddb2aa9719682,cbbd4483835341efa88ddb2aa9719682,] [10.233.151.233:8080] [] 2026-03-10 14:00:12,250 [Jetty-Worker_8080-Thread-47] ERROR c.w.b.a.r.r.RestAop (?:?) -- real exception message:[tid:cbbd4483835341efa88ddb2aa9719682,6265:winning-winex-ward-akso5-pbc,sid:10.233.151.233:8080]:java.lang.NumberFormatException:For input string: &quot;422721418690582531,443119721612783616&quot; real exception message:[tid:cbbd4483835341efa88ddb2aa9719682,6265:winning-winex-ward-akso5-pbc,sid:10.233.1</li></ul></div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">cbbd4483835341efa88ddb2aa9719682</span> <span class="trace-time">2026-03-10 14:00</span></li>
+
+                            <li><span class="trace-id">f61bd7a7d623484c8611202c825c86ff</span> <span class="trace-time">2026-03-10 14:00</span></li>
+
+                            <li><span class="trace-id">a240eb759d5a4def9b0e6bcf07d5b080</span> <span class="trace-time">2026-03-10 14:01</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查入参格式、字段类型和下游返回内容是否符合预期</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🔴 4. 业务逻辑错误</span>
+                        <span class="severity-badge severity-high">高严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 37 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.w.p.a.p.u.PerUpdateFilePostData</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>业务数据缺失/参数约束</code></p>
+
+                    <p class="error-meta"><strong>真正原因:</strong> <span style="color: #c62828;">msg=ES0990004:更新住院档案根据患者标识--未查询到就诊记录</span></p>
+
+                    <div class="error-details">【推送住院更新患者档案信息】错误：msg=ES0990004:更新住院档案根据患者标识--未查询到就诊记录，患者标识：3333335465031</div>
+
+                    <div class="trace-list">
+                        <h5>🧵 trace 关联上下文</h5>
+<p><strong>堆栈摘要：</strong></p><ul><li><code>10.233.151.233:8080</code></li></ul></div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">c8bdf54fbf7444b5afcbdeeeb1c1df87</span> <span class="trace-time">2026-03-10 14:03</span></li>
+
+                            <li><span class="trace-id">0f9cf73d88744780ae189445d6d6617e</span> <span class="trace-time">2026-03-10 14:06</span></li>
+
+                            <li><span class="trace-id">f2f08fc985e548c3a5fc2de1382528a9</span> <span class="trace-time">2026-03-10 14:07</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查业务逻辑、输入数据完整性及上下游业务约束</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟡 5. 空指针异常</span>
+                        <span class="severity-badge severity-medium">中等严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 28 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.b.a.r.r.RestAop</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>NullPointerException</code></p>
+
+                    <p class="error-meta"><strong>真正原因:</strong> <span style="color: #c62828;">[tid:96213440855b425e94f9a99f73d2fd6b</span></p>
+
+                    <div class="error-details">real exception message:[tid:96213440855b425e94f9a99f73d2fd6b,6265:winning-winex-ward-akso5-pbc,sid:10.233.162.8:8080]:NullPointerException </div>
+
+                    <div class="trace-list">
+                        <h5>🧵 trace 关联上下文</h5>
+<p><strong>堆栈摘要：</strong></p><ul><li><code>10.233.162.8:8080</code></li></ul><p><strong>关联日志：</strong></p><ul><li>[96213440855b425e94f9a99f73d2fd6b,96213440855b425e94f9a99f73d2fd6b,] [10.233.162.8:8080] [] 2026-03-10 14:00:12,205 [Jetty-Worker_8080-Thread-67] ERROR c.w.b.a.r.r.RestAop (?:?) -- real exception message:[tid:96213440855b425e94f9a99f73d2fd6b,6265:winning-winex-ward-akso5-pbc,sid:10.233.162.8:8080]:NullPointerException real exception message:[tid:96213440855b425e94f9a99f73d2fd6b,6265:winning-winex-ward-akso5-pbc,sid:10.233.162.8:8080]:NullPointerException</li></ul></div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">96213440855b425e94f9a99f73d2fd6b</span> <span class="trace-time">2026-03-10 14:00</span></li>
+
+                            <li><span class="trace-id">910224a8f4804ed6ac4220614f206cec</span> <span class="trace-time">2026-03-10 14:01</span></li>
+
+                            <li><span class="trace-id">dd97a357d25242fb98ab6b6e02df9c4b</span> <span class="trace-time">2026-03-10 14:01</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查对象是否为空，添加空值校验</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟡 6. 数据格式错误</span>
+                        <span class="severity-badge severity-medium">中等严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 25 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.w.b.a.r.i.BedCardDomainServiceRepository</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>BINARY</code></p>
+
+                    <p class="error-meta"><strong>真正原因:</strong> <span style="color: #c62828;">ES0060001:[ES0060001]$core{could not extract ResultSet:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY</span></p>
+
+                    <div class="error-details">ES0060001:[ES0060001]$core{could not extract ResultSet:ORA-00932: 数据类型不一致: 应为 NUMBER, 但却获得 BINARY</div>
+
+                    <div class="trace-list">
+                        <h5>🧵 trace 关联上下文</h5>
+<p><strong>堆栈摘要：</strong></p><ul><li><code>10.233.151.233:8080</code></li></ul></div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">76e27b3affd94ae0bf0f9fe78656677c</span> <span class="trace-time">2026-03-10 14:00</span></li>
+
+                            <li><span class="trace-id">0534d9ef945e44a58243019aff2ec423</span> <span class="trace-time">2026-03-10 14:01</span></li>
+
+                            <li><span class="trace-id">a16d361f665846a983d62359abf9eb83</span> <span class="trace-time">2026-03-10 14:04</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查入参格式、字段类型和下游返回内容是否符合预期</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟡 7. 业务逻辑错误</span>
+                        <span class="severity-badge severity-medium">中等严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 22 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.p.p.s.d.s.i.StockModifySdkImpl</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>批次冻结失败</code></p>
+
+                    <p class="error-meta"><strong>真正原因:</strong> <span style="color: #c62828;">批次冻结失败的药品库存：[]</span></p>
+
+                    <div class="error-details">批次冻结失败的药品库存：[]</div>
+
+                    <div class="trace-list">
+                        <h5>🧵 trace 关联上下文</h5>
+<p><strong>堆栈摘要：</strong></p><ul><li><code>10.233.162.8:8080</code></li></ul></div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">4EF9BA9FDF15B189100901ECFDDBEE92</span> <span class="trace-time">2026-03-10 14:07</span></li>
+
+                            <li><span class="trace-id">F9A5FB303B84D6660B562E87CA434201</span> <span class="trace-time">2026-03-10 14:10</span></li>
+
+                            <li><span class="trace-id">595D84B0799F8CAB1E916FB6BA44B56F</span> <span class="trace-time">2026-03-10 14:10</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查业务逻辑、输入数据完整性及上下游业务约束</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟡 8. 其他异常</span>
+                        <span class="severity-badge severity-medium">中等严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 11 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.n.m.p.a.i.ExecPlanRevokeApplyPostServiceImpl</p>
+
+                    <p class="error-meta"><strong>真正原因:</strong> <span style="color: #c62828;">删除导管医嘱提醒记录--异常结束</span></p>
+
+                    <div class="error-details">删除导管医嘱提醒记录--异常结束</div>
+
+                    <div class="trace-list">
+                        <h5>🧵 trace 关联上下文</h5>
+<p><strong>堆栈摘要：</strong></p><ul><li><code>10.233.162.8:8080</code></li></ul></div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">237a3b02151742899cd1f08b31dfda9a</span> <span class="trace-time">2026-03-10 14:00</span></li>
+
+                            <li><span class="trace-id">ae2e821048524c9c958cf7976086ad6c</span> <span class="trace-time">2026-03-10 14:09</span></li>
+
+                            <li><span class="trace-id">fcd88eb2499a48e286fa8fa3f80c79ca</span> <span class="trace-time">2026-03-10 14:15</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>需要查看详细日志进行分析</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟡 9. 业务逻辑错误</span>
+                        <span class="severity-badge severity-medium">中等严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 11 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.w.p.a.p.e.f.ExecutionFhirRoute</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>buildData失败</code></p>
+
+                    <p class="error-meta"><strong>真正原因:</strong> <span style="color: #c62828;">执行Fhir消息处理事件399202393，buildData失败</span></p>
+
+                    <div class="error-details">执行Fhir消息处理事件399202393，buildData失败</div>
+
+                    <div class="trace-list">
+                        <h5>🧵 trace 关联上下文</h5>
+<p><strong>堆栈摘要：</strong></p><ul><li><code>10.233.117.160:8080</code></li></ul><p><strong>关联日志：</strong></p><ul><li>[219c6e798f7b4b4c814348cb497b8a24,219c6e798f7b4b4c814348cb497b8a24,] [10.233.117.160:8080] [] 2026-03-10 14:00:07,821 [task-143] ERROR c.w.w.p.a.p.e.f.ExecutionFhirRoute (?:?) -- 执行Fhir消息处理事件399202393，buildData失败 执行Fhir消息处理事件399202393，buildData失败</li></ul></div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">219c6e798f7b4b4c814348cb497b8a24</span> <span class="trace-time">2026-03-10 14:00</span></li>
+
+                            <li><span class="trace-id">c52600cb9f85483ebacd5cf8f94f3694</span> <span class="trace-time">2026-03-10 14:09</span></li>
+
+                            <li><span class="trace-id">6fbd5519903b4c3bb9c64ffe637d8967</span> <span class="trace-time">2026-03-10 14:15</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查业务逻辑、输入数据完整性及上下游业务约束</p>
+                    </div>
+                </div>
+
+                <div class="error-item">
+                    <div class="error-title">
+                        <span>🟢 10. 认证/权限问题</span>
+                        <span class="severity-badge severity-low">低严重程度</span>
+                    </div>
+                    <p class="error-meta"><strong>出现次数:</strong> 9 次</p>
+                    <p class="error-meta"><strong>位置:</strong> c.w.w.e.a.s.InpatientEncounterRecordService</p>
+
+                    <p class="error-meta"><strong>匹配关键词:</strong> <code>token</code></p>
+
+                    <p class="error-meta"><strong>真正原因:</strong> <span style="color: #c62828;">ES0990004:outpatientService.queryPatientByRoleIdV3 -&gt; [appid:6110],[appName:winning-winex-bmts-akso5]------------------------------- at com.winning.base.akso.validation.WinAksoValidator.validator:68 at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195 at com.</span></p>
+
+                    <div class="error-details">ES0990004:outpatientService.queryPatientByRoleIdV3 -&gt; [appid:6110],[appName:winning-winex-bmts-akso5]-------------------------------    at com.winning.base.akso.validation.WinAksoValidator.validator:68    at com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195    at com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176    at com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108    at com.winning.akso.b</div>
+
+                    <div class="trace-list">
+                        <h5>🧵 trace 关联上下文</h5>
+<p><strong>疑似落点：</strong><code>outpatientService.queryPatientByRoleIdV3</code></p><p><strong>堆栈摘要：</strong></p><ul><li><code>com.winning.base.akso.validation.WinAksoValidator.validator:68</code></li><li><code>com.winning.base.akso.rpc.rest.filter.HttpTraceContentFilter.doFilterInternal:195</code></li><li><code>com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doShouldNotFilterInternal:176</code></li><li><code>com.winning.akso.biz.webmvc.security.WinningOncePerRequestFilter.doFilter:108</code></li><li><code>com.winning.akso.biz.webmvc.security.JwtAuthenticationTokenFilter.doFilter:117</code></li></ul></div>
+                    <div class="trace-list">
+                        <h5>🔍 traceId 样例（可用于追踪完整调用链）</h5>
+                        <ul>
+
+                            <li><span class="trace-id">717f50c5a6e54447ab11a14688dbf2b4</span> <span class="trace-time">2026-03-10 14:13</span></li>
+
+                            <li><span class="trace-id">4e2991e85d6b4eebaad75786adcbce88</span> <span class="trace-time">2026-03-10 14:16</span></li>
+
+                            <li><span class="trace-id">0b80ef853e244753b0c1ae96c2d8d4de</span> <span class="trace-time">2026-03-10 14:19</span></li>
+
+                        </ul>
+                    </div>
+
+                    <div class="suggestion-box">
+                        <h4>💡 优化建议</h4>
+                        <p>检查token是否过期，确认用户权限配置</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">日志反哺建议</h2>
+                <p style="margin-bottom: 20px; color: #666;">以下内容建议优化日志设计或调整日志级别，不纳入核心异常判断，并按同类问题归总展示。</p>
+                <table class="performance-table">
+                    <thead>
+                        <tr><th>类型</th><th>类名</th><th>次数</th><th>traceId样例</th><th>建议</th></tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>对象直接返回null</td>
+                            <td><code>c.w.w.b.a.h.ParamMdmSdkHelper</code></td>
+                            <td>200</td>
+                            <td><span class="trace-id">952e782a6edb4a63b8f994213b4e23d4</span></td>
+                            <td>建议增加上下文日志（入参、对象类型、查询条件、数据源返回状态），并评估改为 INFO/WARN 或显式空结果日志</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">慢接口分析</h2>
+                <p style="margin-bottom: 20px; color: #666;">共发现 35 种慢接口，累计 340 次慢调用</p>
+                <table class="performance-table">
+                    <thead>
+                        <tr><th>接口路径</th><th>调用次数</th><th>最大耗时</th><th>平均耗时</th></tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td><code>/api/v2/material_execution_supply/order_dispense_request_print/query/by_example</code></td>
+                            <td>1</td>
+                            <td>25619ms</td>
+                            <td>25619ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">5E937EF6F05987ACB868AA422AC8F07A</span></p><p><strong>样例时间：</strong>2026-03-10 14:03:53,161　<strong>用户：</strong>许云蕾</p><p><strong>主要瓶颈：</strong>数据库查询，耗时 25619ms</p><p><strong>疑似落点：</strong><code>10.233.117.160:8080</code></p><p><strong>已识别耗时：</strong>25619ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>数据库查询：25619ms <code>10.233.117.160:8080</code> — <code>[5E937EF6F05987ACB868AA422AC8F07A,682e44e71a1e4cbd9571a437bd0941a4,5E937EF6F05987ACB868AA422AC8F07A] [10.233.117.160:8080] [许云蕾(440547506408910857)] 2026-03-10 14:03:53,161 [Jetty-Worker_8080-Thread-3</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在数据库查询，单步耗时 25619ms，占总耗时 100.0%。</li><li>优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。</li><li>数据库查询累计耗时 25619ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_finance_fee_nurse/billplan/timingbilling/by_exec_plan_ids</code></td>
+                            <td>2</td>
+                            <td>3039ms</td>
+                            <td>2806ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">FDD83AF33D18AFC8660015C9883BDA30</span></p><p><strong>样例时间：</strong>2026-03-10 14:38:41,027　<strong>用户：</strong>蒋程程</p><p><strong>主要瓶颈：</strong>控制层入口，耗时 3039ms</p><p><strong>疑似落点：</strong><code>10.233.151.233:8080</code></p><p><strong>已识别耗时：</strong>3039ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>控制层入口：3039ms <code>10.233.151.233:8080</code> — <code>[FDD83AF33D18AFC8660015C9883BDA30,69fa080403334181a106954194d89382,FDD83AF33D18AFC8660015C9883BDA30] [10.233.151.233:8080] [蒋程程(436277623959091206)] 2026-03-10 14:38:41,027 [Jetty-Worker_8080-Thread-3</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在控制层入口，单步耗时 3039ms，占总耗时 100.0%。</li><li>优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。</li><li>控制层入口累计耗时 3039ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_inpatient_encounter/banner_tripartite/query/by_id</code></td>
+                            <td>23</td>
+                            <td>2505ms</td>
+                            <td>1526ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">ECFA3258C74A8AD2F414DE37046F55E0</span></p><p><strong>样例时间：</strong>2026-03-10 14:08:41,583　<strong>用户：</strong>沈琳琳</p><p><strong>主要瓶颈：</strong>数据库查询，耗时 2505ms</p><p><strong>疑似落点：</strong><code>10.233.162.8:8080</code></p><p><strong>已识别耗时：</strong>2505ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>数据库查询：2505ms <code>10.233.162.8:8080</code> — <code>[ECFA3258C74A8AD2F414DE37046F55E0,26848563c6904b66a8e24bc09ce7e091,ECFA3258C74A8AD2F414DE37046F55E0] [10.233.162.8:8080] [沈琳琳(436277654023862287)] 2026-03-10 14:08:41,583 [Jetty-Worker_8080-Thread-62]</code></li><li>数据库查询：5ms <code>10.233.117.160:8080</code> — <code>[ECFA3258C74A8AD2F414DE37046F55E0,1e6c5e16ecb54641a9963d954ab83757,adc409da0b3a4b96bf727d52cce0889c] [10.233.117.160:8080] [沈琳琳(436277654023862287)] 2026-03-10 14:08:39,103 [winning-winex-finance-inp-</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在数据库查询，单步耗时 2505ms，占总耗时 100.0%。</li><li>优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。</li><li>数据库查询累计耗时 2510ms，占总耗时 100.2%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/encounter_inpatient/encounter_info/get/by_id</code></td>
+                            <td>72</td>
+                            <td>2359ms</td>
+                            <td>1506ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">efae48230bd644888387b5ccff64af20</span></p><p><strong>样例时间：</strong>2026-03-10 14:09:39,233</p><p><strong>主要瓶颈：</strong>控制层入口，耗时 2034ms</p><p><strong>疑似落点：</strong><code>10.233.162.8:8080</code></p><p><strong>已识别耗时：</strong>2034ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>控制层入口：2034ms <code>10.233.162.8:8080</code> — <code>[efae48230bd644888387b5ccff64af20,efae48230bd644888387b5ccff64af20,] [10.233.162.8:8080] [] 2026-03-10 14:09:39,233 [winning-winex-ipt-charting-pbc_Jetty-Worker_8080-Thread-1] WARN  c.w.b.a.r.r.RestAo</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在控制层入口，单步耗时 2034ms，占总耗时 100.0%。</li><li>优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。</li><li>控制层入口累计耗时 2034ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_finance_fee_nurse/inpatient_bill/bill</code></td>
+                            <td>4</td>
+                            <td>2350ms</td>
+                            <td>1450ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">59AF25E7A46BBBA171294EB3F2737B76</span></p><p><strong>样例时间：</strong>2026-03-10 14:20:50,856　<strong>用户：</strong>董雪</p><p><strong>主要瓶颈：</strong>控制层入口，耗时 2350ms</p><p><strong>疑似落点：</strong><code>10.233.117.160:8080</code></p><p><strong>已识别耗时：</strong>2350ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>控制层入口：2350ms <code>10.233.117.160:8080</code> — <code>[59AF25E7A46BBBA171294EB3F2737B76,007b1416224f450bbe655fb5bdad8cac,59AF25E7A46BBBA171294EB3F2737B76] [10.233.117.160:8080] [董雪(436278734208137231)] 2026-03-10 14:20:50,856 [Jetty-Worker_8080-Thread-29</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在控制层入口，单步耗时 2350ms，占总耗时 100.0%。</li><li>优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。</li><li>控制层入口累计耗时 2350ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split</code></td>
+                            <td>10</td>
+                            <td>2177ms</td>
+                            <td>1437ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">b79af23a0399494ba4556c3eb12f609e</span></p><p><strong>样例时间：</strong>2026-03-10 14:31:56,415</p><p><strong>主要瓶颈：</strong>控制层入口，耗时 2177ms</p><p><strong>疑似落点：</strong><code>10.233.151.233:8080</code></p><p><strong>已识别耗时：</strong>2177ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>控制层入口：2177ms <code>10.233.151.233:8080</code> — <code>[b79af23a0399494ba4556c3eb12f609e,b79af23a0399494ba4556c3eb12f609e,] [10.233.151.233:8080] [] 2026-03-10 14:31:56,415 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-37] WARN  c.w.b.a.r.r.RestAop (?:?</code></li><li>控制层入口：37ms <code>10.233.162.8:8080</code> — <code>[b79af23a0399494ba4556c3eb12f609e,0d448f8df6014fa584028cbd730eac16,a746f46fe72e45138a0273e2d265e999] [10.233.162.8:8080] [] 2026-03-10 14:31:56,705 [winning-winex-ipt-std-fhir-pbc_Jetty-Worker_8080-Th</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在控制层入口，单步耗时 2177ms，占总耗时 100.0%。</li><li>优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。</li><li>控制层入口累计耗时 2214ms，占总耗时 101.7%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/encounter_inpatient/encounter_tag_data/refresh</code></td>
+                            <td>34</td>
+                            <td>2159ms</td>
+                            <td>1780ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">9517981BDD22E04AB090B1602441AB8A</span></p><p><strong>样例时间：</strong>2026-03-10 14:01:02,177</p><p><strong>主要瓶颈：</strong>控制层入口，耗时 1886ms</p><p><strong>疑似落点：</strong><code>10.233.151.233:8080</code></p><p><strong>已识别耗时：</strong>1886ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>控制层入口：1886ms <code>10.233.151.233:8080</code> — <code>[9517981BDD22E04AB090B1602441AB8A,0454e7c9625c49fda0311058e898f993,bb3d50f69a394613bf527a490840f921] [10.233.151.233:8080] [] 2026-03-10 14:01:02,177 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-91</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在控制层入口，单步耗时 1886ms，占总耗时 100.0%。</li><li>优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。</li><li>控制层入口累计耗时 1886ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/material_execution_supply/dispense_request_ids/all/query_encounter</code></td>
+                            <td>3</td>
+                            <td>2046ms</td>
+                            <td>1594ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">29B685E5F6DCE54B9C9756FE95DD382D</span></p><p><strong>样例时间：</strong>2026-03-10 14:26:35,470　<strong>用户：</strong>蒋佳佳</p><p><strong>主要瓶颈：</strong>数据库查询，耗时 2046ms</p><p><strong>疑似落点：</strong><code>10.233.117.160:8080</code></p><p><strong>已识别耗时：</strong>2046ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>数据库查询：2046ms <code>10.233.117.160:8080</code> — <code>[29B685E5F6DCE54B9C9756FE95DD382D,8b0068b3a6454eeaad69dcddab34ce88,29B685E5F6DCE54B9C9756FE95DD382D] [10.233.117.160:8080] [蒋佳佳(436277666908764171)] 2026-03-10 14:26:35,470 [Jetty-Worker_8080-Thread-5</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在数据库查询，单步耗时 2046ms，占总耗时 100.0%。</li><li>优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。</li><li>数据库查询累计耗时 2046ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_inpatient_encounter/encounter_bed_list/query/by_example</code></td>
+                            <td>27</td>
+                            <td>2016ms</td>
+                            <td>1643ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">dd31ce9c985249fea16cf30d7b5c3868</span></p><p><strong>样例时间：</strong>2026-03-10 14:01:59,663　<strong>用户：</strong>黄丽丽</p><p><strong>主要瓶颈：</strong>数据库查询，耗时 1924ms</p><p><strong>疑似落点：</strong><code>10.233.162.8:8080</code></p><p><strong>已识别耗时：</strong>1924ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>数据库查询：1924ms <code>10.233.162.8:8080</code> — <code>[dd31ce9c985249fea16cf30d7b5c3868,dd31ce9c985249fea16cf30d7b5c3868,] [10.233.162.8:8080] [黄丽丽(436277645433927715)] 2026-03-10 14:01:59,663 [Jetty-Worker_8080-Thread-53] WARN  c.w.b.a.r.r.RestAop (?:?)</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在数据库查询，单步耗时 1924ms，占总耗时 100.0%。</li><li>优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。</li><li>数据库查询累计耗时 1924ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/encounter_inpatient/encounter_bed/refresh</code></td>
+                            <td>1</td>
+                            <td>1987ms</td>
+                            <td>1987ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">2fa0dceaf0fa46fbaf43e4223e50672a</span></p><p><strong>样例时间：</strong>2026-03-10 14:07:42,627</p><p><strong>主要瓶颈：</strong>控制层入口，耗时 1987ms</p><p><strong>疑似落点：</strong><code>10.233.162.8:8080</code></p><p><strong>已识别耗时：</strong>1987ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>控制层入口：1987ms <code>10.233.162.8:8080</code> — <code>[2fa0dceaf0fa46fbaf43e4223e50672a,2fa0dceaf0fa46fbaf43e4223e50672a,] [10.233.162.8:8080] [] 2026-03-10 14:07:42,627 [winning-winex-ipt-pbc_Jetty-Worker_8080-Thread-17] WARN  c.w.b.a.r.r.RestAop (?:?) </code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在控制层入口，单步耗时 1987ms，占总耗时 100.0%。</li><li>优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。</li><li>控制层入口累计耗时 1987ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id</code></td>
+                            <td>5</td>
+                            <td>1982ms</td>
+                            <td>1552ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">10BC99632F04785E7C2CE8759B92B7F4</span></p><p><strong>样例时间：</strong>2026-03-10 14:23:40,983　<strong>用户：</strong>沈珍珠</p><p><strong>主要瓶颈：</strong>控制层入口，耗时 1982ms</p><p><strong>疑似落点：</strong><code>10.233.117.160:8080</code></p><p><strong>已识别耗时：</strong>1982ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>控制层入口：1982ms <code>10.233.117.160:8080</code> — <code>[10BC99632F04785E7C2CE8759B92B7F4,668d7adc47624cfebd0c2c0cfcedce40,10BC99632F04785E7C2CE8759B92B7F4] [10.233.117.160:8080] [沈珍珠(436199895725068337)] 2026-03-10 14:23:40,983 [Jetty-Worker_8080-Thread-2</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在控制层入口，单步耗时 1982ms，占总耗时 100.0%。</li><li>优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。</li><li>控制层入口累计耗时 1982ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/nis/exec_order/check/by_exec_order_ids</code></td>
+                            <td>13</td>
+                            <td>1914ms</td>
+                            <td>1317ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">71D8FBA44603409DBBB94FF170B4DB71</span></p><p><strong>样例时间：</strong>2026-03-10 14:11:19,092　<strong>用户：</strong>章嘉佳</p><p><strong>主要瓶颈：</strong>控制层入口，耗时 1914ms</p><p><strong>疑似落点：</strong><code>10.233.117.160:8080</code></p><p><strong>已识别耗时：</strong>1914ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>控制层入口：1914ms <code>10.233.117.160:8080</code> — <code>[71D8FBA44603409DBBB94FF170B4DB71,b7c249dec59545d98ccf63b59a43546e,71D8FBA44603409DBBB94FF170B4DB71] [10.233.117.160:8080] [章嘉佳(440543598002468867)] 2026-03-10 14:11:19,092 [Jetty-Worker_8080-Thread-5</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在控制层入口，单步耗时 1914ms，占总耗时 100.0%。</li><li>优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。</li><li>控制层入口累计耗时 1914ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/nis/exec_order_plan/advance_apply/by_end_time</code></td>
+                            <td>8</td>
+                            <td>1815ms</td>
+                            <td>1388ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">93D2CFBF4914BB92679562804F0062B8</span></p><p><strong>样例时间：</strong>2026-03-10 14:19:41,913　<strong>用户：</strong>董雪</p><p><strong>主要瓶颈：</strong>控制层入口，耗时 1815ms</p><p><strong>疑似落点：</strong><code>10.233.151.233:8080</code></p><p><strong>已识别耗时：</strong>1815ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>控制层入口：1815ms <code>10.233.151.233:8080</code> — <code>[93D2CFBF4914BB92679562804F0062B8,02f52c7d4e3c4e489b9e13dde370745b,93D2CFBF4914BB92679562804F0062B8] [10.233.151.233:8080] [董雪(436278734208137231)] 2026-03-10 14:19:41,913 [Jetty-Worker_8080-Thread-90</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在控制层入口，单步耗时 1815ms，占总耗时 100.0%。</li><li>优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。</li><li>控制层入口累计耗时 1815ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v2/nis/cli_order_change_doc/query/by_encounter_ids</code></td>
+                            <td>1</td>
+                            <td>1720ms</td>
+                            <td>1720ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">6A89ED77610B85FEBBC598F0B6A12CB7</span></p><p><strong>样例时间：</strong>2026-03-10 14:12:16,383　<strong>用户：</strong>朱娅</p><p><strong>主要瓶颈：</strong>数据库查询，耗时 1720ms</p><p><strong>疑似落点：</strong><code>10.233.162.8:8080</code></p><p><strong>已识别耗时：</strong>1720ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>数据库查询：1720ms <code>10.233.162.8:8080</code> — <code>[6A89ED77610B85FEBBC598F0B6A12CB7,776c932d75e5490d9d82c73aae5fe2f4,6A89ED77610B85FEBBC598F0B6A12CB7] [10.233.162.8:8080] [朱娅(436199900020035609)] 2026-03-10 14:12:16,383 [Jetty-Worker_8080-Thread-73] </code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在数据库查询，单步耗时 1720ms，占总耗时 100.0%。</li><li>优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。</li><li>数据库查询累计耗时 1720ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_inpatient_encounter/patient_list/query/by_example</code></td>
+                            <td>66</td>
+                            <td>1709ms</td>
+                            <td>1118ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">F80A55CF33B84DA4C7FDF20C8773542D</span></p><p><strong>样例时间：</strong>2026-03-10 14:01:08,383　<strong>用户：</strong>周丽</p><p><strong>主要瓶颈：</strong>数据库查询，耗时 1180ms</p><p><strong>疑似落点：</strong><code>10.233.117.160:8080</code></p><p><strong>已识别耗时：</strong>1180ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>数据库查询：1180ms <code>10.233.117.160:8080</code> — <code>[F80A55CF33B84DA4C7FDF20C8773542D,553d7366eb444a3cab2b5f4d58d9b945,F80A55CF33B84DA4C7FDF20C8773542D] [10.233.117.160:8080] [周丽(436277688383600676)] 2026-03-10 14:01:08,383 [Jetty-Worker_8080-Thread-6]</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在数据库查询，单步耗时 1180ms，占总耗时 100.0%。</li><li>优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。</li><li>数据库查询累计耗时 1180ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v2/app_finance_fee_nurse/fee/query/by_order_id</code></td>
+                            <td>4</td>
+                            <td>1660ms</td>
+                            <td>1480ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">5CE956A5A2DC987ED9FB51C54F3819C0</span></p><p><strong>样例时间：</strong>2026-03-10 14:52:30,420　<strong>用户：</strong>盛香维</p><p><strong>主要瓶颈：</strong>数据库查询，耗时 1660ms</p><p><strong>疑似落点：</strong><code>10.233.162.8:8080</code></p><p><strong>已识别耗时：</strong>1660ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>数据库查询：1660ms <code>10.233.162.8:8080</code> — <code>[5CE956A5A2DC987ED9FB51C54F3819C0,630b9516355049aaa18b0e0d19a67d60,5CE956A5A2DC987ED9FB51C54F3819C0] [10.233.162.8:8080] [盛香维(436277656171345952)] 2026-03-10 14:52:30,420 [Jetty-Worker_8080-Thread-3] </code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在数据库查询，单步耗时 1660ms，占总耗时 100.0%。</li><li>优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。</li><li>数据库查询累计耗时 1660ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/mobile_nurse_app/employee_info/query/by_example</code></td>
+                            <td>1</td>
+                            <td>1657ms</td>
+                            <td>1657ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">E5603A19F40350441D2A59CA8A5A4A73</span></p><p><strong>样例时间：</strong>2026-03-10 14:42:18,021　<strong>用户：</strong>王梦莹</p><p><strong>主要瓶颈：</strong>数据库查询，耗时 1657ms</p><p><strong>疑似落点：</strong><code>10.233.117.160:8080</code></p><p><strong>已识别耗时：</strong>1657ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>数据库查询：1657ms <code>10.233.117.160:8080</code> — <code>[E5603A19F40350441D2A59CA8A5A4A73,84ac8d584bb4423ab6987a16ee7e2875,E5603A19F40350441D2A59CA8A5A4A73] [10.233.117.160:8080] [王梦莹(436278734208137246)] 2026-03-10 14:42:18,021 [Jetty-Worker_8080-Thread-9</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在数据库查询，单步耗时 1657ms，占总耗时 100.0%。</li><li>优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。</li><li>数据库查询累计耗时 1657ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v2/app_finance_fee_nurse/daygroup_inp_expense_records/get/template_datasource</code></td>
+                            <td>1</td>
+                            <td>1596ms</td>
+                            <td>1596ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">4EA3877732279BD9E5B561FD2998719C</span></p><p><strong>样例时间：</strong>2026-03-10 14:54:28,426　<strong>用户：</strong>钱佳炎</p><p><strong>主要瓶颈：</strong>控制层入口，耗时 1596ms</p><p><strong>疑似落点：</strong><code>10.233.162.8:8080</code></p><p><strong>已识别耗时：</strong>1596ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>控制层入口：1596ms <code>10.233.162.8:8080</code> — <code>[4EA3877732279BD9E5B561FD2998719C,618ca821c1ce4373ba1288a1e4f0221f,4EA3877732279BD9E5B561FD2998719C] [10.233.162.8:8080] [钱佳炎(436277643286444069)] 2026-03-10 14:54:28,426 [Jetty-Worker_8080-Thread-45]</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在控制层入口，单步耗时 1596ms，占总耗时 100.0%。</li><li>优先检查控制层入口、AOP/拦截器和参数装配过程，确认是否在进入业务前就产生明显等待。</li><li>控制层入口累计耗时 1596ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_finance_fee_nurse/inp_charge_detail/query/by_detail_ids</code></td>
+                            <td>11</td>
+                            <td>1551ms</td>
+                            <td>1162ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">5E3D5C5FB31AD16EE0D1CB6372635E6E</span></p><p><strong>样例时间：</strong>2026-03-10 14:11:34,598　<strong>用户：</strong>曹晓燕</p><p><strong>主要瓶颈：</strong>数据库查询，耗时 1247ms</p><p><strong>疑似落点：</strong><code>10.233.117.160:8080</code></p><p><strong>已识别耗时：</strong>1247ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>数据库查询：1247ms <code>10.233.117.160:8080</code> — <code>[5E3D5C5FB31AD16EE0D1CB6372635E6E,97109d48380940a2844bdbb4e414bfdc,5E3D5C5FB31AD16EE0D1CB6372635E6E] [10.233.117.160:8080] [曹晓燕(436277647581411352)] 2026-03-10 14:11:34,598 [Jetty-Worker_8080-Thread-2</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在数据库查询，单步耗时 1247ms，占总耗时 100.0%。</li><li>优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。</li><li>数据库查询累计耗时 1247ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                        <tr>
+                            <td><code>/api/v1/app_finance_fee_nurse/inp_charge_detail_ids/query/by_category_id</code></td>
+                            <td>1</td>
+                            <td>1511ms</td>
+                            <td>1511ms</td>
+                        </tr>
+
+                    <tr>
+                        <td colspan="4" style="background:#f8f9ff;">
+<p><strong>traceId 样例：</strong><span class="trace-id">F4A8187F0C3931FBEA09835E02B86787</span></p><p><strong>样例时间：</strong>2026-03-10 14:46:56,889　<strong>用户：</strong>沈明娟</p><p><strong>主要瓶颈：</strong>数据库查询，耗时 1511ms</p><p><strong>疑似落点：</strong><code>10.233.151.233:8080</code></p><p><strong>已识别耗时：</strong>1511ms，<strong>未识别耗时：</strong>0ms (0.0%)</p><div style='margin-top:10px;'><strong>调用链步骤：</strong><ul style='margin:8px 0 0 20px;'><li>数据库查询：1511ms <code>10.233.151.233:8080</code> — <code>[F4A8187F0C3931FBEA09835E02B86787,0e57512353ef4db0a869d1ced632562a,F4A8187F0C3931FBEA09835E02B86787] [10.233.151.233:8080] [沈明娟(436277699121018929)] 2026-03-10 14:46:56,889 [Jetty-Worker_8080-Thread-7</code></li></ul></div><div style='margin-top:10px;'><strong>优化建议：</strong><ul style='margin:8px 0 0 20px;'><li>主要瓶颈在数据库查询，单步耗时 1511ms，占总耗时 100.0%。</li><li>优先检查 SQL 是否命中索引、是否存在大结果集扫描，以及同一请求内是否有重复查询。</li><li>数据库查询累计耗时 1511ms，占总耗时 100.0%，这类步骤已成为主要耗时来源，建议优先排查。</li></ul></div>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>报告生成时间: 2026-03-10 16:14:07</p>
+            <p>日志巡检工具 v2.0 | 支持中文分类和智能建议</p>
+        </div>
+    </div>
+</body>
+</html>
