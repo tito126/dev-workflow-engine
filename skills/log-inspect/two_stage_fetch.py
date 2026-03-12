@@ -28,10 +28,10 @@ def run_command(cmd, description):
     duration = time.time() - start_time
     
     if result.returncode != 0:
-        print(f"\n❌ 失败! 耗时: {duration:.1f}秒")
+        print(f"\n[失败] 耗时: {duration:.1f}秒")
         sys.exit(1)
     
-    print(f"\n✅ 成功! 耗时: {duration:.1f}秒")
+    print(f"\n[成功] 耗时: {duration:.1f}秒")
     return duration
 
 
@@ -91,21 +91,21 @@ def main():
         traces_data = json.load(f)
     
     trace_count = traces_data.get('count', 0)
-    print(f"\n📊 代表 traces 统计:")
+    print(f"\n[代表 traces 统计]")
     print(f"   - 总数: {trace_count}")
     print(f"   - 异常类: {sum(1 for t in traces_data['traces'] if t['type'] == 'error')}")
     print(f"   - 慢接口: {sum(1 for t in traces_data['traces'] if t['type'] == 'slow_api')}")
     
     if args.skip_stage2:
-        print("\n⏭️  跳过第二阶段（--skip-stage2）")
+        print("\n[跳过第二阶段] --skip-stage2")
         total_duration = time.time() - total_start
-        print(f"\n🎉 总耗时: {total_duration:.1f}秒")
+        print(f"\n[完成] 总耗时: {total_duration:.1f}秒")
         return
     
     if trace_count == 0:
-        print("\n⚠️  没有代表 traces，跳过第二阶段")
+        print("\n[警告] 没有代表 traces，跳过第二阶段")
         total_duration = time.time() - total_start
-        print(f"\n🎉 总耗时: {total_duration:.1f}秒")
+        print(f"\n[完成] 总耗时: {total_duration:.1f}秒")
         return
     
     # 第二阶段：拉取完整链路
@@ -140,7 +140,7 @@ def main():
     total_duration = time.time() - total_start
     
     print(f"\n{'='*60}")
-    print("🎉 两阶段拉取完成!")
+    print("[完成] 两阶段拉取完成!")
     print(f"{'='*60}")
     print(f"总耗时: {total_duration:.1f}秒")
     print(f"\n输出文件:")
