@@ -6,6 +6,10 @@
 
 import os
 import sys
+
+# Windows 控制台强制 UTF-8，避免 emoji 编码报错
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 import json
 import argparse
 import subprocess
