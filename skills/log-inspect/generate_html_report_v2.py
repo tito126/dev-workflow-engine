@@ -41,7 +41,7 @@ def analyze_trace_timeline(trace_lines):
                     'thread': thread,
                     'level': level,
                     'class': classname,
-                    'content': content[:200]
+                    'content': content
                 })
     
     timeline.sort(key=lambda x: x['timestamp'])
@@ -294,7 +294,7 @@ def generate_error_details(errors, log_file=None):
         if error.get('samples'):
             sample = error['samples'][0]
             html += f"""
-                    <div class="error-details">{sample.get('content', '')[:500]}</div>
+                    <div class="error-details">{sample.get('content', '')}</div>
 """
             
             # 提取接口源头信息（从日志内容中提取的其他API）
@@ -969,12 +969,12 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
                             <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-left: 3px solid #95a5a6;">
                                 <strong>前一条:</strong> {prev['timestamp_str']}<br>
                                 <code>{prev['class']}</code><br>
-                                <span style="color: #666;">{prev['content'][:100]}</span>
+                                <textarea readonly style="width:100%;height:60px;resize:vertical;font-size:0.85em;background:#f8f9fa;border:none;color:#666;">{prev['content']}</textarea>
                             </div>
                             <div style="background: #fee; padding: 10px; margin: 5px 0; border-left: 3px solid #e74c3c;">
                                 <strong>后一条:</strong> {curr['timestamp_str']}<br>
                                 <code>{curr['class']}</code><br>
-                                <span style="color: #666;">{curr['content'][:100]}</span>
+                                <textarea readonly style="width:100%;height:60px;resize:vertical;font-size:0.85em;background:#fee;border:none;color:#666;">{curr['content']}</textarea>
                             </div>
                             <div style="background: #e8f5e9; padding: 10px; margin-top: 10px; border-radius: 3px;">
                                 <strong>分析:</strong> 在 <code>{prev['class']}</code> 和 <code>{curr['class']}</code> 之间耗时 {gap_ms}ms，
