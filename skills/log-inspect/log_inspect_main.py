@@ -50,7 +50,7 @@ class LogInspector:
             'cluster': None,
             'start_time': None,
             'end_time': None,
-            'level': 'ERROR|WARN'
+            'level': 'ERROR|业务处理耗时'
         }
         
         # 匹配医院名称（支持部分匹配）
@@ -331,7 +331,7 @@ class LogInspector:
             
             fetch_start_ts = datetime.now()
             try:
-                result = subprocess.run(cmd, capture_output=True, text=True, timeout=1200)
+                result = subprocess.run(cmd, stderr=subprocess.PIPE, text=True, timeout=1200)
                 
                 if result.returncode != 0:
                     print(f"[失败] 日志拉取失败: {result.stderr}")
@@ -347,6 +347,10 @@ class LogInspector:
                         'fetch_end': end_time,
                         'fetch_duration_s': fetch_duration_s
                     }
+                    # 保存第二阶段需要的参数
+                    self._last_grafana_url = grafana_url
+                    self._last_datasource_id = datasource_id
+                    self._last_app_name = app_name
                     print(f"[成功] 日志拉取完成: {output_file}")
                     log_files.append(str(output_file))
                 else:
@@ -451,7 +455,7 @@ class LogInspector:
         
         print(f"[统计] 正在分析日志...")
         
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = subprocess.run(cmd, stderr=subprocess.PIPE, text=True)
         
         if result.returncode != 0:
             raise RuntimeError(f"日志分析失败:\n{result.stderr}")
@@ -486,13 +490,15 @@ class LogInspector:
             str(self.script_dir / "generate_html_report_v2.py"),
             digest_file,
             report_file,
-            hospital_name,
-            service
         ]
+        if hospital_name:
+            cmd += ["--hospital", hospital_name]
+        if service:
+            cmd += ["--service", service]
         
         print(f"[需求] 正在生成报告...")
         
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = subprocess.run(cmd, stderr=subprocess.PIPE, text=True)
         
         if result.returncode != 0:
             raise RuntimeError(f"报告生成失败:\n{result.stderr}")
@@ -570,22 +576,53 @@ class LogInspector:
             if not params['service']:
                 raise ValueError("无法识别服务名称，请在查询中包含服务名称")
             
-            # 2. 拉取日志
+            # 2. 拉取日志（第一阶段：ERROR|业务处理耗时）
             log_file = self.fetch_logs(
                 params['hospital'],
                 params['service'],
                 params['start_time'],
                 params['end_time'],
                 params['level'],
-                params.get('cluster')  # 传递集群参数
+                params.get('cluster')
             )
             print()
             
-            # 3. 分析日志
+            # 3. 第一阶段分析（生成代表 traces 列表）
             digest_file = self.analyze_logs(log_file)
             print()
             
-            # 4. 生成报告
+            # 4. 第二阶段：拉取代表 traces 完整链路
+            traces_file = digest_file.replace('_digest.json', '_digest_traces.json')
+            if Path(traces_file).exists():
+                import json as _json
+                with open(traces_file, 'r', encoding='utf-8') as f:
+                    traces_data = _json.load(f)
+                trace_count = traces_data.get('count', 0)
+                if trace_count > 0:
+                    print(f"[两阶段] 开始第二阶段：拉取 {trace_count} 个代表 traces 完整链路...")
+                    stage2_cmd = [
+                        sys.executable,
+                        str(self.script_dir / "loki_fetcher.py"),
+                        "--grafana", self._last_grafana_url,
+                        "--datasource", str(self._last_datasource_id),
+                        "--app", self._last_app_name,
+                        "--start", params['start_time'],
+                        "--end", params['end_time'],
+                        "--output", log_file,
+                        "--stage2-traces", traces_file,
+                        "--time-window", "30",
+                    ]
+                    result2 = subprocess.run(stage2_cmd, stderr=subprocess.PIPE, text=True)
+                    if result2.returncode == 0:
+                        print(f"[两阶段] 第二阶段完成，重新分析...")
+                        digest_file = self.analyze_logs(log_file)
+                        print()
+                    else:
+                        print(f"[警告] 第二阶段拉取失败，使用第一阶段结果: {result2.stderr[:200]}")
+                else:
+                    print("[两阶段] 无代表 traces，跳过第二阶段")
+            
+            # 5. 生成报告
             report_file = self.generate_report(
                 digest_file,
                 params['hospital'],
@@ -650,16 +687,113 @@ def main():
     parser.add_argument('--cluster', help='集群名称（多集群时必须指定）')
     parser.add_argument('--start', help='开始时间 (YYYY-MM-DD HH:MM)')
     parser.add_argument('--end', help='结束时间 (YYYY-MM-DD HH:MM)')
-    parser.add_argument('--level', default='ERROR|WARN', help='日志级别过滤')
+    parser.add_argument('--level', default='ERROR|业务处理耗时', help='日志级别过滤')
     parser.add_argument('--push', action='store_true', help='推送到飞书')
     parser.add_argument('--user', help='飞书用户 ID')
     parser.add_argument('--config', default='config/environments.json', 
                        help='配置文件路径')
+    parser.add_argument('--stage', choices=['fetch', 'fetch2', 'analyze', 'report'],
+                       help='只执行指定阶段（供分阶段调用）')
+    parser.add_argument('--log-file', help='日志文件路径（analyze/fetch2 阶段使用）')
+    parser.add_argument('--digest-file', help='digest 文件路径（report 阶段使用）')
+    parser.add_argument('--traces-file', help='代表 traces 文件路径（fetch2 阶段使用）')
+    parser.add_argument('--fetch-start', help='拉取开始时间（analyze 阶段使用）')
+    parser.add_argument('--fetch-end', help='拉取结束时间（analyze 阶段使用）')
+    parser.add_argument('--fetch-duration', help='拉取耗时秒数（analyze 阶段使用）')
+    parser.add_argument('--grafana-url', help='Grafana URL（fetch2 阶段使用）')
+    parser.add_argument('--datasource-id', help='数据源 ID（fetch2 阶段使用）')
+    parser.add_argument('--app-name', help='应用名称（fetch2 阶段使用）')
     
     args = parser.parse_args()
     
     inspector = LogInspector(args.config)
     
+    # 分阶段执行模式
+    if args.stage == 'fetch':
+        # 只拉取日志，输出日志文件路径和拉取元数据
+        params = inspector.parse_natural_language(args.query or '')
+        overrides = {
+            'hospital': args.hospital, 'service': args.service,
+            'cluster': args.cluster, 'start_time': args.start,
+            'end_time': args.end, 'level': args.level if args.level else None,
+        }
+        params.update({k: v for k, v in overrides.items() if v is not None})
+        log_file = inspector.fetch_logs(
+            params['hospital'], params['service'],
+            params['start_time'], params['end_time'],
+            params['level'], params.get('cluster')
+        )
+        meta = getattr(inspector, '_last_fetch_meta', {})
+        print(f"\nRESULT_LOG_FILE: {log_file}")
+        print(f"RESULT_FETCH_START: {meta.get('fetch_start', params['start_time'])}")
+        print(f"RESULT_FETCH_END: {meta.get('fetch_end', params['end_time'])}")
+        print(f"RESULT_FETCH_DURATION: {meta.get('fetch_duration_s', 0)}")
+        print(f"RESULT_GRAFANA_URL: {getattr(inspector, '_last_grafana_url', '')}")
+        print(f"RESULT_DATASOURCE_ID: {getattr(inspector, '_last_datasource_id', '')}")
+        print(f"RESULT_APP_NAME: {getattr(inspector, '_last_app_name', '')}")
+        return
+
+    elif args.stage == 'fetch2':
+        # 第二阶段：拉取代表 traces 完整链路
+        if not args.log_file or not args.traces_file:
+            print("[失败] --stage fetch2 需要 --log-file 和 --traces-file 参数")
+            sys.exit(1)
+        if not args.grafana_url or not args.datasource_id or not args.app_name:
+            print("[失败] --stage fetch2 需要 --grafana-url, --datasource-id, --app-name 参数")
+            sys.exit(1)
+        import json as _json
+        with open(args.traces_file, 'r', encoding='utf-8') as f:
+            traces_data = _json.load(f)
+        trace_count = traces_data.get('count', 0)
+        if trace_count == 0:
+            print("[两阶段] 无代表 traces，跳过第二阶段")
+            print(f"\nRESULT_LOG_FILE: {args.log_file}")
+            return
+        print(f"[两阶段] 拉取 {trace_count} 个代表 traces 完整链路...")
+        stage2_cmd = [
+            sys.executable,
+            str(inspector.script_dir / "loki_fetcher.py"),
+            "--grafana", args.grafana_url,
+            "--datasource", str(args.datasource_id),
+            "--app", args.app_name,
+            "--start", args.start or '',
+            "--end", args.end or '',
+            "--output", args.log_file,
+            "--stage2-traces", args.traces_file,
+            "--time-window", "30",
+        ]
+        result2 = subprocess.run(stage2_cmd, stderr=subprocess.PIPE, text=True)
+        if result2.returncode != 0:
+            print(f"[警告] 第二阶段拉取失败: {result2.stderr[:200]}")
+            sys.exit(1)
+        print(f"\nRESULT_LOG_FILE: {args.log_file}")
+        return
+
+    elif args.stage == 'analyze':
+        if not args.log_file:
+            print("[失败] --stage analyze 需要 --log-file 参数")
+            sys.exit(1)
+        # 恢复 fetch 元数据（跨进程传递）
+        if args.fetch_start or args.fetch_end or args.fetch_duration:
+            inspector._last_fetch_meta = {
+                'fetch_start': args.fetch_start or '',
+                'fetch_end': args.fetch_end or '',
+                'fetch_duration_s': int(args.fetch_duration or 0),
+            }
+        digest_file = inspector.analyze_logs(args.log_file)
+        print(f"\nRESULT_DIGEST_FILE: {digest_file}")
+        return
+
+    elif args.stage == 'report':
+        if not args.digest_file:
+            print("[失败] --stage report 需要 --digest-file 参数")
+            sys.exit(1)
+        hospital = args.hospital or ''
+        service = args.service or ''
+        report_file = inspector.generate_report(args.digest_file, hospital, service)
+        print(f"\nRESULT_REPORT_FILE: {report_file}")
+        return
+
     # 如果提供了自然语言查询
     if args.query:
         overrides = {

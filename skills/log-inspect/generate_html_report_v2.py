@@ -64,20 +64,25 @@ def analyze_trace_timeline(trace_lines):
     return timeline, gaps
 
 def load_trace_logs(log_file, trace_id):
-    """从原始日志文件中加载指定trace的所有日志"""
-    if not os.path.exists(log_file):
+    """从原始日志文件中加载指定trace的所有日志，按时间正序排序"""
+    if not log_file or not os.path.exists(log_file):
         return []
     
     trace_lines = []
+    ts_pattern = re.compile(r'(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}[,\.]\d+)')
     try:
         with open(log_file, 'r', encoding='utf-8') as f:
             for line in f:
                 if trace_id in line:
-                    trace_lines.append(line.strip())
+                    m = ts_pattern.search(line)
+                    ts = m.group(1) if m else ''
+                    trace_lines.append((ts, line.strip()))
     except Exception as e:
         print(f"读取日志文件失败: {e}")
     
-    return trace_lines
+    # 按时间正序排序
+    trace_lines.sort(key=lambda x: x[0])
+    return [line for _, line in trace_lines]
 
 def generate_error_category_cards(summary):
     """生成错误分类统计卡片"""
@@ -224,7 +229,7 @@ def generate_log_quality_analysis(errors, summary):
     
     return html
 
-def generate_error_details(errors):
+def generate_error_details(errors, log_file=None):
     """生成错误详情"""
     html = ""
     
@@ -346,13 +351,53 @@ def generate_error_details(errors):
                     </div>
 """
         
-        # 优化建议
-        suggestion = error.get('suggestion', '需要查看详细日志进行分析')
-        html += f"""
-                    <div class="suggestion-box">
-                        <h4>💡 优化建议</h4>
-                        <p>{suggestion}</p>
+        # 完整链路日志（替代优化建议）
+        rep_trace_id = ''
+        if error.get('samples'):
+            rep_trace_id = error['samples'][0].get('trace_id', '')
+        
+        if rep_trace_id and log_file:
+            trace_logs = load_trace_logs(log_file, rep_trace_id)
+            if trace_logs:
+                def highlight(line, trace_id):
+                    line = line.replace('<', '&lt;').replace('>', '&gt;')
+                    # traceId - 黄色
+                    if trace_id:
+                        line = re.sub(
+                            f'({re.escape(trace_id)})',
+                            r'<span style="background:#ffe066;color:#000;font-weight:bold;">\1</span>',
+                            line, flags=re.IGNORECASE
+                        )
+                    # error - 红色
+                    line = re.sub(
+                        r'(error)',
+                        r'<span style="background:#e53935;color:#fff;font-weight:bold;">\1</span>',
+                        line, flags=re.IGNORECASE
+                    )
+                    # .winning. 中间的 winning 标黄（前后必须是点）
+                    line = re.sub(
+                        r'(?<=\.)(winning)(?=\.)',
+                        r'<span style="background:#ffe066;color:#000;font-weight:bold;">\1</span>',
+                        line, flags=re.IGNORECASE
+                    )
+                    return line
+                logs_html = '\n'.join(
+                    f'<div class="trace-log-line">{highlight(line, rep_trace_id)}</div>'
+                    for line in trace_logs
+                )
+                html += f"""
+                    <div class="trace-chain-box">
+                        <h4>🔗 完整链路日志（traceId: {rep_trace_id}，共 {len(trace_logs)} 条）</h4>
+                        <div class="trace-chain-logs">{logs_html}</div>
                     </div>
+                </div>
+"""
+            else:
+                html += """
+                </div>
+"""
+        else:
+            html += """
                 </div>
 """
     
@@ -519,6 +564,27 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
             margin-top: 15px;
         }}
         .suggestion-box h4 {{ color: #1565c0; margin-bottom: 10px; }}
+        .trace-chain-box {{
+            background: #1e1e1e;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 4px 4px 0;
+        }}
+        .trace-chain-box h4 {{ color: #4caf50; margin-bottom: 10px; font-size: 0.9em; }}
+        .trace-chain-logs {{
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.78em;
+        }}
+        .trace-log-line {{
+            color: #d4d4d4;
+            padding: 2px 0;
+            border-bottom: 1px solid #333;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }}
         .footer {{
             background: #f8f9fa;
             padding: 20px;
@@ -664,7 +730,7 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
             <!-- 详细异常分析 -->
             <div class="section" id="error-details">
                 <h2 class="section-title">详细异常分析</h2>
-{generate_error_details(errors)}
+{generate_error_details(errors, log_file)}
             </div>
 
             <!-- 日志反哺模块 -->
