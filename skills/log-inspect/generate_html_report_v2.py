@@ -240,7 +240,7 @@ def generate_error_details(errors, log_file=None):
         severity_emoji = "🔴" if severity == "high" else "🟡" if severity == "medium" else "🟢"
         
         html += f"""
-                <div class="error-item">
+                <div class="error-item" id="error-item-{idx}">
                     <div class="error-title">
                         <span>{severity_emoji} {idx}. {error['category']}</span>
                         <span class="severity-badge severity-{severity}">{severity_text}</span>
@@ -634,6 +634,21 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
             color: #667eea;
             padding-left: 14px;
         }}
+        .nav-sub {{
+            list-style: none;
+            margin: 4px 0 4px 8px;
+            padding: 0;
+            border-left: 2px solid #e0e0e0;
+        }}
+        .nav-sub-link {{
+            font-size: 0.8em !important;
+            color: #888 !important;
+            padding: 3px 8px !important;
+        }}
+        .nav-sub-link:hover {{
+            color: #667eea !important;
+            background: #f5f5f5 !important;
+        }}
         @media (max-width: 1400px) {{
             .nav-sidebar {{ display: none; }}
         }}
@@ -648,9 +663,19 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
             <li><a href="#basic-info">基本信息</a></li>
             <li><a href="#log-quality">日志质量分析</a></li>
             <li><a href="#error-stats">异常统计概览</a></li>
-            <li><a href="#error-details">详细异常分析</a></li>
+            <li>
+                <a href="#error-details">详细异常分析</a>
+                <ul class="nav-sub">
+{chr(10).join(f'                    <li><a href="#error-item-{i}" class="nav-sub-link">{i}. {e["category"][:20]}{"…" if len(e["category"])>20 else ""}</a></li>' for i, e in enumerate(errors, 1))}
+                </ul>
+            </li>
             <li><a href="#log-feedback">日志反哺建议</a></li>
-            <li><a href="#slow-apis">慢接口 Trace 详情</a></li>
+            <li>
+                <a href="#slow-apis">慢接口 Trace 详情</a>
+                <ul class="nav-sub">
+{chr(10).join(f'                    <li><a href="#slow-item-{i}" class="nav-sub-link">{i}. {a["api_path"].split("/")[-1][:25]}{"…" if len(a["api_path"].split("/")[-1])>25 else ""}</a></li>' for i, a in enumerate(slow_apis[:10], 1))}
+                </ul>
+            </li>
         </ul>
     </div>
 
@@ -909,7 +934,7 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
 
     for idx, api in enumerate(slow_apis[:10], 1):
         html += f"""
-                <div class="error-item">
+                <div class="error-item" id="slow-item-{idx}">
                     <div class="error-title">
                         <span>🐌 {idx}. <code>{api['api_path']}</code></span>
                         <span class="severity-badge severity-medium">Top 慢接口</span>
