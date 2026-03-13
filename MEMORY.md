@@ -47,9 +47,20 @@
   - ✅ preprocess.py - 四级分组和 caller_service 提取
   - ✅ 基本信息优化（拉取时间范围、拉取耗时、友好时间格式）
   - ✅ loki_fetcher.py - 两阶段拉取功能（已完成）
-  - ⏳ log_inspect_main.py - 实时输出和时间记录（待恢复）
+  - ✅ log_inspect_main.py - 分阶段执行（--stage fetch/fetch2/analyze/report）
+  - ✅ log_inspect_main.py - 两阶段拉取集成进 run() 方法
+  - ✅ generate_html_report_v2.py - 完整链路日志展示（替代优化建议）
+  - ✅ 关键字高亮：traceId 黄色，error 红色，.winning. 黄色
 
-#### 2026-03-13：两阶段拉取功能完成
+#### 2026-03-13：分阶段执行 + 完整链路日志展示
+- **分阶段调用**：`--stage fetch/fetch2/analyze/report`，支持阶段间发消息通知
+  - fetch 输出 `RESULT_GRAFANA_URL/DATASOURCE_ID/APP_NAME` 供 fetch2 使用
+  - analyze 支持 `--fetch-start/end/duration` 跨进程传递元数据
+- **默认 level**：改为 `ERROR|业务处理耗时`（argparse 和 parse_natural_language 均已修改）
+- **两阶段拉取**：集成进 `run()` 方法，分阶段流程：fetch → analyze → fetch2 → analyze → report
+- **完整链路日志展示**：详细异常分析中"优化建议"改为完整链路日志，按时间正序排序
+- **关键字高亮**：traceId 黄色，error 红色，`(?<=\.)winning(?=\.)` 黄色
+- **generate_report 修复**：参数改为 `--hospital/--service` 标志形式
 - **实现内容**：
   - 第一阶段：拉取 `ERROR | 业务处理耗时` 日志（不再是 ERROR | WARN）
   - 第二阶段：拉取代表 traces 的完整链路（包括 INFO 等所有日志）
