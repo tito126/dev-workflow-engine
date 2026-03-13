@@ -62,6 +62,8 @@
 - **关键字高亮**：traceId 黄色，error 红色，`(?<=\.)winning(?=\.)` 黄色
 - **内容截断修复**：去掉 content[:200]/[:500]/[:100] 截断，显示完整内容
 - **时间间隔分析**：前一条/后一条内容改用 textarea（60px 高，可拖拽）
+- **导航子项**：详细异常分析、慢接口 Trace 详情加子导航，默认折叠，点击展开
+- **Windows 编码**：log_inspect_main.py 开头加 stdout.reconfigure(utf-8)，修复 emoji 报错
 - **generate_report 修复**：参数改为 `--hospital/--service` 标志形式
 - **实现内容**：
   - 第一阶段：拉取 `ERROR | 业务处理耗时` 日志（不再是 ERROR | WARN）
