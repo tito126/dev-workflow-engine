@@ -639,7 +639,9 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
             margin: 4px 0 4px 8px;
             padding: 0;
             border-left: 2px solid #e0e0e0;
+            display: none;
         }}
+        .nav-sub.open {{ display: block; }}
         .nav-sub-link {{
             font-size: 0.8em !important;
             color: #888 !important;
@@ -649,6 +651,7 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
             color: #667eea !important;
             background: #f5f5f5 !important;
         }}
+        .nav-toggle {{ cursor: pointer; user-select: none; }}
         @media (max-width: 1400px) {{
             .nav-sidebar {{ display: none; }}
         }}
@@ -664,20 +667,33 @@ def generate_html_report_v2(digest_file, output_file, hospital_name, service_nam
             <li><a href="#log-quality">日志质量分析</a></li>
             <li><a href="#error-stats">异常统计概览</a></li>
             <li>
-                <a href="#error-details">详细异常分析</a>
-                <ul class="nav-sub">
+                <a href="#error-details" class="nav-toggle" onclick="toggleSub('sub-errors',this);return false;">▶ 详细异常分析</a>
+                <ul class="nav-sub" id="sub-errors">
 {chr(10).join(f'                    <li><a href="#error-item-{i}" class="nav-sub-link">{i}. {e["category"][:20]}{"…" if len(e["category"])>20 else ""}</a></li>' for i, e in enumerate(errors, 1))}
                 </ul>
             </li>
             <li><a href="#log-feedback">日志反哺建议</a></li>
             <li>
-                <a href="#slow-apis">慢接口 Trace 详情</a>
-                <ul class="nav-sub">
+                <a href="#slow-apis" class="nav-toggle" onclick="toggleSub('sub-slow',this);return false;">▶ 慢接口 Trace 详情</a>
+                <ul class="nav-sub" id="sub-slow">
 {chr(10).join(f'                    <li><a href="#slow-item-{i}" class="nav-sub-link">{i}. {a["api_path"].split("/")[-1][:25]}{"…" if len(a["api_path"].split("/")[-1])>25 else ""}</a></li>' for i, a in enumerate(slow_apis[:10], 1))}
                 </ul>
             </li>
         </ul>
     </div>
+
+    <script>
+    function toggleSub(id, el) {{
+        var sub = document.getElementById(id);
+        if (sub.classList.contains('open')) {{
+            sub.classList.remove('open');
+            el.textContent = el.textContent.replace('▼','▶');
+        }} else {{
+            sub.classList.add('open');
+            el.textContent = el.textContent.replace('▶','▼');
+        }}
+    }}
+    </script>
 
     <div class="container">
         <div class="header">
