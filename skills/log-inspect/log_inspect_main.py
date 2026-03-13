@@ -495,6 +495,11 @@ class LogInspector:
             cmd += ["--hospital", hospital_name]
         if service:
             cmd += ["--service", service]
+        # 传入日志文件路径（用于完整链路日志展示）
+        log_file = digest_file.replace('_digest.json', '.log')
+        if Path(log_file).exists():
+            cmd += ["--log-file", log_file]
+            cmd += ["--service", service]
         
         print(f"[需求] 正在生成报告...")
         
