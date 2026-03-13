@@ -60,6 +60,8 @@
 - **两阶段拉取**：集成进 `run()` 方法，分阶段流程：fetch → analyze → fetch2 → analyze → report
 - **完整链路日志展示**：详细异常分析中"优化建议"改为完整链路日志，按时间正序排序
 - **关键字高亮**：traceId 黄色，error 红色，`(?<=\.)winning(?=\.)` 黄色
+- **内容截断修复**：去掉 content[:200]/[:500]/[:100] 截断，显示完整内容
+- **时间间隔分析**：前一条/后一条内容改用 textarea（60px 高，可拖拽）
 - **generate_report 修复**：参数改为 `--hospital/--service` 标志形式
 - **实现内容**：
   - 第一阶段：拉取 `ERROR | 业务处理耗时` 日志（不再是 ERROR | WARN）
