@@ -202,7 +202,7 @@ def main():
     parser.add_argument('--fallback-window-seconds', type=int, default=15)
     parser.add_argument('--saturation-threshold', type=int, default=4)
     parser.add_argument('--stage2-traces', help='第二阶段：拉取指定 traces 的完整链路（JSON 文件路径）')
-    parser.add_argument('--time-window', type=int, default=30, help='第二阶段时间窗口（秒）')
+    parser.add_argument('--time-window', type=int, default=60, help='第二阶段时间窗口（秒）')
     args = parser.parse_args()
 
     try:

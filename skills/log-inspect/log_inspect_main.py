@@ -201,15 +201,13 @@ class LogInspector:
             raise ValueError(f"未找到医院配置: {hospital}")
         
         # 检查环境类型
-        if env.get('type') == 'k8s' and 'grafana' in env:
+        env_type = env.get('type')
+        if env_type == 'k8s' and 'grafana' in env:
             return self._fetch_from_loki(env, service, start_time, end_time, level, cluster)
-        elif env.get('type') == 'tool_api' and 'toolApi' in env:
+        elif env_type in ('tool_api', 'traditional') and 'toolApi' in env:
             return self._fetch_from_tool_api(env, service, start_time, end_time)
-        elif 'portApi' in env:
-            # 使用工具组 API（待实现）
-            raise NotImplementedError("工具组 API 暂未实现，请使用 K8s 环境")
         else:
-            raise ValueError(f"不支持的环境类型: {env.get('type')}")
+            raise ValueError(f"不支持的环境类型: {env_type}，或缺少 toolApi/grafana 配置")
     
     def _fetch_from_loki(self, env: Dict, service: str, start_time: str, 
                          end_time: str, level: str, cluster: Optional[str] = None) -> str:
@@ -378,62 +376,90 @@ class LogInspector:
         # 返回日志文件（现在只有一个）
         return log_files[0]
     
-    def _fetch_from_tool_api(self, env: Dict, service: str, 
-                             start_time: str, end_time: str) -> str:
-        """从工具组 API 拉取日志
-        
-        Args:
-            env: 环境配置
-            service: 服务名称
-            start_time: 开始时间
-            end_time: 结束时间（暂不使用，API 会返回从 start_time 开始的所有日志）
+    def _fetch_from_tool_api(self, env: Dict, service: str,
+                             start_time: str, end_time: str,
+                             trace_id: Optional[str] = None) -> str:
+        """从工具组 API 拉取日志（适用于 tool_api / traditional 类型）
+
+        普通巡检：取第一个节点
+        指定 traceId：拉取所有节点并合并（跨节点追踪）
         """
-        # 获取应用名称
         if 'services' in env and service in env['services']:
             app_name = env['services'][service]
         else:
             app_name = service
-        
-        # 获取工具组 API 配置
+
         tool_api_config = env.get('toolApi', {})
         base_url = tool_api_config.get('baseUrl')
         app_id = tool_api_config.get('appId')
         env_id = tool_api_config.get('envId')
-        node_id = tool_api_config.get('nodeId')
-        
-        if not all([base_url, app_id, env_id, node_id]):
-            raise ValueError("工具组 API 配置不完整，需要 baseUrl, appId, envId, nodeId")
-        
-        print(f"\n{'='*50}")
-        print(f"[工具组] 使用工具组 API 拉取日志")
-        print(f"{'='*50}")
-        print(f"[配置] API 地址: {base_url}")
-        print(f"[配置] 应用 ID: {app_id}")
-        print(f"[配置] 环境 ID: {env_id}")
-        print(f"[配置] 节点 ID: {node_id}")
-        print(f"[配置] 程序名称: {app_name}")
-        print(f"[配置] 开始时间: {start_time}")
-        
-        # 创建 API 拉取器
+        node_ips = tool_api_config.get('nodeIps', [])  # 可选：限定目标节点 IP
+
+        if not all([base_url, app_id, env_id]):
+            raise ValueError("toolApi 配置不完整，需要 baseUrl、appId、envId")
+
         fetcher = ToolAPIFetcher(base_url)
-        
-        # 拉取日志
-        try:
+
+        # 1. 查询节点列表
+        print(f"\n{'='*50}")
+        print(f"[工具组] 查询节点列表...")
+        nodes = fetcher.get_nodes(app_name, app_id)
+        if not nodes:
+            raise RuntimeError("未获取到节点列表，请检查 code/appId 配置")
+
+        # 2. 按 nodeIps 过滤（如果配置了）
+        if node_ips:
+            nodes = [n for n in nodes if n['ip'] in node_ips]
+            if not nodes:
+                raise RuntimeError(f"按 nodeIps 过滤后无节点，请检查配置: {node_ips}")
+
+        # 3. 选取目标节点
+        if trace_id:
+            target_nodes = nodes
+            print(f"[工具组] traceId 模式，拉取全部 {len(target_nodes)} 个节点")
+        else:
+            target_nodes = [nodes[0]]
+            print(f"[工具组] 普通巡检，使用节点 {nodes[0]['ip']} ({nodes[0]['id']})")
+
+        print(f"[工具组] 服务: {service} ({app_name})")
+        print(f"[工具组] 时间: {start_time} ~ {end_time}")
+
+        # 4. 逐节点拉取
+        log_files = []
+        for node in target_nodes:
+            print(f"\n[工具组] 拉取节点 {node['ip']}...")
+            fetch_start_ts = datetime.now()
             log_file = fetcher.fetch_logs(
                 app_id=app_id,
                 env_id=env_id,
                 program_name=app_name,
-                node_id=node_id,
+                node_id=node['id'],
                 start_time=start_time,
+                end_time=end_time,
+                log_type='all',
                 output_dir=str(self.script_dir)
             )
-            
-            print(f"\n[成功] 日志拉取成功: {log_file}")
-            return log_file
-            
-        except Exception as e:
-            print(f"\n[失败] 日志拉取失败: {str(e)}")
-            raise
+            fetch_end_ts = datetime.now()
+            self._last_fetch_meta = {
+                'fetch_start': start_time,
+                'fetch_end': end_time,
+                'fetch_duration_s': int((fetch_end_ts - fetch_start_ts).total_seconds())
+            }
+            log_files.append(log_file)
+
+        # 5. 多节点合并
+        if len(log_files) == 1:
+            return log_files[0]
+
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        merged_file = str(self.script_dir / f"logs_{timestamp}_{app_name}_merged.log")
+        print(f"\n[工具组] 合并 {len(log_files)} 个节点日志...")
+        with open(merged_file, 'w', encoding='utf-8', errors='ignore') as out:
+            for lf in sorted(log_files):
+                with open(lf, 'r', encoding='utf-8', errors='ignore') as f:
+                    out.write(f.read())
+        print(f"[工具组] 合并完成: {merged_file}")
+        return merged_file
     
     def analyze_logs(self, log_file: str, threshold: int = 1000) -> str:
         """
@@ -600,9 +626,10 @@ class LogInspector:
             digest_file = self.analyze_logs(log_file)
             print()
             
-            # 4. 第二阶段：拉取代表 traces 完整链路
+            # 4. 第二阶段：拉取代表 traces 完整链路（仅 k8s 类型）
+            env_type = self.environments.get(params['hospital'], {}).get('type', '')
             traces_file = digest_file.replace('_digest.json', '_digest_traces.json')
-            if Path(traces_file).exists():
+            if env_type == 'k8s' and Path(traces_file).exists():
                 import json as _json
                 with open(traces_file, 'r', encoding='utf-8') as f:
                     traces_data = _json.load(f)
@@ -619,7 +646,7 @@ class LogInspector:
                         "--end", params['end_time'],
                         "--output", log_file,
                         "--stage2-traces", traces_file,
-                        "--time-window", "30",
+                        "--time-window", "60",
                     ]
                     result2 = subprocess.run(stage2_cmd, stderr=subprocess.PIPE, text=True)
                     if result2.returncode == 0:
@@ -769,7 +796,7 @@ def main():
             "--end", args.end or '',
             "--output", args.log_file,
             "--stage2-traces", args.traces_file,
-            "--time-window", "30",
+            "--time-window", "60",
         ]
         result2 = subprocess.run(stage2_cmd, stderr=subprocess.PIPE, text=True)
         if result2.returncode != 0:
