@@ -14,6 +14,8 @@ Use this SOP to run a chat-driven work control system inside day-to-day conversa
 
 ## System Modules
 
+保持结构稳定，优先在现有模块内处理问题，不为单次想法频繁新增层级。
+
 ## 存量专项收编
 
 当一个专项在新体系建立前已经推进过，不要把旧文件整包迁移进 `work-system/`。使用收编方式纳入：
