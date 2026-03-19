@@ -1,241 +1,254 @@
-# Work Control Quick Start Guide
+# 工作管控快速上手指南
 
-## Purpose
+## 这份指南是干什么的
 
-Use this guide to start using the work control system without learning the whole SOP first. This is a practical operating note for daily use in chat.
+这是一份轻量操作指南，目的是让你先用起来，不需要先把整套 SOP 全看完。
 
-## What This System Helps With
+这套系统主要解决 4 类日常工作问题：
+- 接住临时事项，避免遗忘
+- 持续跟踪专项进度，避免信息断层
+- 每天排出真正该优先推进的事
+- 每天收口沉淀，方便第二天续上和后续汇报
 
-This system is for four kinds of daily work:
-- catch temporary work before it is forgotten
-- keep project progress continuous and traceable
-- decide what deserves focus today
-- summarize what got done today
+## 核心思路
 
-## The Basic Idea
+- 聊天框是输入入口
+- 文件系统是正式记录区
+- 触发词用自然语言，不强制斜杠命令
+- 不是所有聊天都入库，只记录有管理价值的信息
 
-Use chat as the input point.
-Use files as the formal record.
-Use a few fixed trigger phrases to tell the assistant what kind of handling you want.
+## 4 种主要使用方式
 
-Do not try to record everything. Record only information that has management value.
+### 1. 临时记录
 
-## Four Main Use Modes
+适用场景：
+- 领导临时安排了事情
+- 突然想到一个点，怕忘
+- 某个跟进事项需要先记住
+- 发现了一个风险或阻塞
 
-### 1. Temporary capture
-
-Use this when:
-- a leader gives you a temporary assignment
-- you suddenly think of something important
-- you want to remember a follow-up
-- you notice a risk or blocker
-
-You can say:
+你可以这样说：
 - `记录一下：领导要求下周三前给初版方案`
 - `先放临时池：这个事情后面要再确认一下`
 - `提醒我：明天下午跟接口人确认联调`
 - `记成风险：对方部门还没确认资源`
 
-What happens:
-- the item goes into the temporary pool or reminders area
-- it stays there until completed, moved, or archived
+会发生什么：
+- 内容进入临时工作池、提醒区或灵感区
+- 后续再决定是完成、转专项、加提醒还是归档
 
-Main files:
+主要文件：
 - `work-system/inbox/temporary-work-pool.md`
 - `work-system/inbox/reminders.md`
 - `work-system/inbox/ideas.md`
 
-### 2. Project update
+### 2. 专项更新
 
-Use this when:
-- you want to update a tracked project
-- a milestone moves
-- the value statement becomes clearer
-- a blocker appears
-- the next step changes
+适用场景：
+- 某个专项有了新进展
+- 某个里程碑变了
+- 某个专项的价值更明确了
+- 出现了风险或阻塞
+- 下一步动作变了
 
-You can say:
+你可以这样说：
 - `归到接口治理专项：今天确认了现网限制`
 - `更新进展：护士站专项已完成方案初稿`
 - `补充价值：这个专项核心是减少投诉`
 - `记成阻塞：对方团队还没给排期`
 - `加一个里程碑：本周完成联调确认`
 
-What happens:
-- the related project dossier gets updated
-- the useful parts may later flow into daily focus or daily summary
+会发生什么：
+- 对应专项档案会被更新
+- 有价值的内容后续可进入今日聚焦或今日总结
 
-Main files:
+主要文件：
 - `work-system/projects/active/`
 - `work-system/projects/index.md`
 
-### 3. Daily focus
+### 3. 今日聚焦
 
-Use this when:
-- you start the workday
-- too many things are competing for attention
-- you need a ranked priority list
-- you want to know today's top three moves
+适用场景：
+- 刚开始一天工作
+- 手头事情太多，需要排优先级
+- 想知道今天最该推进哪几件事
+- 想结合专项进度来定主线
 
-You can say:
+你可以这样说：
 - `帮我排一下今天的 focus`
 - `按优先级列一下今天最该推进的事`
 - `结合专项进度，帮我定今天主线`
 
-What happens:
-- the assistant reads open temporary items and active project signals
-- a short ranked focus list is written for today
+会发生什么：
+- 我会读取未完成的临时事项和活跃专项信号
+- 帮你产出一份简洁的今日聚焦清单
 
-Main file area:
+主要文件：
 - `work-system/daily/focus/`
 
-### 4. Daily summary
+### 4. 今日总结
 
-Use this when:
-- you are closing the day
-- you want to know what actually moved
-- you need wording for reporting
-- you want tomorrow to start faster
+适用场景：
+- 准备收工
+- 想知道今天到底推进了什么
+- 想为周报或汇报留素材
+- 想让明天更容易接上
 
-You can say:
+你可以这样说：
 - `帮我做今日总结`
 - `整理一下今天完成情况`
 - `把今天推进的专项和未完成项汇总一下`
 
-What happens:
-- the assistant writes a reusable management summary for the day
-- the summary helps weekly reports and next-day planning
+会发生什么：
+- 我会生成一份结构化的今日工作总结
+- 内容会偏“管理摘要”，不是流水账
 
-Main file area:
+主要文件：
 - `work-system/daily/summary/`
 
-## Recommended Trigger Phrases
+## 推荐触发词
 
-You do not need slash commands. Natural language is enough.
+不需要斜杠命令，正常说话就可以。
 
-### For formal record
+### 正式记录类
 - `记录一下`
 - `先放临时池`
 - `归到XX专项`
 - `更新进展`
 - `记成风险`
+- `记成阻塞`
 - `加一个里程碑`
 - `补充价值`
 - `提醒我`
 - `建个专项`
 
-### For review and management
+### 管理和复盘类
 - `帮我排一下今天的 focus`
 - `帮我做今日总结`
 - `总结一下XX专项`
 - `看看还有哪些没闭环`
 - `提醒我有哪些重要但容易忘的事`
 
-## What Gets Recorded
+## 什么内容会正式记录
 
-By default, formal records should focus on these six classes:
-- task
-- progress
-- risk
-- milestone
-- value
-- decision
+默认只记录这 6 类：
+- 任务
+- 进展
+- 风险
+- 里程碑
+- 价值
+- 决策
 
-If a chat message does not belong to one of these classes, it usually stays only in conversation.
+如果一段聊天不属于这 6 类，通常只保留在对话里，不进入正式系统。
 
-## What Does Not Need Formal Recording
+## 什么内容通常不需要正式记录
 
-Usually do not formalize these unless you explicitly ask:
-- casual discussion
-- repeated wording changes
-- rough ideas with no action value yet
-- general emotional reactions
+除非你明确要求，否则以下内容一般不入库：
+- 纯闲聊
+- 重复表达同一个意思
+- 暂时没有行动价值的随口想法
+- 只是情绪表达、没有管理意义的内容
 
-## Where Things Go
+## 文件分别放哪
 
-### Temporary work
+### 临时事项
 - `work-system/inbox/temporary-work-pool.md`
 
-### Ideas
+### 灵感
 - `work-system/inbox/ideas.md`
 
-### Reminders
+### 提醒
 - `work-system/inbox/reminders.md`
 
-### Active projects
+### 活跃专项
 - `work-system/projects/active/`
 
-### Daily focus
+### 今日聚焦
 - `work-system/daily/focus/`
 
-### Daily summary
+### 今日总结
 - `work-system/daily/summary/`
 
-### Rules and standards
+### 规则说明
 - `work-system/sop/collaboration-sop.md`
 - `work-system/sop/record-rules.md`
 
-## A Simple Daily Rhythm
+## 一个简单的日节奏
 
-### Start of day
+### 上午或开始工作时
 
-Say:
+你说：
 - `帮我排一下今天的 focus`
 
-Expected result:
-- one core goal
-- top three focus items
-- a few follow-ups
-- visible risks
+预期结果：
+- 一个今日核心目标
+- Top 3 聚焦事项
+- 少量次级跟进
+- 今日需要注意的风险
 
-### During the day
+### 白天推进过程中
 
-Say things like:
+你可以随时说：
 - `记录一下...`
 - `归到XX专项...`
 - `更新进展...`
 - `记成风险...`
 
-Expected result:
-- important work is continuously captured without changing tools
+预期结果：
+- 重要信息被持续接住和整理，不需要切工具
 
-### End of day
+### 下班前
 
-Say:
+你说：
 - `帮我做今日总结`
 
-Expected result:
-- completed work
-- project movement
-- unfinished items
-- risks
-- tomorrow's likely priorities
+预期结果：
+- 今天完成了什么
+- 哪些专项有推进
+- 哪些事没闭环
+- 风险和阻塞是什么
+- 明天优先做什么
 
-## Suggested First Week Usage
+## 新专项怎么开始
 
-If you are just starting, do not try to formalize everything at once.
+如果你要新增专项，可以直接这样说：
+- `建个专项：门诊护士站详设`
+- `新增一个专项：XX，目标是...`
+- `把这个作为专项管理：...`
 
-Week-one suggestion:
-- use temporary capture every day
-- use daily focus once each morning
-- use daily summary once each evening
-- pick one real project and maintain it consistently
+如果信息足够，我会直接建档。
+如果信息不够明确，我会补问几个最必要的问题，比如：
+- 这个专项的标准名称是什么？
+- 它的核心目标是什么？
+- 当前处于什么阶段？
+- 近期最关键的下一步是什么？
+- 有没有明确的完成节点或里程碑？
 
-After that, expand to more projects.
+## 第一周建议怎么用
 
-## Good Habits
+刚开始不要想着一下子把所有历史信息都补齐。
+建议第一周先这样用：
+- 每天用临时记录接事情
+- 每天早上做一次今日聚焦
+- 每天下班前做一次今日总结
+- 先挑 1 个真实专项持续维护
 
-- keep one stable name per project
-- use trigger phrases when something should become a formal record
-- let the temporary pool be an inbox, not a warehouse
-- keep daily focus short
-- keep daily summary outcome-oriented
+等顺手了，再慢慢扩到更多专项。
 
-## Current Scope
+## 先养成这几个习惯
 
-This guide is intentionally light. It is enough to start using the system. Later, it can expand into a fuller manual with:
-- project naming rules
-- milestone writing examples
-- risk grading rules
-- weekly review method
-- monthly project health review
+- 一个专项尽量只用一个固定名称
+- 需要正式记录时，用触发词明确一下
+- 临时池是收件箱，不是仓库
+- 今日聚焦要短，不要变成待办大全
+- 今日总结要看结果，不写流水账
+
+## 当前版本说明
+
+这份指南是第一版，先解决“能上手”。
+后面可以继续补充：
+- 专项命名规范
+- 里程碑怎么写更好
+- 风险分级规则
+- 周复盘方法
+- 月度专项健康度盘点

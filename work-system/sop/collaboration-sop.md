@@ -14,6 +14,16 @@ Use this SOP to run a chat-driven work control system inside day-to-day conversa
 
 ## System Modules
 
+## 存量专项收编
+
+当一个专项在新体系建立前已经推进过，不要把旧文件整包迁移进 `work-system/`。使用收编方式纳入：
+
+1. 确认专项主名称，避免后续多名称并存。
+2. 提炼专项基本画像，先压缩出专项定义、当前阶段、当前成果、下一步重点、风险或待确认、价值说明、外部依赖。
+3. 在 `work-system/projects/active/` 建立专项主档案。
+4. 在主档案中挂接原有产出物路径，不复制全部历史文件。
+5. 从收编完成后开始，把后续进展统一更新到专项主档案。
+
 ### 1. Temporary Work Pool
 
 Use for quick capture of items that should not be lost yet are not fully structured.

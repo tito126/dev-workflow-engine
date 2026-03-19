@@ -50,7 +50,19 @@ Expected behavior:
 - create or update today's file in `daily/focus/`
 - keep the list intentionally short and ranked
 
-## 6. Write daily summary
+## 6. Absorb an existing in-flight project
+
+User says:
+`把门诊护士站详设纳入新体系。`
+
+Expected behavior:
+- do not copy all historical material into the new system
+- create one project dossier in `projects/active/`
+- summarize the project into a basic project profile
+- attach existing output files as referenced deliverables
+- use the dossier as the single update point going forward
+
+## 7. Write daily summary
 
 User says:
 `Do today's summary.`

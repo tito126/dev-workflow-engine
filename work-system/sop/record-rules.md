@@ -33,6 +33,19 @@ Each meaningful project update should preserve enough detail to answer:
 - what is next
 - whether it affects scope, timeline, value, or risk
 
+## 存量专项收编规则
+
+对于已经推进中的专项，先做一次“专项基本画像”提炼，再正式建档。不要把零散聊天、旧文档和历史记忆原样复制到新系统里。
+
+专项基本画像至少应包含：
+- 专项定义
+- 当前阶段
+- 当前成果
+- 下一步重点
+- 风险或待确认
+- 价值说明
+- 外部依赖
+
 ## Capture Rules
 
 ### Capture immediately
