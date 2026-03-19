@@ -5,6 +5,7 @@
 
 - Project ID: P-YYYY-01
 - Status: not-started | planning | in-progress | waiting | at-risk | done | paused
+- Project Type: design-doc | delivery-dev
 - Health: green | yellow | red
 - Priority: high | medium | low
 - Owner: <name>
@@ -28,6 +29,8 @@ What benefit the project should create. Examples: efficiency, risk reduction, co
 A short current-state summary.
 
 ## Milestones
+- For `design-doc` projects, record milestones by chapter, module, or document output.
+- For `delivery-dev` projects, record milestones by delivery stage and verifiable handoff node.
 - [ ] Milestone 1 - target date - note
 - [ ] Milestone 2 - target date - note
 - [ ] Milestone 3 - target date - note

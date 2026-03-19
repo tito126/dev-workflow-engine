@@ -90,6 +90,21 @@ Do not write formal records for:
 - Update `Latest Update`, `Next Action`, `Risk`, and `Value` aggressively; these are the most decision-useful sections.
 - When a project is completed, paused, or canceled, move it to `projects/archived/`.
 
+## 里程碑设计规则
+
+### 详设/方案类专项
+
+- 里程碑按章节、模块、文档产出记录即可。
+- 优先记录“完成了什么章节”或“当前推进到哪个章节”。
+- 如果内容会因客户、产品或评审意见频繁调整，不要拆成过细节点。
+- 重点记录章节完成情况、待确认项、当前下一章。
+
+### 开发/落地类专项
+
+- 里程碑应比详设类更细，以便跟踪真实进展。
+- 优先记录需求、方案、开发、联调、测试、上线、验收等阶段节点。
+- 必要时补充阻塞、依赖方、目标时间、验收条件。
+
 ## Daily Focus Rules
 
 - Keep the list short enough to be actionable.
