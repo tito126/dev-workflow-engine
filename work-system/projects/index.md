@@ -5,6 +5,7 @@ Use this file as the top-level navigation page for tracked projects.
 ## Active Projects
 
 - [门诊护士站详设](active/menzhen-hushizhan-xiangshe.md) - 推进中 - 第别
+- [日志猎人](active/rizhi-lieren.md) - 推进中 - 第别
 
 ## Archived Projects
 
