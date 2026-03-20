@@ -24,4 +24,12 @@ Use this file for reminders before they become a scheduled reminder or a tracked
 - Status: pending
 - Next Handling: schedule
 
+### [R-20260319-02] 下周与产品沟通病区护士站专项细节
+- Created: 2026-03-19 18:33
+- Due: TBD（下周）
+- Related Project: 病区护士站专项
+- Reason: 与产品沟通病区护士站专项细节的时间已改到下周，需要下周继续跟进并在会前留出准备和对齐时间。
+- Status: pending
+- Next Handling: follow manually
+
 <!-- Add reminder items below this line -->
