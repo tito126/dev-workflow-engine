@@ -46,6 +46,8 @@
 - 当前版本: `work-system/deliverables/log-hunter-ai-presentation-2026-03-21-v11-notes.pptx`
 - 配套脚本: `work-system/deliverables/build_log_hunter_ppt_v11_notes.py`
 - 配套答辩稿: `work-system/deliverables/log-hunter-ai-presentation-2026-03-21-v11-speech.md`
+- 口语版答辩稿: `work-system/deliverables/log-hunter-ai-presentation-2026-03-21-v11-speech-colloquial.md`
+- Q&A 模板: `work-system/deliverables/log-hunter-ai-presentation-2026-03-21-v11-qa.md`
 - 队伍名称: 日志猎人
 - PPT 模板: `D:\WXWork\1688852666741352\Cache\File\2026-03\【 汇报序号+ 参数项目分类 +队名队长姓名 工号 +队伍名称】AI技术大赛汇报演示PPT模板.pptx`
 - 模板结构: 封面 -> 团队介绍 -> 汇报目录 -> 项目背景与目标 -> 技术原理与实现 -> 算法/能力亮点 -> 成果展示与前景 -> 总结展望 -> 收获 -> 未来规划 -> Q&A
