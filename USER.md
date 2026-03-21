@@ -10,7 +10,8 @@ _Learn about the person you're helping. Update this as you go._
 
 ## Context
 
-_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
+- 希望把日常聊天里的零散信息、专项推进中的打磨过程，持续沉淀成可复用的协作上下文，方便后续形成默契。
+- 倾向于让工作信息从消息流变成可追踪、可回看的工作流。
 
 ---
 
