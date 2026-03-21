@@ -42,9 +42,10 @@
 ## 当前答辩准备
 - 场景: AI 技术大赛汇报演示 PPT
 - 截止: 2026-03-22
-- 当前任务: 在现有 v9-notes 基础上继续精修页面表达、图文排版和现场讲述逻辑
-- 当前版本: `work-system/deliverables/log-hunter-ai-presentation-2026-03-21-v9-notes.pptx`
-- 配套脚本: `work-system/deliverables/build_log_hunter_ppt_v9_notes.py`
+- 当前任务: 在现有 v10-notes 基础上继续精修页面表达、图文排版和 15 分钟答辩节奏
+- 当前版本: `work-system/deliverables/log-hunter-ai-presentation-2026-03-21-v10-notes.pptx`
+- 配套脚本: `work-system/deliverables/build_log_hunter_ppt_v10_notes.py`
+- 配套答辩稿: `work-system/deliverables/log-hunter-ai-presentation-2026-03-21-v10-speech.md`
 - 队伍名称: 日志猎人
 - PPT 模板: `D:\WXWork\1688852666741352\Cache\File\2026-03\【 汇报序号+ 参数项目分类 +队名队长姓名 工号 +队伍名称】AI技术大赛汇报演示PPT模板.pptx`
 - 模板结构: 封面 -> 团队介绍 -> 汇报目录 -> 项目背景与目标 -> 技术原理与实现 -> 算法/能力亮点 -> 成果展示与前景 -> 总结展望 -> 收获 -> 未来规划 -> Q&A
@@ -63,6 +64,7 @@
 - [x] 完成答辩 PPT 材料梳理
 - [x] 完成答辩 PPT 初版（v8）
 - [x] 完成带演讲者备注的答辩 PPT 精修版（v9-notes）
+- [x] 完成按 15 分钟答辩节奏收敛的 v10-notes 和配套答辩稿
 - [ ] 完成答辩 PPT 定稿
 
 ## 风险与待确认

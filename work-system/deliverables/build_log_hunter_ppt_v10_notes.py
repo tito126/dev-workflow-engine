@@ -1,0 +1,217 @@
+import copy
+import glob
+import os
+import shutil
+import zipfile
+import xml.etree.ElementTree as ET
+
+BASE = r"C:\Users\pc\.openclaw\workspace\work-system\deliverables"
+TARGET = os.path.join(BASE, "log-hunter-ai-presentation-2026-03-21-v10-notes.pptx")
+SCRIPT_OUT = os.path.join(BASE, "log-hunter-ai-presentation-2026-03-21-v10-speech.md")
+
+ns = {
+    "a": "http://schemas.openxmlformats.org/drawingml/2006/main",
+    "p": "http://schemas.openxmlformats.org/presentationml/2006/main",
+}
+for prefix, uri in ns.items():
+    ET.register_namespace(prefix, uri)
+
+source = os.path.join(BASE, "log-hunter-ai-presentation-2026-03-21-v9-notes.pptx")
+if not os.path.exists(source):
+    raise RuntimeError("v9-notes source ppt not found")
+shutil.copyfile(source, TARGET)
+
+slide_texts = {
+    6: [
+        "02 技术思路与实现 - 能力深化",
+        "在持续优化之外，逐步补齐更完整的智能分析能力",
+        "持续优化主线",
+        "围绕健壮性、性能提升、日志质量分析增强和日志反哺建议，持续把巡检结果转回系统优化。",
+        "能力补强",
+        "支持自然语言发起巡检需求，并可在传统服务器场景扩展 GC 日志分析，能力边界可从业务异常延展到 JVM 运行状态诊断。",
+        "适度技术亮点",
+        "通过代表 trace、完整链路和结构化聚合，既保证结果能看懂，也为后续智能分析和自动处理预留空间。",
+    ],
+    7: [
+        "03 验证闭环与应用价值",
+        "阶段成果",
+        "已形成日志获取、结构化分析、HTML 报告和典型案例沉淀等阶段能力，具备真实场景使用基础。",
+        "验证闭环",
+        "后续希望从“发现问题 -> 提出建议 -> AI 辅助修复 -> 再次验证”逐步建立闭环，让巡检结果真正回到系统本身。",
+        "应用价值",
+        "既能服务日常巡检、异常复盘和性能排查，也能支撑汇报展示、经验沉淀和后续推广复用。",
+        "发展前景",
+        "后续可继续推广到更多服务、更多医院环境和更多治理场景，逐步形成统一的日志巡检与治理能力底座。",
+        "从发现问题到 AI 辅助修复与验证，逐步形成闭环。",
+    ],
+    10: [
+        "成果展示 02",
+        "这一页重点展示两类可落到行动层面的结果：详细异常分析帮助追到异常链路，慢接口 Trace 详情帮助识别性能瓶颈与优化方向。",
+    ],
+}
+
+notes_texts = {
+    1: "大家好，我是第别，今天由我汇报我们团队的项目《日志猎人》。\n\n先用一句话概括这个项目：我们不是在做一个单纯的查日志工具，而是希望把日志从事后排障材料，逐步变成主动发现问题、支撑系统持续治理的抓手。\n\n这次答辩我会用 15 分钟左右，重点讲清三件事：为什么要做、现在做到了什么、后续准备把它往什么方向继续推进。",
+    3: "这一页只做路线预告，不重复第一页的项目定位。\n\n接下来我会按四部分展开：第一部分讲背景与目标，也就是为什么现在需要做这件事；第二部分讲技术思路和能力边界，但重点不是炫技术，而是说明这套能力如何服务持续优化；第三部分讲成果展示与应用价值；第四部分讲总结、未来规划以及我们希望形成的治理闭环。",
+    6: "这一页在 P5 的基础上再往前走一步。\n\nP5 已经讲了这件事的主线是持续优化，这一页补的是能力边界和适度的技术亮点。第一，系统已经支持自然语言发起巡检需求，降低使用门槛；第二，在传统服务器场景下，能力可以扩展到 GC 日志分析，边界可以从业务异常延展到 JVM 运行状态诊断。\n\n所以这一页不是单纯展示技术路径，而是说明这套能力在持续优化之外，正在逐步具备更完整的智能分析潜力。",
+    7: "这一页重点讲我理解的验证闭环。\n\n我们希望后续闭环不只是发现问题、提建议、再验证，而是更进一步做到：发现问题之后，能够基于报告结果给出可执行的修复方向，甚至由 AI 辅助生成修复方案或整改建议，然后再回到日志和结果层面做验证。\n\n如果这个闭环跑通，日志巡检就不只是分析工具，而会逐渐成为连接发现、分析、修复和验证的一套工作机制。",
+    10: "这一页我建议重点讲两张图。\n\n第一张是详细异常分析，它的价值在于不仅告诉我们异常类型，还给出调用方、线程、代表 trace 和完整链路线索，能帮助我们继续追到问题发生在哪一段。\n\n第二张是慢接口 Trace 详情，它把时间间隔分析和代表 trace 放在一起，更容易识别性能瓶颈、调用阻塞和潜在优化点。\n\n这两张图合在一起，能更好说明报告结果已经可以直接成为后续定位和优化的输入。",
+}
+
+speech_md = """# 日志猎人答辩稿（15分钟 + 5分钟提问）
+
+## 时间建议
+- P1-P3：2分钟
+- P4-P7：7分钟
+- P8-P11：4分钟
+- Q&A 预留：2分钟过渡 + 5分钟提问
+
+## 逐页答辩稿
+
+### P1 封面（约40秒）
+大家好，我是第别，今天由我汇报我们团队的项目《日志猎人》。
+
+先用一句话概括这个项目：我们不是在做一个单纯的查日志工具，而是希望把日志从事后排障材料，逐步变成主动发现问题、支撑系统持续治理的抓手。
+
+这次答辩我会重点讲清三件事：为什么要做、现在做到了什么、后续准备把它往什么方向继续推进。
+
+### P2 团队介绍（约30秒）
+这一页简单介绍团队。我们团队的分工覆盖了项目统筹、能力设计、开发实现、联调验证和场景支撑，确保这个项目不是停留在想法层面，而是能真正落到现场使用和答辩展示。
+
+### P3 议程（约40秒）
+这一页只做路线预告，不重复封面的项目定位。
+
+接下来我会按四部分展开：第一部分讲背景与目标，也就是为什么现在需要做这件事；第二部分讲技术思路和能力边界，但重点不是炫技术，而是说明这套能力如何服务持续优化；第三部分讲成果展示与应用价值；第四部分讲总结、未来规划以及我们希望形成的治理闭环。
+
+### P4 背景与目标（约1分30秒）
+这一页先把项目背景和目标讲稳。
+
+核心判断有两个：第一，系统运行中的很多问题发现仍偏事后响应，常常是用户反馈、接口报错或者现场排查时才介入；第二，日志虽然很多，但多数时候还停留在可查看层面，没有稳定转化为能持续使用的改进抓手。
+
+所以我们做这个项目，不只是为了把日志拉出来看，而是希望建立一套可复用的巡检能力，把问题发现、问题分析、优化建议和后续验证串起来，服务后续的健壮性提升、性能优化和日志质量改进。
+
+### P5 技术思路与实现（约1分40秒）
+这一页不强调炫技，强调思路。
+
+我们把事情拆成四块：先稳定获取日志，再做结构化分析，再输出可复盘的结果，最后把结果继续反哺回系统优化。
+
+这里想表达的是，技术路径本身不是重点，重点是让日志真正被用起来，并且能持续产生改进价值。无论是 K8s 还是传统服务器，最终都要落到同一个目标：让日志不只用于看问题，还用于推动问题改进。
+
+### P6 能力深化（约1分40秒）
+这一页是在 P5 的基础上再往前走一步。
+
+P5 讲的是持续优化主线，这一页补的是能力边界和适度的技术亮点。第一，系统已经支持自然语言发起巡检需求，降低使用门槛；第二，在传统服务器场景下，能力可以扩展到 GC 日志分析，边界可以从业务异常延展到 JVM 运行状态诊断。
+
+此外，通过代表 trace、完整链路和结构化聚合，报告结果既能看懂，也为后续更智能的分析和自动处理预留了空间。
+
+### P7 验证闭环与应用价值（约1分40秒）
+这一页重点讲我们希望形成的闭环。
+
+现在项目已经具备阶段成果，包括日志获取、结构化分析、报告输出和案例沉淀。但我们更看重的是，后续能不能把巡检结果重新带回系统里，形成发现问题、提出建议、AI 辅助修复、再次验证的闭环。
+
+如果这个闭环跑通，日志巡检就不只是分析工具，而会逐渐成为连接发现、分析、修复和验证的一套工作机制。
+
+### P8 总结展望（约50秒）
+总结来看，到当前阶段，我们已经形成了一套可落地的日志巡检能力；更重要的是，它推动了工作方式从被动排查走向持续优化。
+
+后续我们会继续增强健壮性、性能和日志质量分析能力，同时把建议落地后的验证闭环补得更完整。
+
+### P9 成果展示 01（约1分钟）
+这一页展示的是报告首页。重点不是界面，而是它能让使用者快速建立对本次巡检结果的整体判断：时间范围是什么、日志量大概多少、数据质量怎么样、哪些问题优先级更高。
+
+这也是后续做异常分析和优化判断的入口。
+
+### P10 成果展示 02（约1分20秒）
+这一页建议重点讲两类结果。
+
+第一类是详细异常分析，它的价值在于不仅告诉我们异常类型，还给出调用方、线程、代表 trace 和完整链路线索，能帮助我们继续追到问题发生在哪一段。
+
+第二类是慢接口 Trace 详情，它把时间间隔分析和代表 trace 放在一起，更容易识别性能瓶颈、调用阻塞和潜在优化点。
+
+这两张图合在一起，能更好说明报告结果已经可以直接成为后续定位和优化的输入。
+
+### P11 未来规划（约1分钟）
+未来规划重点有三块：一是继续增强健壮性、性能和日志质量分析能力；二是把日志反哺建议真正和整改动作连起来，逐步建立更清晰的验证闭环；三是在更多环境里复制落地，并拓展包括 GC 日志在内的更多分析场景。
+
+### P12 Q&A 过渡（约20秒）
+我的汇报就到这里。我们希望把日志猎人从一个项目能力，逐步推进成更通用的日志巡检与治理能力。欢迎各位老师提问。
+
+## 建议准备的 Q&A 方向
+- 这套能力和传统人工排查相比，最核心的价值差异是什么？
+- 当前最难落地的部分是什么，是环境适配、分析准确性，还是闭环执行？
+- AI 辅助修复未来准备怎么做，边界和风险怎么控制？
+- 除了业务异常和慢接口，后续还准备扩哪些日志类型？
+"""
+
+
+def build_paragraph(template_p, text):
+    p = copy.deepcopy(template_p)
+    for child in list(p):
+        if child.tag != f"{{{ns['a']}}}pPr":
+            p.remove(child)
+    if text:
+        runs = template_p.findall("a:r", ns)
+        if runs:
+            run_template = runs[0]
+            r = ET.Element(f"{{{ns['a']}}}r")
+            rPr = run_template.find("a:rPr", ns)
+            if rPr is not None:
+                r.append(copy.deepcopy(rPr))
+            t = ET.Element(f"{{{ns['a']}}}t")
+            t.text = text
+            r.append(t)
+            p.append(r)
+        else:
+            r = ET.Element(f"{{{ns['a']}}}r")
+            r.append(ET.Element(f"{{{ns['a']}}}rPr"))
+            t = ET.Element(f"{{{ns['a']}}}t")
+            t.text = text
+            r.append(t)
+            p.append(r)
+    end = template_p.find("a:endParaRPr", ns)
+    if end is not None:
+        p.append(copy.deepcopy(end))
+    return p
+
+
+def set_shape_text(sp, text):
+    tx_body = sp.find("p:txBody", ns)
+    paragraphs = tx_body.findall("a:p", ns)
+    template_p = paragraphs[0]
+    for p in paragraphs:
+        tx_body.remove(p)
+    for line in text.split("\n"):
+        tx_body.append(build_paragraph(template_p, line))
+
+
+with zipfile.ZipFile(TARGET, "r") as zin:
+    payload = {name: zin.read(name) for name in zin.namelist()}
+
+for slide_idx, texts in slide_texts.items():
+    path = f"ppt/slides/slide{slide_idx}.xml"
+    root = ET.fromstring(payload[path])
+    shapes = [sp for sp in root.findall('.//p:sp', ns) if sp.find('p:txBody', ns) is not None and sp.findall('.//a:t', ns)]
+    if len(shapes) != len(texts):
+        raise RuntimeError(f"slide {slide_idx}: expected {len(shapes)} text shapes, got {len(texts)} replacements")
+    for sp, text in zip(shapes, texts):
+        set_shape_text(sp, text)
+    payload[path] = ET.tostring(root, encoding='utf-8', xml_declaration=True)
+
+for slide_idx, notes_text in notes_texts.items():
+    path = f"ppt/notesSlides/notesSlide{slide_idx}.xml"
+    root = ET.fromstring(payload[path])
+    shapes = [sp for sp in root.findall('.//p:sp', ns) if sp.find('p:txBody', ns) is not None and sp.findall('.//a:t', ns)]
+    if len(shapes) < 2:
+        raise RuntimeError(f"notes slide {slide_idx}: expected note body")
+    set_shape_text(shapes[1], notes_text)
+    payload[path] = ET.tostring(root, encoding='utf-8', xml_declaration=True)
+
+with zipfile.ZipFile(TARGET, 'w', zipfile.ZIP_DEFLATED) as zout:
+    for name, data in payload.items():
+        zout.writestr(name, data)
+
+with open(SCRIPT_OUT, 'w', encoding='utf-8') as f:
+    f.write(speech_md)
+
+print(TARGET)
+print(SCRIPT_OUT)
