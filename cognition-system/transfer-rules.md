@@ -44,3 +44,9 @@
 - 技术表达要始终服务于价值表达
 - 当材料很多但讲不顺时，优先检查主线而不是继续堆内容
 - 页面、讲稿、Q&A 最好同步推进，而不是线性补课
+- 版本对比应重点提炼“结构职责变化”和“价值表达升级”，而不只看文案增删
+
+## 已新增的复用资产
+
+- `cognition-system/log-hunter-retrospective.md`
+- `cognition-system/log-hunter-ppt-version-diff.md`
