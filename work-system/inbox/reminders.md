@@ -32,4 +32,31 @@ Use this file for reminders before they become a scheduled reminder or a tracked
 - Status: pending
 - Next Handling: follow manually
 
+### [R-20260406-01] 下周推进《病区护士（姚云）》高危代码修复清单
+- Created: 2026-04-06 09:30
+- Due: TBD
+- Related Project: 病区护士高危问题治理
+- Reason: 下周需要推进《病区护士（姚云）》高危代码修复清单，这项工作不应按一次性全修处理，而应先用 AI 做分类、聚类、批次拆分，并按长期跟踪台账持续维护，承接后续持续扫描新增问题。
+- Status: in-progress
+- Progress:
+  - 2026-04-08: 已安排人完成一轮代码排查，发现很多记录不需要整改，属于误报或已处理
+  - 后续需完善 `win-code-scanner` skill，优化扫描规则，避免重复扫描和误报
+- Next Handling: follow manually（优先完善扫描规则，减少无效工作量）
+
+### [R-20260406-02] 跟进主数据院端后台接口是否可封装前端接口
+- Created: 2026-04-06 11:18
+- Due: TBD
+- Related Project: 病区护士相关事项
+- Reason: 需确认主数据院端提供的后台接口是否可以进一步封装为前端接口，当前约定由姚云联系黄荣波沟通，后续需要跟进沟通结果与可行性判断。
+- Status: pending
+- Next Handling: follow manually
+
+### [R-20260406-03] 跟进是否增加单独测试环境
+- Created: 2026-04-06 11:18
+- Due: TBD
+- Related Project: 病区护士相关事项
+- Reason: 需评估是否增加单独测试环境；如果 105 测试通过会到现场，担心存在兼容问题；如果 105 测试不通过，又会阻塞代码提交。当前约定由姚云联系李莺沟通，后续需要跟进结论与处理方案。
+- Status: pending
+- Next Handling: follow manually
+
 <!-- Add reminder items below this line -->
