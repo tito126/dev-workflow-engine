@@ -1,0 +1,1348 @@
+[
+  {
+    "id": 88,
+    "category": "性能规范",
+    "code": "PERF-B007",
+    "name": "下游调用超时配置规范",
+    "severity": "严重",
+    "description": "下游接口调用必须设置合理的超时时间，避免长时间等待和资源浪费",
+    "checkpoints": [
+      {
+        "id": "PERF-B007-1",
+        "description": "检查AKSO Feign调用是否配置超时时间",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-B007-2",
+        "description": "验证超时时间是否超过1分钟限制",
+        "severity": "警告",
+        "weight": 0.5
+      },
+      {
+        "id": "PERF-B007-3",
+        "description": "确认连接和读取超时分别设置",
+        "severity": "警告",
+        "weight": 0.5
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".yaml\",\".yml\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 90,
+    "category": "工程规范",
+    "code": "ENG-B001",
+    "name": "第三方接口调用域名规范",
+    "severity": "警告",
+    "description": "禁止以IP形式直接调用第三方接口，必须使用域名调用避免IP变更导致的稳定性问题",
+    "checkpoints": [
+      {
+        "id": "ENG-B001-1",
+        "description": "检查第三方接口调用是否使用IP地址",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-B001-2",
+        "description": "验证域名配置和使用正确性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-B001-3",
+        "description": "确认IP变更检查机制完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-B001-4",
+        "description": "检查硬编码IP地址情况",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".yaml\",\".yml\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 46,
+    "category": "性能规范",
+    "code": "PERF-B001",
+    "name": "线程安全与共享变量控制",
+    "severity": "严重",
+    "description": "多线程共享变量必须使用volatile修饰，线程不安全集合禁止在多线程环境使用，同步代码块锁定对象合理，避免死锁",
+    "checkpoints": [
+      {
+        "id": "PERF-B001-1",
+        "description": "检查共享变量volatile",
+        "severity": "警告",
+        "weight": 0.5
+      },
+      {
+        "id": "PERF-B001-2",
+        "description": "检查成员变量线程安全集合",
+        "severity": "警告",
+        "weight": 0.5
+      },
+      {
+        "id": "PERF-B001-3",
+        "description": "检查锁对象",
+        "severity": "警告",
+        "weight": 0.5
+      },
+      {
+        "id": "PERF-B001-4",
+        "description": "检查死锁预防",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-B001-6",
+        "description": "检查线程里开线程",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".py\",\".yaml\",\".groovy\",\".cs\",\".yml\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 102,
+    "category": "工程规范",
+    "code": "ENG-B003",
+    "name": "JAR包命名规范",
+    "severity": "警告",
+    "description": "新项目JAR包以winning-开头，避免随意命名",
+    "checkpoints": [
+      {
+        "id": "ENG-B003-1",
+        "description": "检查新项目JAR包命名是否以winning-开头",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-B003-2",
+        "description": "验证JAR包命名规范性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-B003-3",
+        "description": "确认老项目JAR包兼容性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-B003-4",
+        "description": "检查命名冲突情况",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 104,
+    "category": "工程规范",
+    "code": "ENG-B005",
+    "name": "实体类命名规范",
+    "severity": "警告",
+    "description": "跨业务系统访问表时实体类命名使用业务系统+表名方式，避免冲突",
+    "checkpoints": [
+      {
+        "id": "ENG-B005-1",
+        "description": "检查跨系统实体类命名规范性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-B005-2",
+        "description": "验证业务系统+表名命名方式",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-B005-3",
+        "description": "确认PBC组合兼容性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-B005-4",
+        "description": "检查类名称冲突情况",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 32,
+    "category": "业务逻辑",
+    "code": "BUS-B002",
+    "name": "状态机完整性与正确性",
+    "severity": "严重",
+    "description": "业务状态流转需符合状态机定义，禁止无效状态流转，状态变更需记录日志，状态判断需覆盖所有可能值，使用枚举管理状态值",
+    "checkpoints": [
+      {
+        "id": "BUS-B002-1",
+        "description": "检查状态流转合法性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B002-2",
+        "description": "检查无效状态变更",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B002-3",
+        "description": "检查状态日志",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B002-4",
+        "description": "检查状态判断完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B002-5",
+        "description": "检查状态枚举使用",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".py\",\".yaml\",\".groovy\",\".cs\",\".yml\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L3",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 105,
+    "category": "性能规范",
+    "code": "PERF-S001",
+    "name": "慢SQL性能规范",
+    "severity": "严重",
+    "description": "高频SQL执行时间超过1秒属于慢SQL，必须进行索引优化和查询重构",
+    "checkpoints": [
+      {
+        "id": "PERF-S001-1",
+        "description": "检查SQL执行时间是否超过1秒",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S001-2",
+        "description": "验证执行计划是否存在全表扫描",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S001-3",
+        "description": "确认索引使用合理性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S001-4",
+        "description": "检查大表查询优化措施",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 106,
+    "category": "性能规范",
+    "code": "PERF-S002",
+    "name": "SQL调用频次控制规范",
+    "severity": "严重",
+    "description": "单次接口调用SQL不能超过100次，避免对数据库产生性能影响",
+    "checkpoints": [
+      {
+        "id": "PERF-S002-1",
+        "description": "检查单接口SQL调用次数是否超过100次",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S002-2",
+        "description": "验证循环调用SQL优化",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S002-3",
+        "description": "确认批量操作使用正确性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S002-4",
+        "description": "检查数据库性能影响评估",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 92,
+    "category": "性能规范",
+    "code": "PERF-B009",
+    "name": "下游RPC调用频次控制规范",
+    "severity": "严重",
+    "description": "单接口对下游RPC调用次数必须低于100次，避免高频调用影响系统稳定性",
+    "checkpoints": [
+      {
+        "id": "PERF-B009-1",
+        "description": "检查单接口下游RPC调用次数是否超过100次",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-B009-2",
+        "description": "验证批量处理机制合理性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-B009-3",
+        "description": "确认异步处理使用正确性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-B009-4",
+        "description": "检查消息队列替代方案适用性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 95,
+    "category": "框架规范",
+    "code": "FRAME-B003",
+    "name": "异步编程上下文传递规范",
+    "severity": "严重",
+    "description": "异步编程中确保正确传递上下文信息，避免上下文值的不一致性和错误",
+    "checkpoints": [
+      {
+        "id": "FRAME-B003-1",
+        "description": "检查TenancyContext类使用正确性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "FRAME-B003-2",
+        "description": "验证子线程上下文传递完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "FRAME-B003-3",
+        "description": "确认ThreadLocal清理机制",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "FRAME-B003-4",
+        "description": "检查自定义线程池上下文处理",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 99,
+    "category": "架构规范",
+    "code": "ARCH-B004",
+    "name": "事务边界控制规范",
+    "severity": "严重",
+    "description": "事务中避免包含其他调用特别是异步处理，防止产生不一致性和性能问题",
+    "checkpoints": [
+      {
+        "id": "ARCH-B004-1",
+        "description": "检查事务中是否包含异步处理",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ARCH-B004-2",
+        "description": "验证RPC调用和IO操作是否在事务外",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ARCH-B004-3",
+        "description": "确认事务隔离级别影响评估",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ARCH-B004-4",
+        "description": "检查数据一致性保障机制",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L3",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 41,
+    "category": "安全规范",
+    "code": "SEC-B003",
+    "name": "SQL注入防护",
+    "severity": "严重",
+    "description": "禁止字符串拼接SQL语句，使用参数化查询，避免使用${}拼接SQL，过滤SQL关键字，使用ORM框架避免原生SQL",
+    "checkpoints": [
+      {
+        "id": "SEC-B003-1",
+        "description": "检查SQL字符串拼接",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-B003-2",
+        "description": "检查参数化查询使用",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-B003-3",
+        "description": "检查${}使用",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-B003-4",
+        "description": "检查SQL关键字过滤",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-B003-5",
+        "description": "检查ORM框架使用",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\", \".py\", \".yaml\", \".groovy\", \".cs\", \".yml\", \".sql\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 108,
+    "category": "语法规范",
+    "code": "SYN-S001",
+    "name": "SQL查询条件完整性规范",
+    "severity": "严重",
+    "description": "数据库查询必须带条件，避免只包含HOSPITAL_SOID和IS_DEL两个条件",
+    "checkpoints": [
+      {
+        "id": "SYN-S001-1",
+        "description": "检查SQL是否包含有效业务条件",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-S001-2",
+        "description": "验证数据范围条件完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-S001-3",
+        "description": "确认全表查询数据量评估",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-S001-4",
+        "description": "检查业务逻辑条件存在性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 111,
+    "category": "性能规范",
+    "code": "PERF-S006",
+    "name": "SQL分页处理规范",
+    "severity": "严重",
+    "description": "结果集超过1000条必须进行分页处理，避免数据量过大导致性能问题",
+    "checkpoints": [
+      {
+        "id": "PERF-S006-1",
+        "description": "检查结果集是否进行分页",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S006-2",
+        "description": "验证分页限制是否超过1000条",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S006-3",
+        "description": "确认业务分页设置合理性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S006-4",
+        "description": "检查全表扫描内存控制",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 113,
+    "category": "性能规范",
+    "code": "PERF-S008",
+    "name": "HQL select new语法避免规范",
+    "severity": "严重",
+    "description": "避免使用select new语法，优先使用普通查询方式，防止性能问题和内存消耗",
+    "checkpoints": [
+      {
+        "id": "PERF-S008-1",
+        "description": "检查HQL中select new使用",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S008-2",
+        "description": "验证关联表查询性能",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S008-3",
+        "description": "确认普通查询替代方案",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S008-4",
+        "description": "检查编译后SQL语句数量",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 114,
+    "category": "语法规范",
+    "code": "SYN-S002",
+    "name": "HQL类名称冲突避免规范",
+    "severity": "严重",
+    "description": "避免HQL中出现相同类名称，防止类冲突和不明确的查询结果",
+    "checkpoints": [
+      {
+        "id": "SYN-S002-1",
+        "description": "检查HQL中类名称唯一性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-S002-2",
+        "description": "验证特征缩写使用正确性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-S002-3",
+        "description": "确认类路径明确性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-S002-4",
+        "description": "检查重名类区分措施",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 119,
+    "category": "安全规范",
+    "code": "SEC-S001",
+    "name": "动态SQL拼接避免规范",
+    "severity": "严重",
+    "description": "避免动态SQL拼接，使用参数化查询或ORM框架，防止SQL注入",
+    "checkpoints": [
+      {
+        "id": "SEC-S001-1",
+        "description": "检查动态SQL拼接使用",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-S001-2",
+        "description": "验证参数化查询替代方案",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-S001-3",
+        "description": "确认ORM框架使用正确性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-S001-4",
+        "description": "检查SQL注入风险",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 120,
+    "category": "性能规范",
+    "code": "PERF-S013",
+    "name": "LOB字段查询优化规范",
+    "severity": "严重",
+    "description": "避免在select distinct中使用LOB字段，列表查询尽量避免LOB字段",
+    "checkpoints": [
+      {
+        "id": "PERF-S013-1",
+        "description": "检查select distinct中LOB字段使用",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S013-2",
+        "description": "验证列表查询字段必要性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S013-3",
+        "description": "确认LOB字段截取处理",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S013-4",
+        "description": "检查应用层压缩处理",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 126,
+    "category": "性能规范",
+    "code": "PERF-R001",
+    "name": "Redis键过期时间设置规范",
+    "severity": "严重",
+    "description": "为每个Redis键设置合理的过期时间，避免数据过期问题和内存占用过多",
+    "checkpoints": [
+      {
+        "id": "PERF-R001-1",
+        "description": "检查Redis key TTL设置",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-R001-2",
+        "description": "验证过期时间合理性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-R001-3",
+        "description": "确认数据自动过期机制",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-R001-4",
+        "description": "检查内存占用控制",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 127,
+    "category": "性能规范",
+    "code": "PERF-R002",
+    "name": "Redis慢查询优化规范",
+    "severity": "严重",
+    "description": "超过50ms的Redis查询视为慢查询，单次请求控制在20ms以内",
+    "checkpoints": [
+      {
+        "id": "PERF-R002-1",
+        "description": "检查Redis查询响应时间",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-R002-2",
+        "description": "验证50ms慢查询标识",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-R002-3",
+        "description": "确认20ms性能目标",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-R002-4",
+        "description": "检查查询优化措施",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 131,
+    "category": "安全规范",
+    "code": "SEC-R001",
+    "name": "Redis危险命令禁用规范",
+    "severity": "严重",
+    "description": "禁用KEYS、FLUSHALL、FLUSHDB、HMGETALL、HGETALL等危险命令",
+    "checkpoints": [
+      {
+        "id": "SEC-R001-1",
+        "description": "检查KEYS命令使用情况",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-R001-2",
+        "description": "验证FLUSH系列命令避免",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-R001-3",
+        "description": "确认HGETALL替代方案",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-R001-4",
+        "description": "检查框架控制有效性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 22,
+    "category": "代码质量",
+    "code": "QUAL-B011",
+    "name": "异常处理机制完整性",
+    "severity": "严重",
+    "description": "对可能返回null/undefined的方法调用添加完整异常处理，捕获具体异常而非通用Exception，异常信息需包含关键上下文，资源操作后确保关闭释放",
+    "checkpoints": [
+      {
+        "id": "QUAL-B011-4",
+        "description": "使用printStackTrace,高并发影响IO性能",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "QUAL-B011-5",
+        "description": "空/边界检查缺失",
+        "severity": "警告",
+        "weight": 0.5
+      },
+      {
+        "id": "QUAL-B011-6",
+        "description": "null调用风险",
+        "severity": "警告",
+        "weight": 0.5
+      },
+      {
+        "id": "QUAL-B011-9",
+        "description": "资源未释放",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".py\",\".yaml\",\".groovy\",\".cs\",\".yml\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 31,
+    "category": "业务逻辑",
+    "code": "BUS-B003",
+    "name": "业务规则一致性检查",
+    "severity": "严重",
+    "description": "确保相同业务场景的规则判断逻辑一致，业务规则变更需同步更新所有相关代码，关键业务逻辑需添加注释说明规则依据",
+    "checkpoints": [
+      {
+        "id": "BUS-B003-1",
+        "description": "检查相同业务规则一致性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B003-2",
+        "description": "检查规则变更同步性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B003-3",
+        "description": "检查规则注释",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B003-4",
+        "description": "检查硬编码业务规则",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B003-5",
+        "description": "检查规则逻辑正确性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\", \".py\", \".yaml\", \".groovy\", \".cs\", \".yml\", \".sql\"]",
+    "status": "执行",
+    "check_level": "L3",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 33,
+    "category": "业务逻辑",
+    "code": "BUS-B001",
+    "name": "数据一致性与完整性保障",
+    "severity": "严重",
+    "description": "关联数据操作需确保一致性，批量操作需处理部分成功场景，关键数据修改需记录操作日志，重要业务数据需添加校验和机制",
+    "checkpoints": [
+      {
+        "id": "BUS-B001-1",
+        "description": "检查关联数据一致性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B001-2",
+        "description": "检查批量操作容错",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B001-3",
+        "description": "检查操作日志",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B001-4",
+        "description": "检查数据校验和",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "BUS-B001-5",
+        "description": "检查数据同步机制",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".py\",\".yaml\",\".groovy\",\".cs\",\".yml\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L3",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 75,
+    "category": "语法规范",
+    "code": "SYN-B004",
+    "name": "Java语法完整性检测",
+    "severity": "严重",
+    "description": "Java语句结构完整，类型匹配正确，导入类有效，避免编译阶段报错",
+    "checkpoints": [
+      {
+        "id": "SYN-B004-1",
+        "description": "括号/分号/语句结束符完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B004-2",
+        "description": "数据类型兼容性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B004-3",
+        "description": "导入类有效性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B004-4",
+        "description": "语法结构正确性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".py\",\".yaml\",\".groovy\",\".cs\",\".yml\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 76,
+    "category": "语法规范",
+    "code": "SYN-B003",
+    "name": "SQL/JPA语法规范性检测",
+    "severity": "严重",
+    "description": "遵循标准SQL语法与JPA规范，关键字拼写正确，字段与值数量匹配，条件语句完整，避免执行失败",
+    "checkpoints": [
+      {
+        "id": "SYN-B003-1",
+        "description": "SQL/JPA关键字拼写",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B003-2",
+        "description": "字段与值数量一致性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B003-3",
+        "description": "条件语句完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B003-4",
+        "description": "MyBatis占位符/JPA注解正确性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B003-5",
+        "description": "JPQL语句语法规范性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".py\",\".yaml\",\".groovy\",\".cs\",\".yml\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 77,
+    "category": "语法规范",
+    "code": "SYN-B002",
+    "name": "后端未定义资源调用检测",
+    "severity": "严重",
+    "description": "调用的Java方法/变量/工具类/JPA接口需在当前上下文已定义或导入，避免编译或运行时找不到资源",
+    "checkpoints": [
+      {
+        "id": "SYN-B002-1",
+        "description": "方法/变量定义存在性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B002-2",
+        "description": "工具类方法有效性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B002-3",
+        "description": "JPA接口/实体类导入完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B002-4",
+        "description": "包导入正确性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\", \".py\", \".yaml\", \".groovy\", \".cs\", \".yml\", \".sql\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 78,
+    "category": "语法规范",
+    "code": "SYN-B001",
+    "name": "后端资源路径有效性检测",
+    "severity": "警告",
+    "description": "Java代码中引用的配置文件、静态资源、JPA映射文件路径拼写正确且存在，避免资源加载失败",
+    "checkpoints": [
+      {
+        "id": "SYN-B001-1",
+        "description": "配置文件名/路径拼写",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B001-2",
+        "description": "静态资源路径正确性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B001-3",
+        "description": "JPA映射文件路径有效性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B001-4",
+        "description": "文件后缀完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-B001-5",
+        "description": "路径分隔符正确性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".py\",\".yaml\",\".groovy\",\".cs\",\".yml\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 83,
+    "category": "架构规范",
+    "code": "ARCH-B001",
+    "name": "searchEmployeeInfoAllByExample接口调用检查",
+    "severity": "严重",
+    "description": "对性能消耗较大的基础数据查询接口进行调用约束，确保在合适的范围内使用，避免系统性能问题",
+    "checkpoints": [],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 135,
+    "category": "性能规范",
+    "code": "PERF-S017",
+    "name": "循环内数据库查询检测（N+1）",
+    "severity": "严重",
+    "description": "只检测明确的N+1问题。循环内查询单条数据且循环次数>10次才报告，固定循环不报错。",
+    "checkpoints": [
+      {
+        "id": "PERF-S017-1",
+        "description": "在遍历集合的循环（forEach/for-each）内调用数据库查询单条记录，且集合大小>10",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S017-2",
+        "description": "在嵌套循环中调用数据库查询",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".py\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 136,
+    "category": "性能规范",
+    "code": "PERF-S018",
+    "name": "多表JOIN性能检测",
+    "severity": "严重",
+    "description": "只检测存在明确性能风险的多表JOIN。7表以上JOIN或无关联条件才报告。",
+    "checkpoints": [
+      {
+        "id": "PERF-S018-1",
+        "description": "JOIN表数量超过7个",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S018-2",
+        "description": "多表JOIN中存在完全无ON条件的表（会导致笛卡尔积）",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S018-3",
+        "description": "LEFT JOIN链式超过5层且表数据量>10万",
+        "severity": "警告",
+        "weight": 0.5
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 134,
+    "category": "性能规范",
+    "code": "PERF-S016",
+    "name": "深分页查询检测",
+    "severity": "严重",
+    "description": "只检测真正的深度分页问题。OFFSET超过100000才会报告，普通分页不报错。",
+    "checkpoints": [
+      {
+        "id": "PERF-S016-1",
+        "description": "分页查询OFFSET超过100000",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-S016-2",
+        "description": "使用LIMIT 1000000以上格式的查询",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".sql\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 137,
+    "category": "性能规范",
+    "code": "PERF-J001",
+    "name": "Jackson序列化性能敏感操作检测",
+    "severity": "严重",
+    "description": "禁止在Jackson序列化器中使用StringEscapeUtils等性能敏感操作，避免在大数据序列化时导致CPU耗尽。Jackson已内置HTML转义功能，不应重复处理。",
+    "checkpoints": [
+      {
+        "id": "PERF-J001-1",
+        "description": "检查自定义Jackson序列化器中是否调用StringEscapeUtils.unescapeHtml4/escapeHtml",
+        "severity": "严重",
+        "weight": 1.0
+      },
+      {
+        "id": "PERF-J001-2",
+        "description": "检查Jackson序列化器中对每个字段值进行HTML/XML转义操作",
+        "severity": "严重",
+        "weight": 0.9
+      },
+      {
+        "id": "PERF-J001-3",
+        "description": "检查在JsonSerializer.serialize()方法中进行字符串转义处理",
+        "severity": "严重",
+        "weight": 0.9
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 138,
+    "category": "性能规范",
+    "code": "PERF-M001",
+    "name": "MyBatis大数据量结果映射性能检测",
+    "severity": "严重",
+    "description": "检测可能导致MyBatis结果集映射性能问题的代码模式，包括查询返回大量数据、复杂嵌套结果映射等，避免CPU耗尽",
+    "checkpoints": [
+      {
+        "id": "PERF-M001-1",
+        "description": "检查MyBatis查询是否返回大量数据（无limit或limit值过大）",
+        "severity": "严重",
+        "weight": 1.0
+      },
+      {
+        "id": "PERF-M001-2",
+        "description": "检查ResultMap中是否包含大量嵌套association或collection",
+        "severity": "严重",
+        "weight": 0.9
+      },
+      {
+        "id": "PERF-M001-3",
+        "description": "检查是否存在N+1查询问题（循环中执行查询）",
+        "severity": "严重",
+        "weight": 1.0
+      }
+    ],
+    "applicable_extensions": "[\".java\", \".xml\"]",
+    "status": "执行",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 139,
+    "category": "性能规范",
+    "code": "PERF-L001",
+    "name": "锁竞争与死锁风险检测",
+    "severity": "严重",
+    "description": "检测可能导致锁竞争、死锁或长时间等待的代码模式，包括不当使用ReentrantLock、synchronized锁粒度过大、锁嵌套等",
+    "checkpoints": [
+      {
+        "id": "PERF-L001-1",
+        "description": "检查在循环中使用ReentrantLock.lock()或synchronized",
+        "severity": "严重",
+        "weight": 1.0
+      },
+      {
+        "id": "PERF-L001-2",
+        "description": "检查锁嵌套（在已持有锁的情况下再次获取锁）",
+        "severity": "严重",
+        "weight": 0.9
+      },
+      {
+        "id": "PERF-L001-3",
+        "description": "检查长时间持有锁（锁范围内包含IO操作或网络调用）",
+        "severity": "严重",
+        "weight": 1.0
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "code_type": "后端",
+    "_optimized": true
+  },
+  {
+    "id": 140,
+    "category": "性能规范",
+    "code": "PERF-A001",
+    "name": "大数组频繁操作检测",
+    "severity": "严重",
+    "description": "检测可能导致CPU耗尽的大数组频繁操作，包括在循环中使用Arrays.copyOfRange、System.arraycopy、频繁扩容List等",
+    "checkpoints": [
+      {
+        "id": "PERF-A001-1",
+        "description": "检查在循环中使用Arrays.copyOfRange或System.arraycopy",
+        "severity": "严重",
+        "weight": 1.0
+      }
+    ],
+    "applicable_extensions": "[\".java\"]",
+    "status": "执行",
+    "code_type": "后端",
+    "_optimized": true
+  }
+]

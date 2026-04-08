@@ -40,3 +40,4 @@
 - 从复盘中抽出跨项目检查点
 - 将对第别决策方式的新理解持续补进 `self-model.md`
 - 将协作中的偏差和纠偏经验补进 `collaboration-model.md`
+- 对于执行型 Agent 这类能力建设事项，优先沉淀到 `cognition-system/execution-agent-mechanism.md`，而不是误收编为业务专项

@@ -52,13 +52,24 @@ Each meaningful project update should preserve enough detail to answer:
 
 Write immediately when the user explicitly says:
 - record this
+- 记一下
+- 记录一下
 - remember this in the system
 - put this in the temporary pool
+- 放到临时池
 - add to project
+- 加到项目
+- 更新项目
 - update progress
+- 更新进展
 - record as risk
+- 记成风险
+- 记录为风险
 - add milestone
+- 加个里程碑
 - remind me
+- 提醒我
+- 前一天提醒我
 
 ### Capture after short clarification
 
@@ -82,6 +93,7 @@ Do not write formal records for:
 - Review it daily or every two days.
 - Convert items out of it whenever possible.
 - Avoid keeping stale items without status.
+- If a message already contains a clear time node, due window, or preparation window, prefer `reminders.md` over the temporary pool.
 
 ## Project Dossier Rules
 
@@ -111,6 +123,8 @@ Do not write formal records for:
 - Prefer one core goal and three key focus items.
 - Rank by priority, not by message arrival order.
 - Pull from both the temporary pool and active project dossiers.
+- Treat `今日聚焦`、`今天重点`、`排一下今天优先级` as direct Daily Focus triggers.
+- Pull in reminder items that have entered a near-term window.
 
 ## Daily Summary Rules
 
@@ -118,6 +132,8 @@ Do not write formal records for:
 - Write a management summary.
 - Focus on outcomes, project movement, unclosed items, risks, and tomorrow's priorities.
 - Make the summary reusable for weekly reporting.
+- Treat `今日总结`、`今天总结`、`收个尾` as direct Daily Summary triggers.
+- Before writing, check whether near-term reminder items should be proactively surfaced.
 
 ## Traceability Style
 
@@ -143,6 +159,50 @@ Escalate attention when any of these appear:
 - project value becomes unclear
 - scope increases materially
 - dependency from another team is unresolved
+
+## 三类载体的路由补充规则
+
+### 1. `ideas.md`
+
+- 用于承接方向、机会点、工具设想、潜在线索
+- 不要求 idea 必须先升级到 `reminders.md` 才能进入 `projects`
+- 当 idea 已具备明确目标、价值、下一步，或已经需要持续积累上下文时，可以直接转入 `projects`
+
+### 2. `reminders.md`
+
+- 用于承接有明确时间节点、时间窗口或临近压力的事项
+- 凡是出现“本周要完成”“下周要讲”“周四要分享”“某天前交付”“某天有评审/汇报”“前一天提醒我一下”“进入准备窗口了”这类表达，默认应考虑进入 `reminders.md`
+- `reminders.md` 的职责不是自动提醒，而是为 `Daily Summary` 和 `Daily Focus` 提供临近事项输入
+
+### 3. `projects`
+
+- 用于承接持续推进、需要上下文积累的事项
+- 进入 `projects` 的标准不是“是否很大”，而是“是否需要连续几轮推进和持续更新状态”
+- 具备明确目标、价值、下一步的事项，即使最初来自 idea，也可以直接建档到 `projects`
+
+## Daily Summary / Daily Focus 联动要求
+
+### 1. 每日总结前
+
+助手应至少检查一次：
+- `reminders.md` 中是否存在临近节点
+- `ideas.md` 中是否存在值得抬头回看的方向
+- `projects` 中是否存在进入关键窗口的专项
+
+### 2. 生成 Daily Focus 时
+
+助手应把以下内容显性列出：
+- 今天真的要推进的项目事项
+- 已进入临近时间窗口的提醒事项
+- 已从 idea 升级为当天值得投入的事项
+
+如果用户直接使用 `今日聚焦`、`今天重点`、`排一下今天优先级` 等中文表达，也应按同样规则处理，不因语言形式不同而降级。
+
+### 3. 防沉底要求
+
+- `ideas.md` 不能只进不出
+- `reminders.md` 不能只记不抬头
+- `projects` 不能只建档不更新
 
 ## Anti-Clutter Rules
 

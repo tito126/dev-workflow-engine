@@ -1,0 +1,19 @@
+{
+  "name": "wxp-tunnel",
+  "version": "2.0.0",
+  "description": "WXP Tunnel - 使用 Lockjaw 代理服务管理 TCP 隧道",
+  "main": "dist/cli.js",
+  "bin": {
+    "wxp-tunnel": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc --noEmit && node build.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "commander": "^13.1.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.7.0"
+  }
+}

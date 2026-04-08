@@ -1,0 +1,27 @@
+{
+  "session_id": "20260305_204308",
+  "created_at": "2026-03-05T20:43:08+08:00",
+  "input": {
+    "raw": "分析上海市徐汇区大华医院_新-生产环境门诊医生微服务,报告拷贝到 /Users/leishi/work/winning/skill-reports",
+    "parsed": {
+      "hospital": "上海市徐汇区大华医院_新",
+      "env_name": "WiNEX全60-生产环境",
+      "service_name": "PBC-门诊医生",
+      "output_dir": "/Users/leishi/work/winning/skill-reports"
+    }
+  },
+  "tunnel": {
+    "proxy_address": "172.16.7.39:8000",
+    "tenant_code": "shsxhqdhyyx"
+  },
+  "env": {
+    "id": "45b734a3482b474fb8d437a1d62060ed",
+    "name": "WiNEX全60-生产环境"
+  },
+  "service": {
+    "id": "85cbe41c77b446d88a1f1b801a60f6a0",
+    "name": "PBC-门诊医生",
+    "ip": "10.36.210.54",
+    "port": "1500"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "default_source_branch": "",
+  "source_branches": ["sr-next", "sr-rc", "it.develop.wxp"],
+  "branch_patterns": {
+    "by_task": "feature/{taskId}",
+    "by_demand": "feature/{demandId}_{sourceBranch}"
+  }
+}

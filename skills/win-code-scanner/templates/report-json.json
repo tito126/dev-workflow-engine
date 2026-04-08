@@ -1,0 +1,82 @@
+{
+  "report_info": {
+    "module_name": "{{module_name}}",
+    "scan_time": "{{scan_time}}",
+    "scanned_files": {{scanned_files}},
+    "scan_mode": "{{scan_mode}}",
+    "repo_path": "{{repo_path}}",
+    "report_generated_at": "{{report_generated_at}}"
+  },
+  "summary": {
+    "total": {{total_count}},
+    "by_severity": {
+      "critical": {{critical_count}},
+      "warning": {{warning_count}},
+      "info": {{info_count}}
+    },
+    "by_category": {
+      "performance": {{category_performance}},
+      "security": {{category_security}},
+      "business": {{category_business}},
+      "framework": {{category_framework}},
+      "architecture": {{category_architecture}},
+      "quality": {{category_quality}},
+      "syntax": {{category_syntax}}
+    }
+  },
+  "issues": [
+    {{#each issues}}
+    {
+      "rule_code": "{{rule_code}}",
+      "rule_name": "{{rule_name}}",
+      "severity": "{{severity}}",
+      "category": "{{category}}",
+      "file": "{{file}}",
+      "line": {{line}},
+      "code_snippet": {{{code_snippet_json}}},
+      "description": "{{description}}",
+      "suggestion": "{{suggestion}}"
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "issues_by_rule": [
+    {{#each issues_by_rule}}
+    {
+      "rule_code": "{{rule_code}}",
+      "rule_name": "{{rule_name}}",
+      "severity": "{{severity}}",
+      "category": "{{category}}",
+      "file_count": {{file_count}},
+      "suggestion": "{{suggestion}}",
+      "occurrences": [
+        {{#each occurrences}}
+        {
+          "file_path": "{{file_path}}",
+          "line": {{line}},
+          "code_snippet": {{{code_snippet_json}}},
+          "description": "{{description}}"
+        }{{#unless @last}},{{/unless}}
+        {{/each}}
+      ]
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "issues_by_file": [
+    {{#each issues_by_file}}
+    {
+      "file_path": "{{file_path}}",
+      "issue_count": {{issue_count}},
+      "issues": [
+        {{#each issues}}
+        {
+          "line": {{line}},
+          "rule_code": "{{rule_code}}",
+          "severity": "{{severity}}",
+          "description": "{{description}}"
+        }{{#unless @last}},{{/unless}}
+        {{/each}}
+      ]
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ]
+}

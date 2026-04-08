@@ -1,0 +1,276 @@
+{
+  "traces": [
+    {
+      "trace_id": "5DBBCF4E397C3BCE9026813D9A964E48",
+      "timestamp": "2026-03-18 16:50:41,087",
+      "type": "error",
+      "category": "第三方调用异常",
+      "root_class": "c.w.w.t.a.i.FinanceHelperImpl",
+      "api_entry": "/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id"
+    },
+    {
+      "trace_id": "1735e8e276434788b10013bd9a4c5b85",
+      "timestamp": "2026-03-18 16:50:42,644",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "A066905E808C0B78B4164071EAC06591",
+      "timestamp": "2026-03-18 16:50:40,750",
+      "type": "error",
+      "category": "参数校验失败",
+      "root_class": "c.w.b.a.r.r.RestAop",
+      "api_entry": "/api/v1/encounter_inpatient/newborn/foreign/by_mother_encounter_id"
+    },
+    {
+      "trace_id": "1d170a8f82974b749cd329c6a757c8e1",
+      "timestamp": "2026-03-18 16:50:39,290",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "7a88f389eadd45b59dd0e1322e7296ac",
+      "timestamp": "2026-03-18 16:51:16,115",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.r.r.RestAop",
+      "api_entry": "/api/v1/inpatient_encounter/encounter_medical_insurance_expire_tag/query/by_example"
+    },
+    {
+      "trace_id": "e69c8bce31734fe7870aeee71c354cb7",
+      "timestamp": "2026-03-18 16:50:33,800",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.w.p.a.p.u.PerUpdateFilePostData",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "20930E34BB6930B8D1E732D551B52C7D",
+      "timestamp": "2026-03-18 16:51:16,002",
+      "type": "error",
+      "category": "标签配置问题",
+      "root_class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "57216E379CB1D4364B702D02199F0AD0",
+      "timestamp": "2026-03-18 16:51:26,051",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.w.c.u.h.c.c.o.UnifiedOkHttpClient",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "a727ec15b5d04bbb886d58a22ab0831d",
+      "timestamp": "2026-03-18 16:50:39,176",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "2EE7F8A7D08BF8EDE00E40EFD59BADD3",
+      "timestamp": "2026-03-18 16:50:59,788",
+      "type": "error",
+      "category": "第三方调用异常",
+      "root_class": "c.w.p.p.s.d.s.i.StockModifySdkImpl",
+      "api_entry": "/api/v1/nis/exec_order_plan/advance_apply/by_end_time"
+    },
+    {
+      "trace_id": "43bdfc43ae184df7b3451fe0faaf7b08",
+      "timestamp": "2026-03-18 16:54:38,312",
+      "type": "error",
+      "category": "参数校验失败",
+      "root_class": "c.w.b.a.r.r.RestAop",
+      "api_entry": "/api/v3/mobile_nurse_app/exec_order/exec_with_detail"
+    },
+    {
+      "trace_id": "d664c1a776ef4f7fbd59fd93ce2be270",
+      "timestamp": "2026-03-18 16:52:05,377",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.w.p.a.p.e.f.ExecutionFhirRoute",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "ad75468bb23b4500b9d3ca3f959dac50",
+      "timestamp": "2026-03-18 16:52:05,384",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.n.m.p.a.i.ExecPlanRevokeApplyPostServiceImpl",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "1ff69fa3a4db4729977696d9bf8322bb",
+      "timestamp": "2026-03-18 16:55:14,073",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "/api/v1/encounter_inpatient/encounter_tag_data/refresh"
+    },
+    {
+      "trace_id": "657583CAB818AA71528679869C23B25B",
+      "timestamp": "2026-03-18 16:51:01,623",
+      "type": "error",
+      "category": "SQL错误",
+      "root_class": "c.w.b.a.r.r.RestAop",
+      "api_entry": "/api/v1/mobile_nurse_app/employee_info/query/by_example"
+    },
+    {
+      "trace_id": "425db60064c44c50aca7ff6c41543e05",
+      "timestamp": "2026-03-18 16:51:19,287",
+      "type": "error",
+      "category": "第三方调用异常",
+      "root_class": "c.w.w.b.a.h.ValueMdmRpcHelper",
+      "api_entry": "/api/v1/encounter_component/inpat_org/query/by_example"
+    },
+    {
+      "trace_id": "bf2360efc6214de5bfe12f9da9eaf316",
+      "timestamp": "2026-03-18 16:51:42,590",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.b.a.r.r.RestAop",
+      "api_entry": "/api/v1/app_inpatient_encounter/inpatient_encounter_by_input/query"
+    },
+    {
+      "trace_id": "34F4E05A86A281B1A249C611F92437AD",
+      "timestamp": "2026-03-18 16:52:05,364",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.w.c.u.h.c.c.o.UnifiedOkHttpClient",
+      "api_entry": "/api/v1/finance_aggregate_nurse/billing_node_setting/by_example"
+    },
+    {
+      "trace_id": "B2BD7E267ED845FA534E0DB2214F7C7D",
+      "timestamp": "2026-03-18 16:52:44,736",
+      "type": "error",
+      "category": "JSON解析错误",
+      "root_class": "c.w.w.b.a.s.InpatientEncounterLiteService",
+      "api_entry": "/api/v2/app_inpatient_encounter/encounter_bed_detail/query/by_id"
+    },
+    {
+      "trace_id": "8a703ba427284a26a4f072e8b32e2cbb",
+      "timestamp": "2026-03-18 16:53:20,168",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+      "api_entry": "/api/v1/encounter_inpatient/encounter_tag_data/refresh"
+    },
+    {
+      "trace_id": "f4f3d2bc13f34f16877f853c031a2c86",
+      "timestamp": "2026-03-18 16:54:33,799",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "/api/v1/encounter_inpatient/encounter_tag_data/refresh"
+    },
+    {
+      "trace_id": "494a00cb83e24730b5bd23b09d90c703",
+      "timestamp": "2026-03-18 16:51:38,040",
+      "type": "error",
+      "category": "标签配置问题",
+      "root_class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "7a66ff7ed97049ebad15801283a2c79a",
+      "timestamp": "2026-03-18 16:53:21,008",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.r.r.RestAop",
+      "api_entry": "/api/v1/inpatient_encounter/health_condition_chart/update/by_id"
+    },
+    {
+      "trace_id": "9D2C96935E2A5C13F677844E67FDF6A7",
+      "timestamp": "2026-03-18 16:53:39,213",
+      "type": "error",
+      "category": "第三方调用异常",
+      "root_class": "c.w.w.c.u.h.c.c.o.UnifiedOkHttpClient",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "444AA41F941670FFB39CA65B80DC289E",
+      "timestamp": "2026-03-18 16:54:26,587",
+      "type": "error",
+      "category": "第三方调用异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "857CAFAF79908354417DFE23705E57E2",
+      "timestamp": "2026-03-18 16:54:32,737",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "/api/v1/finance_aggregate_nurse/billing_node_setting/by_example"
+    },
+    {
+      "trace_id": "2724e66be75845e3bce9ea14adbd77d2",
+      "timestamp": "2026-03-18 16:56:55,507",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 10691
+    },
+    {
+      "trace_id": "58477307DD3E535F6438AAF51D9B810F",
+      "timestamp": "2026-03-18 16:55:09,643",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 2224
+    },
+    {
+      "trace_id": "F57DB561730B9DA684355148E64A37D7",
+      "timestamp": "2026-03-18 16:54:15,914",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1774
+    },
+    {
+      "trace_id": "83ab46c720c4437bb1025f9aa67f17d0",
+      "timestamp": "2026-03-18 16:58:53,896",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1564
+    },
+    {
+      "trace_id": "1B9DA879411BDEC60A3DAF70D1DCFAEA",
+      "timestamp": "2026-03-18 16:53:01,129",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1232
+    },
+    {
+      "trace_id": "8945AA9D4172FE0DCDF7A9294E49B0B0",
+      "timestamp": "2026-03-18 16:55:06,444",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1208
+    },
+    {
+      "trace_id": "BFB24AB5D3AC7416D892CF3671D21316",
+      "timestamp": "2026-03-18 16:51:00,865",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1116
+    },
+    {
+      "trace_id": "3a8f6ba5e28e4e12816910c3f6672078",
+      "timestamp": "2026-03-18 16:53:35,510",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1062
+    },
+    {
+      "trace_id": "ea054ae72a82460c8341b2971167b275",
+      "timestamp": "2026-03-18 16:51:53,428",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1005
+    }
+  ],
+  "count": 35
+}

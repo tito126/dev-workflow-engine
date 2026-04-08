@@ -1,0 +1,40 @@
+# 临时文件
+temp_*.py
+tmp_*.py
+temp_analysis/
+test-server-log/
+
+# 原始日志
+*.gz
+*.log
+
+# 生成的报告和digest（运行产物，不需要版本控制）
+*_report.html
+*_digest.json
+*_digest_traces.json
+*_final_digest.json
+*_final_digest_traces.json
+
+# opencode 运行产物
+opencode-runs/
+opencode/
+
+# 状态文件
+state/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# prompt pocket
+prompt-pocket/
+
+# root file archive
+root-file-archive/

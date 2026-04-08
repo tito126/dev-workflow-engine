@@ -436,7 +436,7 @@ class LogInspector:
                 node_id=node['id'],
                 start_time=start_time,
                 end_time=end_time,
-                log_type='all',
+                log_type='ms_all',
                 output_dir=str(self.script_dir)
             )
             fetch_end_ts = datetime.now()
@@ -461,7 +461,8 @@ class LogInspector:
         print(f"[工具组] 合并完成: {merged_file}")
         return merged_file
     
-    def analyze_logs(self, log_file: str, threshold: int = 1000) -> str:
+    def analyze_logs(self, log_file: str, threshold: int = 1000,
+                     start_time: str = '', end_time: str = '') -> str:
         """
         分析日志
         返回 digest.json 文件路径
@@ -482,6 +483,15 @@ class LogInspector:
             cmd += ["--fetch-start", fetch_meta.get('fetch_start', '')]
             cmd += ["--fetch-end", fetch_meta.get('fetch_end', '')]
             cmd += ["--fetch-duration", str(fetch_meta.get('fetch_duration_s', 0))]
+        
+        # 传入时间窗用于行级过滤（tool_api 全天日志需要）
+        _start = start_time or (fetch_meta.get('fetch_start', '') if fetch_meta else '')
+        _end = end_time or (fetch_meta.get('fetch_end', '') if fetch_meta else '')
+        if _start:
+            # preprocess 接受 'YYYY-MM-DD HH:MM' 格式，截取前16位
+            cmd += ["--start", _start[:16]]
+        if _end:
+            cmd += ["--end", _end[:16]]
         
         print(f"[统计] 正在分析日志...")
         
@@ -623,7 +633,9 @@ class LogInspector:
             print()
             
             # 3. 第一阶段分析（生成代表 traces 列表）
-            digest_file = self.analyze_logs(log_file)
+            digest_file = self.analyze_logs(log_file,
+                start_time=params.get('start_time', ''),
+                end_time=params.get('end_time', ''))
             print()
             
             # 4. 第二阶段：拉取代表 traces 完整链路（仅 k8s 类型）
@@ -651,7 +663,9 @@ class LogInspector:
                     result2 = subprocess.run(stage2_cmd, stderr=subprocess.PIPE, text=True)
                     if result2.returncode == 0:
                         print(f"[两阶段] 第二阶段完成，重新分析...")
-                        digest_file = self.analyze_logs(log_file)
+                        digest_file = self.analyze_logs(log_file,
+                            start_time=params.get('start_time', ''),
+                            end_time=params.get('end_time', ''))
                         print()
                     else:
                         print(f"[警告] 第二阶段拉取失败，使用第一阶段结果: {result2.stderr[:200]}")
@@ -816,7 +830,9 @@ def main():
                 'fetch_end': args.fetch_end or '',
                 'fetch_duration_s': int(args.fetch_duration or 0),
             }
-        digest_file = inspector.analyze_logs(args.log_file)
+        digest_file = inspector.analyze_logs(args.log_file,
+            start_time=args.fetch_start or '',
+            end_time=args.fetch_end or '')
         print(f"\nRESULT_DIGEST_FILE: {digest_file}")
         return
 

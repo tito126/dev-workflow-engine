@@ -1,0 +1,139 @@
+<mxfile host="app.diagrams.net" modified="2026-03-25T19:35:00.000Z" agent="OpenClaw" version="24.7.17">
+  <diagram id="core-data-flow" name="4.2.2.2 核心数据流转图">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="4.2.2.2.1 核心数据流转图（新版口径）" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=22;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="600" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="note" value="说明：固定资源仅做后台统一配置，不扩展规则字段，不通过定时任务自动生成未来可预约数据。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;align=left;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="360" y="70" width="880" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="extSchedule" value="三方系统推送排班&#xa;HIS / 康复 / 医技 / 手麻" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="70" y="190" width="240" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="fixedResource" value="后台固定资源配置&#xa;outp_fixed_resource&#xa;（资源定义，不自动生成排班）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="70" y="340" width="240" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="nurseManual" value="护士手动新增日程" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="70" y="490" width="240" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="extReservation" value="三方系统推送预约数据" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="70" y="620" width="240" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="hisCheckin" value="HIS Check In 回传" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="70" y="750" width="240" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="schedMain" value="资源排班表&#xa;outp_resource_sched" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="430" y="180" width="250" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="schedDetail" value="资源排班明细表&#xa;outp_res_sched_detail" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="430" y="290" width="250" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="reserved" value="日程 / 预约记录表&#xa;outp_schedule_reserved&#xa;（记录预约类型，用于颜色展示）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="430" y="440" width="250" height="95" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="orderResv" value="医嘱预约信息表&#xa;outp_sched_order_resv" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="430" y="585" width="250" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="checkin" value="门诊护士接诊表&#xa;outpatient_checkin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="430" y="720" width="250" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="checkinOrder" value="接诊后医嘱关联表&#xa;outp_checkin_order" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="430" y="830" width="250" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="syncStatus" value="三方同步状态表&#xa;outp_sync_status&#xa;幂等 / 重试 / 对账" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="790" y="300" width="260" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="opLog" value="日程操作日志表&#xa;outp_schedule_log&#xa;全过程追溯" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="790" y="470" width="260" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="board" value="日程看板 / 业务使用侧&#xa;按资源 + 时段展示&#xa;已预约按预约类型着色" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="340" width="260" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="colorCfg" value="颜色配置 / 诊区配置&#xa;预约类型颜色由本系统统一维护" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="500" width="260" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" value="推送排班" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="extSchedule" target="schedMain">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="拆分时段" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="schedMain" target="schedDetail">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="资源定义" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="fixedResource" target="reserved">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="手动新增日程" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="nurseManual" target="reserved">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="如占用已有排班时段则更新状态" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="nurseManual" target="schedDetail">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="推送预约" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="extReservation" target="reserved">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="包含医嘱信息" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="extReservation" target="orderResv">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" value="幂等 / 重试 / 对账" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="extReservation" target="syncStatus">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" value="关键操作留痕" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="reserved" target="opLog">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" value="关键操作留痕" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="schedMain" target="opLog">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" value="Check In" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="hisCheckin" target="checkin">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" value="关联预约 / 医嘱" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="checkin" target="checkinOrder">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13" value="关联预约" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="reserved" target="checkinOrder">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e14" value="关联医嘱" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="orderResv" target="checkinOrder">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e15" value="加载排班" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="schedMain" target="board">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e16" value="加载时段" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="schedDetail" target="board">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e17" value="加载已预约数据" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="reserved" target="board">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e18" value="颜色配置" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="colorCfg" target="board">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e19" value="界面展示 / 手动选择" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="fixedResource" target="board">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e20" value="处理结果" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="syncStatus" target="opLog">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,251 @@
+{
+  "traces": [
+    {
+      "trace_id": "D8DE4ABCF60687921197D65AD9A970B1",
+      "timestamp": "2026-03-31 17:28:25,903",
+      "type": "error",
+      "category": "第三方调用异常",
+      "root_class": "c.w.w.t.a.i.FinanceHelperImpl",
+      "api_entry": "/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id"
+    },
+    {
+      "trace_id": "5b4175b9f5cf43488debe76c1c96e363",
+      "timestamp": "2026-03-31 17:29:22,397",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "42c9882eb0104198b59a57b29141bbd3",
+      "timestamp": "2026-03-31 17:28:59,309",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "0d46552415a4435ea717059748971af4",
+      "timestamp": "2026-03-31 17:28:40,730",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.w.p.a.p.e.f.ExecutionFhirRoute",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "30FD0F85B48F777BAB3969ECDCB17888",
+      "timestamp": "2026-03-31 17:28:34,927",
+      "type": "error",
+      "category": "标签配置问题",
+      "root_class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "D3FCDA0AC62F12F3C3EBDCDC786C699F",
+      "timestamp": "2026-03-31 17:30:45,200",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.w.t.a.i.InpatientVisitHelperImpl",
+      "api_entry": "/api/v1/app_inpatient_encounter/encounter_info/private/get/by_encounter_id"
+    },
+    {
+      "trace_id": "FEDB0EED112358A601477FDF2C9AEAA0",
+      "timestamp": "2026-03-31 17:30:45,211",
+      "type": "error",
+      "category": "第三方调用异常",
+      "root_class": "c.w.w.t.a.i.FinanceHelperImpl",
+      "api_entry": "/api/v1/app_inpatient_encounter/inpat_basics_expense/query/by_encounter_id"
+    },
+    {
+      "trace_id": "F6D7EE0190D90F220F37639931D6FB4D",
+      "timestamp": "2026-03-31 17:28:59,299",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.b.a.r.r.RestAop",
+      "api_entry": "/api/v1/app_finance_fee_nurse/query/substance/by_barcode"
+    },
+    {
+      "trace_id": "7d038945be024d89b9964458e155182a",
+      "timestamp": "2026-03-31 17:30:03,888",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "A2EE451C7F1A029F81D7BD6F776E7D0B",
+      "timestamp": "2026-03-31 17:29:25,399",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.p.p.s.d.s.i.StockModifySdkImpl",
+      "api_entry": "/api/v1/nis/exec_order_plan/advance_apply/by_end_time"
+    },
+    {
+      "trace_id": "685c8d89249e44829557acdc07ccaa93",
+      "timestamp": "2026-03-31 17:29:42,779",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.n.m.p.a.i.ExecPlanRevokeApplyPostServiceImpl",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "100087101ABC93E573DEE68E4ABB4A44",
+      "timestamp": "2026-03-31 17:30:50,610",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.w.t.a.i.ClinicalHelperImpl",
+      "api_entry": "/api/v1/app_inpatient_encounter/patient_list/query/by_example"
+    },
+    {
+      "trace_id": "F0BDF5A34E9CD291C6317DEB0E00311E",
+      "timestamp": "2026-03-31 17:33:04,278",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.w.f.a.s.s.SearchComponentService",
+      "api_entry": "/api/v1/app_finance_component/inpatient_medical_service/search/by_keyword"
+    },
+    {
+      "trace_id": "19656EAAC58948D7474423C09E21E1C8",
+      "timestamp": "2026-03-31 17:29:25,431",
+      "type": "error",
+      "category": "第三方调用异常",
+      "root_class": "c.w.p.p.s.d.s.i.StockModifySdkImpl",
+      "api_entry": "/api/v1/nis/exec_order_plan/advance_apply/by_end_time"
+    },
+    {
+      "trace_id": "0e42e60abbe8442db4fc47c08d860747",
+      "timestamp": "2026-03-31 17:28:35,064",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.r.r.RestAop",
+      "api_entry": "/api/v1/inpatient_encounter/encounter_medical_insurance_expire_tag/query/by_example"
+    },
+    {
+      "trace_id": "F54710C845CCEFFF7E7832AFB61C5618",
+      "timestamp": "2026-03-31 17:28:45,399",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.w.c.u.h.c.c.o.UnifiedOkHttpClient",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "BBA648D183FDBFE8B8216CFB2AF309B0",
+      "timestamp": "2026-03-31 17:30:41,909",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.w.t.a.s.i.AutoTagAlgorithmServiceImpl",
+      "api_entry": "/api/v1/encounter_inpatient/encounter_tag_data/refresh"
+    },
+    {
+      "trace_id": "02d777fe26d84a7cbcff205a4fb48ba2",
+      "timestamp": "2026-03-31 17:28:39,875",
+      "type": "error",
+      "category": "JSON解析错误",
+      "root_class": "c.w.w.t.a.i.OrderExecHelperImpl",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "4b2325f22b9e487487a62b357f66602e",
+      "timestamp": "2026-03-31 17:29:30,302",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "/api/v1/execution_aggregate/ipt/order_exec_result/update"
+    },
+    {
+      "trace_id": "2720f7e0637d41df9da4eac4b6bd4bd0",
+      "timestamp": "2026-03-31 17:36:50,536",
+      "type": "error",
+      "category": "其他异常",
+      "root_class": "c.w.b.a.r.r.RestAop",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "871c9b1d4adc4e359324644d9176c767",
+      "timestamp": "2026-03-31 17:38:55,690",
+      "type": "error",
+      "category": "空指针异常",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "/api/v1/execution_aggregate/ipt/clinical_order/sync_call_order_split"
+    },
+    {
+      "trace_id": "0bcb3a6e3e0646009b49621c468178ad",
+      "timestamp": "2026-03-31 17:45:04,700",
+      "type": "error",
+      "category": "SQL错误",
+      "root_class": "c.w.b.a.c.c.u.CompletableFutureBuilder",
+      "api_entry": "N/A"
+    },
+    {
+      "trace_id": "AA7003A740C79CFC6D530276BD00E94E",
+      "timestamp": "2026-03-31 17:30:07,199",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 3467
+    },
+    {
+      "trace_id": "41A3DBB4342B461BA8231E0EDE8303AD",
+      "timestamp": "2026-03-31 17:33:33,918",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 2506
+    },
+    {
+      "trace_id": "53AE03883D0262DFA603FD45DFDE82DF",
+      "timestamp": "2026-03-31 17:48:03,105",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 2020
+    },
+    {
+      "trace_id": "00790FD64CA717233AD175EDCC582790",
+      "timestamp": "2026-03-31 17:56:14,638",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1650
+    },
+    {
+      "trace_id": "378EF333A4E64E58C1617B29813637E2",
+      "timestamp": "2026-03-31 17:56:09,084",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1264
+    },
+    {
+      "trace_id": "A92B76997B115498DE549B2856781CCA",
+      "timestamp": "2026-03-31 17:43:28,888",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1142
+    },
+    {
+      "trace_id": "4AC20F92C4CDD617D3A9702C9F975819",
+      "timestamp": "2026-03-31 17:44:46,188",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1135
+    },
+    {
+      "trace_id": "1FA085A1A5527C130FE57D8E3E944F66",
+      "timestamp": "2026-03-31 17:50:45,671",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1105
+    },
+    {
+      "trace_id": "aa40e0b3e38143f9b4d2c892b6ff985a",
+      "timestamp": "2026-03-31 17:42:58,861",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1046
+    },
+    {
+      "trace_id": "12EC845700256630427F1F1EE6466769",
+      "timestamp": "2026-03-31 17:32:18,570",
+      "type": "slow_api",
+      "api": null,
+      "duration_ms": 1036
+    }
+  ],
+  "count": 32
+}

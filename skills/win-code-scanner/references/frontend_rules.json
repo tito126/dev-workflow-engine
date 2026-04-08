@@ -1,0 +1,494 @@
+[
+  {
+    "id": 93,
+    "category": "性能规范",
+    "code": "PERF-B010",
+    "name": "裂变调用控制规范",
+    "severity": "严重",
+    "description": "避免前端一次点击产生大量下游接口调用，控制上游调用流量与下游处理能力对等",
+    "checkpoints": [
+      {
+        "id": "PERF-B010-1",
+        "description": "检查前端操作是否产生裂变调用",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-B010-2",
+        "description": "验证流量控制机制有效性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-B010-3",
+        "description": "确认异步批量处理使用合理性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "PERF-B010-4",
+        "description": "检查突发推送消息处理机制",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".java\",\".vue\",\".js\",\".ts\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "混合",
+    "_optimized": true
+  },
+  {
+    "id": 50,
+    "category": "框架规范",
+    "code": "FRAME-F008",
+    "name": "Element UI导入规范",
+    "severity": "严重",
+    "description": "禁止从'element-ui/lib/*'直接导入组件，需使用统一入口导入，避免抽取公共依赖失败",
+    "checkpoints": [
+      {
+        "id": "FRAME-F008-1",
+        "description": "检查是否有from 'element-ui/lib/xxx'的导入语句",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "FRAME-F008-2",
+        "description": "确认是否使用统一入口import ElementUI或解构导入",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "FRAME-F008-3",
+        "description": "检查按需加载配置是否正确",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "FRAME-F008-4",
+        "description": "确认无混合导入方式",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".vue\",\".js\",\".css\",\".ts\",\".json\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "前端",
+    "_optimized": true
+  },
+  {
+    "id": 55,
+    "category": "框架规范",
+    "code": "FRAME-F003",
+    "name": "watch监听规范",
+    "severity": "严重",
+    "description": "Vue的watch监听中禁止直接修改监听对象本身，直接修改可能导致无限循环、数据不一致或性能问题",
+    "checkpoints": [
+      {
+        "id": "FRAME-F003-1",
+        "description": "检查watch回调中是否修改监听的变量",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "FRAME-F003-2",
+        "description": "确认是否有深度监听导致的循环问题",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "FRAME-F003-3",
+        "description": "检查watch是否使用正确的immediate配置",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "FRAME-F003-4",
+        "description": "确认监听逻辑是否符合单向数据流",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".vue\",\".js\",\".css\",\".ts\",\".json\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "前端",
+    "_optimized": true
+  },
+  {
+    "id": 60,
+    "category": "工程规范",
+    "code": "ENG-F005",
+    "name": "请求库使用规范",
+    "severity": "严重",
+    "description": "前端项目只能使用'@winex-plugin/win-request'作为请求库，禁止使用axios、fetch、his-request等其他请求库",
+    "checkpoints": [
+      {
+        "id": "ENG-F005-1",
+        "description": "检查代码中是否有axios、fetch等请求库调用",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-F005-2",
+        "description": "确认是否使用@winex-plugin/win-request",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-F005-3",
+        "description": "检查package.json中是否有禁用的请求库依赖",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-F005-4",
+        "description": "确认请求拦截器配置是否统一",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".vue\",\".js\",\".css\",\".ts\",\".json\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "前端",
+    "_optimized": true
+  },
+  {
+    "id": 61,
+    "category": "工程规范",
+    "code": "ENG-F004",
+    "name": "Lodash使用规范",
+    "severity": "严重",
+    "description": "避免从'lodash'导入工具函数，需使用支持tree-shaking的'lodash-es'，减少最终代码体积，优化加载性能",
+    "checkpoints": [
+      {
+        "id": "ENG-F004-1",
+        "description": "检查是否有import _ from 'lodash'的导入",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-F004-2",
+        "description": "确认是否使用lodash-es",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-F004-3",
+        "description": "检查是否按需导入具体函数",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-F004-4",
+        "description": "确认无全量导入lodash的情况",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".vue\",\".js\",\".css\",\".ts\",\".json\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "前端",
+    "_optimized": true
+  },
+  {
+    "id": 62,
+    "category": "安全规范",
+    "code": "SEC-F003",
+    "name": "禁止使用eval函数",
+    "severity": "严重",
+    "description": "前端代码禁止使用eval函数，eval会执行字符串形式的代码，可能导致代码注入攻击，带来严重的安全风险",
+    "checkpoints": [
+      {
+        "id": "SEC-F003-1",
+        "description": "检查代码中是否存在eval()调用",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-F003-2",
+        "description": "检查是否有new Function()等类似动态执行代码的方式",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-F003-3",
+        "description": "检查是否有使用eval解析JSON等场景",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-F003-4",
+        "description": "确认无动态执行字符串代码的逻辑",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".vue\",\".js\",\".css\",\".ts\",\".json\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "前端",
+    "_optimized": true
+  },
+  {
+    "id": 64,
+    "category": "安全规范",
+    "code": "SEC-F001",
+    "name": "禁止全局变量污染",
+    "severity": "严重",
+    "description": "禁止向window或global对象注入全局变量，避免命名冲突、变量覆盖，影响应用稳定性",
+    "checkpoints": [
+      {
+        "id": "SEC-F001-1",
+        "description": "检查代码中是否有window.xxx = 赋值操作",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-F001-2",
+        "description": "检查是否有global.xxx = 赋值操作",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-F001-3",
+        "description": "子应用需特别检查全局变量注入",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SEC-F001-4",
+        "description": "确认无意外暴露的全局变量",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".vue\",\".js\",\".css\",\".ts\",\".json\"]",
+    "status": "执行",
+    "check_level": "L2",
+    "code_type": "前端",
+    "_optimized": true
+  },
+  {
+    "id": 69,
+    "category": "工程规范",
+    "code": "ENG-F003",
+    "name": "禁止动态require",
+    "severity": "严重",
+    "description": "禁止使用动态require，构建工具无法识别动态依赖路径，会导致构建失败或资源缺失",
+    "checkpoints": [
+      {
+        "id": "ENG-F003-1",
+        "description": "检查代码中是否有动态require调用",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-F003-2",
+        "description": "确认是否有模板字符串拼接的require路径",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-F003-3",
+        "description": "检查是否有根据变量动态加载模块的逻辑",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "ENG-F003-4",
+        "description": "确认静态资源导入是否规范",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".vue\",\".js\",\".css\",\".ts\",\".json\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "前端",
+    "_optimized": true
+  },
+  {
+    "id": 79,
+    "category": "语法规范",
+    "code": "SYN-F004",
+    "name": "JS/Vue语法完整性检测",
+    "severity": "严重",
+    "description": "JS/Vue语法结构完整，关键字拼写正确，类型匹配正确，避免解析或运行异常",
+    "checkpoints": [
+      {
+        "id": "SYN-F004-1",
+        "description": "括号/分号/引号完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F004-2",
+        "description": "数据类型兼容性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F004-3",
+        "description": "Vue模板语法正确性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F004-4",
+        "description": "函数结构完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F004-5",
+        "description": "数组元素分隔符完整性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".vue\",\".js\",\".css\",\".ts\",\".json\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "前端",
+    "_optimized": true
+  },
+  {
+    "id": 80,
+    "category": "语法规范",
+    "code": "SYN-F003",
+    "name": "CSS语法规范性检测",
+    "severity": "严重",
+    "description": "CSS选择器、属性、属性值拼写正确，语法结构完整，单位规范，避免样式失效",
+    "checkpoints": [
+      {
+        "id": "SYN-F003-1",
+        "description": "CSS选择器拼写",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F003-2",
+        "description": "属性/属性值拼写",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F003-3",
+        "description": "分号/大括号完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F003-4",
+        "description": "单位规范性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F003-5",
+        "description": "样式语法正确性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".vue\",\".js\",\".css\",\".ts\",\".json\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "前端",
+    "_optimized": true
+  },
+  {
+    "id": 81,
+    "category": "语法规范",
+    "code": "SYN-F002",
+    "name": "前端未定义资源调用检测",
+    "severity": "严重",
+    "description": "调用的JS函数/Vue组件/变量需已定义或导入，避免运行时找不到资源导致功能异常",
+    "checkpoints": [
+      {
+        "id": "SYN-F002-1",
+        "description": "JS函数定义存在性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F002-2",
+        "description": "Vue组件导入有效性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F002-3",
+        "description": "变量定义存在性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F002-4",
+        "description": "工具函数有效性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F002-5",
+        "description": "组件注册完整性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".vue\",\".js\",\".css\",\".ts\",\".json\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "前端",
+    "_optimized": true
+  },
+  {
+    "id": 82,
+    "category": "语法规范",
+    "code": "SYN-F001",
+    "name": "前端资源路径有效性检测",
+    "severity": "严重",
+    "description": "前端引用的图片、JS/CSS文件、接口地址路径拼写正确，避免资源加载失败或接口请求异常",
+    "checkpoints": [
+      {
+        "id": "SYN-F001-1",
+        "description": "静态资源路径拼写",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F001-2",
+        "description": "接口地址拼写",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F001-3",
+        "description": "文件后缀完整性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F001-4",
+        "description": "相对/绝对路径正确性",
+        "severity": "严重",
+        "weight": 0.8
+      },
+      {
+        "id": "SYN-F001-5",
+        "description": "资源引用格式规范性",
+        "severity": "严重",
+        "weight": 0.8
+      }
+    ],
+    "applicable_extensions": "[\".vue\",\".js\",\".css\",\".ts\",\".json\"]",
+    "status": "执行",
+    "check_level": "L1",
+    "code_type": "前端",
+    "_optimized": true
+  }
+]

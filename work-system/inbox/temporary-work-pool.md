@@ -26,4 +26,14 @@ Use this file as the main inbox for temporary operational items.
 
 ## Active Items
 
+### [T-20260407-01] 固化护士站 skill 顺序规则
+- Created: 2026-04-07 20:18
+- Type: pending-confirmation
+- Source: self
+- Related Project: nurse-station framework
+- Priority: high
+- Status: pending
+- Content: 将“`nurse-station-*` 应按顺序执行，默认先过 `brainstorming` checkpoint，再进入 planning / execution”固化为后续框架约束，并在今晚 `今日总结` 中显式收编。
+- Next Handling: move to project / summarize today
+
 <!-- Add new temporary items below this line -->

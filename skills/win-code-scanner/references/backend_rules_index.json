@@ -1,0 +1,234 @@
+{
+  "性能规范": {
+    "PERF-B007": {
+      "name": "下游调用超时配置规范",
+      "severity": "严重",
+      "description": "下游接口调用必须设置合理的超时时间，避免长时间等待和资源浪费",
+      "checkpoints": 3
+    },
+    "PERF-B001": {
+      "name": "线程安全与共享变量控制",
+      "severity": "严重",
+      "description": "多线程共享变量必须使用volatile修饰，线程不安全集合禁止在多线程环境使用，同步代码块锁定对象合理，避免死锁",
+      "checkpoints": 5
+    },
+    "PERF-S001": {
+      "name": "慢SQL性能规范",
+      "severity": "严重",
+      "description": "高频SQL执行时间超过1秒属于慢SQL，必须进行索引优化和查询重构",
+      "checkpoints": 4
+    },
+    "PERF-S002": {
+      "name": "SQL调用频次控制规范",
+      "severity": "严重",
+      "description": "单次接口调用SQL不能超过100次，避免对数据库产生性能影响",
+      "checkpoints": 4
+    },
+    "PERF-B009": {
+      "name": "下游RPC调用频次控制规范",
+      "severity": "严重",
+      "description": "单接口对下游RPC调用次数必须低于100次，避免高频调用影响系统稳定性",
+      "checkpoints": 4
+    },
+    "PERF-S006": {
+      "name": "SQL分页处理规范",
+      "severity": "严重",
+      "description": "结果集超过1000条必须进行分页处理，避免数据量过大导致性能问题",
+      "checkpoints": 4
+    },
+    "PERF-S008": {
+      "name": "HQL select new语法避免规范",
+      "severity": "严重",
+      "description": "避免使用select new语法，优先使用普通查询方式，防止性能问题和内存消耗",
+      "checkpoints": 4
+    },
+    "PERF-S013": {
+      "name": "LOB字段查询优化规范",
+      "severity": "严重",
+      "description": "避免在select distinct中使用LOB字段，列表查询尽量避免LOB字段",
+      "checkpoints": 4
+    },
+    "PERF-R001": {
+      "name": "Redis键过期时间设置规范",
+      "severity": "严重",
+      "description": "为每个Redis键设置合理的过期时间，避免数据过期问题和内存占用过多",
+      "checkpoints": 4
+    },
+    "PERF-R002": {
+      "name": "Redis慢查询优化规范",
+      "severity": "严重",
+      "description": "超过50ms的Redis查询视为慢查询，单次请求控制在20ms以内",
+      "checkpoints": 4
+    },
+    "PERF-S017": {
+      "name": "循环内数据库查询检测（N+1）",
+      "severity": "严重",
+      "description": "只检测明确的N+1问题。循环内查询单条数据且循环次数>10次才报告，固定循环不报错。",
+      "checkpoints": 2
+    },
+    "PERF-S018": {
+      "name": "多表JOIN性能检测",
+      "severity": "严重",
+      "description": "只检测存在明确性能风险的多表JOIN。7表以上JOIN或无关联条件才报告。",
+      "checkpoints": 3
+    },
+    "PERF-S016": {
+      "name": "深分页查询检测",
+      "severity": "严重",
+      "description": "只检测真正的深度分页问题。OFFSET超过100000才会报告，普通分页不报错。",
+      "checkpoints": 2
+    },
+    "PERF-J001": {
+      "name": "Jackson序列化性能敏感操作检测",
+      "severity": "严重",
+      "description": "禁止在Jackson序列化器中使用StringEscapeUtils等性能敏感操作，避免在大数据序列化时导致CPU耗尽。Jackson已内置HTML转义功能，不应重复处理。",
+      "checkpoints": 3
+    },
+    "PERF-M001": {
+      "name": "MyBatis大数据量结果映射性能检测",
+      "severity": "严重",
+      "description": "检测可能导致MyBatis结果集映射性能问题的代码模式，包括查询返回大量数据、复杂嵌套结果映射等，避免CPU耗尽",
+      "checkpoints": 3
+    },
+    "PERF-L001": {
+      "name": "锁竞争与死锁风险检测",
+      "severity": "严重",
+      "description": "检测可能导致锁竞争、死锁或长时间等待的代码模式，包括不当使用ReentrantLock、synchronized锁粒度过大、锁嵌套等",
+      "checkpoints": 3
+    },
+    "PERF-A001": {
+      "name": "大数组频繁操作检测",
+      "severity": "严重",
+      "description": "检测可能导致CPU耗尽的大数组频繁操作，包括在循环中使用Arrays.copyOfRange、System.arraycopy、频繁扩容List等",
+      "checkpoints": 1
+    }
+  },
+  "工程规范": {
+    "ENG-B001": {
+      "name": "第三方接口调用域名规范",
+      "severity": "警告",
+      "description": "禁止以IP形式直接调用第三方接口，必须使用域名调用避免IP变更导致的稳定性问题",
+      "checkpoints": 4
+    },
+    "ENG-B003": {
+      "name": "JAR包命名规范",
+      "severity": "警告",
+      "description": "新项目JAR包以winning-开头，避免随意命名",
+      "checkpoints": 4
+    },
+    "ENG-B005": {
+      "name": "实体类命名规范",
+      "severity": "警告",
+      "description": "跨业务系统访问表时实体类命名使用业务系统+表名方式，避免冲突",
+      "checkpoints": 4
+    }
+  },
+  "业务逻辑": {
+    "BUS-B002": {
+      "name": "状态机完整性与正确性",
+      "severity": "严重",
+      "description": "业务状态流转需符合状态机定义，禁止无效状态流转，状态变更需记录日志，状态判断需覆盖所有可能值，使用枚举管理状态值",
+      "checkpoints": 5
+    },
+    "BUS-B003": {
+      "name": "业务规则一致性检查",
+      "severity": "严重",
+      "description": "确保相同业务场景的规则判断逻辑一致，业务规则变更需同步更新所有相关代码，关键业务逻辑需添加注释说明规则依据",
+      "checkpoints": 5
+    },
+    "BUS-B001": {
+      "name": "数据一致性与完整性保障",
+      "severity": "严重",
+      "description": "关联数据操作需确保一致性，批量操作需处理部分成功场景，关键数据修改需记录操作日志，重要业务数据需添加校验和机制",
+      "checkpoints": 5
+    }
+  },
+  "框架规范": {
+    "FRAME-B003": {
+      "name": "异步编程上下文传递规范",
+      "severity": "严重",
+      "description": "异步编程中确保正确传递上下文信息，避免上下文值的不一致性和错误",
+      "checkpoints": 4
+    }
+  },
+  "架构规范": {
+    "ARCH-B004": {
+      "name": "事务边界控制规范",
+      "severity": "严重",
+      "description": "事务中避免包含其他调用特别是异步处理，防止产生不一致性和性能问题",
+      "checkpoints": 4
+    },
+    "ARCH-B001": {
+      "name": "searchEmployeeInfoAllByExample接口调用检查",
+      "severity": "严重",
+      "description": "对性能消耗较大的基础数据查询接口进行调用约束，确保在合适的范围内使用，避免系统性能问题",
+      "checkpoints": 0
+    }
+  },
+  "安全规范": {
+    "SEC-B003": {
+      "name": "SQL注入防护",
+      "severity": "严重",
+      "description": "禁止字符串拼接SQL语句，使用参数化查询，避免使用${}拼接SQL，过滤SQL关键字，使用ORM框架避免原生SQL",
+      "checkpoints": 5
+    },
+    "SEC-S001": {
+      "name": "动态SQL拼接避免规范",
+      "severity": "严重",
+      "description": "避免动态SQL拼接，使用参数化查询或ORM框架，防止SQL注入",
+      "checkpoints": 4
+    },
+    "SEC-R001": {
+      "name": "Redis危险命令禁用规范",
+      "severity": "严重",
+      "description": "禁用KEYS、FLUSHALL、FLUSHDB、HMGETALL、HGETALL等危险命令",
+      "checkpoints": 4
+    }
+  },
+  "语法规范": {
+    "SYN-S001": {
+      "name": "SQL查询条件完整性规范",
+      "severity": "严重",
+      "description": "数据库查询必须带条件，避免只包含HOSPITAL_SOID和IS_DEL两个条件",
+      "checkpoints": 4
+    },
+    "SYN-S002": {
+      "name": "HQL类名称冲突避免规范",
+      "severity": "严重",
+      "description": "避免HQL中出现相同类名称，防止类冲突和不明确的查询结果",
+      "checkpoints": 4
+    },
+    "SYN-B004": {
+      "name": "Java语法完整性检测",
+      "severity": "严重",
+      "description": "Java语句结构完整，类型匹配正确，导入类有效，避免编译阶段报错",
+      "checkpoints": 4
+    },
+    "SYN-B003": {
+      "name": "SQL/JPA语法规范性检测",
+      "severity": "严重",
+      "description": "遵循标准SQL语法与JPA规范，关键字拼写正确，字段与值数量匹配，条件语句完整，避免执行失败",
+      "checkpoints": 5
+    },
+    "SYN-B002": {
+      "name": "后端未定义资源调用检测",
+      "severity": "严重",
+      "description": "调用的Java方法/变量/工具类/JPA接口需在当前上下文已定义或导入，避免编译或运行时找不到资源",
+      "checkpoints": 4
+    },
+    "SYN-B001": {
+      "name": "后端资源路径有效性检测",
+      "severity": "警告",
+      "description": "Java代码中引用的配置文件、静态资源、JPA映射文件路径拼写正确且存在，避免资源加载失败",
+      "checkpoints": 5
+    }
+  },
+  "代码质量": {
+    "QUAL-B011": {
+      "name": "异常处理机制完整性",
+      "severity": "严重",
+      "description": "对可能返回null/undefined的方法调用添加完整异常处理，捕获具体异常而非通用Exception，异常信息需包含关键上下文，资源操作后确保关闭释放",
+      "checkpoints": 4
+    }
+  }
+}

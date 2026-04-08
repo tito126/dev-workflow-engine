@@ -1,0 +1,84 @@
+{
+  "性能规范": {
+    "PERF-B010": {
+      "name": "裂变调用控制规范",
+      "severity": "严重",
+      "description": "避免前端一次点击产生大量下游接口调用，控制上游调用流量与下游处理能力对等",
+      "checkpoints": 4
+    }
+  },
+  "框架规范": {
+    "FRAME-F008": {
+      "name": "Element UI导入规范",
+      "severity": "严重",
+      "description": "禁止从'element-ui/lib/*'直接导入组件，需使用统一入口导入，避免抽取公共依赖失败",
+      "checkpoints": 4
+    },
+    "FRAME-F003": {
+      "name": "watch监听规范",
+      "severity": "严重",
+      "description": "Vue的watch监听中禁止直接修改监听对象本身，直接修改可能导致无限循环、数据不一致或性能问题",
+      "checkpoints": 4
+    }
+  },
+  "工程规范": {
+    "ENG-F005": {
+      "name": "请求库使用规范",
+      "severity": "严重",
+      "description": "前端项目只能使用'@winex-plugin/win-request'作为请求库，禁止使用axios、fetch、his-request等其他请求库",
+      "checkpoints": 4
+    },
+    "ENG-F004": {
+      "name": "Lodash使用规范",
+      "severity": "严重",
+      "description": "避免从'lodash'导入工具函数，需使用支持tree-shaking的'lodash-es'，减少最终代码体积，优化加载性能",
+      "checkpoints": 4
+    },
+    "ENG-F003": {
+      "name": "禁止动态require",
+      "severity": "严重",
+      "description": "禁止使用动态require，构建工具无法识别动态依赖路径，会导致构建失败或资源缺失",
+      "checkpoints": 4
+    }
+  },
+  "安全规范": {
+    "SEC-F003": {
+      "name": "禁止使用eval函数",
+      "severity": "严重",
+      "description": "前端代码禁止使用eval函数，eval会执行字符串形式的代码，可能导致代码注入攻击，带来严重的安全风险",
+      "checkpoints": 4
+    },
+    "SEC-F001": {
+      "name": "禁止全局变量污染",
+      "severity": "严重",
+      "description": "禁止向window或global对象注入全局变量，避免命名冲突、变量覆盖，影响应用稳定性",
+      "checkpoints": 4
+    }
+  },
+  "语法规范": {
+    "SYN-F004": {
+      "name": "JS/Vue语法完整性检测",
+      "severity": "严重",
+      "description": "JS/Vue语法结构完整，关键字拼写正确，类型匹配正确，避免解析或运行异常",
+      "checkpoints": 5
+    },
+    "SYN-F003": {
+      "name": "CSS语法规范性检测",
+      "severity": "严重",
+      "description": "CSS选择器、属性、属性值拼写正确，语法结构完整，单位规范，避免样式失效",
+      "checkpoints": 5
+    },
+    "SYN-F002": {
+      "name": "前端未定义资源调用检测",
+      "severity": "严重",
+      "description": "调用的JS函数/Vue组件/变量需已定义或导入，避免运行时找不到资源导致功能异常",
+      "checkpoints": 5
+    },
+    "SYN-F001": {
+      "name": "前端资源路径有效性检测",
+      "severity": "严重",
+      "description": "前端引用的图片、JS/CSS文件、接口地址路径拼写正确，避免资源加载失败或接口请求异常",
+      "checkpoints": 5
+    }
+  }
+}

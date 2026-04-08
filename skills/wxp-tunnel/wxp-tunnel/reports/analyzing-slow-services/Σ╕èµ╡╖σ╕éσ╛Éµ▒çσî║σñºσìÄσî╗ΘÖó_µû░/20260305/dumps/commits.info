@@ -1,0 +1,34 @@
+[
+	{
+		"commitPerson":"chensj",
+		"comment":"#973597 feat(pbc):还原druid页面\n",
+		"remoteUrl":"http://tfs2018-web.winning.com.cn:8080/tfs/WINNING-6.0/WiNEX_WXP/_git/winning-dtc-MiddleWare",
+		"commitId":"fd01bb71653f97550235f995b9529b126ffa5785",
+		"branch":"fd01bb71653f97550235f995b9529b126ffa5785",
+		"commitDate":"2025-03-26 16:40:19"
+	},
+	{
+		"commitPerson":"chensj",
+		"comment":"#943288 feat(akso):回退代码\n",
+		"remoteUrl":"http://tfs2018-web.winning.com.cn:8080/tfs/WINNING-6.0/WiNEX_WXP/_git/winning-dtc-Akso",
+		"commitId":"444fc679b9b3c828ff49e0bd63a8131ece4344d1",
+		"branch":"444fc679b9b3c828ff49e0bd63a8131ece4344d1",
+		"commitDate":"2025-03-05 17:31:21"
+	},
+	{
+		"commitPerson":"DevOps_W6_All",
+		"comment":"#1198062 #1198062 【上海红房子】【0815迭代】急诊医生站，检索列表药房为门诊药房，加工厂的是急诊药房，不一致 --刘聪(12563)\n",
+		"remoteUrl":"http://tfs2018-web.winning.com.cn:8080/tfs/WINNING-6.0/W.in-MVP/_git/winning-winex-opt",
+		"commitId":"444d457da58494543ba061c7a30337105bc48ee0",
+		"branch":"sr-next",
+		"commitDate":"2025-08-15 19:31:11"
+	},
+	{
+		"commitPerson":"ZCY-MAC-BOOK",
+		"comment":"#1078841 [门急诊融合]--门诊费用项目-20250815迭代\n",
+		"remoteUrl":"http://tfs2018-web.winning.com.cn:8080/tfs/WINNING-6.0/W.in-MVP/_git/winning-winex-finance",
+		"commitId":"48ab36515219924f9550c2c0ce847f6fa137e263",
+		"branch":"sr-next",
+		"commitDate":"2025-06-07 00:31:29"
+	}
+]

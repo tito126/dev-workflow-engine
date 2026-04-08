@@ -32,33 +32,54 @@ class ToolAPIFetcher:
             'Content-Type': 'application/json'
         })
     
-    def fetch_logs(self, app_id: str, env_id: str, program_name: str, 
-                   node_id: str, start_time: str, output_dir: str = ".") -> List[str]:
+    def get_nodes(self, code: str, app_id: str) -> List[Dict]:
+        """
+        查询服务节点列表
+        GET /api/v1/wincode/faultlocation/getServicesByCodeOrAppid
+        
+        Returns:
+            节点列表，每项含 id, ip, port, name, code, appid
+        """
+        url = f"{self.api_base_url}/api/v1/wincode/faultlocation/getServicesByCodeOrAppid"
+        try:
+            r = self.session.get(url, params={"code": code, "appid": app_id}, timeout=15)
+            r.encoding = "utf-8"
+            r.raise_for_status()
+            result = r.json()
+            if result.get("success") and result.get("data"):
+                return result["data"]
+            print(f"[警告] getServicesByCodeOrAppid 返回异常: {result.get('message')}")
+            return []
+        except requests.exceptions.RequestException as e:
+            print(f"[失败] 查询节点列表失败: {e}")
+            return []
+
+    def fetch_logs(self, app_id: str, env_id: str, program_name: str,
+                   node_id: str, start_time: str, end_time: Optional[str] = None,
+                   log_type: str = "all", output_dir: str = ".") -> str:
         """
         拉取日志
         
         Args:
             app_id: 应用 ID
             env_id: 环境 ID
-            program_name: 程序名称
+            program_name: 程序名称（code）
             node_id: 节点 ID
-            start_time: 开始时间 (格式: YYYY-MM-DD HH:MM:SS)
+            start_time: 开始时间 (YYYY-MM-DD HH:MM:SS)
+            end_time: 结束时间 (YYYY-MM-DD HH:MM:SS)
+            log_type: 日志类型，默认 all（后续可扩展 gc）
             output_dir: 输出目录
         
         Returns:
-            解压后的日志文件路径列表
+            合并后的日志文件路径
         """
-        print(f"[检测] 正在从工具组 API 拉取日志...")
-        print(f"   应用 ID: {app_id}")
-        print(f"   环境 ID: {env_id}")
-        print(f"   程序名称: {program_name}")
+        print(f"[工具组] 正在从工具组 API 拉取日志...")
         print(f"   节点 ID: {node_id}")
-        print(f"   开始时间: {start_time}")
+        print(f"   程序名称: {program_name}")
+        print(f"   时间: {start_time} ~ {end_time}")
+        print(f"   类型: {log_type}")
         
-        # 1. 调用 API 获取下载地址
-        download_url = self._get_download_url(
-            app_id, env_id, program_name, node_id, start_time
-        )
+        download_url = self._get_download_url(app_id, env_id, program_name, node_id, start_time, log_type=log_type)
         
         if not download_url:
             raise RuntimeError("获取下载地址失败")
@@ -83,12 +104,11 @@ class ToolAPIFetcher:
         return merged_file
     
     def _get_download_url(self, app_id: str, env_id: str, program_name: str,
-                          node_id: str, start_time: str) -> Optional[str]:
+                          node_id: str, start_time: str, end_time: Optional[str] = None,
+                          log_type: str = "all") -> Optional[str]:
         """
-        调用 API 获取下载地址
-        
-        Returns:
-            下载地址（完整 URL）
+        调用 getServiceLogs 获取下载地址
+        工具组已修复 endTime 问题，按开始/结束时间拉取指定时间窗日志
         """
         api_url = f"{self.api_base_url}/api/v1/wincode/faultlocation/getServiceLogs"
         
@@ -97,12 +117,19 @@ class ToolAPIFetcher:
             "envId": env_id,
             "programName": program_name,
             "nodeId": node_id,
-            "startTime": start_time
+            "startTime": start_time,
+            "type": log_type,
         }
+        if end_time:
+            payload["endTime"] = end_time
         
         try:
             response = self.session.post(api_url, json=payload, timeout=30)
             response.raise_for_status()
+            
+            if not response.content:
+                print(f"[失败] getServiceLogs 返回空响应，可能该时间段无日志或 envId 不匹配")
+                return None
             
             result = response.json()
             
@@ -232,9 +259,13 @@ class ToolAPIFetcher:
         if not log_files:
             raise ValueError("没有日志文件可合并")
         
-        # 如果只有一个文件，直接返回
+        # 如果只有一个文件，移出 extracted_logs 目录再返回
         if len(log_files) == 1:
-            return log_files[0]
+            src = Path(log_files[0])
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            dst = Path(output_dir) / f"logs_{timestamp}_{program_name}.log"
+            shutil.move(str(src), str(dst))
+            return str(dst)
         
         # 生成合并后的文件名
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -288,6 +319,8 @@ def main():
     parser.add_argument('--program', required=True, help='程序名称')
     parser.add_argument('--node-id', required=True, help='节点 ID')
     parser.add_argument('--start-time', required=True, help='开始时间')
+    parser.add_argument('--end-time', required=True, help='结束时间')
+    parser.add_argument('--log-type', default='all', help='日志类型 (all/gc)')
     parser.add_argument('--output', default='.', help='输出目录')
     
     args = parser.parse_args()
@@ -301,6 +334,8 @@ def main():
             args.program,
             args.node_id,
             args.start_time,
+            args.end_time,
+            args.log_type,
             args.output
         )
         

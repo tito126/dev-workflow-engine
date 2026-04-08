@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-07T13:46:00.146Z",
+  "entries": {
+    "memory:memory/2026-03-29.md:5:8": {
+      "key": "memory:memory/2026-03-29.md:5:8",
+      "path": "memory/2026-03-29.md",
+      "startLine": 5,
+      "endLine": 8,
+      "source": "memory",
+      "snippet": "- 更具体地说：如果命令依赖当前工作目录，回复时必须用“先 cd 到 xxx，再执行 yyy”的格式；如果目录非常关键，应额外强调“不要在上级目录执行”。 - 后续凡是涉及 OpenClaw 插件局部安装，也要优先使用这种格式：`cd /d <精确目录>` + 安装命令，并解释为什么不能在更上层目录执行。 - 今晚关于 OpenClaw ACP / Claude Code 对接，还有一条重要技术结论：升级到 `OpenClaw 2026.3.24` 后，`acpx` 变成内置 stock 插件，默认依赖 `acpx@0.3.1`，并且在 Windows 上首先卡在 plugin-local `acpx.cmd` wrapper 校验，不一定立即进入 Claude adapter / session-init 层；要排查这版问题，优先看 `D:\\nvm\\v24.9.0\\node_modules\\openclaw\\dist\\extensions\\acpx` 下的 plugin-local `acpx` 是否已安装，以及 gateway 日志里是否出现 `acpx runtime backend ready`。 - 今晚还确认了一个协作规范：当用户要手动执行安装命令时，除了命令本体，必须明确给出“在哪个目录执行”“不要在哪些上层目录执行”“执行完后回传哪两个验证结果”，否则很容易因当前目录错误造成全局环境损坏。",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.47903088629245755,
+      "maxScore": 0.47903088629245755,
+      "firstRecalledAt": "2026-04-07T13:45:46.180Z",
+      "lastRecalledAt": "2026-04-07T13:45:46.180Z",
+      "queryHashes": [
+        "98e7e4237841"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "gateway",
+        "2026.3.24",
+        "0.3.1",
+        "plugin-local",
+        "acpx.cmd",
+        "session-init",
+        "v24.9.0",
+        "node-modules"
+      ]
+    },
+    "memory:memory/2026-04-01.md:1:29": {
+      "key": "memory:memory/2026-04-01.md:1:29",
+      "path": "memory/2026-04-01.md",
+      "startLine": 1,
+      "endLine": 29,
+      "source": "memory",
+      "snippet": "# 2026-04-01 (Wednesday) ## AI 分享文案方向持续收口 今晚围绕明天的 AI 分享，继续把表达方向从“系统介绍 / 功能罗列”往“方法论 / 实操设计 / 少案例”方向收口。 ### 今天进一步明确的关键判断 1. **不是每页都要堆案例** - 过多的小案例会让整场分享显得杂乱 - 对这次面向不熟悉 OpenClaw 的听众来说，更重要的是： - 每页先讲清一个方法点 - 在关键位置穿插少量高质量例子 - 也就是说，内容应该是“强方法、少案例”，而不是“页页带例子” 2. **`work-control` 的讲法要更聚焦设计理由** - 重点不是解释目录结构，而是说明： - 它为什么是 `skill` - 为什么它处理的是路由规则而不是台账记录 - 为什么模糊输入不能直接入正式系统 3. **`work-system` 的讲法要更强调分工** - `reminders` 负责“别忘” - `今日聚焦` 负责“今天先抓什么” - `每日总结` 负责“提前感知时间节点和准备压力” - 这个区分比单讲某一个模块更有方法价值 4. **`ACP + Codex` 的讲法要从“能看代码”升级到“能接住复杂执行”** - 主会话可以先把问题梳理成更专业的提示词",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.4513609021902084,
+      "maxScore": 0.4513609021902084,
+      "firstRecalledAt": "2026-04-07T13:45:46.180Z",
+      "lastRecalledAt": "2026-04-07T13:45:46.180Z",
+      "queryHashes": [
+        "98e7e4237841"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "work-control",
+        "work-system",
+        "wednesday",
+        "分享",
+        "文案",
+        "方向",
+        "持续",
+        "收口"
+      ]
+    },
+    "memory:memory/2026-03-27.md:1:36": {
+      "key": "memory:memory/2026-03-27.md:1:36",
+      "path": "memory/2026-03-27.md",
+      "startLine": 1,
+      "endLine": 36,
+      "source": "memory",
+      "snippet": "# 2026-03-27 (Friday) ## 执行型 Agent 方向正式收敛 今晚和第别把“是否需要多 agent / 多会话”的讨论，进一步收敛成了一个更明确的业务诉求： - 不是为了解决“多会话体验”本身而上多 agent - 而是因为后续多个专项会涉及执行类工作，尤其是住院护士站系统的前后端代码维护、优化、隔离改造与落地执行 - 需要一个更偏执行的 Agent，通过 OpenClaw + ACP + Claude Code 承接代码现场工作 - 最终目标仍然是持续服务“降本增效” ### 当前共识 1. 主会话更适合承担： - 目标澄清 - 专项判断 - work-control 路由 - 复盘与方法论沉淀 2. 执行型 Agent 更适合承担： - 代码阅读与局部理解 - 问题到代码位置的映射 - 小到中等规模修改 - 技术优化与验证闭环 - 执行结果整理与回写 3. 当前阶段应按“执行型 Agent 试验”来推进，而不是一开始就做复杂多 Agent 架构改造。 ### 已落地到系统 - 新增机制说明：`cognition-system/execution-agent-mechanism.md` - 新增模板：`work-system/templates/execution-feedback-template.md` - 已将“执行型 Agent”从业务专项语义纠偏为协作能力 / 执行机制 ### 关键判断",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.448897185921669,
+      "maxScore": 0.448897185921669,
+      "firstRecalledAt": "2026-04-07T13:45:46.180Z",
+      "lastRecalledAt": "2026-04-07T13:45:46.180Z",
+      "queryHashes": [
+        "98e7e4237841"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "work-control",
+        "friday",
+        "执行",
+        "方向",
+        "正式",
+        "今晚",
+        "别把",
+        "是否"
+      ]
+    },
+    "memory:memory/2026-04-07.md:1:18": {
+      "key": "memory:memory/2026-04-07.md:1:18",
+      "path": "memory/2026-04-07.md",
+      "startLine": 1,
+      "endLine": 18,
+      "source": "memory",
+      "snippet": "# 2026-04-07 ## OpenClaw / OpenCode 执行链验证进展 - 今天围绕护士站框架 v2 的中任务样本 `TFS 1543024`，集中验证了 `wrapper opencode`、`ACP -> OpenCode`、`exec opencode` 三条执行路径。 - 结论已明显收敛： - `wrapper opencode` 本次未跑通，不应作为默认方案，也不应作为降级方案。 - `ACP -> OpenCode` 在 `OpenClaw 2026.4.5` 下已通过**最小连通性验证**，能承接短 prompt + 指定 cwd 的最小任务。 - 但 `ACP -> OpenCode` 目前**尚未通过正式任务级 prompt 承载验证**；对稍复杂 locate 指令，出现了“请提供具体任务内容 / 请告诉我你想搜索什么”的空回现象。 - `exec opencode run` 已成功跑通 `1543024` 的 locate-only 实战任务，当前是已验证可用的降级路径。 ## 执行路径规则收敛 - 第别今天明确要求： - 标准主路径应为 `ACP / acpx -> opencode` - 若主路径未通过正式任务级验证，降级方案应是**最原始的 `exec opencode`** - `wrapper opencode` 不能定义为降级方案，因为它本次并未跑通 - 这是一个重要边界：以后不能把“未验证成功的实验链路”写进标准执行策略，也不能把它包装成 fallback。 ## 提示词层面的重要教训",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "totalScore": 0.44378076791763305,
+      "maxScore": 0.44378076791763305,
+      "firstRecalledAt": "2026-04-07T13:46:00.146Z",
+      "lastRecalledAt": "2026-04-07T13:46:00.146Z",
+      "queryHashes": [
+        "ee2379e43d1b"
+      ],
+      "recallDays": [
+        "2026-04-07"
+      ],
+      "conceptTags": [
+        "2026.4.5",
+        "locate-only",
+        "openclaw",
+        "opencode",
+        "执行",
+        "验证",
+        "进展",
+        "今天"
+      ]
+    }
+  }
+}

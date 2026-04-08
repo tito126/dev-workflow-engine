@@ -31,6 +31,8 @@
 ## 当前进度
 根据既有沉淀,当前已完成核心能力搭建,并打通 K8s 与 tool_api 两条主要业务线。项目已形成流程文档、分析报告、关键脚本和多轮联调结论。答辩材料方面,已完成从 `v11` 到 `v12` 的一轮集中收敛,已围绕"问题驱动、持续优化、验证闭环"重新校正文案主线,并纠正了"健壮性"表述偏差,当前阶段可视为答辩材料暂告一段落,后续重心转向抽时间持续补强验证闭环。
 
+围绕真实事故样例“中江病区护士站节点 down 事件”,当前也已完成一轮基于 `executor -> acp -> Codex` 的源码分析收口: 已确认目标接口、关键代码路径、三方依赖结构、主要瓶颈与隔离优化草案,并已回写正式分析报告,可作为后续技术评审和实施拆解的共同底稿。
+
 ## 核心成果
 - 两阶段日志拉取与完整链路补强
 - 四级分组、代表 trace、调用方识别、慢接口分析
@@ -76,6 +78,8 @@
 - 传统服务器生产环境验证仍待后续推进
 - 答辩材料虽然已阶段性收口,但验证闭环目前仍主要停留在答辩表达层,后续还需要继续沉淀成可复用的执行路径
 - 现有成果较多,后续若继续扩展内容,仍需要控制重点,避免重新回到信息堆积
+- 中江病区护士站慢接口问题当前仍停留在静态源码分析阶段,尚未补齐运行时分段耗时与实际集成方式证据
+- 中江当前到底走 `60 / HTTP / FHIR` 哪条分支尚未确认; 若实际走 HTTP, 风险等级预计更高
 
 ## 下一步动作
 - **中江病区护士站慢接口优化**：基于 Codex 分析结果，推进隔离优化方案（详见 deliverables/zhongjiang-2026-03-31-slow-api-analysis.md）
@@ -85,11 +89,40 @@
 - 结合后续真实场景，继续推进传统服务器生产环境验证和闭环佐证
 
 ## 最近更新
+- 2026-03-31: 已完成“中江病区护士站节点 down 事件——慢接口与三方服务隔离优化”的正式分析回写,共享报告为 `work-system/deliverables/zhongjiang-2026-03-31-slow-api-analysis.md`。当前结论已收口为: 目标接口为 `/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id`; 主问题是 3 段远程依赖串行执行、通用费用链路过度取数、集成方式查询无缓存、缺少显式超时/隔离治理; 最优先的止血方向是第二段/第三段异步 fail-open、集成方式缓存、跳过 HTTP 分支中当前接口未消费的附加查询。
 - 2026-03-31: 昨天围绕 `APC` 联调 `Codex` 已不只是概念尝试,而是拿到了实际推进结果;这件事说明 `main / executor / Codex` 的最小协作链路已经从"能不能通"进入"如何沉淀成稳定工作法"的阶段,今天应继续评估它是否值得作为后续高价值任务的常用执行路径。
 - 2026-03-30: 确认中江病区护士站节点 down 事件继续挂在本专项下推进,不单独新立正式专项;已将其收敛为子任务"中江病区护士站节点 down 事件:慢接口与三方服务隔离优化",并通过 `Codex` 拿到首轮事故驱动分析结果。
 - 2026-03-22: 完成 `v12-notes`、正式稿和口语稿,纠正"健壮性"表述偏差,本轮答辩材料阶段性收口,后续转入验证闭环持续补强。
 - 2026-03-21: 在 v8 基础上继续调整,削弱技术路径表达,强化"事后响应痛点、持续优化方向、验证闭环机制",并补齐演讲者备注,形成 `v9-notes`。
 - 2026-03-21: 完成答辩 PPT v8,重构中段论证逻辑并纳入 GC 日志能力延展表达。
+
+## 中江子任务快照
+- 子任务: 中江病区护士站节点 down 事件——慢接口与三方服务隔离优化
+- 当前状态: 已完成静态源码分析与方案草案,未进入实施
+- 当前结论:
+  - 目标接口: `/api/v1/app_inpatient_encounter/inpat_banner_basics_expense/query/by_id`
+  - 主调用链: `BannerInfoController.java:200` → `BannerInfoService.java:436`
+  - 主问题: 3 段远程依赖串行执行 + 通用查询链路过度取数 + 集成方式查询无缓存 + 缺少显式超时/隔离治理
+- 关键代码路径:
+  - `winning-ward-banner/winning-ward-banner-api/src/main/java/com/winning/ward/banner/api/controller/BannerInfoController.java:200`
+  - `winning-ward-banner/winning-ward-banner-application/src/main/java/com/winning/ward/banner/application/service/BannerInfoService.java:436`
+  - `winning-ward-tripartite/winning-ward-tripartite-application/src/main/java/com/winning/ward/tripartite/application/impl/WHttpHelperImpl.java:53`
+  - `winning-ward-tripartite/winning-ward-tripartite-application/src/main/java/com/winning/ward/tripartite/application/impl/WHttpHelperImpl.java:92`
+  - `winning-ward-tripartite/winning-ward-tripartite-application/src/main/java/com/winning/ward/tripartite/application/impl/FinanceHelperImpl.java:1271`
+  - `winning-ward-finance/winning-ward-finance-application/src/main/java/com/winning/ward/finance/application/service/query/impl/QueryBillHttpServiceImpl.java:315`
+  - `winning-ward-finance/winning-ward-finance-application/src/main/java/com/winning/ward/finance/application/service/query/impl/QueryBillHttpServiceImpl.java:2202`
+- 优化方案草案:
+  - `P0`: 第二段 / 第三段异步 fail-open
+  - `P0`: `(hospitalSOID, transCode)` 集成方式查询加 5~10 分钟缓存
+  - `P1`: 跳过 HTTP 分支药占比等当前接口未消费的附加查询
+  - `P2`: 统一熔断 / 超时 / 线程隔离治理
+- 风险与待确认:
+  - 未确认中江当前实际走 `60 / HTTP / FHIR` 哪条分支
+  - 未补真实慢请求的分段耗时证据
+  - 尚需业务确认哪些增强字段允许降级为空
+- 下一步:
+  - 先补运行环境分支证据和分段耗时
+  - 再决定是先止血优化还是直接进入中期治理
 
 ## 更新记录
 - 2026-03-31: 补充记录"昨天通过 `APC` 联调 `Codex` 已有实际进展"这一新状态。当前判断不再停留在工具尝鲜,而是已经出现方法论价值:一方面说明 `Codex` 适合承接部分事故驱动、探索性强、需要文件/代码上下文的执行任务;另一方面也暴露出一个管理要求--这类新进展如果不及时写入项目 `Latest Update / Next Action`,第二天的 `Daily Focus` 容易漏抬头。后续应把这类"昨天刚发生、今天值得继续推进"的进展,作为 `Daily Focus` 的显式提取信号。

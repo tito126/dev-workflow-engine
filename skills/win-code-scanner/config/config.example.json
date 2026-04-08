@@ -1,0 +1,5 @@
+{
+  "default_scan_path": "/winning/winex-repo/storage/repos",
+  "report_output_path": "/winning/winex-repo/storage/repos/reports/code-scan",
+  "report_base_url": "http://172.17.1.173/repos/reports/code-scan"
+}
