@@ -101,7 +101,24 @@ cd E:\winning-code\akso5\winning-nis-ward && codex exec "分析 winning-ward-exe
 4. 若后续需要补依赖,先说明缺什么,再执行安装或等待确认
 5. 这类阻塞和处理约束,优先记到 `TOOLS.md`
 
-### `opencode` 执行链路规则（2026-04-07）
+### ACP 手动补丁（2026-04-08）⚠️ 升级会被覆盖
+
+OpenClaw 2026.4.5 的 ACP backend 在 Windows 上无法正常初始化，需要手动打两处补丁。
+
+**补丁 1**：`D:\nvm\v24.9.0\node_modules\openclaw\dist\register.runtime-DnI7Bmok.js` 第219行
+```
+// 修改前: this.healthy = false;
+// 修改后: this.healthy = true;
+```
+原因：AcpxRuntime 构造时 healthy=false，需要异步 probe 成功才设为 true，但 probe 的 client.start() 在 Windows 上会卡住，导致后端永远标记为 unavailable。
+
+**补丁 2**：`D:\nvm\v24.9.0\node_modules\openclaw\dist\server-Cv5hzFG4.js` 第25975行
+在 `reconcilePendingSessionIdentities` 调用前，加入 `waitForAcpBackend` 轮询等待逻辑（对应 PR #40671），超时 5 秒，轮询间隔 50ms。
+原因：Gateway 启动时 reconcile 在后端注册前就执行了，需要先等待后端就绪。
+
+**⚠️ 注意**：每次 `npm update -g openclaw` 会覆盖这两处修改，升级后必须重新打补丁。
+
+### `opencode` 执行链路规则（2026-04-07 / 2026-04-08 更新）
 
 当前标准路径明确调整为：
 1. **主路径**：`ACP / acpx -> opencode`
@@ -111,7 +128,9 @@ cd E:\winning-code\akso5\winning-nis-ward && codex exec "分析 winning-ward-exe
 补充约束：
 - `wrapper opencode` 这轮验证未跑通，不能写进标准执行链
 - 如果后续再次研究 wrapper，必须明确标注为**实验/排障**，不能伪装成正式 carrier
+- 当前 `ACP -> opencode` 在本机 **仅在已打 2026-04-08 Windows 手动补丁后才视为正式可用**
 - 后续在护士站框架、执行计划、子任务派发中，只要写到 `opencode` 路径，默认按 `ACP 优先，exec 降级` 理解
+- 如果 OpenClaw 升级、重装或切版本后 ACP 再次报 `backend unavailable`，先检查补丁是否被覆盖，不要直接误判为 `opencode` 本身故障
 
 ### `work-control` 触发规则(2026-04-05)
 
