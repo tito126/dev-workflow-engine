@@ -1,22 +1,22 @@
-# Work Control File Map
+# Work Control 文件地图
 
-## Runtime Data Area
+## 运行数据区
 
-All operational records live under `work-system/`.
+所有运行记录都放在 `work-system/` 下。
 
 ### `work-system/inbox/`
-- `temporary-work-pool.md`: quick-capture operational items
-- `ideas.md`: ideas not yet promoted into projects
-- `reminders.md`: reminder candidates and follow-ups
+- `temporary-work-pool.md`：快速收集运行中事项
+- `ideas.md`：尚未升级为项目的想法
+- `reminders.md`：提醒候选项与后续跟进
 
 ### `work-system/projects/`
-- `index.md`: project navigation page
-- `active/`: active project dossiers
-- `archived/`: completed, paused, or canceled project dossiers
+- `index.md`：项目导航页
+- `active/`：活跃项目档案
+- `archived/`：已完成、暂停或取消的项目档案
 
 ### `work-system/daily/`
-- `focus/`: one file per day for ranked work priorities
-- `summary/`: one file per day for end-of-day work summaries
+- `focus/`：每天一份排序后的工作优先级文件
+- `summary/`：每天一份收尾工作总结文件
 
 ### `work-system/templates/`
 - `project-template.md`
@@ -25,5 +25,5 @@ All operational records live under `work-system/`.
 - `daily-summary-template.md`
 
 ### `work-system/sop/`
-- `collaboration-sop.md`: end-to-end behavior standard
-- `record-rules.md`: formal record rules and anti-clutter rules
+- `collaboration-sop.md`：端到端协作行为标准
+- `record-rules.md`：正式记录规则与防杂乱规则

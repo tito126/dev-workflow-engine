@@ -1,8 +1,8 @@
-# Trigger Phrases
+# 触发语
 
-Use natural language. Slash commands are optional.
+使用自然语言即可，斜杠命令只是可选项。
 
-## Capture triggers
+## 记录触发语
 - `record this`
 - `记一下`
 - `记录一下`
@@ -36,7 +36,7 @@ Use natural language. Slash commands are optional.
 - `建个项目`
 - `建个专项`
 
-## Reminder-routing triggers
+## 提醒路由触发语
 - `下周要讲`
 - `周四要分享`
 - `某天前交付`
@@ -51,7 +51,7 @@ Use natural language. Slash commands are optional.
 - `留意这个时间点`
 - `进入准备窗口了`
 
-## Review triggers
+## 回顾触发语
 - `plan today's focus`
 - `rank today's priorities`
 - `今日聚焦`
@@ -75,13 +75,13 @@ Use natural language. Slash commands are optional.
 - `list important forgotten items`
 - `看看有没有遗漏的重要事项`
 
-## Clarification triggers
-If the project name, due date, or target destination is unclear, ask one short follow-up before formal capture.
+## 澄清触发
+如果项目名、截止时间或目标落点不清楚，在正式记录前补一个简短追问。
 
-## Routing Notes
-- Treat the Chinese review phrases under `Review triggers` as strong triggers, not weak hints.
-- `今日聚焦` and similar wording should default to `Daily Focus`, even when the user does not explicitly say `plan` or `priority`.
-- `今日总结` and similar wording should default to `Daily Summary`, even when the user does not explicitly say `summary`.
-- Treat the phrases under `Reminder-routing triggers` as default signals for `work-system/inbox/reminders.md`.
-- If a message contains both a time node and an ongoing project, keep the project link but route the time pressure through `reminders.md` first.
-- For near-term items, prefer surfacing them again in `Daily Summary` and `Daily Focus` instead of defaulting to `cron`.
+## 路由说明
+- 把 `回顾触发语` 里的中文表达视为强触发，而不是弱提示。
+- `今日聚焦` 及类似表达，应默认路由到 `Daily Focus`，即使用户没有明确说 `plan` 或 `priority`。
+- `今日总结` 及类似表达，应默认路由到 `Daily Summary`，即使用户没有明确说 `summary`。
+- 把 `提醒路由触发语` 里的表达默认视为写入 `work-system/inbox/reminders.md` 的信号。
+- 如果一条消息同时包含时间节点和持续中的项目，保留项目关联，但时间压力优先经由 `reminders.md` 路由。
+- 对近期待办，优先在 `Daily Summary` 和 `Daily Focus` 中再次抬头，而不是默认切到 `cron`。

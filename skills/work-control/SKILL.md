@@ -1,52 +1,52 @@
 ---
 name: work-control
-description: Chat-driven work control for day-to-day professional execution. Use when the user wants to capture temporary work, track projects, rank daily priorities, write end-of-day summaries, standardize project control habits, or build a reusable SOP around task capture, project dossiers, daily focus, daily summaries, and traceable markdown records.
+description: 面向日常职业执行的聊天驱动型工作控制技能。适用于用户希望记录临时工作、跟踪项目、排序每日优先级、编写每日总结、规范项目控制习惯，或围绕任务收集、项目档案、每日聚焦、每日总结与可追踪 Markdown 记录建立可复用 SOP 的场景。
 ---
 
-# Work Control
+# 工作控制
 
-Use this skill to run a light but durable work control system inside normal chat. Treat chat as the input layer, `work-system/` as the operational record layer, and this skill as the operating standard.
+用这个 skill 在日常聊天里运行一套轻量但可持续的工作控制系统。把聊天视为输入层，把 `work-system/` 视为运行记录层，把这个 skill 视为操作标准。
 
 中文高频触发默认有效，不要因为用户没有说英文而降级为普通聊天。像 `今日聚焦`、`今天聚焦`、`今天重点`、`今天先做什么`、`排一下今天优先级` 这类表达，默认按 `Daily Focus` 处理；像 `今日总结`、`今天总结`、`收个尾`、`做个今天的总结` 这类表达，默认按 `Daily Summary` 处理。
 
 凡是出现明确时间节点或时间窗口的中文表达，也默认进入时间路由判断。像 `提醒我`、`下周要讲`、`周四要分享`、`某天前交付`、`前一天提醒我一下`、`这周要完成` 这类表达，优先判断是否写入 `work-system/inbox/reminders.md`，并在合适时机通过 `Daily Summary / Daily Focus` 主动抬头，而不是默认等到时间点机械提醒。
 
-## Quick Start
+## 快速开始
 
-When this skill applies, work through this sequence:
-1. Decide whether the message is conversation only, a candidate record, or a formal record.
-2. If it is a formal record, write it into the right file under `work-system/`.
-3. If it belongs to a long-running initiative, update the matching project dossier.
-4. If the user asks for prioritization, create or update today's Daily Focus file.
-5. If the user asks for a wrap-up, create or update today's Daily Summary file.
+当这个 skill 适用时，按下面顺序推进：
+1. 判断这条消息属于仅聊天、候选记录，还是正式记录。
+2. 如果属于正式记录，写入 `work-system/` 下对应文件。
+3. 如果它属于一个长期推进事项，更新匹配的项目档案。
+4. 如果用户要求排优先级，创建或更新今天的 Daily Focus 文件。
+5. 如果用户要求收尾总结，创建或更新今天的 Daily Summary 文件。
 
-Read these references as needed:
-- `references/file-map.md` for where records live
-- `references/trigger-phrases.md` for natural-language triggers
-- `references/usage-scenarios.md` for common interaction patterns
-- `work-system/sop/collaboration-sop.md` for the end-to-end operating rules
-- `work-system/sop/record-rules.md` for capture discipline and anti-clutter rules
+按需阅读这些参考文件：
+- `references/file-map.md`，查看记录落点
+- `references/trigger-phrases.md`，查看自然语言触发语
+- `references/usage-scenarios.md`，查看常见交互场景
+- `work-system/sop/collaboration-sop.md`，查看端到端操作规则
+- `work-system/sop/record-rules.md`，查看记录纪律与防杂乱规则
 
-## Core Capabilities
+## 核心能力
 
-### 1. Capture temporary work without losing the thread
+### 1. 在不丢线索的前提下记录临时工作
 
-Use `work-system/inbox/temporary-work-pool.md` for short-lived but important items such as leader requests, meeting follow-ups, reminder candidates, and early risk signals.
+对领导要求、会议跟进、提醒候选项、早期风险信号等短周期但重要的事项，使用 `work-system/inbox/temporary-work-pool.md`。
 
-Prefer the temporary pool when:
-- the item matters but is not fully structured yet
-- project mapping is unclear
-- the user wants a quick capture first and refinement later
+优先写入 temporary pool 的场景：
+- 事项重要，但结构还不完整
+- 暂时看不清该归到哪个项目
+- 用户希望先快速记下，之后再整理
 
-Do not turn the temporary pool into a permanent archive. Move items onward, close them, or archive them.
+不要把 temporary pool 变成永久档案。要么继续推进、要么关闭、要么归档。
 
 如果用户表达里已经带有明确时间节点、时间窗口、会前准备、交付前提醒等信息，优先考虑 `reminders.md`，而不是先落到 temporary pool。
 
-### 2. Maintain project dossiers
+### 2. 维护项目档案
 
-Use one markdown file per active project under `work-system/projects/active/`.
+每个活跃项目在 `work-system/projects/active/` 下使用一个 Markdown 文件。
 
-Keep these sections current because they drive good decisions:
+保持这些部分是最新状态，因为它们直接影响判断质量：
 - Goal
 - Value
 - Current Progress
@@ -55,82 +55,82 @@ Keep these sections current because they drive good decisions:
 - Next Action
 - Latest Update
 
-When the user updates a project, prefer concise stateful edits over dumping raw chat logs.
+当用户更新项目时，优先做简洁、带状态的修改，不要把原始聊天内容整段倾倒进去。
 
-### 3. Produce Daily Focus
+### 3. 产出 Daily Focus
 
-When the user asks to plan the day, rank work using this default order unless instructed otherwise:
-1. deadline today or tomorrow
-2. urgent leadership request
-3. blocker that unblocks others
-4. high-value milestone
-5. important but non-urgent maintenance work
+当用户要求安排当天工作时，除非用户另有说明，默认按这个顺序排序：
+1. 今天或明天到期的事项
+2. 紧急领导需求
+3. 会卡住他人推进的阻塞项
+4. 高价值里程碑
+5. 重要但不紧急的维护类工作
 
-Write the result to `work-system/daily/focus/YYYY-MM-DD.md` using the template in `work-system/templates/daily-focus-template.md`.
+把结果写入 `work-system/daily/focus/YYYY-MM-DD.md`，使用 `work-system/templates/daily-focus-template.md` 模板。
 
-Keep the list intentionally short:
-- one core goal
-- top three focus items
-- a few secondary follow-ups
-- visible risk watch items
+列表要刻意保持简短：
+- 一个核心目标
+- 三个最高优先级事项
+- 少量次级跟进项
+- 明显可见的风险观察项
 
-When reviewing what should enter today's focus, do not look only at deadlines and old standing priorities. Also check whether the last 24 hours produced a high-value new development in an active project, especially things like a new collaboration path being validated, a blocked chain being opened, or a previously uncertain method proving workable. If yes, re-evaluate whether that item deserves entry into today's Top 3.
+在判断什么应该进入今天的 focus 时，不要只看截止时间和旧的常驻优先级。也要检查过去 24 小时里，活跃项目是否出现了高价值的新进展，尤其是像新协作路径被验证、阻塞链被打开、此前不确定的方法已证明可行这类信号。如果有，要重新评估它是否值得进入今天的 Top 3。
 
-Strong-trigger rule:
-- Requests like `今日聚焦`、`今天聚焦`、`今天重点`、`今天先做什么`、`排一下今天优先级` are direct `Daily Focus` triggers
-- Do not downgrade them into ordinary conversation just because more context might be nice to have
-- Default behavior is: read the relevant `work-system` inputs, generate the daily file, then reply with the result
-- Only ask a short follow-up if a key missing fact makes a formal `Daily Focus` impossible to generate
-- Do not stop at a guiding question without creating the daily record
+强触发规则：
+- 像 `今日聚焦`、`今天聚焦`、`今天重点`、`今天先做什么`、`排一下今天优先级` 这样的请求，都是直接的 `Daily Focus` 触发语
+- 不要因为觉得还可以补背景，就把它降级成普通聊天
+- 默认行为是：读取相关 `work-system` 输入，生成当天文件，然后再回复结果
+- 只有在缺少关键事实、导致正式 `Daily Focus` 根本无法产出时，才补一个很短的追问
+- 不要只停在引导式提问，而不创建正式记录
 
-### 4. Produce Daily Summary
+### 4. 产出 Daily Summary
 
-When the user asks for an end-of-day summary, write a management summary, not a diary.
+当用户要求做每日收尾时，写的是管理型总结，不是流水账日记。
 
-Write the result to `work-system/daily/summary/YYYY-MM-DD.md` using the template in `work-system/templates/daily-summary-template.md`.
+把结果写入 `work-system/daily/summary/YYYY-MM-DD.md`，使用 `work-system/templates/daily-summary-template.md` 模板。
 
-Include:
-- completed work
-- project movement
-- unfinished or delayed items
-- risks and blockers
-- tomorrow's likely priorities
-- wording useful for weekly or leadership reporting
+应包含：
+- 已完成工作
+- 项目推进变化
+- 未完成或延期事项
+- 风险与阻塞
+- 明天可能的优先级
+- 可直接用于周报或向上汇报的表述
 
-### 5. Enforce traceable record discipline
+### 5. 维持可追踪的记录纪律
 
-Formal project records should live in `work-system/`, not mainly in MEMORY.md.
+正式项目记录应该主要落在 `work-system/`，而不是主要写在 `MEMORY.md`。
 
-Use MEMORY.md only for durable personal context, preferences, and a small number of long-term decisions. Do not let project run-state drift into memory as the primary source of truth.
+`MEMORY.md` 只用于保存长期有效的个人上下文、偏好，以及少量长期决策。不要让项目运行状态漂到 memory，变成主要事实来源。
 
-### 6. Route time-sensitive work correctly
+### 6. 正确路由时间敏感事项
 
-When the user mentions a clear time node, near-term deadline, or preparation window, treat it as a reminder-routing signal first.
+当用户提到明确时间节点、近期待办截止、或准备窗口时，优先把它视为提醒路由信号。
 
-Default routing order:
-- if the message is mainly about a time node or preparation window, write or update `work-system/inbox/reminders.md`
-- if it also belongs to a continuing initiative, link the reminder to the related project
-- if the reminder is now within a near window, surface it again in `Daily Summary` or `Daily Focus`
+默认路由顺序：
+- 如果消息主要围绕时间节点或准备窗口，写入或更新 `work-system/inbox/reminders.md`
+- 如果它同时属于一个持续推进的事项，把提醒和相关项目关联起来
+- 如果提醒已经进入近窗期，再在 `Daily Summary` 或 `Daily Focus` 里重新抬头
 
-Do not default to `cron` or isolated reminders unless the user explicitly wants exact-time reminding.
+不要默认切到 `cron` 或独立提醒，除非用户明确要求精确时间提醒。
 
-## Operating Rules
+## 操作规则
 
-### Default capture behavior
+### 默认记录行为
 
-- Do not save every chat message.
-- Save only information with management value.
-- Use natural-language triggers; do not require slash commands.
-- Prefer semantic intent recognition over rigid keywords.
-- Treat explicit user phrases such as `record this`, `add to project`, `remind me`, `this is a rule`, or `do not file this yet` as stronger routing signals.
-- Treat clear Chinese operational phrases such as `今日聚焦`、`今天重点`、`今天先干什么`、`今日总结`、`记一下`、`加到项目里`、`记成风险` as equally strong routing signals.
-- Treat clear Chinese time phrases such as `提醒我`、`下周要讲`、`周四要分享`、`某天前交付`、`前一天提醒我`、`这周要完成` as strong reminder-routing signals.
-- Ask one short clarification when the target file, project name, due date, or system layer is materially unclear.
-- When ambiguity remains, prefer lighter capture first instead of prematurely creating a formal record.
+- 不要保存每一条聊天消息。
+- 只保存具有管理价值的信息。
+- 使用自然语言触发，不要求斜杠命令。
+- 优先按语义意图判断，而不是死板关键词匹配。
+- 把用户明确表达如 `record this`、`add to project`、`remind me`、`this is a rule`、`do not file this yet` 视为更强的路由信号。
+- 把明确的中文工作控制表达，如 `今日聚焦`、`今天重点`、`今天先干什么`、`今日总结`、`记一下`、`加到项目里`、`记成风险`，同样视为强路由信号。
+- 把明确的中文时间表达，如 `提醒我`、`下周要讲`、`周四要分享`、`某天前交付`、`前一天提醒我`、`这周要完成`，视为强提醒路由信号。
+- 当目标文件、项目名、截止时间或系统层级存在实质性不清楚时，补一个简短追问。
+- 如果仍有歧义，优先先做轻量记录，不要过早创建正式记录。
 
-### What counts as a formal record
+### 什么算正式记录
 
-Capture and structure content in these categories:
+以下几类内容需要被记录并结构化：
 - task
 - progress
 - risk
@@ -138,17 +138,17 @@ Capture and structure content in these categories:
 - value
 - decision
 
-### What stays out of formal records by default
+### 默认不进入正式记录的内容
 
-Do not archive:
-- casual discussion
-- duplicate restatements
-- half-formed chat without action or decision value
-- vague references that cannot be traced later
+默认不要归档：
+- 随意闲聊
+- 重复复述
+- 没有行动或决策价值的半成型聊天
+- 之后无法追踪的模糊提法
 
-## File Outputs
+## 文件输出
 
-Use these files and directories directly:
+直接使用这些文件和目录：
 - `work-system/inbox/temporary-work-pool.md`
 - `work-system/inbox/ideas.md`
 - `work-system/inbox/reminders.md`
@@ -159,9 +159,9 @@ Use these files and directories directly:
 - `work-system/daily/summary/`
 - `work-system/templates/`
 
-## Recommended Interaction Patterns
+## 推荐交互模式
 
-Example user requests this skill should support:
+这个 skill 应支持的用户请求示例：
 - `Record this: leader wants a draft by next Wednesday.`
 - `Add to project Interface Governance: confirmed current environment limits today.`
 - `Record as risk: the external team has not confirmed resources.`
@@ -175,10 +175,10 @@ Example user requests this skill should support:
 - `提醒我周四前收一版分享提纲。`
 - `这个下周要讲，前一天提醒我一下。`
 
-## Maintenance
+## 维护
 
-When the system evolves:
-- update the SOP first if the rule changes
-- update templates if the structure changes
-- keep project names stable
-- avoid duplicate storage of the same content across multiple files unless the duplication has a clear purpose
+当系统演进时：
+- 如果规则变了，先更新 SOP
+- 如果结构变了，更新模板
+- 保持项目名称稳定
+- 避免把同一内容无目的地重复存到多个文件，除非这种重复有明确用途
