@@ -1,18 +1,18 @@
-# Work Control Collaboration SOP
+# 工作控制协作 SOP
 
-## Purpose
+## 目的
 
-Use this SOP to run a chat-driven work control system inside day-to-day conversations. The goal is to capture important work information without forcing manual system switching, while keeping records traceable, structured, and reusable.
+用这个 SOP 在日常对话里运行一套聊天驱动的工作控制系统。目标是：在不强制切换系统的情况下捕获重要工作信息，同时保持记录可追踪、结构化、可复用。
 
-## Core Principles
+## 核心原则
 
-- Use chat as the input surface.
-- Store formal records in files, not only in memory.
-- Do not archive every message by default.
-- Capture only information with management value.
-- Keep the system light enough to sustain every day.
+- 以聊天为输入界面
+- 正式记录存文件，不只靠记忆
+- 默认不归档每条消息
+- 只捕获有管理价值的信息
+- 保持系统足够轻量，能每天持续使用
 
-## System Modules
+## 系统模块
 
 保持结构稳定，优先在现有模块内处理问题，不为单次想法频繁新增层级。
 
@@ -21,74 +21,74 @@ Use this SOP to run a chat-driven work control system inside day-to-day conversa
 当一个专项在新体系建立前已经推进过，不要把旧文件整包迁移进 `work-system/`。使用收编方式纳入：
 
 1. 确认专项主名称，避免后续多名称并存。
-2. 提炼专项基本画像，先压缩出专项定义、当前阶段、当前成果、下一步重点、风险或待确认、价值说明、外部依赖。
+2. 提炼专项基本画像，先压缩出：专项定义、当前阶段、当前成果、下一步重点、风险或待确认、价值说明、外部依赖。
 3. 在 `work-system/projects/active/` 建立专项主档案。
 4. 在主档案中挂接原有产出物路径，不复制全部历史文件。
 5. 从收编完成后开始，把后续进展统一更新到专项主档案。
 
-### 1. Temporary Work Pool
+### 1. 临时工作池
 
-Use for quick capture of items that should not be lost yet are not fully structured.
+用于快速捕获不应丢失但尚未完全结构化的事项。
 
-Typical content:
-- leader's temporary assignments
-- meeting follow-ups
-- ideas and solution fragments
-- pending confirmations
-- early risk signals
-- reminders
+典型内容：
+- 领导临时交办
+- 会议跟进
+- 想法和方案片段
+- 待确认事项
+- 早期风险信号
+- 提醒候选项
 
-### 2. Project Dossier
+### 2. 项目档案
 
-Use for long-running initiatives that need continuity, status tracking, milestone control, risk awareness, and value review.
+用于需要连续推进、状态跟踪、里程碑管控、风险感知和价值复盘的长期事项。
 
-### 3. Daily Focus
+### 3. 每日聚焦
 
-Use to decide what deserves attention today, based on priority, urgency, dependency, and project value.
+基于优先级、紧迫性、依赖关系和项目价值，决定今天值得关注什么。
 
-### 4. Daily Summary
+### 4. 每日总结
 
-Use to compress the day's work into a reusable daily record for handoff, weekly reporting, and next-day continuation.
+将当天工作压缩成可复用的每日记录，用于交接、周报和次日衔接。
 
-## Information Tiers
+## 信息层级
 
-### Tier A: Conversation Only
+### A 层：仅聊天
 
-Keep content in the current conversation only when it is exploratory or has no management value.
+当内容属于探索性质或没有管理价值时，仅保留在当前对话中。
 
-Examples:
-- rough discussion with no conclusion
-- quick opinion checks
-- temporary wording attempts
-- general chat
+示例：
+- 没有结论的粗略讨论
+- 快速意见试探
+- 临时措辞尝试
+- 一般闲聊
 
-### Tier B: Candidate Record
+### B 层：候选记录
 
-Treat content as a candidate when it appears important but has not been formally archived yet.
+当内容看起来重要但尚未正式归档时，视为候选。
 
-Examples:
-- a likely task without confirmed owner
-- a possible risk without impact confirmation
-- a project idea not yet approved
-- an important reminder without a due date
+示例：
+- 很可能是任务但未确认负责人
+- 可能是风险但未确认影响
+- 尚未批准的项目想法
+- 重要的提醒但没有截止时间
 
-### Tier C: Formal Record
+### C 层：正式记录
 
-Write content into the file system when it belongs to one of these categories:
-- task
-- progress update
-- risk or blocker
-- milestone or time commitment
-- value statement
-- project decision
+当内容属于以下类别之一时，写入文件系统：
+- task（任务）
+- progress update（进展更新）
+- risk or blocker（风险或阻塞）
+- milestone or time commitment（里程碑或时间承诺）
+- value statement（价值声明）
+- project decision（项目决策）
 
-## Record Triggers
+## 记录触发
 
-Use natural-language trigger phrases. Slash commands are optional and not required.
+使用自然语言触发语。斜杠命令是可选项，不是必需的。
 
-### Formal capture triggers
+### 正式记录触发语
 
-Use phrases like:
+使用类似这样的表达：
 - record this
 - 记一下
 - 记录一下
@@ -114,9 +114,9 @@ Use phrases like:
 - 建个项目
 - 建个专项
 
-### Review triggers
+### 回顾触发语
 
-Use phrases like:
+使用类似这样的表达：
 - plan today's focus
 - rank today's priorities
 - 今日聚焦
@@ -136,9 +136,9 @@ Use phrases like:
 - list important forgotten items
 - 看看有没有遗漏的重要事项
 
-### Reminder-routing triggers
+### 提醒路由触发语
 
-Use phrases like:
+使用类似这样的表达：
 - 下周要讲
 - 周四要分享
 - 某天前交付
@@ -151,67 +151,67 @@ Use phrases like:
 - 留意这个时间点
 - 进入准备窗口了
 
-## Assistant Behavior Rules
+## 助手行为规则
 
-### Default behavior
+### 默认行为
 
-- Read the message semantically.
-- Identify whether the content is a task, progress update, risk, milestone, value statement, or decision.
-- If a trigger is explicit, write to the correct file.
-- Treat clear Chinese operational phrases as equally strong triggers; do not downgrade them into ordinary chat only because they are not written in English.
-- If the message contains a clear time node or preparation window, route it through `reminders.md` first unless the user explicitly wants exact-time scheduling.
-- If the message looks important but the destination is unclear, ask one short clarification or place it in the temporary work pool when safe.
+- 按语义理解消息。
+- 判断内容属于任务、进展更新、风险、里程碑、价值声明还是决策。
+- 如果触发语明确，写入正确文件。
+- 把明确的中文工作控制表达视为同等强触发；不要因为是中文就降级成普通聊天。
+- 如果消息包含明确时间节点或准备窗口，优先通过 `reminders.md` 路由，除非用户明确要求精确时间调度。
+- 如果消息看起来重要但目标不明，补一个简短追问，或者在安全时先放入临时工作池。
 
-### Do not do by default
+### 默认不做的事
 
-- Do not save every message.
-- Do not treat casual chat as formal record.
-- Do not create a new project without clear naming.
-- Do not put project run-state into MEMORY.md as the primary source of truth.
+- 不保存每条消息。
+- 不把闲聊当作正式记录。
+- 不在没有明确命名的情况下创建新项目。
+- 不把项目运行状态作为主要事实来源写入 `MEMORY.md`。
 
-## Naming Rules
+## 命名规则
 
-### Project naming
+### 项目命名
 
-- Use one stable name per project.
-- Avoid aliases like "that project" or "the previous one" in formal records.
-- Prefer short Chinese names or consistent Chinese-plus-English names.
-- Once a project is created, keep the filename and header aligned.
+- 每个项目使用一个稳定名称。
+- 在正式记录中避免使用"那个项目"、"之前那个"等别名。
+- 优先使用简短中文名或一致的中英混合名。
+- 项目创建后，保持文件名和标题对齐。
 
-### Daily files
+### 每日文件
 
-Use ISO date filenames:
+使用 ISO 日期文件名：
 - `daily/focus/YYYY-MM-DD.md`
 - `daily/summary/YYYY-MM-DD.md`
 
-## Flow Rules
+## 流程规则
 
-### Flow 1: Temporary work item
+### 流程 1：临时工作事项
 
-Conversation -> temporary work pool -> one of:
-- complete and close
-- convert into project update
-- convert into reminder
-- archive as no longer needed
+对话 -> 临时工作池 -> 以下去向之一：
+- 完成并关闭
+- 转为项目更新
+- 转为提醒
+- 归档为不再需要
 
-### Flow 2: Project update
+### 流程 2：项目更新
 
-Conversation -> project dossier -> optionally:
-- mark as today's focus
-- include in daily summary
-- carry into weekly review later
+对话 -> 项目档案 -> 可选：
+- 标记为今日聚焦
+- 纳入每日总结
+- 后续带入周报
 
-### Flow 3: Daily focus
+### 流程 3：每日聚焦
 
-Temporary pool + project dossiers -> daily focus -> execution
+临时工作池 + 项目档案 -> 每日聚焦 -> 执行
 
-Also pull in reminder items that have entered a near-term preparation or delivery window.
+同时拉入已进入近期准备或交付窗口的提醒事项。
 
-### Flow 4: Daily summary
+### 流程 4：每日总结
 
-Conversation records + today's focus + project changes -> daily summary -> project dossier backfill
+对话记录 + 今日聚焦 + 项目变化 -> 每日总结 -> 项目档案回填
 
-Also review `reminders.md` for items that should be proactively surfaced before the time node arrives.
+同时回看 `reminders.md`，在时间节点到来之前主动抬头相关事项。
 
 ## 专项类型与里程碑颗粒度
 
@@ -232,7 +232,7 @@ Also review `reminders.md` for items that should be proactively surfaced before 
 - 哪些口径待确认
 - 当前阶段的主要产出是什么
 
-不要为了“看起来精细”把这类专项拆成过多小任务，否则会因为频繁改动导致维护成本过高。
+不要为了"看起来精细"把这类专项拆成过多小任务，否则会因为频繁改动导致维护成本过高。
 
 ### 开发/落地类专项
 
@@ -253,54 +253,54 @@ Also review `reminders.md` for items that should be proactively surfaced before 
 - 时间节点是否受影响
 - 是否已满足进入下一阶段的条件
 
-## Priority Logic for Daily Focus
+## 每日聚焦的优先级排序
 
-Rank by this order unless the user says otherwise:
-1. hard deadline today or tomorrow
-2. leader-assigned urgent work
-3. blocked project that unblocks others
-4. high-value project milestone
-5. important but non-urgent maintenance work
+除非用户另有说明，按以下顺序排序：
+1. 今天或明天硬性截止
+2. 领导紧急交办
+3. 卡住他人推进的阻塞项目
+4. 高价值项目里程碑
+5. 重要但不紧急的维护工作
 
-When ranking, consider:
-- deadline pressure
-- business value
-- dependency impact
-- leadership attention
-- effort versus outcome
+排序时考虑：
+- 截止压力
+- 业务价值
+- 依赖影响
+- 领导关注度
+- 投入产出比
 
-## Daily Rhythm
+## 每日节奏
 
-### Morning or start of work
+### 早间或工作开始时
 
-Use Daily Focus.
+使用每日聚焦。
 
-Expected outcome:
-- one core goal
-- top three focus items
-- a small list of secondary follow-ups
-- visible risks for today
+期望产出：
+- 一个核心目标
+- 三个最高优先级事项
+- 少量次级跟进项
+- 今天可见的风险
 
-### End of day
+### 一天结束时
 
-Use Daily Summary.
+使用每日总结。
 
-Expected outcome:
-- completed work
-- project progress
-- unclosed items
-- blockers and risks
-- tomorrow's likely priorities
+期望产出：
+- 已完成工作
+- 项目推进变化
+- 未关闭事项
+- 阻塞和风险
+- 明天可能的优先级
 
-## What Goes Where
+## 什么放哪里
 
-- `work-system/inbox/temporary-work-pool.md`: quick-capture operational items
-- `work-system/inbox/ideas.md`: ideas worth revisiting and waiting for routing
-- `work-system/inbox/reminders.md`: items with explicit time nodes, windows, or near-term timing pressure
-- `work-system/projects/active/`: ongoing project dossiers
-- `work-system/projects/archived/`: finished, paused, or canceled projects
-- `work-system/daily/focus/`: daily focus files
-- `work-system/daily/summary/`: daily summary files
+- `work-system/inbox/temporary-work-pool.md`：快速收集的运行中事项
+- `work-system/inbox/ideas.md`：值得回看、等待分流的想法
+- `work-system/inbox/reminders.md`：带有明确时间节点、窗口或近期时间压力的事项
+- `work-system/projects/active/`：推进中的项目档案
+- `work-system/projects/archived/`：已完成、暂停或取消的项目
+- `work-system/daily/focus/`：每日聚焦文件
+- `work-system/daily/summary/`：每日总结文件
 
 ## 三块协调规则
 
@@ -308,7 +308,7 @@ Expected outcome:
 
 ### 1. `ideas.md` 的职责
 
-`ideas.md` 用于承接“值得保留，但暂未决定是否正式推进”的方向、机会点和设想。
+`ideas.md` 用于承接"值得保留，但暂未决定是否正式推进"的方向、机会点和设想。
 
 适合进入 `ideas.md` 的内容：
 - 方向型想法
@@ -317,14 +317,14 @@ Expected outcome:
 - 当前先记住、后续再判断的潜在线索
 
 关键规则：
-- `ideas.md` 不是长期沉底仓库，而是“待分流池”
+- `ideas.md` 不是长期沉底仓库，而是"待分流池"
 - idea 后续可以直接进入 `projects`，不要求必须先升级到 `reminders.md`
 - idea 也可以继续保留观察、转成 reminder、或明确归档
 - 后续应在每日总结中择机回看，避免石沉大海
 
 ### 2. `reminders.md` 的职责
 
-`reminders.md` 用于承接“已经存在明确时间节点、时间窗口或临近压力”的事项。
+`reminders.md` 用于承接"已经存在明确时间节点、时间窗口或临近压力"的事项。
 
 适合进入 `reminders.md` 的内容：
 - 本周内要完成的事项
@@ -334,7 +334,7 @@ Expected outcome:
 
 关键规则：
 - `reminders.md` 不是自动提醒器，也不以 `cron` 为默认处理方式
-- 它的主要价值是给助手在“今日总结 / Daily Focus”中主动抬头使用
+- 它的主要价值是给助手在"今日总结 / Daily Focus"中主动抬头使用
 - 对于临近事项，更重要的是在前一天总结里主动提醒，在当天聚焦里显性列出，而不是等到时间点再机械提醒
 
 ### 3. `projects` 的职责
@@ -350,7 +350,7 @@ Expected outcome:
 - 一旦某事项需要连续几轮推进，就不要只停留在 `ideas` 或 `reminders`
 - `projects` 负责承接长期上下文，不负责直接替代当天执行判断
 
-## Daily Summary 与 Daily Focus 的调度职责
+## 每日总结与每日聚焦的调度职责
 
 真正把三块入口串起来工作的，不是它们自己，而是 `Daily Summary`、`Daily Focus` 和助手的主动判断。
 
@@ -361,7 +361,7 @@ Expected outcome:
 - `ideas.md` 中是否有值得抬头回看的方向
 - `projects` 中是否有已进入关键时间窗口或风险窗口的事项
 
-`Daily Summary` 不只是复盘当天做了什么，也要承担“提前抬头看临近事项”的职责。
+`Daily Summary` 不只是复盘当天做了什么，也要承担"提前抬头看临近事项"的职责。
 
 ### 2. `Daily Focus` 的职责
 
@@ -370,7 +370,7 @@ Expected outcome:
 - 进入临近时间窗口的 reminder 项
 - 已经从 idea 升级为今日值得投入的事项
 
-`Daily Focus` 负责把“今天该占用注意力的内容”浮到台面，而不是按记录先后顺序机械罗列。
+`Daily Focus` 负责把"今天该占用注意力的内容"浮到台面，而不是按记录先后顺序机械罗列。
 
 ## 默认路由规则
 
@@ -399,91 +399,91 @@ Expected outcome:
 - 保留观察
 - 明确归档
 
-不得默认长期保持“open 但无人回看”的状态。
+不得默认长期保持"open 但无人回看"的状态。
 
-## Traceability Requirements
+## 可追踪性要求
 
-Every formal record should make it possible to answer:
-- when did this enter the system
-- what is the item or update
-- which project it belongs to, if any
-- what is the current status
-- what should happen next
+每条正式记录都应能回答以下问题：
+- 什么时候进入系统的
+- 事项或更新是什么
+- 属于哪个项目（如果有）
+- 当前状态是什么
+- 下一步应该做什么
 
-## Recommended Working Style
+## 推荐工作方式
 
-### Scenario: quick temporary task
+### 场景：快速临时任务
 
-Example input:
+示例输入：
 `Record this: leader wants a draft by next Wednesday.`
 
-Expected handling:
-- add to temporary work pool
-- mark type as task
-- mark status as pending
-- note due timing if provided
+期望处理：
+- 加入临时工作池
+- 标记类型为 task
+- 标记状态为 pending
+- 如果提供了截止时间则记录
 
-### Scenario: update a project
+### 场景：更新项目
 
-Example input:
+示例输入：
 `Add to project Interface Governance: confirmed current environment limits today.`
 
-Expected handling:
-- update project dossier
-- revise latest update and next action
-- add risk if the new information changes delivery
+期望处理：
+- 更新项目档案
+- 修改 Latest Update 和 Next Action
+- 如果新信息影响交付，补充风险
 
-### Scenario: clarify value
+### 场景：澄清价值
 
-Example input:
+示例输入：
 `Add value: this project is mainly to reduce complaints, not only improve efficiency.`
 
-Expected handling:
-- update the value section in the project dossier
-- carry the wording into future summaries when useful
+期望处理：
+- 更新项目档案中的 Value 部分
+- 在后续总结中合适时带入这个表述
 
-### Scenario: ask for focus
+### 场景：要求排聚焦
 
-Example input:
+示例输入：
 `Plan today's focus.`
 
-Also applies to:
+以下表达也适用：
 - `今日聚焦。`
 - `今天重点。`
 - `排一下今天优先级。`
 
-Expected handling:
-- read open temporary items and active project signals
-- read near-term reminder items
-- produce a ranked daily focus file
-- keep the list intentionally short
+期望处理：
+- 读取未关闭的临时事项和活跃项目信号
+- 读取近期提醒事项
+- 生成带排序的每日聚焦文件
+- 列表保持简短
 
-### Scenario: ask for summary
+### 场景：要求做总结
 
-Example input:
+示例输入：
 `Do today's summary.`
 
-Also applies to:
+以下表达也适用：
 - `今日总结。`
 - `今天总结。`
 - `收个尾。`
 
-Expected handling:
-- summarize completed work and project movement
-- list unclosed items and risks
-- proactively check whether near-term reminder items need to be surfaced
-- produce a reusable written record
+期望处理：
+- 总结已完成工作和项目推进
+- 列出未关闭事项和风险
+- 主动检查近期提醒事项是否需要抬头
+- 生成可复用的书面记录
 
-### Scenario: ask for advance reminder
+### 场景：要求提前提醒
 
-Example input:
+示例输入：
 `这个下周要讲，前一天提醒我一下。`
 
-Expected handling:
-- route the item into `reminders.md`
-- preserve the time node and the request for advance prompting
-- rely on future `Daily Summary / Daily Focus` surfacing by default instead of assuming `cron`
+期望处理：
+- 将事项路由到 `reminders.md`
+- 保留时间节点和提前提醒的要求
+- 默认依赖后续 `Daily Summary / Daily Focus` 抬头，而不是默认假设 `cron`
 
-## Memory Boundary
+## 记忆边界
 
-Use MEMORY.md for durable personal context, preferences, and a small number of long-term decisions. Do not use MEMORY.md as the operating ledger for project management. Project operations must stay in `work-system/`.
+`MEMORY.md` 用于保存长期有效的个人上下文、偏好，以及少量长期决策。不要把 `MEMORY.md` 当作项目管理的运行台账。项目操作必须留在 `work-system/`。

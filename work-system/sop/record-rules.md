@@ -1,41 +1,41 @@
-# Work Control Record Rules
+# 工作控制记录规则
 
-## Formal Record Scope
+## 正式记录范围
 
-Only create or update formal records for information that belongs to at least one of these classes:
-- task
-- progress
-- risk
-- milestone
-- value
-- decision
+只为属于以下至少一个类别的信息创建或更新正式记录：
+- task（任务）
+- progress（进展）
+- risk（风险）
+- milestone（里程碑）
+- value（价值）
+- decision（决策）
 
-If a message does not belong to one of these classes, keep it in conversation unless the user explicitly asks to archive it.
+如果一条消息不属于以上任何类别，保留在对话中，除非用户明确要求归档。
 
-## Minimum Required Fields
+## 最低必填字段
 
-### Temporary work item
+### 临时工作事项
 
-Each formal temporary item should include:
-- created time
-- content
-- type
-- source
-- related project if known
-- status
-- next handling action if known
+每条正式临时事项应包含：
+- 创建时间
+- 内容
+- 类型
+- 来源
+- 已知关联项目
+- 状态
+- 已知的下一步处理动作
 
-### Project update
+### 项目更新
 
-Each meaningful project update should preserve enough detail to answer:
-- what changed
-- why it matters
-- what is next
-- whether it affects scope, timeline, value, or risk
+每次有意义的项目更新应保留足够细节，能回答：
+- 变了什么
+- 为什么重要
+- 下一步是什么
+- 是否影响范围、时间、价值或风险
 
 ## 存量专项收编规则
 
-对于已经推进中的专项，先做一次“专项基本画像”提炼，再正式建档。不要把零散聊天、旧文档和历史记忆原样复制到新系统里。
+对于已经推进中的专项，先做一次"专项基本画像"提炼，再正式建档。不要把零散聊天、旧文档和历史记忆原样复制到新系统里。
 
 专项基本画像至少应包含：
 - 专项定义
@@ -46,11 +46,11 @@ Each meaningful project update should preserve enough detail to answer:
 - 价值说明
 - 外部依赖
 
-## Capture Rules
+## 记录规则
 
-### Capture immediately
+### 立即记录
 
-Write immediately when the user explicitly says:
+当用户明确说出以下表达时，立即写入：
 - record this
 - 记一下
 - 记录一下
@@ -71,43 +71,43 @@ Write immediately when the user explicitly says:
 - 提醒我
 - 前一天提醒我
 
-### Capture after short clarification
+### 短暂澄清后记录
 
-Clarify before writing when any of these are missing and materially important:
-- project name
-- due date for a reminder
-- whether a statement is final or still exploratory
-- whether a new effort is a project or a one-off task
+当以下信息缺失且实质重要时，先澄清再写入：
+- 项目名
+- 提醒的截止时间
+- 某句话是定论还是仍在探索
+- 某个新事项是项目还是一次性任务
 
-### Do not capture automatically
+### 不自动记录
 
-Do not write formal records for:
-- casual brainstorming without clear action or conclusion
-- repeated restatements of the same point
-- emotional reactions without management value
-- vague references that cannot be traced later
+不对以下内容写入正式记录：
+- 没有明确行动或结论的随意头脑风暴
+- 同一观点的重复复述
+- 没有管理价值的情绪反应
+- 之后无法追踪的模糊提法
 
-## Temporary Work Pool Rules
+## 临时工作池规则
 
-- Use the temporary pool as an inbox, not as permanent storage.
-- Review it daily or every two days.
-- Convert items out of it whenever possible.
-- Avoid keeping stale items without status.
-- If a message already contains a clear time node, due window, or preparation window, prefer `reminders.md` over the temporary pool.
+- 把临时池当收件箱用，不是永久存储。
+- 每天或每两天审阅一次。
+- 尽可能把事项转出临时池。
+- 避免保留没有状态标注的过期事项。
+- 如果消息已包含明确时间节点、截止窗口或准备窗口，优先写入 `reminders.md`，而不是临时池。
 
-## Project Dossier Rules
+## 项目档案规则
 
-- One active project should have one main markdown file.
-- Keep the file focused on the durable project picture, not every chat detail.
-- Update `Latest Update`, `Next Action`, `Risk`, and `Value` aggressively; these are the most decision-useful sections.
-- When a project is completed, paused, or canceled, move it to `projects/archived/`.
+- 一个活跃项目应该有一个主 Markdown 文件。
+- 保持文件聚焦于项目的持久画面，不是每个聊天细节。
+- 积极更新 `Latest Update`、`Next Action`、`Risk` 和 `Value`；这些是对判断最有用的部分。
+- 当项目完成、暂停或取消时，移到 `projects/archived/`。
 
 ## 里程碑设计规则
 
 ### 详设/方案类专项
 
 - 里程碑按章节、模块、文档产出记录即可。
-- 优先记录“完成了什么章节”或“当前推进到哪个章节”。
+- 优先记录"完成了什么章节"或"当前推进到哪个章节"。
 - 如果内容会因客户、产品或评审意见频繁调整，不要拆成过细节点。
 - 重点记录章节完成情况、待确认项、当前下一章。
 
@@ -117,48 +117,48 @@ Do not write formal records for:
 - 优先记录需求、方案、开发、联调、测试、上线、验收等阶段节点。
 - 必要时补充阻塞、依赖方、目标时间、验收条件。
 
-## Daily Focus Rules
+## 每日聚焦规则
 
-- Keep the list short enough to be actionable.
-- Prefer one core goal and three key focus items.
-- Rank by priority, not by message arrival order.
-- Pull from both the temporary pool and active project dossiers.
-- Treat `今日聚焦`、`今天重点`、`排一下今天优先级` as direct Daily Focus triggers.
-- Pull in reminder items that have entered a near-term window.
+- 列表保持足够简短，确保可执行。
+- 优先一个核心目标加三个关键聚焦事项。
+- 按优先级排序，不是按消息到达顺序。
+- 同时从临时池和活跃项目档案中拉取。
+- 把 `今日聚焦`、`今天重点`、`排一下今天优先级` 视为直接的 Daily Focus 触发语。
+- 拉入已进入近期窗口的提醒事项。
 
-## Daily Summary Rules
+## 每日总结规则
 
-- Do not write a diary.
-- Write a management summary.
-- Focus on outcomes, project movement, unclosed items, risks, and tomorrow's priorities.
-- Make the summary reusable for weekly reporting.
-- Treat `今日总结`、`今天总结`、`收个尾` as direct Daily Summary triggers.
-- Before writing, check whether near-term reminder items should be proactively surfaced.
+- 不写流水账日记。
+- 写管理型总结。
+- 聚焦产出、项目推进、未关闭事项、风险和明天优先级。
+- 使总结可复用于周报。
+- 把 `今日总结`、`今天总结`、`收个尾` 视为直接的 Daily Summary 触发语。
+- 写入前，检查近期提醒事项是否需要主动抬头。
 
-## Traceability Style
+## 可追踪性风格
 
-When possible, preserve these markers inside records:
-- date
-- owner or source
-- due date or target node
-- current state
-- next action
+在记录中尽可能保留以下标记：
+- 日期
+- 负责人或来源
+- 截止时间或目标节点
+- 当前状态
+- 下一步动作
 
-## Update Discipline
+## 更新纪律
 
-When updating a record:
-- prefer appending a dated update note instead of overwriting history blindly
-- keep the most current state visible near the top
-- avoid duplicate entries for the same event
+更新记录时：
+- 优先追加带日期的更新备注，而不是盲目覆盖历史
+- 保持最新状态在靠近顶部的位置可见
+- 避免为同一事件创建重复条目
 
-## Escalation Rules
+## 升级规则
 
-Escalate attention when any of these appear:
-- due date within one to two days
-- repeated blocker with no owner action
-- project value becomes unclear
-- scope increases materially
-- dependency from another team is unresolved
+出现以下任一情况时升级关注：
+- 截止时间在 1-2 天内
+- 重复出现的阻塞没有负责人采取行动
+- 项目价值变得不清晰
+- 范围实质性扩大
+- 来自其他团队的依赖未解决
 
 ## 三类载体的路由补充规则
 
@@ -171,16 +171,16 @@ Escalate attention when any of these appear:
 ### 2. `reminders.md`
 
 - 用于承接有明确时间节点、时间窗口或临近压力的事项
-- 凡是出现“本周要完成”“下周要讲”“周四要分享”“某天前交付”“某天有评审/汇报”“前一天提醒我一下”“进入准备窗口了”这类表达，默认应考虑进入 `reminders.md`
+- 凡是出现"本周要完成""下周要讲""周四要分享""某天前交付""某天有评审/汇报""前一天提醒我一下""进入准备窗口了"这类表达，默认应考虑进入 `reminders.md`
 - `reminders.md` 的职责不是自动提醒，而是为 `Daily Summary` 和 `Daily Focus` 提供临近事项输入
 
 ### 3. `projects`
 
 - 用于承接持续推进、需要上下文积累的事项
-- 进入 `projects` 的标准不是“是否很大”，而是“是否需要连续几轮推进和持续更新状态”
+- 进入 `projects` 的标准不是"是否很大"，而是"是否需要连续几轮推进和持续更新状态"
 - 具备明确目标、价值、下一步的事项，即使最初来自 idea，也可以直接建档到 `projects`
 
-## Daily Summary / Daily Focus 联动要求
+## 每日总结 / 每日聚焦联动要求
 
 ### 1. 每日总结前
 
@@ -189,7 +189,7 @@ Escalate attention when any of these appear:
 - `ideas.md` 中是否存在值得抬头回看的方向
 - `projects` 中是否存在进入关键窗口的专项
 
-### 2. 生成 Daily Focus 时
+### 2. 生成每日聚焦时
 
 助手应把以下内容显性列出：
 - 今天真的要推进的项目事项
@@ -204,10 +204,10 @@ Escalate attention when any of these appear:
 - `reminders.md` 不能只记不抬头
 - `projects` 不能只建档不更新
 
-## Anti-Clutter Rules
+## 防杂乱规则
 
-To control information sprawl:
-- do not save whole conversations into files
-- do not create a new file for every tiny task
-- do not duplicate the same item in temporary pool, project file, and daily file without reason
-- summarize, classify, and link instead of copying everything
+控制信息蔓延：
+- 不把完整对话存入文件
+- 不为每个小任务创建新文件
+- 没有理由时，不在临时池、项目文件和每日文件中重复存放同一事项
+- 优先总结、分类、关联，而不是全部复制
