@@ -1,0 +1,78 @@
+diff --git a/D:/nvm/v24.9.0/node_modules/openclaw/dist/pi-embedded-DWASRjxE.js b/D:/nvm/v24.9.0/node_modules/openclaw/dist/pi-embedded-DWASRjxE.js
+--- a/D:/nvm/v24.9.0/node_modules/openclaw/dist/pi-embedded-DWASRjxE.js
++++ b/D:/nvm/v24.9.0/node_modules/openclaw/dist/pi-embedded-DWASRjxE.js
+@@ -10890,10 +10890,47 @@ async function captureSubagentCompletionReply(sessionKey, options) {
+ 	const immediate = await readSubagentOutput(sessionKey);
+ 	if (immediate?.trim()) return immediate;
+ 	if (options?.waitForReply === false) return;
+-	return await readLatestSubagentOutputWithRetry({
++	const retried = await readLatestSubagentOutputWithRetry({
+ 		sessionKey,
+ 		maxWaitMs: isFastTestMode() ? 50 : 1500
+ 	});
++	if (retried?.trim()) return retried;
++	const fromDisk = readLatestAssistantReplyFromDisk(sessionKey);
++	if (fromDisk?.trim()) return fromDisk;
++	return retried;
++}
++function readLatestAssistantReplyFromDisk(sessionKey) {
++	try {
++		const cfg = subagentAnnounceOutputDeps.loadConfig();
++		const agentId = resolveAgentIdFromSessionKey(sessionKey);
++		const storePath = resolveStorePath(cfg.session?.store, { agentId });
++		const store = loadSessionStore(storePath);
++		const sessEntry = store[sessionKey];
++		if (!sessEntry) return;
++		const sessionId = typeof sessEntry.sessionId === "string" ? sessEntry.sessionId.trim() : "";
++		if (!sessionId) return;
++		const candidates = [];
++		try {
++			candidates.push(resolveSessionFilePath(sessionId, sessEntry, { agentId }));
++		} catch {}
++		const home = process.env.OPENCLAW_HOME || os.homedir();
++		const legacyDir = path.join(home, ".openclaw", "agents", agentId, "sessions");
++		candidates.push(path.join(legacyDir, `${sessionId}.jsonl`));
++		for (const candidate of candidates) {
++			try {
++				if (!fs.existsSync(candidate)) continue;
++				const raw = fs.readFileSync(candidate, "utf-8");
++				const lines = raw.split(/\r?\n/).filter((l) => l.trim());
++				for (let i = lines.length - 1; i >= 0; i--) {
++					let msg;
++					try { msg = JSON.parse(lines[i]); } catch { continue; }
++					if (!msg || typeof msg !== "object" || msg.role !== "assistant") continue;
++					const text = extractAssistantText(msg);
++					if (text?.trim()) return text;
++				}
++			} catch {}
++		}
++	} catch {}
+ }
+ function describeSubagentOutcome(outcome) {
+ 	if (!outcome) return "unknown";
+@@ -11210,6 +11247,7 @@ async function runSubagentAnnounceFlow(params) {
+ 				maxWaitMs: params.timeoutMs,
+ 				outcome
+ 			});
++			if (!reply?.trim()) reply = readLatestAssistantReplyFromDisk(params.childSessionKey);
+ 			if (!reply?.trim() && fallbackReply && !fallbackIsSilent) reply = fallbackReply;
+ 			if (outcome?.status === "timeout" && reply?.trim() && params.waitForCompletion !== false) try {
+ 				const applied = applySubagentWaitOutcome({
+@@ -11726,9 +11764,15 @@ function createSubagentRegistryLifecycleController(params) {
+ 		if (entry.frozenResultText !== void 0) return false;
+ 		try {
+ 			const captured = await params.captureSubagentCompletionReply(entry.childSessionKey, { waitForReply: entry.expectsCompletionMessage === true });
+-			entry.frozenResultText = captured?.trim() ? capFrozenResultText(captured) : null;
++			if (captured?.trim()) {
++				entry.frozenResultText = capFrozenResultText(captured);
++			} else {
++				const diskFallback = readLatestAssistantReplyFromDisk(entry.childSessionKey);
++				entry.frozenResultText = diskFallback?.trim() ? capFrozenResultText(diskFallback) : null;
++			}
+ 		} catch {
+-			entry.frozenResultText = null;
++			const diskFallback = readLatestAssistantReplyFromDisk(entry.childSessionKey);
++			entry.frozenResultText = diskFallback?.trim() ? capFrozenResultText(diskFallback) : null;
+ 		}
+ 		entry.frozenResultCapturedAt = Date.now();
+ 		return true;

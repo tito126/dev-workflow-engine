@@ -88,6 +88,8 @@
 ## ACP 执行基础设施（2026-04-08 打通）
 - OpenClaw ACP 连 opencode 已从 `backend unavailable` 修复为正式可用
 - 依赖两处 Windows 手动补丁（详见 TOOLS.md），升级后需重新打
+- 2026-04-10 / 2026-04-11 又补了一处 `pi-embedded-DWASRjxE.js` 的 ACP result relay 磁盘 fallback 补丁，并已在本机验证通过
+- 已验证场景包括：正常 one-shot ACP 返回、spawn 后立即 `openclaw gateway restart` 的结果回传
 - 执行载体优先级：`ACP opencode` > `exec opencode` > `wrapper opencode`（禁止）
 - ACP 的核心价值：减少上下文重复灌输、支撑中任务连续推进、利用持续会话能力
 

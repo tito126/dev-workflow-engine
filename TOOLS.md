@@ -118,6 +118,37 @@ OpenClaw 2026.4.5 的 ACP backend 在 Windows 上无法正常初始化，需要�
 
 **⚠️ 注意**：每次 `npm update -g openclaw` 会覆盖这两处修改，升级后必须重新打补丁。
 
+### ACP 结果回传补丁（2026-04-10 修复，2026-04-11 验证通过）
+
+`OpenClaw 2026.4.5` 在 Windows 上还存在一类 ACP relay 问题：
+- child session 已经产出 assistant 结果
+- child transcript / 落盘文件已存在
+- 但 parent 主会话可能收到空 result、timeout 或 gateway closed
+
+**本地修复文件**：
+- `D:\nvm\v24.9.0\node_modules\openclaw\dist\pi-embedded-DWASRjxE.js`
+
+**修复思路**：
+- 在 `captureSubagentCompletionReply`
+- `freezeRunResultAtCompletion`
+- `runSubagentAnnounceFlow`
+三处补上 `readLatestAssistantReplyFromDisk(sessionKey)` transcript 磁盘 fallback，避免 gateway RPC 失败时结果丢失。
+
+**验证结果（2026-04-11）**：
+1. 正常场景：`sessions_spawn runtime="acp" agentId="opencode" mode="run"`，parent 正常收到 child 输出
+2. 重启场景：spawn 后立刻 `openclaw gateway restart`，parent 仍收到 `ACP-RELAY-RESTART-TEST-OK`
+3. 已核对 stream log 与 child transcript，结果一致
+
+**验证产物**：
+- 报告：`C:\Users\pc\.openclaw\workspace\acp-result-relay-fix-report.md`
+- patch：`C:\Users\pc\.openclaw\workspace\work-system\projects\active\openclaw-tooling\runtime\2026-04-10-acp-result-relay\acp-result-relay-fix.patch`
+- 验证记录：`C:\Users\pc\.openclaw\workspace\work-system\projects\active\openclaw-tooling\runtime\2026-04-10-acp-result-relay\validation-2026-04-11.md`
+
+**后续规则**：
+- 只要升级 `openclaw`、重装依赖、切换 Node，优先检查这处补丁是否被覆盖
+- 若 ACP 再出现“child 有结果但 parent 空回”现象，先检查 `pi-embedded-DWASRjxE.js` 是否仍含磁盘 fallback 逻辑
+- 若需要对外分发，优先提供 patch 文件，不要靠手工口述改法
+
 ### `opencode` 执行链路规则（2026-04-07 / 2026-04-08 更新）
 
 当前标准路径明确调整为：
