@@ -35,6 +35,7 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 9. 应使用哪种执行载体（`direct edit` / `ACP opencode` / `exec opencode` / other）
 10. 后续阶段共享输入摘要
 11. 哪些内容要沉淀为 findings / progress / verification evidence
+12. 对于 SQL / 性能优化任务，代码分析后必须回问用户确认的业务 / 语义 / 性能问题
 
 ## 规则
 
@@ -44,6 +45,7 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 - 如果任务是 `light` 或 `medium`，优先用最小计划，不要强行套重型多角色结构。
 - 已知时要明确写出文件和模块名。
 - 如果文件目标未知，就在计划里加入专门的定位任务，再进入实现。
+- 如果任务属于 SQL / 性能优化，计划中必须显式写出“分析后向用户确认”的阻断点；没有用户确认，不进入 implementer。
 - 不要把不确定性藏在计划里，要显式标出来。
 - 当 controller 可以给出更尖锐上下文时，不要让 implementer 自己“去代码库里摸索”。
 - 默认把本计划视为后续阶段共享底稿，而不是一次性聊天输出。
@@ -72,6 +74,7 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 - Expected findings capture:
 - Expected progress updates:
 - Pre-code confirmation items:
+- User confirmation gate after analysis:
 
 ### Agent 分工
 - Controller:

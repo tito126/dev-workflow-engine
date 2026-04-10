@@ -70,7 +70,8 @@ brainstorming（简短检查点，确认足够清楚）
 ```
 brainstorming
   → writing-plans
-  → locator（按需插入）
+  → locator（按需插入，SQL / 性能优化任务默认必经）
+  → user-confirmation gate（SQL / 性能优化任务）
   → implementer（优先 ACP opencode）
   → verification
   → review-gate
@@ -107,10 +108,16 @@ brainstorming
 
 ### locator（按需插入）
 - **何时需要**：planning 阶段无法确定具体文件，需要先做代码定位
+- **SQL / 性能优化例外**：即使 planning 已大致知道文件，也默认先做 locator，补代码证据与待确认问题
 - **何时跳过**：planning 阶段已经知道改哪些文件
 - 插入位置：writing-plans 之后、implementer 之前
 - 产出：findings（供 implementer 直接复用）
 - 对于 medium 任务，locator 和 implementer 可以合并成一个 ACP session 里连续推进
+
+### user-confirmation gate（SQL / 性能优化任务）
+- locator / analyst 必须先把代码证据、候选问题和待确认语义整理出来
+- controller 必须基于这些结果向用户追问现场业务场景、结果语义和性能目标
+- 未完成这一闸门前，不进入 implementer
 
 ### implementer
 - 执行载体选择：
@@ -162,6 +169,7 @@ work-system/deliverables/nurse-station/{task-id}/
 - implementer 的 `implementation-result.md` → verification 的输入
 - verification 的 `verification-evidence.md` → review-gate 的输入
 - 若后续阶段发现关键外部依赖在 intake 中未被识别，或需求成立前提发生变化，必须回退到 brainstorming / planning 重写，不允许带着旧前提继续收口
+- 若后续阶段发现 SQL / 性能优化任务缺少现场业务口径或用户确认，也必须回退到 locator / planning 补齐，不允许直接带着技术猜测改码
 
 ### light 任务例外
 light 任务不需要创建 deliverables 目录，产物直接在聊天中流转即可。
@@ -198,3 +206,4 @@ ACP 可用性检查：
 - 把 medium 任务升级成 heavy 流程
 - 让 implementer 同时承担 locator 的职责
 - 在关键外部依赖未明确时，把“依赖方会配合”当成默认成立前提直接推进实现
+- 在 SQL / 性能优化任务里，跳过代码分析后的用户确认环节，直接把候选优化方向落成代码
