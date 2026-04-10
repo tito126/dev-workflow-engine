@@ -59,4 +59,12 @@ Use this file for reminders before they become a scheduled reminder or a tracked
 - Status: pending
 - Next Handling: follow manually
 
+### [R-20260410-01] 周末在家搭建微信集成“小龙虾”
+- Created: 2026-04-10 14:55
+- Due: TBD（本周末）
+- Related Project: none
+- Reason: 周末计划在家搭建微信集成“小龙虾”，为后续把微信消息直接记入 reminder 打通入口，减少从消息流转成待办记录的摩擦。
+- Status: pending
+- Next Handling: follow manually
+
 <!-- Add reminder items below this line -->
