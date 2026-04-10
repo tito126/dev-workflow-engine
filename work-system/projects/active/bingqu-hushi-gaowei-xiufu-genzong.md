@@ -1,8 +1,8 @@
 # 病区护士高危代码修复跟踪
 
 - 专项编号: P-2026-04
-- 状态: 待启动
-- 健康度: 黄
+- 状态: 进行中
+- 健康度: 绿
 - 优先级: 高
 - 负责人: 第别
 - 协同方: 姚云, 研发, 需求/产品, 相关业务方
@@ -67,3 +67,33 @@
 - 已生成问题台账：`work-system/deliverables/bingqu-hushi-yaoyun-problem-list-2026-04-03.md`
 - 已建立长期跟踪档案（本文件）
 - 约定下周用 AI 做首轮分类，不按一次性全修推进
+
+## Update (2026-04-10)
+
+### 人工复核完成
+- 第别已完成一轮人工复核，在 Excel 台账 G/K/L 列填入行数、是否需要修复、备注
+- 结果：103 条中 90 条标记“不需要修复”、12 条“需要修复”、2 条“待确认”
+- 备注中记录了不需要修复的具体原因
+
+### win-code-scanner 知识库增强（已完成）
+- 确认“粗暴跳过不解决同质问题”，收敛为知识库增强方案
+- 原始扫描结果不改，叠加解释和分流（保留/降级/人工确认/已知误报）
+- 不依赖行号，靠模式 + 上下文 + 原因做匹配
+- 落地产物：
+  - `scripts/filter_repair_targets.py` — 台账过滤
+  - `references/false-positive-kb.json` — 知识库模板（3 条候选样例，均 enabled=false）
+  - `scripts/annotate_scan_results.py` — 结果增强标注
+  - `scripts/export_annotated_report.py` — Excel/Markdown 导出
+  - `scripts/build_enhanced_report.py` — 一键流水线
+  - Excel 报告新增 7 列知识库增强字段
+
+### 实战扫描：winning-ward-newborn 模块
+- 用 opencode 对 newborn 模块做了一次代码扫描
+- 扫描 108 个文件，发现 8 条问题（7 条 PERF-S008 + 1 条 PERF-B007）
+- 结果已导出 Excel：`E:\winning-code\akso5\winning-nis-ward\winning-ward-newborn-scan-report.xlsx`
+- 待第别复核后反哺，沉淀为正式知识库条目
+
+### 待跟进
+- [R-20260410-02] ACP 子会话结果回传失败问题定位（本周内）
+- [R-20260410-03] 完善人工反哺流程（自动沉淀候选知识条目）
+- 知识库当前只有 3 条 disabled 样例，需从实际复核中逐步积累
