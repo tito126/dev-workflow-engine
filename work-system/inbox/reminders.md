@@ -67,4 +67,18 @@ Use this file for reminders before they become a scheduled reminder or a tracked
 - Status: pending
 - Next Handling: follow manually
 
-<!-- Add reminder items below this line -->
+### [R-20260410-02] 定位 ACP 子会话结果回传失败问题
+- Created: 2026-04-10 19:21
+- Due: TBD（本周内）
+- Related Project: win-code-scanner
+- Reason: 2026-04-10 实战发现 ACP child session 有扫描结果且已落盘，但主会话 completion event 收到的是空 result。根因在 OpenClaw ACP 回传链路，不是 opencode 本身。需要定位 relay 断点并修复。
+- Status: pending
+- Next Handling: 排查 OpenClaw ACP result relay 机制，确认是 gateway 层还是 session 层丢数据
+
+### [R-20260410-03] 完善 win-code-scanner 人工反哺流程
+- Created: 2026-04-10 19:21
+- Due: TBD
+- Related Project: win-code-scanner
+- Reason: 第一阶段知识库增强框架已打通，但还缺最后一环：把人工复核结果自动沉淀为候选知识条目（enabled=false），减少手工整理成本。
+- Status: pending
+- Next Handling: 实现 extract_feedback_candidates.py 或等价功能
