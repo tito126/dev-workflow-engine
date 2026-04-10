@@ -235,6 +235,25 @@ python scripts/annotate_scan_results.py scan-results.json --output annotated-res
 - `kb_requires_human_review`
 - `kb_target_severity`
 
+### 报告导出脚本
+
+当需要把增强结果真正写入 Excel / Markdown 报告产物时，使用：`scripts/export_annotated_report.py`
+
+```bash
+python scripts/export_annotated_report.py annotated-results.json \
+  --xlsx-out report.xlsx \
+  --md-out report.md \
+  --repo-name winning-demo \
+  --git-url http://example/repo \
+  --git-branch sr-next
+```
+
+脚本行为：
+- 读取带 `kb_*` 字段的扫描结果
+- 导出 Excel 三个 Sheet：`扫描概览`、`问题清单`、`问题明细`
+- 导出 Markdown 报告，并按 `建议处理动作` 分层展示
+- **原始扫描字段保留不变**，新增知识库增强列写入报告
+
 ### 报告新增列（Excel / 表格 / JSON 均适用）
 
 在原始扫描字段后，追加以下增强列：
@@ -245,6 +264,19 @@ python scripts/annotate_scan_results.py scan-results.json --output annotated-res
 - `匹配特征摘要`
 - `置信度`
 - `是否需人工复核`
+
+### 推荐产物流水线
+
+```bash
+# 1. 原始扫描结果
+scan -> scan-results.json
+
+# 2. 知识库增强
+python scripts/annotate_scan_results.py scan-results.json --output annotated-results.json
+
+# 3. 导出正式报告
+python scripts/export_annotated_report.py annotated-results.json --xlsx-out report.xlsx --md-out report.md
+```
 
 ### 报告分层规则
 

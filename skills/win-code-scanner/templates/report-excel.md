@@ -58,10 +58,17 @@ Git URL | {{git_url}} |
 | 涉及文件 | 文件路径及行号列表 | `path/to/Service.java`: 第 45, 67, 89 行 |
 | 修复建议 | 修复建议内容 | 为 RPC 调用配置超时时间... |
 | 原理说明 | 问题描述和影响 | 下游接口调用必须设置合理的超时时间... |
+| 知识库匹配状态 | 未命中 / 已命中 / 弱命中 | 已命中 |
+| 建议处理动作 | 保留 / 降级 / 人工确认 / 已知误报 | 人工确认 |
+| 知识库规则ID | 命中的知识库规则 | KB-FP-001 |
+| 知识库判断原因 | 为什么命中知识库 | 构建配置上下文，不属于运行时风险 |
+| 匹配特征摘要 | 命中特征概览 | 配置文件 + require + 非运行时代码 |
+| 置信度 | 高/中/低 | 高 |
+| 是否需人工复核 | 是/否 | 否 |
 
 ### 数据行生成
 {{#each issues_by_rule}}
-| {{rule_code}} | {{risk_level}} | {{category}} | {{rule_name}} | {{impact_count}} | {{files_summary}} | {{suggestion}} | {{description}} |
+| {{rule_code}} | {{risk_level}} | {{category}} | {{rule_name}} | {{impact_count}} | {{files_summary}} | {{suggestion}} | {{description}} | {{kb_match_status}} | {{kb_action}} | {{kb_rule_id}} | {{kb_reason}} | {{kb_feature_summary}} | {{kb_confidence}} | {{kb_requires_human_review}} |
 {{/each}}
 
 #### 涉及文件格式示例
@@ -89,10 +96,17 @@ winning-log-main/src/main/java/com/winning/mis/service/MgrLogServiceImpl.java: �
 | 行号 | 123 |
 | 问题描述 | 循环内调用数据库查询单条记录 |
 | 修复建议 | 使用批量查询替代循环查询 |
+| 知识库匹配状态 | 未命中 / 已命中 / 弱命中 |
+| 建议处理动作 | 保留 / 降级 / 人工确认 / 已知误报 |
+| 知识库规则ID | KB-FP-001 |
+| 知识库判断原因 | 构建配置上下文，不属于运行时风险 |
+| 匹配特征摘要 | 配置文件 + require + 非运行时代码 |
+| 置信度 | 高/中/低 |
+| 是否需人工复核 | 是/否 |
 
 ### 数据行结构
 {{#each issues_expanded}}
-| {{rule_code}} | {{risk_level}} | {{category}} | {{file_path}} | {{line}} | {{description}} | {{suggestion}} |
+| {{rule_code}} | {{risk_level}} | {{category}} | {{file_path}} | {{line}} | {{description}} | {{suggestion}} | {{kb_match_status}} | {{kb_action}} | {{kb_rule_id}} | {{kb_reason}} | {{kb_feature_summary}} | {{kb_confidence}} | {{kb_requires_human_review}} |
 {{/each}}
 
 **说明**: 此 Sheet 将每个规则下的每个文件位置展开为独立行，便于筛选和排序。
