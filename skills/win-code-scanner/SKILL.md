@@ -265,16 +265,36 @@ python scripts/export_annotated_report.py annotated-results.json \
 - `置信度`
 - `是否需人工复核`
 
+### 一键后处理脚本（推荐）
+
+当你已经拿到原始扫描 JSON，希望最少手工步骤完成“知识库增强 + 正式报告导出”时，优先使用：`scripts/build_enhanced_report.py`
+
+```bash
+python scripts/build_enhanced_report.py scan-results.json \
+  --repo-name winning-demo \
+  --git-url http://example/repo \
+  --git-branch sr-next
+```
+
+默认产物：
+- `scan-results.annotated.json`
+- `scan-results.knowledge.xlsx`
+- `scan-results.knowledge.md`
+
+可选参数：
+- `--kb`：指定知识库文件
+- `--output-dir`：指定输出目录
+- `--base-name`：指定输出基础名
+- `--annotated-json` / `--xlsx-out` / `--md-out`：显式指定各产物路径
+
 ### 推荐产物流水线
 
 ```bash
-# 1. 原始扫描结果
-scan -> scan-results.json
+# 单命令后处理（推荐）
+python scripts/build_enhanced_report.py scan-results.json --repo-name winning-demo --git-branch sr-next
 
-# 2. 知识库增强
+# 若需要拆步排查，再分别执行：
 python scripts/annotate_scan_results.py scan-results.json --output annotated-results.json
-
-# 3. 导出正式报告
 python scripts/export_annotated_report.py annotated-results.json --xlsx-out report.xlsx --md-out report.md
 ```
 
