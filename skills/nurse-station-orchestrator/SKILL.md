@@ -96,6 +96,8 @@ brainstorming
 ### brainstorming（必经）
 - 产出：requirement summary + success anchors + 任务级别 + 推荐路径
 - 不允许跳过，除非用户显式说"已过 intake"
+- 必须显式检查方案是否依赖第三方 / 外部团队 / 外部系统配合，以及该依赖是否已明确到可执行
+- 如果依赖方一旦配合就能直接规避本需求，则要先重判“该需求是否仍成立”，不能直接流入 planning / implementer
 - 如果任务不够清楚，在这里停下追问
 
 ### writing-plans
@@ -159,6 +161,7 @@ work-system/deliverables/nurse-station/{task-id}/
 - locator 的 `findings.md` → implementer 的输入（若存在）
 - implementer 的 `implementation-result.md` → verification 的输入
 - verification 的 `verification-evidence.md` → review-gate 的输入
+- 若后续阶段发现关键外部依赖在 intake 中未被识别，或需求成立前提发生变化，必须回退到 brainstorming / planning 重写，不允许带着旧前提继续收口
 
 ### light 任务例外
 light 任务不需要创建 deliverables 目录，产物直接在聊天中流转即可。
@@ -194,3 +197,4 @@ ACP 可用性检查：
 - 把 light 任务强行套进 medium/heavy 流程
 - 把 medium 任务升级成 heavy 流程
 - 让 implementer 同时承担 locator 的职责
+- 在关键外部依赖未明确时，把“依赖方会配合”当成默认成立前提直接推进实现
