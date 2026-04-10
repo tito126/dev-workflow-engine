@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "description": "win-code-scanner 知识库模板。第一阶段仅用于增强报告，不直接删除原始扫描结果。将人工复核结果沉淀为候选知识后，再人工启用。",
+  "report_columns": [
+    "知识库匹配状态",
+    "建议处理动作",
+    "知识库规则ID",
+    "知识库判断原因",
+    "匹配特征摘要",
+    "置信度",
+    "是否需人工复核"
+  ],
+  "entries": [
+    {
+      "id": "KB-FP-EXAMPLE-001",
+      "enabled": false,
+      "title": "构建配置文件中的 require 不直接按运行时动态加载高危处理",
+      "rule_codes": [
+        "DYN-IMPORT",
+        "SEC-FRONTEND-DYNAMIC-LOAD"
+      ],
+      "match": {
+        "file_path_regex": [
+          ".*\\.sparkrc\\.ts$",
+          ".*vite\\.config\\.(ts|js)$",
+          ".*webpack\\.config\\.(ts|js)$"
+        ],
+        "extensions": [
+          ".ts",
+          ".js"
+        ],
+        "path_contains_any": [
+          "config",
+          ".sparkrc"
+        ],
+        "description_contains_any": [
+          "动态require",
+          "动态 import",
+          "动态加载"
+        ],
+        "code_contains_any": [
+          "require(",
+          "import("
+        ],
+        "code_contains_none": [
+          "window.eval",
+          "new Function",
+          "fetch(remote"
+        ]
+      },
+      "decision": {
+        "action": "downgrade",
+        "target_severity": "提示",
+        "confidence": "高",
+        "requires_human_review": false
+      },
+      "reason": "构建配置阶段的 require/import 与运行时动态远程加载风险不同，宜降级展示而不是直接按高危处理。",
+      "feature_summary": "构建配置文件 + require/import + 非运行时代码执行",
+      "source": "manual-review-candidate"
+    },
+    {
+      "id": "KB-FP-EXAMPLE-002",
+      "enabled": false,
+      "title": "JPA select new DTO 投影不直接视作高危漏洞",
+      "rule_codes": [
+        "JPA-SELECT-NEW",
+        "SQL-INJECTION"
+      ],
+      "match": {
+        "extensions": [
+          ".java"
+        ],
+        "path_contains_any": [
+          "repository",
+          "jpa"
+        ],
+        "description_contains_any": [
+          "select new",
+          "字符串拼接SQL",
+          "JPQL"
+        ],
+        "code_contains_any": [
+          "select new",
+          "@Query"
+        ]
+      },
+      "decision": {
+        "action": "manual_review",
+        "target_severity": "警告",
+        "confidence": "中",
+        "requires_human_review": true
+      },
+      "reason": "JPA DTO 投影、JPQL 与原生动态 SQL 需要区分；这类问题宜进入人工确认，而不是直接认定为高危。",
+      "feature_summary": "JPA/Repository 上下文 + DTO 投影/JPQL",
+      "source": "manual-review-candidate"
+    },
+    {
+      "id": "KB-FP-EXAMPLE-003",
+      "enabled": false,
+      "title": "Redis 只读查询未设置 TTL 不直接视作需修复",
+      "rule_codes": [
+        "REDIS-TTL",
+        "REDIS-DANGER"
+      ],
+      "match": {
+        "extensions": [
+          ".java"
+        ],
+        "description_contains_any": [
+          "未设置过期时间",
+          "TTL"
+        ],
+        "code_contains_any": [
+          ".get(",
+          ".hGet(",
+          ".query"
+        ],
+        "code_contains_none": [
+          ".set(",
+          ".sAdd(",
+          ".expire(",
+          "KEYS",
+          "FLUSH"
+        ]
+      },
+      "decision": {
+        "action": "manual_review",
+        "target_severity": "警告",
+        "confidence": "中",
+        "requires_human_review": true
+      },
+      "reason": "只读查询与写入缓存的 TTL 责任不同，遇到 Redis 读操作应先做人审，不宜直接按需修复项输出。",
+      "feature_summary": "Redis 只读 API + TTL 类规则",
+      "source": "manual-review-candidate"
+    }
+  ]
+}
