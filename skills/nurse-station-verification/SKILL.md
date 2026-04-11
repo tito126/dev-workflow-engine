@@ -15,6 +15,13 @@ description: 当护士站实现结果或代码定位结论需要在验收前，�
 
 验证阶段不允许猜测验收依据。
 
+验证阶段必须显式区分三件事：
+- 代码是否完成
+- 需求是否满足
+- 效果是否已验证
+
+这三件事可以同时为真，也可以只成立其中一部分，不能混写成一个笼统的“已完成”。
+
 如果任务没有清晰的编码前验收锚点，就不要把它标记为完成，而应把它退回到更前面的合适阶段。
 
 默认退回顺序应遵循护士站流程：
@@ -68,6 +75,13 @@ description: 当护士站实现结果或代码定位结论需要在验收前，�
 - 哪些仍需要人工确认？
 - 哪些内容因上游 requirement-fit 证据缺失而无法验证？
 
+### 证据等级
+- A：真实环境 / 真实样本 / 实测结果 / 上线后观察证据
+- B：代码证据 / 静态分析 / 结构化 diff / 文件级证据
+- C：业务口头确认 / 聊天确认 / 规则性判断
+
+如果某项结论只拿到了 B 或 C 级证据，就不要把它写成“效果已验证”。
+
 ## 输出格式
 
 ### 验证结果
@@ -76,9 +90,13 @@ description: 当护士站实现结果或代码定位结论需要在验收前，�
 - Acceptance anchors reviewed:
 - Missing acceptance anchors:
 - Return stage if failed:
+- Evidence level:
 - Requirement fit:
 - Scene fit:
 - Technical fit:
+- Code complete:
+- Requirement complete:
+- Effect verified:
 - Risks:
 - Unverified points:
 - Verification evidence summary:
@@ -87,6 +105,7 @@ description: 当护士站实现结果或代码定位结论需要在验收前，�
 ### 可复用产物
 验证结果应默认充当 review-gate 的输入，而不是只留在聊天里。
 - "Acceptance anchors reviewed" 应直接对齐 planning 阶段产出的 success anchors
+- "Evidence level" 应说明当前结论主要依赖 A / B / C 哪一级证据
 - "Risks" 和 "Unverified points" 应供 review-gate 当作审查起点
 - 如果验证不通过，"Return stage" 应明确指出该退回到哪个阶段、带着什么问题
 

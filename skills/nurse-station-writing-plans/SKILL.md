@@ -36,6 +36,8 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 10. 后续阶段共享输入摘要
 11. 哪些内容要沉淀为 findings / progress / verification evidence
 12. 对于 SQL / 性能优化任务，代码分析后必须回问用户确认的业务 / 语义 / 性能问题
+13. 本轮允许改动层级 / 禁止改动层级
+14. 验收方式与证据预期（代码完成 / 需求完成 / 效果已验证分别靠什么判定）
 
 ## 规则
 
@@ -51,6 +53,7 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 - 默认把本计划视为后续阶段共享底稿，而不是一次性聊天输出。
 - 如果已经存在 runtime task，就把计划绑定到该 runtime path，而不是只留作聊天输出。
 - 如果外部执行会使用 `opencode`，就要显式决定是 `ACP opencode` 还是裸 `exec opencode`。
+- 一旦需求边界、结果语义、是否分页、是否允许改系统策略、是否涉及第三方规则等关键口径发生变化，必须重写 success anchors 及受影响的计划段落，不要只在聊天里补一嘴。
 - 默认路径：`ACP opencode`。
 - 当前 Windows 环境下，只有在 `2026-04-08` 记录的本地 ACP 手动补丁仍然存在时，才把 `ACP opencode` 视为正式可用。
 - 如果 ACP 不可用、不健康，或升级后补丁被覆盖，则降级为裸 `exec opencode`。
@@ -67,14 +70,18 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 - Module:
 - In scope:
 - Out of scope:
+- Allowed change layers:
 - Shared context summary:
 - Success anchors:
+- Acceptance method:
+- Evidence expectations:
 - Runtime path:
 - Phases to mirror in later artifacts:
 - Expected findings capture:
 - Expected progress updates:
 - Pre-code confirmation items:
 - User confirmation gate after analysis:
+- If scope changes later, rewrite these sections first:
 
 ### Agent 分工
 - Controller:
@@ -104,6 +111,15 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 ### 执行就绪度
 - Can enter coding now: yes/no
 - Missing prerequisite:
+
+## SQL / 性能优化任务补充要求
+
+如果任务属于 SQL / 性能优化，计划里至少要写明：
+- 本轮允许不允许改系统策略
+- 本轮允许不允许改变查询语义
+- 结果一致性、性能收益、实现侵入性三者的优先级
+- 验收方式是代码证据、真实样本、SQL plan、压测、日志对比中的哪些
+- 如果只能拿到代码证据，后续谁来补效果验证、在什么环境补
 
 ## 对 ACP 的特殊用法
 

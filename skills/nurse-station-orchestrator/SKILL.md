@@ -105,6 +105,7 @@ brainstorming
 - 产出：共享底稿（plan），含 agent 分工、执行载体、验证步骤
 - medium / heavy 必经
 - plan 是后续所有阶段的共享输入
+- 若关键口径发生变化（如是否分页、是否允许改系统策略、是否展开第三方规则、结果语义优先级变化），必须先回写并重写 success anchors，再继续后续阶段
 
 ### locator（按需插入）
 - **何时需要**：planning 阶段无法确定具体文件，需要先做代码定位
@@ -130,11 +131,13 @@ brainstorming
 - 对照 planning 阶段的 success anchors 逐条核对
 - 产出：验证结论 + 验证证据摘要
 - 如果验收锚点缺失，退回 brainstorming 或 planning
+- 必须显式区分“代码完成”“需求完成”“效果已验证”三种状态
 
 ### review-gate
 - 三道闸门按顺序执行：编码前需求匹配 → 实现后需求匹配 → 代码质量
 - 产出：评审结论 + 可沉淀经验
 - 前序闸门不通过时，不启动后续闸门
+- 若当前只有代码证据或业务确认，而没有真实环境 / 真实样本证据，不得把结论写成“效果已验证”
 
 ### retrospective（heavy 任务收尾）
 - 评估上下文流转效率：每段衔接是否做到了少重复喂、少转述
@@ -170,6 +173,7 @@ work-system/deliverables/nurse-station/{task-id}/
 - verification 的 `verification-evidence.md` → review-gate 的输入
 - 若后续阶段发现关键外部依赖在 intake 中未被识别，或需求成立前提发生变化，必须回退到 brainstorming / planning 重写，不允许带着旧前提继续收口
 - 若后续阶段发现 SQL / 性能优化任务缺少现场业务口径或用户确认，也必须回退到 locator / planning 补齐，不允许直接带着技术猜测改码
+- 若后续阶段发现关键口径变化已使原 success anchors 失效，也必须回退到 planning 重写，不允许只靠聊天补口径继续推进
 
 ### light 任务例外
 light 任务不需要创建 deliverables 目录，产物直接在聊天中流转即可。
