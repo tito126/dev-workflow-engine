@@ -1,0 +1,347 @@
+const { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu, nativeImage } = require('electron')
+const path = require('path')
+const fs = require('fs')
+
+const DATA_DIR = path.join(__dirname, 'data')
+const PROMPTS_FILE = path.join(DATA_DIR, 'prompts.json')
+const NOTES_FILE = path.join(DATA_DIR, 'notes.json')
+const CONFIG_FILE = path.join(DATA_DIR, 'config.json')
+const START_HIDDEN_ARG = '--hidden'
+
+let win = null
+let tray = null
+
+const DEFAULT_CONFIG = {
+  shortcut: 'CommandOrControl+Shift+P',
+  autoLaunch: true
+}
+
+const gotTheLock = app.requestSingleInstanceLock()
+if (!gotTheLock) {
+  app.quit()
+}
+
+app.on('second-instance', () => {
+  if (!win) return
+  if (!win.isVisible()) win.show()
+  if (win.isMinimized()) win.restore()
+  win.focus()
+})
+
+function ensureDataDir() {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true })
+  }
+}
+
+function getConfig() {
+  try {
+    ensureDataDir()
+    if (!fs.existsSync(CONFIG_FILE)) return { ...DEFAULT_CONFIG }
+    return { ...DEFAULT_CONFIG, ...JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf-8')) }
+  } catch (e) {
+    return { ...DEFAULT_CONFIG }
+  }
+}
+
+function saveConfig(config) {
+  try {
+    ensureDataDir()
+    fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2), 'utf-8')
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+function inferCreatedAt(item = {}) {
+  if (item.createdAt) return item.createdAt
+  if (item.id && /^\d+$/.test(String(item.id))) {
+    const fromId = new Date(Number(item.id))
+    if (!Number.isNaN(fromId.getTime())) {
+      return fromId.toISOString()
+    }
+  }
+  return new Date().toISOString()
+}
+
+function normalizeItem(item = {}) {
+  return {
+    id: item.id ? String(item.id) : Date.now().toString(),
+    title: item.title || '',
+    category: item.category || '',
+    content: item.content || '',
+    createdAt: inferCreatedAt(item),
+    updatedAt: item.updatedAt || item.createdAt || null,
+    deletedAt: item.deletedAt || null
+  }
+}
+
+function readJSON(file) {
+  try {
+    ensureDataDir()
+    if (!fs.existsSync(file)) return []
+    const parsed = JSON.parse(fs.readFileSync(file, 'utf-8'))
+    return Array.isArray(parsed) ? parsed.map(normalizeItem) : []
+  } catch (e) {
+    return []
+  }
+}
+
+function writeJSON(file, data) {
+  try {
+    ensureDataDir()
+    const normalized = Array.isArray(data) ? data.map(normalizeItem) : []
+    fs.writeFileSync(file, JSON.stringify(normalized, null, 2), 'utf-8')
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
+function isStartHidden() {
+  return process.argv.includes(START_HIDDEN_ARG)
+}
+
+function createWindow() {
+  win = new BrowserWindow({
+    width: 900,
+    height: 680,
+    show: false,
+    frame: false,
+    alwaysOnTop: true,
+    resizable: true,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false
+    }
+  })
+
+  win.loadFile(path.join(__dirname, 'index.html'))
+
+  win.on('ready-to-show', () => {
+    if (!isStartHidden()) {
+      win.show()
+      win.focus()
+    }
+  })
+
+  win.on('close', (e) => {
+    if (!app.isQuitting) {
+      e.preventDefault()
+      win.hide()
+    }
+  })
+
+  win.on('minimize', (e) => {
+    e.preventDefault()
+    win.hide()
+  })
+}
+
+function createTray() {
+  const iconPath = path.join(__dirname, 'icon.svg')
+  const trayIcon = nativeImage.createFromPath(iconPath)
+
+  tray = new Tray(trayIcon)
+
+  const contextMenu = Menu.buildFromTemplate([
+    { label: '显示窗口', click: () => toggleWindow(true) },
+    { type: 'separator' },
+    {
+      label: '开机自启',
+      type: 'checkbox',
+      checked: getConfig().autoLaunch,
+      click: (menuItem) => {
+        const config = getConfig()
+        config.autoLaunch = menuItem.checked
+        saveConfig(config)
+        setAutoLaunch(menuItem.checked)
+      }
+    },
+    { type: 'separator' },
+    {
+      label: '退出',
+      click: () => {
+        app.isQuitting = true
+        app.quit()
+      }
+    }
+  ])
+
+  tray.setToolTip('Prompt Pocket')
+  tray.setContextMenu(contextMenu)
+  tray.on('click', () => toggleWindow())
+}
+
+function toggleWindow(forceShow = false) {
+  if (!win) return
+
+  if (forceShow) {
+    win.show()
+    if (win.isMinimized()) win.restore()
+    win.focus()
+    return
+  }
+
+  if (win.isVisible() && win.isFocused()) {
+    win.hide()
+  } else {
+    win.show()
+    if (win.isMinimized()) win.restore()
+    win.focus()
+  }
+}
+
+function getAutoLaunchSettings(enable) {
+  const settings = {
+    openAtLogin: enable,
+    name: 'Prompt Pocket'
+  }
+
+  if (process.platform === 'win32') {
+    settings.path = process.execPath
+    settings.args = process.defaultApp
+      ? [app.getAppPath(), START_HIDDEN_ARG]
+      : [START_HIDDEN_ARG]
+  } else {
+    settings.openAsHidden = true
+    settings.args = [START_HIDDEN_ARG]
+  }
+
+  return settings
+}
+
+function setAutoLaunch(enable) {
+  app.setLoginItemSettings(getAutoLaunchSettings(enable))
+}
+
+function registerShortcut() {
+  const config = getConfig()
+  globalShortcut.unregisterAll()
+
+  const success = globalShortcut.register(config.shortcut, () => toggleWindow())
+  if (!success) {
+    console.error('Failed to register shortcut:', config.shortcut)
+  }
+}
+
+function saveItem(file, payload) {
+  const items = readJSON(file)
+  const now = new Date().toISOString()
+
+  if (payload.id) {
+    const idx = items.findIndex(item => item.id === String(payload.id))
+    if (idx >= 0) {
+      items[idx] = normalizeItem({
+        ...items[idx],
+        ...payload,
+        id: items[idx].id,
+        updatedAt: now
+      })
+    } else {
+      items.unshift(normalizeItem({ ...payload, createdAt: now, updatedAt: now }))
+    }
+  } else {
+    items.unshift(normalizeItem({
+      ...payload,
+      id: Date.now().toString(),
+      createdAt: now,
+      updatedAt: now,
+      deletedAt: null
+    }))
+  }
+
+  return writeJSON(file, items) ? readJSON(file) : []
+}
+
+function softDeleteItem(file, id) {
+  const items = readJSON(file)
+  const idx = items.findIndex(item => item.id === String(id))
+  if (idx >= 0) {
+    items[idx] = normalizeItem({
+      ...items[idx],
+      deletedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    })
+  }
+  return writeJSON(file, items) ? readJSON(file) : []
+}
+
+function restoreItem(file, id) {
+  const items = readJSON(file)
+  const idx = items.findIndex(item => item.id === String(id))
+  if (idx >= 0) {
+    items[idx] = normalizeItem({
+      ...items[idx],
+      deletedAt: null,
+      updatedAt: new Date().toISOString()
+    })
+  }
+  return writeJSON(file, items) ? readJSON(file) : []
+}
+
+function purgeItem(file, id) {
+  const items = readJSON(file).filter(item => item.id !== String(id))
+  return writeJSON(file, items) ? readJSON(file) : []
+}
+
+ipcMain.handle('get-prompts', () => readJSON(PROMPTS_FILE))
+ipcMain.handle('get-notes', () => readJSON(NOTES_FILE))
+ipcMain.handle('get-config', () => getConfig())
+
+ipcMain.handle('save-prompt', (event, prompt) => saveItem(PROMPTS_FILE, prompt))
+ipcMain.handle('delete-prompt', (event, id) => softDeleteItem(PROMPTS_FILE, id))
+ipcMain.handle('restore-prompt', (event, id) => restoreItem(PROMPTS_FILE, id))
+ipcMain.handle('purge-prompt', (event, id) => purgeItem(PROMPTS_FILE, id))
+
+ipcMain.handle('save-note', (event, note) => saveItem(NOTES_FILE, note))
+ipcMain.handle('delete-note', (event, id) => softDeleteItem(NOTES_FILE, id))
+ipcMain.handle('restore-note', (event, id) => restoreItem(NOTES_FILE, id))
+ipcMain.handle('purge-note', (event, id) => purgeItem(NOTES_FILE, id))
+
+ipcMain.handle('update-shortcut', (event, newShortcut) => {
+  const config = getConfig()
+  config.shortcut = newShortcut
+  if (saveConfig(config)) {
+    registerShortcut()
+    return { success: true, shortcut: newShortcut }
+  }
+  return { success: false }
+})
+
+ipcMain.handle('toggle-auto-launch', (event, enable) => {
+  const config = getConfig()
+  config.autoLaunch = enable
+  if (saveConfig(config)) {
+    setAutoLaunch(enable)
+    return { success: true, autoLaunch: enable }
+  }
+  return { success: false }
+})
+
+ipcMain.on('hide-window', () => {
+  if (win) win.hide()
+})
+
+app.whenReady().then(() => {
+  createWindow()
+  createTray()
+  registerShortcut()
+
+  const config = getConfig()
+  setAutoLaunch(Boolean(config.autoLaunch))
+})
+
+app.on('window-all-closed', () => {
+  // 保持运行在托盘
+})
+
+app.on('before-quit', () => {
+  app.isQuitting = true
+})
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll()
+})

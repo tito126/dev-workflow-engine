@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Pocket</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="titlebar">
+      <span class="title">📦 Prompt Pocket</span>
+      <div class="titlebar-actions">
+        <span class="hint" id="shortcut-hint">Ctrl+Shift+P 呼出/隐藏 | Esc 隐藏</span>
+        <button class="btn-minimize" data-action="hide-window" title="隐藏窗口">_</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="prompts">常用 Prompt</button>
+      <button class="tab" data-tab="notes">零碎消息</button>
+      <button class="tab" data-tab="trash">垃圾站</button>
+      <button class="tab" data-tab="settings">设置</button>
+    </div>
+
+    <div id="prompts-panel" class="panel active">
+      <div class="toolbar">
+        <input type="text" id="prompt-search" placeholder="搜索标题 / 分类 / 内容..." class="search-input">
+        <select id="prompt-sort" class="sort-select">
+          <option value="updated-desc">最近更新</option>
+          <option value="created-desc">最新创建</option>
+          <option value="created-asc">最早创建</option>
+          <option value="title-asc">标题 A-Z</option>
+          <option value="title-desc">标题 Z-A</option>
+          <option value="category-asc">分类 A-Z</option>
+        </select>
+        <span id="prompt-count" class="search-count">0 条</span>
+        <button class="btn-secondary" data-action="clear-search" data-target="prompt">清除</button>
+        <button class="btn-primary" data-action="add-prompt">+ 新增</button>
+      </div>
+      <div class="list" id="prompts-list"></div>
+    </div>
+
+    <div id="notes-panel" class="panel">
+      <div class="toolbar">
+        <input type="text" id="note-search" placeholder="搜索标题 / 分类 / 内容..." class="search-input">
+        <select id="note-sort" class="sort-select">
+          <option value="updated-desc">最近更新</option>
+          <option value="created-desc">最新创建</option>
+          <option value="created-asc">最早创建</option>
+          <option value="title-asc">标题 A-Z</option>
+          <option value="title-desc">标题 Z-A</option>
+          <option value="category-asc">分类 A-Z</option>
+        </select>
+        <span id="note-count" class="search-count">0 条</span>
+        <button class="btn-secondary" data-action="clear-search" data-target="note">清除</button>
+        <button class="btn-primary" data-action="add-note">+ 新增</button>
+      </div>
+      <div class="list" id="notes-list"></div>
+    </div>
+
+    <div id="trash-panel" class="panel">
+      <div class="toolbar toolbar-wrap">
+        <input type="text" id="trash-search" placeholder="搜索标题 / 分类 / 内容..." class="search-input">
+        <select id="trash-type" class="sort-select">
+          <option value="all">全部类型</option>
+          <option value="prompt">Prompt</option>
+          <option value="note">消息</option>
+        </select>
+        <select id="trash-sort" class="sort-select">
+          <option value="deleted-desc">最近删除</option>
+          <option value="deleted-asc">最早删除</option>
+          <option value="title-asc">标题 A-Z</option>
+          <option value="category-asc">分类 A-Z</option>
+        </select>
+        <span id="trash-count" class="search-count">0 条</span>
+        <button class="btn-secondary" data-action="clear-search" data-target="trash">清除</button>
+      </div>
+      <div class="list" id="trash-list"></div>
+    </div>
+
+    <div id="settings-panel" class="panel">
+      <div class="settings-content">
+        <div class="settings-section">
+          <h3>快捷键设置</h3>
+          <div class="setting-item setting-item-column">
+            <label>呼出/隐藏窗口快捷键</label>
+            <div class="shortcut-input-group">
+              <input type="text" id="shortcut-input" placeholder="Press shortcut..." readonly>
+              <button class="btn-secondary" data-action="capture-shortcut">录制</button>
+              <button class="btn-primary" data-action="save-shortcut">保存</button>
+            </div>
+            <p class="hint-text">点击“录制”后按下新的快捷键组合</p>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>开机自启</h3>
+          <div class="setting-item">
+            <label>开机时自动启动</label>
+            <label class="switch">
+              <input type="checkbox" id="auto-launch-toggle">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <p class="hint-text">现在会直接拉起 Prompt Pocket 本体，并以隐藏方式启动到托盘。</p>
+        </div>
+
+        <div class="settings-section">
+          <h3>关于</h3>
+          <div class="about-info">
+            <p><strong>Prompt Pocket</strong> v0.2.0</p>
+            <p>本地 Prompt 与消息收纳工具</p>
+            <p class="hint-text">所有数据保存在本地，不会上传到任何服务器</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title">编辑</h3>
+        <button class="btn-close" data-action="close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-id">
+        <input type="hidden" id="edit-type">
+        <label for="edit-title">标题</label>
+        <input type="text" id="edit-title" placeholder="标题（可选）">
+        <label for="edit-category">分类</label>
+        <input type="text" id="edit-category" placeholder="例如：工作 / 会议 / SQL / 灵感">
+        <label for="edit-content">内容</label>
+        <textarea id="edit-content" placeholder="内容..." rows="10"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" data-action="close-modal">取消</button>
+        <button class="btn-primary" data-action="save-edit">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="delete-modal" class="modal">
+    <div class="modal-content delete-confirm">
+      <div class="modal-header">
+        <h3 id="delete-modal-title">确认删除</h3>
+        <button class="btn-close" data-action="close-delete-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="delete-message" id="delete-message">确定要删除这条记录吗？</p>
+        <p class="delete-hint" id="delete-hint">删除后可在垃圾站恢复</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" data-action="close-delete-modal">取消</button>
+        <button class="btn-danger" id="delete-confirm-btn" data-action="confirm-delete">删除</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
