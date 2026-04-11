@@ -61,7 +61,7 @@ brainstorming（简短检查点，确认足够清楚）
   → done
 ```
 
-不需要 runtime，不需要 plan，不需要外部执行器。
+不需要运行时跟踪，不需要计划文档，不需要外部执行器。
 重点是 brainstorming 确认"这确实够轻"，而不是直接跳过。
 
 ### medium 路径
@@ -71,7 +71,7 @@ brainstorming（简短检查点，确认足够清楚）
 brainstorming
   → writing-plans
   → locator（按需插入，SQL / 性能优化任务默认必经）
-  → user-confirmation gate（SQL / 性能优化任务）
+  → 用户确认闸门（SQL / 性能优化任务）
   → implementer（优先 ACP opencode）
   → verification
   → review-gate
@@ -95,28 +95,28 @@ brainstorming
 ## 阶段说明
 
 ### brainstorming（必经）
-- 产出：requirement summary + success anchors + 任务级别 + 推荐路径
-- 不允许跳过，除非用户显式说"已过 intake"
+- 产出：需求摘要 + 成功锚点 + 任务级别 + 推荐路径
+- 不允许跳过，除非用户显式说"已过前置澄清"
 - 必须显式检查方案是否依赖第三方 / 外部团队 / 外部系统配合，以及该依赖是否已明确到可执行
-- 如果依赖方一旦配合就能直接规避本需求，则要先重判“该需求是否仍成立”，不能直接流入 planning / implementer
+- 如果依赖方一旦配合就能直接规避本需求，则要先重判“该需求是否仍成立”，不能直接流入计划或实现阶段
 - 如果任务不够清楚，在这里停下追问
 
 ### writing-plans
-- 产出：共享底稿（plan），含 agent 分工、执行载体、验证步骤
+- 产出：共享底稿（plan），含角色分工、执行载体、验证步骤
 - medium / heavy 必经
 - plan 是后续所有阶段的共享输入
-- 若关键口径发生变化（如是否分页、是否允许改系统策略、是否展开第三方规则、结果语义优先级变化），必须先回写并重写 success anchors，再继续后续阶段
+- 若关键口径发生变化（如是否分页、是否允许改系统策略、是否展开第三方规则、结果语义优先级变化），必须先回写并重写成功锚点，再继续后续阶段
 
 ### locator（按需插入）
-- **何时需要**：planning 阶段无法确定具体文件，需要先做代码定位
-- **SQL / 性能优化例外**：即使 planning 已大致知道文件，也默认先做 locator，补代码证据与待确认问题
-- **何时跳过**：planning 阶段已经知道改哪些文件
-- 插入位置：writing-plans 之后、implementer 之前
-- 产出：findings（供 implementer 直接复用）
-- 对于 medium 任务，locator 和 implementer 可以合并成一个 ACP session 里连续推进
+- **何时需要**：计划阶段无法确定具体文件，需要先做代码定位
+- **SQL / 性能优化例外**：即使计划阶段已大致知道文件，也默认先做 `locator`，补代码证据与待确认问题
+- **何时跳过**：计划阶段已经知道改哪些文件
+- 插入位置：`writing-plans` 之后、实现阶段之前
+- 产出：`findings`（供实现阶段直接复用）
+- 对于 medium 任务，`locator` 和实现阶段可以合并成一个 ACP 会话里连续推进
 
 ### user-confirmation gate（SQL / 性能优化任务）
-- locator / analyst 必须先把代码证据、候选问题和待确认语义整理出来
+- `locator` / 分析 必须先把代码证据、候选问题和待确认语义整理出来
 - 主控必须基于这些结果向用户追问现场业务场景、结果语义和性能目标
 - 未完成这一闸门前，不进入 implementer
 
@@ -128,9 +128,9 @@ brainstorming
 - 产出：结构化实现报告（供 verification 和 review-gate 直接引用）
 
 ### verification
-- 对照 planning 阶段的 success anchors 逐条核对
+- 对照计划阶段的成功锚点逐条核对
 - 产出：验证结论 + 验证证据摘要
-- 如果验收锚点缺失，退回 brainstorming 或 planning
+- 如果验收锚点缺失，退回 `brainstorming` 或计划阶段
 - 必须显式区分“代码完成”“需求完成”“效果已验证”三种状态
 
 ### review-gate
@@ -151,29 +151,29 @@ brainstorming
 work-system/deliverables/nurse-station/{task-id}/
 ```
 
-其中 `{task-id}` 在 brainstorming 阶段确定，格式建议：`{tfs-id 或简短标识}-{日期}`
+其中 `{task-id}` 在 `brainstorming` 阶段确定，格式建议：`{tfs-id 或简短标识}-{日期}`
 
 ### 标准文件
 
 | 阶段 | 文件 | 内容 | 是否必须 |
 |------|------|------|---------|
-| brainstorming | `requirement-summary.md` | 需求澄清结果、success anchors、任务级别 | medium/heavy 必须 |
-| writing-plans | `plan.md` | 执行计划、agent 分工、验证步骤 | medium/heavy 必须 |
+| brainstorming | `requirement-summary.md` | 需求澄清结果、成功锚点、任务级别 | medium/heavy 必须 |
+| writing-plans | `plan.md` | 执行计划、角色分工、验证步骤 | medium/heavy 必须 |
 | locator | `findings.md` | 代码定位结果、入口文件、风险 | 有 locator 阶段时必须 |
-| implementer | `implementation-result.md` | 实现报告、已改文件、不确定性 | medium/heavy 必须 |
+| implementer | `implementation-result.md` | 实现报告、已改文件、不确定性 | `medium/heavy` 必须 |
 | verification | `verification-evidence.md` | 验证结论、未验证点 | medium/heavy 必须 |
 | review-gate | `review-conclusion.md` | 评审结论、可沉淀经验 | medium/heavy 建议 |
 
 ### 产物流转规则
 - 每个阶段的输入优先从前序阶段的落地文件中读取，而不是从聊天里回捞
-- brainstorming 的 `requirement-summary.md` → planning 的输入
-- planning 的 `plan.md` → implementer 的输入
-- locator 的 `findings.md` → implementer 的输入（若存在）
-- implementer 的 `implementation-result.md` → verification 的输入
+- `brainstorming` 的 `requirement-summary.md` → 计划阶段输入
+- `planning` 的 `plan.md` → 实现阶段输入
+- `locator` 的 `findings.md` → 实现阶段输入（若存在）
+- `implementer` 的 `implementation-result.md` → `verification` 的输入
 - verification 的 `verification-evidence.md` → review-gate 的输入
-- 若后续阶段发现关键外部依赖在 intake 中未被识别，或需求成立前提发生变化，必须回退到 brainstorming / planning 重写，不允许带着旧前提继续收口
-- 若后续阶段发现 SQL / 性能优化任务缺少现场业务口径或用户确认，也必须回退到 locator / planning 补齐，不允许直接带着技术猜测改码
-- 若后续阶段发现关键口径变化已使原 success anchors 失效，也必须回退到 planning 重写，不允许只靠聊天补口径继续推进
+- 若后续阶段发现关键外部依赖在前置澄清中未被识别，或需求成立前提发生变化，必须回退到 `brainstorming` / 计划阶段重写，不允许带着旧前提继续收口
+- 若后续阶段发现 SQL / 性能优化任务缺少现场业务口径或用户确认，也必须回退到 `locator` / 计划阶段补齐，不允许直接带着技术猜测改码
+- 若后续阶段发现关键口径变化已使原成功锚点失效，也必须回退到计划阶段重写，不允许只靠聊天补口径继续推进
 
 ### light 任务例外
 light 任务不需要创建 deliverables 目录，产物直接在聊天中流转即可。
@@ -182,8 +182,8 @@ light 任务不需要创建 deliverables 目录，产物直接在聊天中流转
 
 `nurse-station-subagent-execution` 不是流程中的一个"阶段"，而是 **派发层**：
 - 它定义了主控如何把工作派给外部执行器（ACP opencode / exec opencode）
-- 它不与 implementer 竞争，而是互补：implementer 定义"做什么"，subagent-execution 定义"怎么派出去"
-- 对于 medium 任务：主控用 subagent-execution 的派发规则，把 implementer 角色的工作交给 ACP opencode
+- 它不与实现阶段竞争，而是互补：`implementer` 定义"做什么"，`subagent-execution` 定义"怎么派出去"
+- 对于 `medium` 任务：主控用 `subagent-execution` 的派发规则，把 `implementer` 角色的工作交给 ACP opencode
 - 对于 light 任务：主控自己做 direct edit，不需要 subagent-execution
 
 ## 执行载体选择规则
@@ -204,10 +204,10 @@ ACP 可用性检查：
 不要：
 - 收到护士站任务就直接跳到 implementer，跳过 brainstorming
 - 每个阶段都从零重讲需求，而不复用前序阶段的产物
-- 主控在 locator / implementer / verifier 之间做人肉转发器
+- 主控在 `locator` / `implementer` / `verifier` 之间做人肉转发器
 - 把 ACP 只当一次性命令通道，而不利用其减少上下文重复的价值
-- 把 light 任务强行套进 medium/heavy 流程
-- 把 medium 任务升级成 heavy 流程
-- 让 implementer 同时承担 locator 的职责
+- 把 `light` 任务强行套进 `medium/heavy` 流程
+- 把 `medium` 任务升级成 `heavy` 流程
+- 让 `implementer` 同时承担 `locator` 的职责
 - 在关键外部依赖未明确时，把“依赖方会配合”当成默认成立前提直接推进实现
 - 在 SQL / 性能优化任务里，跳过代码分析后的用户确认环节，直接把候选优化方向落成代码
