@@ -2,10 +2,7 @@ const { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu, nativeImage } =
 const path = require('path')
 const fs = require('fs')
 
-const DATA_DIR = path.join(__dirname, 'data')
-const PROMPTS_FILE = path.join(DATA_DIR, 'prompts.json')
-const NOTES_FILE = path.join(DATA_DIR, 'notes.json')
-const CONFIG_FILE = path.join(DATA_DIR, 'config.json')
+const BUNDLED_DATA_DIR = path.join(__dirname, 'data')
 const START_HIDDEN_ARG = '--hidden'
 const APP_ICON_ICO = path.join(__dirname, 'assets', 'icon.ico')
 const APP_ICON_PNG = path.join(__dirname, 'assets', 'icon.png')
@@ -30,17 +27,50 @@ app.on('second-instance', () => {
   win.focus()
 })
 
+function getDataDir() {
+  return app.isPackaged
+    ? path.join(app.getPath('userData'), 'data')
+    : BUNDLED_DATA_DIR
+}
+
+function getDataFile(name) {
+  return path.join(getDataDir(), name)
+}
+
 function ensureDataDir() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true })
+  const dataDir = getDataDir()
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true })
   }
+}
+
+function ensureSeedFile(name, fallbackContent) {
+  ensureDataDir()
+
+  const target = getDataFile(name)
+  if (fs.existsSync(target)) return target
+
+  const bundled = path.join(BUNDLED_DATA_DIR, name)
+  try {
+    if (fs.existsSync(bundled)) {
+      fs.copyFileSync(bundled, target)
+    } else {
+      fs.writeFileSync(target, fallbackContent, 'utf-8')
+    }
+  } catch (e) {
+    if (!fs.existsSync(target)) {
+      fs.writeFileSync(target, fallbackContent, 'utf-8')
+    }
+  }
+
+  return target
 }
 
 function getConfig() {
   try {
-    ensureDataDir()
-    if (!fs.existsSync(CONFIG_FILE)) return { ...DEFAULT_CONFIG }
-    return { ...DEFAULT_CONFIG, ...JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf-8')) }
+    const configFile = ensureSeedFile('config.json', JSON.stringify(DEFAULT_CONFIG, null, 2))
+    if (!fs.existsSync(configFile)) return { ...DEFAULT_CONFIG }
+    return { ...DEFAULT_CONFIG, ...JSON.parse(fs.readFileSync(configFile, 'utf-8')) }
   } catch (e) {
     return { ...DEFAULT_CONFIG }
   }
@@ -48,8 +78,9 @@ function getConfig() {
 
 function saveConfig(config) {
   try {
+    const configFile = getDataFile('config.json')
     ensureDataDir()
-    fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2), 'utf-8')
+    fs.writeFileSync(configFile, JSON.stringify(config, null, 2), 'utf-8')
     return true
   } catch (e) {
     return false
@@ -290,19 +321,19 @@ function purgeItem(file, id) {
   return writeJSON(file, items) ? readJSON(file) : []
 }
 
-ipcMain.handle('get-prompts', () => readJSON(PROMPTS_FILE))
-ipcMain.handle('get-notes', () => readJSON(NOTES_FILE))
+ipcMain.handle('get-prompts', () => readJSON(ensureSeedFile('prompts.json', '[]')))
+ipcMain.handle('get-notes', () => readJSON(ensureSeedFile('notes.json', '[]')))
 ipcMain.handle('get-config', () => getConfig())
 
-ipcMain.handle('save-prompt', (event, prompt) => saveItem(PROMPTS_FILE, prompt))
-ipcMain.handle('delete-prompt', (event, id) => softDeleteItem(PROMPTS_FILE, id))
-ipcMain.handle('restore-prompt', (event, id) => restoreItem(PROMPTS_FILE, id))
-ipcMain.handle('purge-prompt', (event, id) => purgeItem(PROMPTS_FILE, id))
+ipcMain.handle('save-prompt', (event, prompt) => saveItem(getDataFile('prompts.json'), prompt))
+ipcMain.handle('delete-prompt', (event, id) => softDeleteItem(getDataFile('prompts.json'), id))
+ipcMain.handle('restore-prompt', (event, id) => restoreItem(getDataFile('prompts.json'), id))
+ipcMain.handle('purge-prompt', (event, id) => purgeItem(getDataFile('prompts.json'), id))
 
-ipcMain.handle('save-note', (event, note) => saveItem(NOTES_FILE, note))
-ipcMain.handle('delete-note', (event, id) => softDeleteItem(NOTES_FILE, id))
-ipcMain.handle('restore-note', (event, id) => restoreItem(NOTES_FILE, id))
-ipcMain.handle('purge-note', (event, id) => purgeItem(NOTES_FILE, id))
+ipcMain.handle('save-note', (event, note) => saveItem(getDataFile('notes.json'), note))
+ipcMain.handle('delete-note', (event, id) => softDeleteItem(getDataFile('notes.json'), id))
+ipcMain.handle('restore-note', (event, id) => restoreItem(getDataFile('notes.json'), id))
+ipcMain.handle('purge-note', (event, id) => purgeItem(getDataFile('notes.json'), id))
 
 ipcMain.handle('update-shortcut', (event, newShortcut) => {
   const config = getConfig()
@@ -329,6 +360,10 @@ ipcMain.on('hide-window', () => {
 })
 
 app.whenReady().then(() => {
+  ensureSeedFile('prompts.json', '[]')
+  ensureSeedFile('notes.json', '[]')
+  ensureSeedFile('config.json', JSON.stringify(DEFAULT_CONFIG, null, 2))
+
   createWindow()
   createTray()
   registerShortcut()
