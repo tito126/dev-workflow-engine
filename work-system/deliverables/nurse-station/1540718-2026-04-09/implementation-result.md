@@ -1,59 +1,87 @@
 # Implementation Result - 1540718
 
-> 阶段：implementer
-> 时间：2026-04-10 15:xx
-> 目标口径：第三方未明确期间的系统侧最小兜底
+> 任务：TFS 1540718
+> 日期：2026-04-11
+> 阶段：implementer 完成
 
-## 已实现目标
-- 将 1540718 的实现目标从“长期正式优化”收敛为“第三方未明确期间的系统侧兜底”。
-- 对昨天已落代码做了第一轮风险修正，优先处理两类高风险问题：
-  1. `UNION ALL` 可能带来的重复语义 / 重复计数风险
-  2. 分页场景下空页直接返回 `count=0` 的错误风险
+---
 
-## 运行时路径
-- `work-system/deliverables/nurse-station/1540718-2026-04-09/`
+## 1. 已实现目标
 
-## 是否需要过程更新
-- 是。当前已完成最小代码修正，正在跑定向编译确认。
+基于"系统兜底"定位，本次实现仅做最小改动：
+- 将 `UNION` 改为 `UNION ALL`，在当前已确认业务口径允许的前提下去掉去重成本
 
-## 需要沉淀的错误
-- 原实现把分页参数下沉后，如果当前页查不到数据，可能直接返回 `WinPagedList(0L, [])`，这会把“空页”误报成“总数为 0”。
-- 在未完成语义确认前，直接把 `UNION` 改成 `UNION ALL`，会把性能优化和结果语义变更绑在一起，风险过高。
+## 2. 已修改文件
 
-## 已修改文件
-- `winning-ward-execution-order/winning-ward-execution-order-application/src/main/java/com/winning/ward/order/application/service/execorder/impl/ExeOrderExecuteQueryServiceImpl.java`
-- `winning-ward-execution-order/winning-ward-execution-order-application/src/main/java/com/winning/ward/order/application/repository/execplan/impl/ExecPlanRepositoryImpl.java`
+| 文件 | 改动类型 |
+|------|----------|
+| `ExecPlanRepositoryImpl.java` | 核心SQL拼接到处 |
 
-## 实际改动摘要
-1. `ExeOrderExecuteQueryServiceImpl`
-   - 保留分页场景下独立 count 查询的能力
-   - 调整分页分支逻辑：即使当前页数据为空，也先返回真实 totalCount，再返回空列表
-   - 非分页分支仍保持原有空结果快速返回逻辑
+### 改动详情
 
-2. `ExecPlanRepositoryImpl`
-   - 保留数据库侧分页能力
-   - 将查询和 count 里的 `union all` 回退为 `union`
-   - 目的不是否定性能优化，而是在系统兜底阶段先守住结果语义，避免重复数据与重复计数风险
+**文件：** 
+`winning-ward-execution-order/winning-ward-execution-order-application/src/main/java/com/winning/ward/order/application/repository/execplan/impl/ExecPlanRepositoryImpl.java`
 
-## 未改动部分及原因
-- 没有新增索引，因为当前已知 DBA 不建议继续加索引
-- 没有引入并发切片，因为当前目标是最小兜底，且尚无充分证据证明应优先并发
-- 没有继续深改排序 / 更大范围 SQL 重构，因为这已经超出“最小兜底修正”的边界
+**行号：** 235
 
-## 已执行验证
-- 已完成代码级 diff 复核，确认修正点与当前 fallback 目标一致
-- 已执行定向编译：
-  - `mvn -pl winning-ward-execution-order/winning-ward-execution-order-application -am -DskipTests compile`
-- 编译未通过，但当前失败点是**环境问题**而非本次改动直接报错：
-  - `winning-ward-common` 编译阶段失败
-  - Maven 编译器报错：`Fatal error compiling: 无效的目标发行版: 17`
-- 该结果说明当前机器 / Maven 使用的 JDK 版本与项目 `release 17` 要求不匹配，因此这次未完成模块级编译验证
+**改动前：**
+```java
+//性能优化，利用索引，or 改成 union查询
+sqlQuery.append(" union ");
+```
 
-## 风险 / 不确定性
-- 目前尚未拿到“代码层面编译通过”的最终结论，原因是本机 JDK / Maven 环境不满足 `release 17`
-- `union` 回退后，性能收益可能低于昨天那版激进实现，但语义安全性更稳
-- 仍缺数据库执行计划，无法精确量化本轮兜底收益上限
-- 若后续第三方明确并改为 1 天检索，需要再评估这轮系统兜底改动是否保留或收缩
+**改动后：**
+```java
+//性能优化，利用索引，or 改成 union all 查询（不去重，减少成本）
+sqlQuery.append(" union all ");
+```
 
-## 是否可进入评审
-- 可进入代码评审 / verification 准备，但需明确：当前缺少基于本机的编译通过证据，阻塞点是环境而不是已知业务逻辑错误
+## 3. 实际改动摘要
+
+| 维度 | 状态 |
+|------|------|
+| SQL使用参数绑定 | ✓ 已保持（原代码已使用 setParameter） |
+| UNION改 UNION ALL | ✓ 已完成 |
+| 分页优化 | ✗ 未做（用户约束"无需分页"） |
+| 并发切片 | ✗ 未做（用户约束"不引入并发切片"） |
+| 新增索引 | ✗ 未做（用户约束"不新增索引"） |
+
+## 4. 未改动部分及原因
+
+| 功能 | 未改动原因 |
+|------|----------|
+| 数据库侧分页 | 需求明确"无需分页" |
+| 并发时间切片 | 需求明确"不引入并发切片" |
+| GOODS_FLOW_ID 索引 | 需求明确"不新增索引"，且DBA不建议 |
+| 分页count查询 | 非本次边界 |
+
+## 5. 验证
+
+- **语法检查**：SQL 拼写正确（`UNION ALL` 为标准保留字）
+- **参数绑定**：原代码已使用 `setParameter` 绑定，未引入注入风险
+- **语义口径**：本次 `UNION ALL` 的采用依据是已完成的 user-confirmation gate，当前按业务确认口径放行；未补到真实数据集级别的重复样本验证
+- **编译验证**：本机 JDK 环境不匹配 `release 17`，无法完成 Maven 编译（非本改动阻塞）
+
+## 6. 风险 / 不确定性
+
+| 风险项 | 等级 | 说明 |
+|--------|------|------|
+| 性能收益不达预期 | 中 | 只优化了去重成本，GOODS_FLOW_ID 缺索引的根本问题未解决 |
+| 第三方后续明确 | 高 | 一旦第三方明确，系统侧兜底方案需回退或收缩 |
+
+## 7. 是否可进入评审
+
+**结论：可以进入 review-gate**
+
+**理由：**
+- 最小改动已落地
+- 符合当前已确认约束（`union all` 可用、参数绑定、无需分页、三方不展开）
+- 改动窄、可回退，但性能收益和真实数据下的重复情况仍待环境验证
+
+---
+
+## 8. 后续建议（非本次范围）
+
+1. 待第三方明确后，评估是否需要回退 UNION ALL
+2. 如需进一步优化，三方明确后再评估时间切片或索引方案
+3. 建议保留本次改动日志，便于后续追溯
