@@ -5,7 +5,7 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 
 # 护士站执行计划编写
 
-把一个已澄清的护士站事项，转成无需执行者反复猜题、也无需 controller 多次转述的可执行计划。
+把一个已澄清的护士站事项，转成无需执行者反复猜题、也无需主控多次转述的可执行计划。
 
 ## 目标
 
@@ -13,7 +13,7 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 
 一份好的计划应同时解决：
 - 后续执行器不需要再从聊天里回捞大量上下文
-- controller 不需要在 locator / implementer / verifier 之间反复口头转述
+- 主控不需要在 locator / implementer / verifier 之间反复口头转述
 - 同一个中任务跨多轮推进时，计划仍能充当稳定锚点
 - skill 顺序能够自然串起来，而不是每一段都像重新开题
 
@@ -23,11 +23,11 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 1. 目标与预期行为
 2. 范围内与范围外边界
 3. 仓库 / 模块 / 可能文件目标
-4. Agent 分工
-   - controller
-   - locator / analyst
-   - implementer
-   - verifier / reviewer
+4. 角色分工
+   - 主控
+   - 定位 / 分析
+   - 实现执行
+   - 验证 / 评审
 5. 执行顺序
 6. 验证步骤
 7. 风险 / 回滚顾虑
@@ -42,16 +42,16 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 ## 规则
 
 - 把本技能视为护士站默认流程中的第二阶段，位于 `nurse-station-brainstorming` 之后。
-- 除非用户明确说明该任务已过 intake，或前序 brainstorming checkpoint 已确认就绪，否则不要把本技能作为入口阶段。
+- 除非用户明确说明该任务已过 intake，或前序需求匹配检查点已确认就绪，否则不要把本技能作为入口阶段。
 - 优先拆成小而可独立评审的任务。
 - 如果任务是 `light` 或 `medium`，优先用最小计划，不要强行套重型多角色结构。
 - 已知时要明确写出文件和模块名。
 - 如果文件目标未知，就在计划里加入专门的定位任务，再进入实现。
 - 如果任务属于 SQL / 性能优化，计划中必须显式写出“分析后向用户确认”的阻断点；没有用户确认，不进入 implementer。
 - 不要把不确定性藏在计划里，要显式标出来。
-- 当 controller 可以给出更尖锐上下文时，不要让 implementer 自己“去代码库里摸索”。
+- 当主控可以给出更尖锐上下文时，不要让 implementer 自己“去代码库里摸索”。
 - 默认把本计划视为后续阶段共享底稿，而不是一次性聊天输出。
-- 如果已经存在 runtime task，就把计划绑定到该 runtime path，而不是只留作聊天输出。
+- 如果已经存在运行时任务，就把计划绑定到对应运行时路径，而不是只留作聊天输出。
 - 如果外部执行会使用 `opencode`，就要显式决定是 `ACP opencode` 还是裸 `exec opencode`。
 - 一旦需求边界、结果语义、是否分页、是否允许改系统策略、是否涉及第三方规则等关键口径发生变化，必须重写 success anchors 及受影响的计划段落，不要只在聊天里补一嘴。
 - 默认路径：`ACP opencode`。
@@ -62,55 +62,55 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 ## 推荐计划结构
 
 ### 计划头
-- Item:
-- Task level:
-- Execution carrier:
-- Goal:
-- Repo:
-- Module:
-- In scope:
-- Out of scope:
-- Allowed change layers:
-- Shared context summary:
-- Success anchors:
-- Acceptance method:
-- Evidence expectations:
-- Runtime path:
-- Phases to mirror in later artifacts:
-- Expected findings capture:
-- Expected progress updates:
-- Pre-code confirmation items:
-- User confirmation gate after analysis:
-- If scope changes later, rewrite these sections first:
+- 事项标识：
+- 任务级别：
+- 执行载体：
+- 目标：
+- 仓库：
+- 模块：
+- 范围内：
+- 范围外：
+- 允许改动层级：
+- 共享上下文摘要：
+- 成功锚点：
+- 验收方式：
+- 证据预期：
+- 运行时路径：
+- 后续阶段需镜像的产物：
+- 预期 findings 捕获：
+- 预期进度更新：
+- 编码前确认项：
+- 分析后用户确认闸门：
+- 若范围后续变化，需优先重写的段落：
 
-### Agent 分工
-- Controller:
-- Locator / Analyst:
-- Implementer:
-- Verifier / Reviewer:
+### 角色分工
+- 主控：
+- 定位 / 分析：
+- 实现执行：
+- 验证 / 评审：
 
 ### 任务
-- Task 1:
-  - Purpose:
-  - Inputs:
-  - Likely files:
-  - Output:
-  - Should persist as:
-  - Verification:
-- Task 2:
-  - Purpose:
-  - Inputs:
-  - Likely files:
-  - Output:
-  - Should persist as:
-  - Verification:
+- 任务 1：
+  - 目的：
+  - 输入：
+  - 可能文件：
+  - 输出：
+  - 应沉淀为：
+  - 验证方式：
+- 任务 2：
+  - 目的：
+  - 输入：
+  - 可能文件：
+  - 输出：
+  - 应沉淀为：
+  - 验证方式：
 
 ### 风险
 -
 
 ### 执行就绪度
-- Can enter coding now: yes/no
-- Missing prerequisite:
+- 是否可进入编码：是/否
+- 缺失前提：
 
 ## SQL / 性能优化任务补充要求
 
@@ -139,7 +139,7 @@ description: 当一个护士站任务已经完成 intake，需要被转成可执
 
 完成计划后：
 - 默认把计划视为后续 `subagent-execution`、`implementer`、`verification` 的共享输入。
-- 如果任务有 runtime path，就把计划视为该任务的执行底稿，而不是只留在聊天里。
+- 如果任务有运行时路径，就把计划视为该任务的执行底稿，而不是只留在聊天里。
 - 如果任务会使用 `opencode`，优先走 `ACP opencode`。
 - 如果 ACP 被阻塞，或 Windows 本地补丁失效 / 被覆盖，则降级为裸 `exec opencode`。
 - 不要把标准护士站执行路由到基于 wrapper 的启动方式（`start-opencode-task.ps1`）。

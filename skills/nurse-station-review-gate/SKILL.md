@@ -41,7 +41,7 @@ description: 当护士站实现结果、变更方案或定位结论在验收前�
 
 如果闸门 0 失败：
 - 不要进入实现
-- 返回到 requirement-fit checkpoint、brainstorming 或 planning
+- 返回到需求匹配检查点、brainstorming 或 planning
 
 输出：
 - 通过 / 不通过
@@ -88,7 +88,7 @@ description: 当护士站实现结果、变更方案或定位结论在验收前�
 
 - 不要只相信总结。
 - 要读实际文件 / 实际变更描述。
-- 如果已有 runtime 证据，先读证据，再决定是否相信最新总结。
+- 如果已有运行时证据，先读证据，再决定是否相信最新总结。
 - 如果任务使用过外部执行器，优先查看可用的运行证据、结果产物或结构化输出，而不是只看聊天总结。
 - 如果前序 verification 已产出结构化验证结论，优先把它当作审查起点，而不是重新从零推断。
 - 如果证据不完整，要明确说明哪些点还无法验证。
@@ -107,13 +107,13 @@ description: 当护士站实现结果、变更方案或定位结论在验收前�
 
 ### 闸门 0：编码前需求匹配
 - 结果：
-- 已审阅的 runtime 证据：
+- 已审阅的运行时证据：
 - 缺失锚点：
 - 返回阶段：
 
 ### 闸门 1：需求匹配
 - 结果：
-- 已审阅的 runtime 证据：
+- 已审阅的运行时证据：
 - 缺失证据：
 - 已匹配行为：
 - 缺口：
@@ -127,10 +127,10 @@ description: 当护士站实现结果、变更方案或定位结论在验收前�
 
 ### 决策
 - 当前是否可接受：是/否
-- Evidence level:
-- Code complete:
-- Requirement complete:
-- Effect verified:
+- 证据等级：
+- 代码完成：
+- 需求完成：
+- 效果已验证：
 - 评审结论摘要：
 - 可沉淀的经验 / 教训：
 - 下一步动作：
@@ -138,17 +138,17 @@ description: 当护士站实现结果、变更方案或定位结论在验收前�
 ### 可复用产物
 评审结论应默认充当任务交付的最终闸门记录。
 - "评审结论摘要" 应可被 work-control 体系引用
-- "Code complete / Requirement complete / Effect verified" 必须避免混写成一个状态
+- "代码完成 / 需求完成 / 效果已验证" 必须避免混写成一个状态
 - "可沉淀的经验 / 教训" 应在今日总结时同步到 memory
 - 如果评审发现系统性问题（如某类需求经常在 implementation 阶段返工），应显式建议改进上游 skill 或流程
 
 ## 集成关系
 
 在 `nurse-station-subagent-execution` 之后、最终交付前使用。
-当任务被 runtime 跟踪时，优先审阅 `task-plan.md`、`findings.md` 和 `progress.md`，再做闸门判断。
+当任务被运行时跟踪时，优先审阅 `task-plan.md`、`findings.md` 和 `progress.md`，再做闸门判断。
 当任务使用过 `ACP opencode` 或 `exec opencode` 等外部执行路径时，把可获得的计划、结果和运行证据视为评审证据。
 若当前结论依赖 `ACP opencode` 执行成功，且环境为 Windows，本地应默认认可 `2026-04-08` 记录的 ACP 手动补丁为已知前提；若升级后链路失效，应先检查补丁是否被覆盖。
-如果闸门 0 失败，在任何编码前返回 requirement-fit checkpoint 或 planning。
+如果闸门 0 失败，在任何编码前返回需求匹配检查点或 planning。
 如果闸门 1 失败，带着需求级纠偏意见退回。
 如果闸门 2 失败，带着代码质量级纠偏意见退回。
 完整的阶段顺序和产物落地约定，见 `nurse-station-orchestrator`。

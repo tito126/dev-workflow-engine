@@ -79,7 +79,7 @@ brainstorming
 ```
 
 ### heavy 路径
-适用：多阶段、高不确定性、跨仓库、需要 runtime 跟踪
+适用：多阶段、高不确定性、跨仓库、需要运行时跟踪
 
 ```
 brainstorming
@@ -117,7 +117,7 @@ brainstorming
 
 ### user-confirmation gate（SQL / 性能优化任务）
 - locator / analyst 必须先把代码证据、候选问题和待确认语义整理出来
-- controller 必须基于这些结果向用户追问现场业务场景、结果语义和性能目标
+- 主控必须基于这些结果向用户追问现场业务场景、结果语义和性能目标
 - 未完成这一闸门前，不进入 implementer
 
 ### implementer
@@ -181,10 +181,10 @@ light 任务不需要创建 deliverables 目录，产物直接在聊天中流转
 ## subagent-execution 的定位
 
 `nurse-station-subagent-execution` 不是流程中的一个"阶段"，而是 **派发层**：
-- 它定义了 controller 如何把工作派给外部执行器（ACP opencode / exec opencode）
-- 它不与 implementer 竞争，而是 complement：implementer 定义"做什么"，subagent-execution 定义"怎么派出去"
-- 对于 medium 任务：controller 用 subagent-execution 的派发规则，把 implementer 角色的工作交给 ACP opencode
-- 对于 light 任务：controller 自己做 direct edit，不需要 subagent-execution
+- 它定义了主控如何把工作派给外部执行器（ACP opencode / exec opencode）
+- 它不与 implementer 竞争，而是互补：implementer 定义"做什么"，subagent-execution 定义"怎么派出去"
+- 对于 medium 任务：主控用 subagent-execution 的派发规则，把 implementer 角色的工作交给 ACP opencode
+- 对于 light 任务：主控自己做 direct edit，不需要 subagent-execution
 
 ## 执行载体选择规则
 
@@ -204,7 +204,7 @@ ACP 可用性检查：
 不要：
 - 收到护士站任务就直接跳到 implementer，跳过 brainstorming
 - 每个阶段都从零重讲需求，而不复用前序阶段的产物
-- controller 在 locator / implementer / verifier 之间做人肉转发器
+- 主控在 locator / implementer / verifier 之间做人肉转发器
 - 把 ACP 只当一次性命令通道，而不利用其减少上下文重复的价值
 - 把 light 任务强行套进 medium/heavy 流程
 - 把 medium 任务升级成 heavy 流程
