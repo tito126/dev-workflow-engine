@@ -22,10 +22,12 @@
       "index.html",
       "styles.css",
       "icon.svg",
+      "assets/**/*",
       "data/**/*",
       "package.json"
     ],
     "win": {
+      "icon": "assets/icon.ico",
       "signAndEditExecutable": false,
       "target": [
         {

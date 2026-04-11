@@ -7,6 +7,8 @@ const PROMPTS_FILE = path.join(DATA_DIR, 'prompts.json')
 const NOTES_FILE = path.join(DATA_DIR, 'notes.json')
 const CONFIG_FILE = path.join(DATA_DIR, 'config.json')
 const START_HIDDEN_ARG = '--hidden'
+const APP_ICON_ICO = path.join(__dirname, 'assets', 'icon.ico')
+const APP_ICON_PNG = path.join(__dirname, 'assets', 'icon.png')
 
 let win = null
 let tray = null
@@ -111,6 +113,7 @@ function createWindow() {
     frame: false,
     alwaysOnTop: true,
     resizable: true,
+    icon: fs.existsSync(APP_ICON_ICO) ? APP_ICON_ICO : APP_ICON_PNG,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -141,7 +144,7 @@ function createWindow() {
 }
 
 function createTray() {
-  const iconPath = path.join(__dirname, 'icon.svg')
+  const iconPath = fs.existsSync(APP_ICON_PNG) ? APP_ICON_PNG : (fs.existsSync(APP_ICON_ICO) ? APP_ICON_ICO : path.join(__dirname, 'icon.svg'))
   const trayIcon = nativeImage.createFromPath(iconPath)
 
   tray = new Tray(trayIcon)
