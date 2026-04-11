@@ -98,11 +98,16 @@ function inferCreatedAt(item = {}) {
   return new Date().toISOString()
 }
 
+function normalizePriority(priority) {
+  return ['urgent', 'high', 'medium', 'low'].includes(priority) ? priority : 'medium'
+}
+
 function normalizeItem(item = {}) {
   return {
     id: item.id ? String(item.id) : Date.now().toString(),
     title: item.title || '',
     category: item.category || '',
+    priority: normalizePriority(item.priority),
     content: item.content || '',
     createdAt: inferCreatedAt(item),
     updatedAt: item.updatedAt || item.createdAt || null,

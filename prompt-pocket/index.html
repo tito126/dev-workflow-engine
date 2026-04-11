@@ -42,10 +42,19 @@
     </div>
 
     <div id="notes-panel" class="panel">
-      <div class="toolbar">
+      <div class="toolbar toolbar-wrap">
         <input type="text" id="note-search" placeholder="搜索标题 / 分类 / 内容..." class="search-input">
+        <select id="note-priority-filter" class="sort-select">
+          <option value="all">全部优先级</option>
+          <option value="urgent">紧急</option>
+          <option value="high">高</option>
+          <option value="medium">中</option>
+          <option value="low">低</option>
+        </select>
         <select id="note-sort" class="sort-select">
           <option value="updated-desc">最近更新</option>
+          <option value="priority-desc">优先级从高到低</option>
+          <option value="priority-asc">优先级从低到高</option>
           <option value="created-desc">最新创建</option>
           <option value="created-asc">最早创建</option>
           <option value="title-asc">标题 A-Z</option>
@@ -70,6 +79,8 @@
         <select id="trash-sort" class="sort-select">
           <option value="deleted-desc">最近删除</option>
           <option value="deleted-asc">最早删除</option>
+          <option value="priority-desc">优先级从高到低</option>
+          <option value="priority-asc">优先级从低到高</option>
           <option value="title-asc">标题 A-Z</option>
           <option value="category-asc">分类 A-Z</option>
         </select>
@@ -109,7 +120,7 @@
         <div class="settings-section">
           <h3>关于</h3>
           <div class="about-info">
-            <p><strong>Prompt Pocket</strong> v0.2.1</p>
+            <p><strong>Prompt Pocket</strong> v0.2.2</p>
             <p>本地 Prompt 与消息收纳工具</p>
             <p class="hint-text">所有数据保存在本地，不会上传到任何服务器</p>
           </div>
@@ -131,6 +142,15 @@
         <input type="text" id="edit-title" placeholder="标题（可选）">
         <label for="edit-category">分类</label>
         <input type="text" id="edit-category" placeholder="例如：工作 / 会议 / SQL / 灵感">
+        <div id="priority-field-group" class="priority-field-group hidden">
+          <label for="edit-priority">优先级</label>
+          <select id="edit-priority" class="sort-select modal-select">
+            <option value="urgent">紧急</option>
+            <option value="high">高</option>
+            <option value="medium">中</option>
+            <option value="low">低</option>
+          </select>
+        </div>
         <label for="edit-content">内容</label>
         <textarea id="edit-content" placeholder="内容..." rows="10"></textarea>
       </div>

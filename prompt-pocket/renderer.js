@@ -1,3 +1,10 @@
+const PRIORITY_META = {
+  urgent: { label: '紧急', weight: 4, className: 'badge-priority-urgent' },
+  high: { label: '高', weight: 3, className: 'badge-priority-high' },
+  medium: { label: '中', weight: 2, className: 'badge-priority-medium' },
+  low: { label: '低', weight: 1, className: 'badge-priority-low' }
+}
+
 const state = {
   prompts: [],
   notes: [],
@@ -13,6 +20,7 @@ const state = {
     note: 'updated-desc',
     trash: 'deleted-desc'
   },
+  notePriorityFilter: 'all',
   trashType: 'all',
   deleteTarget: null,
   isCapturingShortcut: false,
@@ -62,6 +70,11 @@ function bindEvents() {
   document.getElementById('trash-sort').addEventListener('change', (e) => {
     state.sorts.trash = e.target.value
     renderTrash()
+  })
+
+  document.getElementById('note-priority-filter').addEventListener('change', (e) => {
+    state.notePriorityFilter = e.target.value
+    renderNotes()
   })
 
   document.getElementById('trash-type').addEventListener('change', (e) => {
@@ -144,14 +157,6 @@ function getCollection(type) {
   return type === 'prompt' ? state.prompts : state.notes
 }
 
-function setCollection(type, items) {
-  if (type === 'prompt') {
-    state.prompts = items
-  } else {
-    state.notes = items
-  }
-}
-
 function findItem(type, id) {
   return getCollection(type).find(item => item.id === id)
 }
@@ -168,10 +173,27 @@ function normalizeText(value) {
   return (value || '').toString().trim().toLowerCase()
 }
 
+function normalizePriority(priority) {
+  return PRIORITY_META[priority] ? priority : 'medium'
+}
+
+function getPriorityMeta(priority) {
+  return PRIORITY_META[normalizePriority(priority)]
+}
+
+function getPriorityWeight(priority) {
+  return getPriorityMeta(priority).weight
+}
+
 function matchesFilter(item, keyword) {
   const q = normalizeText(keyword)
   if (!q) return true
   return [item.title, item.category, item.content].some(field => normalizeText(field).includes(q))
+}
+
+function matchesNotePriority(item, filterValue) {
+  if (filterValue === 'all') return true
+  return normalizePriority(item.priority) === filterValue
 }
 
 function getSortTimestamp(item, key) {
@@ -198,6 +220,10 @@ function sortItems(items, sortKey) {
       return list.sort((a, b) => compareText(b.title, a.title))
     case 'category-asc':
       return list.sort((a, b) => compareText(a.category, b.category) || compareText(a.title, b.title))
+    case 'priority-asc':
+      return list.sort((a, b) => getPriorityWeight(a.priority) - getPriorityWeight(b.priority) || compareText(a.title, b.title))
+    case 'priority-desc':
+      return list.sort((a, b) => getPriorityWeight(b.priority) - getPriorityWeight(a.priority) || compareText(a.title, b.title))
     case 'deleted-asc':
       return list.sort((a, b) => getSortTimestamp(a, 'deletedAt') - getSortTimestamp(b, 'deletedAt'))
     case 'deleted-desc':
@@ -231,14 +257,17 @@ function renderPrompts() {
 
 function renderNotes() {
   const items = sortItems(
-    getActiveItems('note').filter(item => matchesFilter(item, state.searches.note)),
+    getActiveItems('note')
+      .filter(item => matchesFilter(item, state.searches.note))
+      .filter(item => matchesNotePriority(item, state.notePriorityFilter)),
     state.sorts.note
   )
+
   renderItemList({
     containerId: 'notes-list',
     type: 'note',
     items,
-    emptyText: state.searches.note ? '没有匹配的消息' : '暂无消息，点击“新增”添加',
+    emptyText: state.searches.note || state.notePriorityFilter !== 'all' ? '没有匹配的消息' : '暂无消息，点击“新增”添加',
     copyable: true
   })
   updateCount('note-count', items.length, getActiveItems('note').length)
@@ -278,9 +307,15 @@ function renderItemList({ containerId, type, items, emptyText, copyable }) {
   list.innerHTML = items.map(item => renderItemCard(type, item, copyable)).join('')
 }
 
+function renderPriorityBadge(priority) {
+  const meta = getPriorityMeta(priority)
+  return `<span class="badge ${meta.className}">${meta.label}优先级</span>`
+}
+
 function renderItemCard(type, item, copyable) {
   const title = escapeHtml(item.title || '无标题')
   const category = item.category ? `<span class="badge badge-category">${escapeHtml(item.category)}</span>` : ''
+  const priority = type === 'note' ? renderPriorityBadge(item.priority) : ''
   const preview = escapeHtml(item.content || '')
   const dateText = formatDate(item.updatedAt || item.createdAt)
 
@@ -289,6 +324,7 @@ function renderItemCard(type, item, copyable) {
       <div class="item-header">
         <div class="item-main">
           <span class="item-title">${title}</span>
+          ${priority}
           ${category}
         </div>
         <span class="item-date">${dateText}</span>
@@ -307,6 +343,7 @@ function renderTrashCard(item) {
   const typeLabel = item._type === 'prompt' ? 'Prompt' : '消息'
   const title = escapeHtml(item.title || '无标题')
   const category = item.category ? `<span class="badge badge-category">${escapeHtml(item.category)}</span>` : ''
+  const priority = item._type === 'note' ? renderPriorityBadge(item.priority) : ''
   const preview = escapeHtml(item.content || '')
 
   return `
@@ -315,6 +352,7 @@ function renderTrashCard(item) {
         <div class="item-main">
           <span class="item-title">${title}</span>
           <span class="badge badge-type">${typeLabel}</span>
+          ${priority}
           ${category}
         </div>
         <span class="item-date">删除于 ${formatDate(item.deletedAt)}</span>
@@ -339,9 +377,20 @@ function clearSearch(target) {
   if (input) input.value = ''
   state.searches[target] = ''
 
+  if (target === 'note') {
+    state.notePriorityFilter = 'all'
+    document.getElementById('note-priority-filter').value = 'all'
+  }
+
   if (target === 'prompt') renderPrompts()
   if (target === 'note') renderNotes()
   if (target === 'trash') renderTrash()
+}
+
+function togglePriorityField(type) {
+  const isNote = type === 'note'
+  const group = document.getElementById('priority-field-group')
+  group.classList.toggle('hidden', !isNote)
 }
 
 function openEditor(type, id = '') {
@@ -353,7 +402,9 @@ function openEditor(type, id = '') {
   document.getElementById('edit-type').value = type
   document.getElementById('edit-title').value = item?.title || ''
   document.getElementById('edit-category').value = item?.category || ''
+  document.getElementById('edit-priority').value = normalizePriority(item?.priority)
   document.getElementById('edit-content').value = item?.content || ''
+  togglePriorityField(type)
   document.getElementById('modal').classList.add('show')
   document.getElementById('edit-content').focus()
 }
@@ -368,6 +419,7 @@ async function saveEdit() {
   const title = document.getElementById('edit-title').value.trim()
   const category = document.getElementById('edit-category').value.trim()
   const content = document.getElementById('edit-content').value.trim()
+  const priority = normalizePriority(document.getElementById('edit-priority').value)
 
   if (!content) {
     alert('内容不能为空')
@@ -384,7 +436,7 @@ async function saveEdit() {
   if (type === 'prompt') {
     state.prompts = await window.api.savePrompt(payload)
   } else {
-    state.notes = await window.api.saveNote(payload)
+    state.notes = await window.api.saveNote({ ...payload, priority })
   }
 
   closeModal()
