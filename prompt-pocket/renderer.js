@@ -5,10 +5,16 @@ const PRIORITY_META = {
   low: { label: '低', weight: 1, className: 'badge-priority-low' }
 }
 
+const STATUS_META = {
+  todo: { label: '未开始' },
+  done: { label: '已完成' }
+}
+
 const state = {
   prompts: [],
   notes: [],
   config: {},
+  dataDir: '',
   activeTab: 'prompts',
   searches: {
     prompt: '',
@@ -20,9 +26,11 @@ const state = {
     note: 'updated-desc',
     trash: 'deleted-desc'
   },
+  noteStatusFilter: 'todo',
   notePriorityFilter: 'all',
   trashType: 'all',
   deleteTarget: null,
+  completionTargetId: null,
   isCapturingShortcut: false,
   shortcutHandler: null
 }
@@ -31,9 +39,11 @@ async function init() {
   state.prompts = await window.api.getPrompts()
   state.notes = await window.api.getNotes()
   state.config = await window.api.getConfig()
+  state.dataDir = await window.api.getDataDir()
 
   bindEvents()
   loadConfig()
+  loadSettings()
   renderAll()
 }
 
@@ -72,6 +82,11 @@ function bindEvents() {
     renderTrash()
   })
 
+  document.getElementById('note-status-filter').addEventListener('change', (e) => {
+    state.noteStatusFilter = e.target.value
+    renderNotes()
+  })
+
   document.getElementById('note-priority-filter').addEventListener('change', (e) => {
     state.notePriorityFilter = e.target.value
     renderNotes()
@@ -93,6 +108,11 @@ function handleGlobalKeydown(e) {
 
   if (state.isCapturingShortcut) {
     stopCapturingShortcut()
+    return
+  }
+
+  if (document.getElementById('completion-modal').classList.contains('show')) {
+    closeCompletionModal()
     return
   }
 
@@ -122,8 +142,13 @@ function handleDocumentClick(e) {
     if (action === 'clear-search') return clearSearch(actionEl.dataset.target)
     if (action === 'capture-shortcut') return captureShortcut()
     if (action === 'save-shortcut') return saveShortcut()
+    if (action === 'open-data-dir') return openDataDir()
     if (action === 'close-delete-modal') return closeDeleteModal()
     if (action === 'confirm-delete') return confirmDelete()
+    if (action === 'close-completion-modal') return closeCompletionModal()
+    if (action === 'add-related-item') return addRelatedInput('')
+    if (action === 'remove-related-item') return removeRelatedInput(actionEl.closest('.related-item-row'))
+    if (action === 'confirm-completion') return confirmCompletion()
 
     const type = actionEl.dataset.type
     const id = actionEl.dataset.id
@@ -133,6 +158,7 @@ function handleDocumentClick(e) {
     if (action === 'soft-delete') return requestDelete(type, id, 'soft')
     if (action === 'restore-item') return restoreItem(type, id)
     if (action === 'purge-item') return requestDelete(type, id, 'purge')
+    if (action === 'toggle-note-status') return handleNoteStatusToggle(id)
 
     return
   }
@@ -177,6 +203,10 @@ function normalizePriority(priority) {
   return PRIORITY_META[priority] ? priority : 'medium'
 }
 
+function normalizeStatus(status) {
+  return STATUS_META[status] ? status : 'todo'
+}
+
 function getPriorityMeta(priority) {
   return PRIORITY_META[normalizePriority(priority)]
 }
@@ -185,15 +215,24 @@ function getPriorityWeight(priority) {
   return getPriorityMeta(priority).weight
 }
 
+function normalizeRelatedItems(relatedItems) {
+  if (!Array.isArray(relatedItems)) return []
+  return relatedItems.map(item => normalizeText(item) ? item.trim() : '').filter(Boolean)
+}
+
 function matchesFilter(item, keyword) {
   const q = normalizeText(keyword)
   if (!q) return true
-  return [item.title, item.category, item.content].some(field => normalizeText(field).includes(q))
+  return [item.title, item.category, item.content, ...(item.relatedItems || [])].some(field => normalizeText(field).includes(q))
 }
 
 function matchesNotePriority(item, filterValue) {
   if (filterValue === 'all') return true
   return normalizePriority(item.priority) === filterValue
+}
+
+function matchesNoteStatus(item, filterValue) {
+  return normalizeStatus(item.status) === filterValue
 }
 
 function getSortTimestamp(item, key) {
@@ -245,6 +284,7 @@ function renderPrompts() {
     getActiveItems('prompt').filter(item => matchesFilter(item, state.searches.prompt)),
     state.sorts.prompt
   )
+
   renderItemList({
     containerId: 'prompts-list',
     type: 'prompt',
@@ -256,18 +296,18 @@ function renderPrompts() {
 }
 
 function renderNotes() {
-  const items = sortItems(
-    getActiveItems('note')
-      .filter(item => matchesFilter(item, state.searches.note))
-      .filter(item => matchesNotePriority(item, state.notePriorityFilter)),
-    state.sorts.note
-  )
+  const filtered = getActiveItems('note')
+    .filter(item => matchesFilter(item, state.searches.note))
+    .filter(item => matchesNoteStatus(item, state.noteStatusFilter))
+    .filter(item => matchesNotePriority(item, state.notePriorityFilter))
+
+  const items = sortItems(filtered, state.sorts.note)
 
   renderItemList({
     containerId: 'notes-list',
     type: 'note',
     items,
-    emptyText: state.searches.note || state.notePriorityFilter !== 'all' ? '没有匹配的消息' : '暂无消息，点击“新增”添加',
+    emptyText: state.searches.note || state.notePriorityFilter !== 'all' ? '没有匹配的消息' : (state.noteStatusFilter === 'todo' ? '暂无未开始消息，点击“新增”添加' : '暂无已完成消息'),
     copyable: true
   })
   updateCount('note-count', items.length, getActiveItems('note').length)
@@ -283,9 +323,7 @@ function renderTrash() {
   })
 
   const items = sortItems(filteredByType, state.sorts.trash)
-  const total = [...deletedPrompts, ...deletedNotes].filter(item => {
-    return state.trashType === 'all' || item._type === state.trashType
-  }).length
+  const total = [...deletedPrompts, ...deletedNotes].filter(item => state.trashType === 'all' || item._type === state.trashType).length
 
   const list = document.getElementById('trash-list')
   if (items.length === 0) {
@@ -312,24 +350,57 @@ function renderPriorityBadge(priority) {
   return `<span class="badge ${meta.className}">${meta.label}优先级</span>`
 }
 
+function renderRelatedBlock(item) {
+  const relatedItems = normalizeRelatedItems(item.relatedItems)
+  if (!relatedItems.length) return ''
+
+  return `
+    <div class="related-preview">
+      <div class="related-title">关联内容 ${relatedItems.length} 条</div>
+      <ul>
+        ${relatedItems.slice(0, 3).map(text => `<li>${escapeHtml(text)}</li>`).join('')}
+      </ul>
+    </div>
+  `
+}
+
+function renderNoteSwitch(item) {
+  const isTodo = normalizeStatus(item.status) === 'todo'
+  return `
+    <label class="todo-switch" title="${isTodo ? '点击标记完成' : '点击恢复为未开始'}">
+      <input type="checkbox" ${isTodo ? 'checked' : ''} data-action="toggle-note-status" data-id="${item.id}">
+      <span class="todo-slider"></span>
+      <span class="todo-label">${isTodo ? '未开始' : '已完成'}</span>
+    </label>
+  `
+}
+
 function renderItemCard(type, item, copyable) {
   const title = escapeHtml(item.title || '无标题')
   const category = item.category ? `<span class="badge badge-category">${escapeHtml(item.category)}</span>` : ''
   const priority = type === 'note' ? renderPriorityBadge(item.priority) : ''
+  const statusSwitch = type === 'note' ? renderNoteSwitch(item) : ''
   const preview = escapeHtml(item.content || '')
-  const dateText = formatDate(item.updatedAt || item.createdAt)
+  const dateText = type === 'note' && normalizeStatus(item.status) === 'done' && item.completedAt
+    ? `完成于 ${formatDate(item.completedAt)}`
+    : formatDate(item.updatedAt || item.createdAt)
+  const relatedBlock = type === 'note' ? renderRelatedBlock(item) : ''
 
   return `
-    <div class="item-card" data-type="${type}" data-id="${item.id}" data-copyable="${copyable}">
+    <div class="item-card ${type === 'note' ? `item-card-note status-${normalizeStatus(item.status)}` : ''}" data-type="${type}" data-id="${item.id}" data-copyable="${copyable}">
       <div class="item-header">
         <div class="item-main">
           <span class="item-title">${title}</span>
           ${priority}
           ${category}
         </div>
-        <span class="item-date">${dateText}</span>
+        <div class="item-side">
+          ${statusSwitch}
+          <span class="item-date">${dateText}</span>
+        </div>
       </div>
       <div class="item-content">${preview}</div>
+      ${relatedBlock}
       <div class="item-actions">
         <button class="btn-action" data-action="edit-item" data-type="${type}" data-id="${item.id}">编辑</button>
         <button class="btn-action" data-action="copy-item" data-type="${type}" data-id="${item.id}">复制</button>
@@ -345,6 +416,7 @@ function renderTrashCard(item) {
   const category = item.category ? `<span class="badge badge-category">${escapeHtml(item.category)}</span>` : ''
   const priority = item._type === 'note' ? renderPriorityBadge(item.priority) : ''
   const preview = escapeHtml(item.content || '')
+  const relatedBlock = item._type === 'note' ? renderRelatedBlock(item) : ''
 
   return `
     <div class="item-card trash-card" data-type="${item._type}" data-id="${item.id}">
@@ -358,6 +430,7 @@ function renderTrashCard(item) {
         <span class="item-date">删除于 ${formatDate(item.deletedAt)}</span>
       </div>
       <div class="item-content">${preview}</div>
+      ${relatedBlock}
       <div class="item-actions item-actions-visible">
         <button class="btn-action" data-action="restore-item" data-type="${item._type}" data-id="${item.id}">恢复</button>
         <button class="btn-action delete" data-action="purge-item" data-type="${item._type}" data-id="${item.id}">彻底删除</button>
@@ -378,7 +451,9 @@ function clearSearch(target) {
   state.searches[target] = ''
 
   if (target === 'note') {
+    state.noteStatusFilter = 'todo'
     state.notePriorityFilter = 'all'
+    document.getElementById('note-status-filter').value = 'todo'
     document.getElementById('note-priority-filter').value = 'all'
   }
 
@@ -389,8 +464,7 @@ function clearSearch(target) {
 
 function togglePriorityField(type) {
   const isNote = type === 'note'
-  const group = document.getElementById('priority-field-group')
-  group.classList.toggle('hidden', !isNote)
+  document.getElementById('priority-field-group').classList.toggle('hidden', !isNote)
 }
 
 function openEditor(type, id = '') {
@@ -436,7 +510,14 @@ async function saveEdit() {
   if (type === 'prompt') {
     state.prompts = await window.api.savePrompt(payload)
   } else {
-    state.notes = await window.api.saveNote({ ...payload, priority })
+    const original = id ? findItem('note', id) : null
+    state.notes = await window.api.saveNote({
+      ...payload,
+      priority,
+      status: normalizeStatus(original?.status),
+      relatedItems: normalizeRelatedItems(original?.relatedItems),
+      completedAt: original?.completedAt || null
+    })
   }
 
   closeModal()
@@ -513,12 +594,130 @@ async function restoreItem(type, id) {
   showHint('已恢复')
 }
 
+function addRelatedInput(value = '') {
+  const list = document.getElementById('related-items-list')
+  const row = document.createElement('div')
+  row.className = 'related-item-row'
+  row.innerHTML = `
+    <textarea class="related-item-input" rows="3" placeholder="补充一条关联内容，例如完成说明、链接、结论...">${escapeTextarea(value)}</textarea>
+    <button class="btn-action delete" data-action="remove-related-item">移除</button>
+  `
+  list.appendChild(row)
+}
+
+function removeRelatedInput(row) {
+  if (!row) return
+  const list = document.getElementById('related-items-list')
+  if (list.children.length === 1) {
+    row.querySelector('.related-item-input').value = ''
+    return
+  }
+  row.remove()
+}
+
+function getRelatedInputs() {
+  return Array.from(document.querySelectorAll('.related-item-input'))
+    .map(input => input.value.trim())
+    .filter(Boolean)
+}
+
+function openCompletionModal(id) {
+  const note = findItem('note', id)
+  if (!note) return
+
+  state.completionTargetId = id
+  document.getElementById('completion-note-id').value = id
+  document.getElementById('completion-title').value = note.title || ''
+  document.getElementById('completion-category').value = note.category || ''
+  document.getElementById('completion-priority').value = normalizePriority(note.priority)
+  document.getElementById('completion-content').value = note.content || ''
+
+  const list = document.getElementById('related-items-list')
+  list.innerHTML = ''
+  const relatedItems = normalizeRelatedItems(note.relatedItems)
+  if (relatedItems.length) {
+    relatedItems.forEach(item => addRelatedInput(item))
+  } else {
+    addRelatedInput('')
+  }
+
+  document.getElementById('completion-modal').classList.add('show')
+  document.getElementById('completion-content').focus()
+}
+
+function closeCompletionModal() {
+  document.getElementById('completion-modal').classList.remove('show')
+  state.completionTargetId = null
+  renderAll()
+}
+
+async function confirmCompletion() {
+  const id = document.getElementById('completion-note-id').value
+  const note = findItem('note', id)
+  if (!note) return
+
+  const title = document.getElementById('completion-title').value.trim()
+  const category = document.getElementById('completion-category').value.trim()
+  const priority = normalizePriority(document.getElementById('completion-priority').value)
+  const content = document.getElementById('completion-content').value.trim()
+  const relatedItems = getRelatedInputs()
+
+  if (!content) {
+    alert('内容不能为空')
+    return
+  }
+
+  state.notes = await window.api.saveNote({
+    ...note,
+    id,
+    title,
+    category,
+    priority,
+    content,
+    status: 'done',
+    relatedItems,
+    completedAt: new Date().toISOString()
+  })
+
+  closeCompletionModal()
+  renderAll()
+  showHint('已归档到已完成')
+}
+
+async function handleNoteStatusToggle(id) {
+  const note = findItem('note', id)
+  if (!note) return
+
+  if (normalizeStatus(note.status) === 'todo') {
+    openCompletionModal(id)
+    return
+  }
+
+  state.notes = await window.api.saveNote({
+    ...note,
+    id,
+    status: 'todo',
+    completedAt: null
+  })
+  renderAll()
+  showHint('已恢复为未开始')
+}
+
 function copyItem(type, id) {
   const item = findItem(type, id)
   if (!item) return
   navigator.clipboard.writeText(item.content || '').then(() => {
     showHint('已复制到剪贴板')
   })
+}
+
+async function openDataDir() {
+  const result = await window.api.openDataDir()
+  if (result.success) {
+    showHint('已打开数据目录')
+  } else {
+    alert(`打开失败: ${result.error || '未知错误'}`)
+  }
 }
 
 function showHint(message) {
@@ -537,6 +736,13 @@ function escapeHtml(text) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
     .replace(/\n/g, '<br>')
+}
+
+function escapeTextarea(text) {
+  return (text || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
 }
 
 function formatDate(isoString) {
@@ -566,6 +772,12 @@ function loadConfig() {
   document.getElementById('shortcut-input').dataset.shortcut = ''
   document.getElementById('shortcut-hint').textContent = `${displayShortcut} 呼出/隐藏 | Esc 隐藏`
   document.getElementById('auto-launch-toggle').checked = Boolean(state.config.autoLaunch)
+}
+
+function loadSettings() {
+  document.getElementById('data-dir-input').value = state.dataDir
+  document.getElementById('note-status-filter').value = state.noteStatusFilter
+  document.getElementById('note-priority-filter').value = state.notePriorityFilter
 }
 
 function formatShortcut(shortcut = '') {

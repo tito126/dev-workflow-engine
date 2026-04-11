@@ -1,4 +1,4 @@
-const { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu, nativeImage } = require('electron')
+const { app, BrowserWindow, globalShortcut, ipcMain, Tray, Menu, nativeImage, shell } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
@@ -28,9 +28,7 @@ app.on('second-instance', () => {
 })
 
 function getDataDir() {
-  return app.isPackaged
-    ? path.join(app.getPath('userData'), 'data')
-    : BUNDLED_DATA_DIR
+  return app.isPackaged ? path.join(app.getPath('userData'), 'data') : BUNDLED_DATA_DIR
 }
 
 function getDataFile(name) {
@@ -66,51 +64,41 @@ function ensureSeedFile(name, fallbackContent) {
   return target
 }
 
-function getConfig() {
-  try {
-    const configFile = ensureSeedFile('config.json', JSON.stringify(DEFAULT_CONFIG, null, 2))
-    if (!fs.existsSync(configFile)) return { ...DEFAULT_CONFIG }
-    return { ...DEFAULT_CONFIG, ...JSON.parse(fs.readFileSync(configFile, 'utf-8')) }
-  } catch (e) {
-    return { ...DEFAULT_CONFIG }
-  }
+function normalizePriority(priority) {
+  return ['urgent', 'high', 'medium', 'low'].includes(priority) ? priority : 'medium'
 }
 
-function saveConfig(config) {
-  try {
-    const configFile = getDataFile('config.json')
-    ensureDataDir()
-    fs.writeFileSync(configFile, JSON.stringify(config, null, 2), 'utf-8')
-    return true
-  } catch (e) {
-    return false
-  }
+function normalizeStatus(status) {
+  return ['todo', 'done'].includes(status) ? status : 'todo'
+}
+
+function normalizeRelatedItems(relatedItems) {
+  if (!Array.isArray(relatedItems)) return []
+  return relatedItems.map(item => (item || '').toString().trim()).filter(Boolean)
 }
 
 function inferCreatedAt(item = {}) {
   if (item.createdAt) return item.createdAt
   if (item.id && /^\d+$/.test(String(item.id))) {
     const fromId = new Date(Number(item.id))
-    if (!Number.isNaN(fromId.getTime())) {
-      return fromId.toISOString()
-    }
+    if (!Number.isNaN(fromId.getTime())) return fromId.toISOString()
   }
   return new Date().toISOString()
 }
 
-function normalizePriority(priority) {
-  return ['urgent', 'high', 'medium', 'low'].includes(priority) ? priority : 'medium'
-}
-
 function normalizeItem(item = {}) {
+  const status = normalizeStatus(item.status)
   return {
     id: item.id ? String(item.id) : Date.now().toString(),
     title: item.title || '',
     category: item.category || '',
     priority: normalizePriority(item.priority),
+    status,
+    relatedItems: normalizeRelatedItems(item.relatedItems),
     content: item.content || '',
     createdAt: inferCreatedAt(item),
     updatedAt: item.updatedAt || item.createdAt || null,
+    completedAt: status === 'done' ? (item.completedAt || item.updatedAt || item.createdAt || null) : null,
     deletedAt: item.deletedAt || null
   }
 }
@@ -137,14 +125,35 @@ function writeJSON(file, data) {
   }
 }
 
+function getConfig() {
+  try {
+    const configFile = ensureSeedFile('config.json', JSON.stringify(DEFAULT_CONFIG, null, 2))
+    if (!fs.existsSync(configFile)) return { ...DEFAULT_CONFIG }
+    return { ...DEFAULT_CONFIG, ...JSON.parse(fs.readFileSync(configFile, 'utf-8')) }
+  } catch (e) {
+    return { ...DEFAULT_CONFIG }
+  }
+}
+
+function saveConfig(config) {
+  try {
+    const configFile = getDataFile('config.json')
+    ensureDataDir()
+    fs.writeFileSync(configFile, JSON.stringify(config, null, 2), 'utf-8')
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
 function isStartHidden() {
   return process.argv.includes(START_HIDDEN_ARG)
 }
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 900,
-    height: 680,
+    width: 960,
+    height: 720,
     show: false,
     frame: false,
     alwaysOnTop: true,
@@ -180,7 +189,9 @@ function createWindow() {
 }
 
 function createTray() {
-  const iconPath = fs.existsSync(APP_ICON_PNG) ? APP_ICON_PNG : (fs.existsSync(APP_ICON_ICO) ? APP_ICON_ICO : path.join(__dirname, 'icon.svg'))
+  const iconPath = fs.existsSync(APP_ICON_PNG)
+    ? APP_ICON_PNG
+    : (fs.existsSync(APP_ICON_ICO) ? APP_ICON_ICO : path.join(__dirname, 'icon.svg'))
   const trayIcon = nativeImage.createFromPath(iconPath)
 
   tray = new Tray(trayIcon)
@@ -198,6 +209,11 @@ function createTray() {
         saveConfig(config)
         setAutoLaunch(menuItem.checked)
       }
+    },
+    { type: 'separator' },
+    {
+      label: '打开数据目录',
+      click: () => shell.openPath(getDataDir())
     },
     { type: 'separator' },
     {
@@ -241,9 +257,7 @@ function getAutoLaunchSettings(enable) {
 
   if (process.platform === 'win32') {
     settings.path = process.execPath
-    settings.args = process.defaultApp
-      ? [app.getAppPath(), START_HIDDEN_ARG]
-      : [START_HIDDEN_ARG]
+    settings.args = process.defaultApp ? [app.getAppPath(), START_HIDDEN_ARG] : [START_HIDDEN_ARG]
   } else {
     settings.openAsHidden = true
     settings.args = [START_HIDDEN_ARG]
@@ -286,8 +300,11 @@ function saveItem(file, payload) {
     items.unshift(normalizeItem({
       ...payload,
       id: Date.now().toString(),
+      priority: normalizePriority(payload.priority),
+      status: normalizeStatus(payload.status),
       createdAt: now,
       updatedAt: now,
+      completedAt: payload.status === 'done' ? now : null,
       deletedAt: null
     }))
   }
@@ -329,6 +346,7 @@ function purgeItem(file, id) {
 ipcMain.handle('get-prompts', () => readJSON(ensureSeedFile('prompts.json', '[]')))
 ipcMain.handle('get-notes', () => readJSON(ensureSeedFile('notes.json', '[]')))
 ipcMain.handle('get-config', () => getConfig())
+ipcMain.handle('get-data-dir', () => getDataDir())
 
 ipcMain.handle('save-prompt', (event, prompt) => saveItem(getDataFile('prompts.json'), prompt))
 ipcMain.handle('delete-prompt', (event, id) => softDeleteItem(getDataFile('prompts.json'), id))
@@ -358,6 +376,16 @@ ipcMain.handle('toggle-auto-launch', (event, enable) => {
     return { success: true, autoLaunch: enable }
   }
   return { success: false }
+})
+
+ipcMain.handle('open-data-dir', async () => {
+  ensureDataDir()
+  const error = await shell.openPath(getDataDir())
+  return {
+    success: !error,
+    path: getDataDir(),
+    error: error || null
+  }
 })
 
 ipcMain.on('hide-window', () => {

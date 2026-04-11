@@ -4,6 +4,7 @@ contextBridge.exposeInMainWorld('api', {
   getPrompts: () => ipcRenderer.invoke('get-prompts'),
   getNotes: () => ipcRenderer.invoke('get-notes'),
   getConfig: () => ipcRenderer.invoke('get-config'),
+  getDataDir: () => ipcRenderer.invoke('get-data-dir'),
 
   savePrompt: (prompt) => ipcRenderer.invoke('save-prompt', prompt),
   deletePrompt: (id) => ipcRenderer.invoke('delete-prompt', id),
@@ -17,6 +18,7 @@ contextBridge.exposeInMainWorld('api', {
 
   updateShortcut: (shortcut) => ipcRenderer.invoke('update-shortcut', shortcut),
   toggleAutoLaunch: (enable) => ipcRenderer.invoke('toggle-auto-launch', enable),
+  openDataDir: () => ipcRenderer.invoke('open-data-dir'),
 
   hideWindow: () => ipcRenderer.send('hide-window')
 })

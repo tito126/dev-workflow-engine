@@ -1,6 +1,6 @@
 {
   "name": "prompt-pocket",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "description": "本地常用 Prompt 与零碎消息收纳小工具",
   "main": "main.js",

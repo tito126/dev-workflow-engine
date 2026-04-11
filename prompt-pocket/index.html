@@ -44,6 +44,10 @@
     <div id="notes-panel" class="panel">
       <div class="toolbar toolbar-wrap">
         <input type="text" id="note-search" placeholder="搜索标题 / 分类 / 内容..." class="search-input">
+        <select id="note-status-filter" class="sort-select">
+          <option value="todo">未开始</option>
+          <option value="done">已完成</option>
+        </select>
         <select id="note-priority-filter" class="sort-select">
           <option value="all">全部优先级</option>
           <option value="urgent">紧急</option>
@@ -106,6 +110,18 @@
         </div>
 
         <div class="settings-section">
+          <h3>数据目录</h3>
+          <div class="setting-item setting-item-column">
+            <label for="data-dir-input">当前数据目录</label>
+            <div class="data-dir-group">
+              <input type="text" id="data-dir-input" readonly>
+              <button class="btn-secondary" data-action="open-data-dir">打开数据目录</button>
+            </div>
+            <p class="hint-text">打包版会把数据保存在这个目录中，便于备份和排查。</p>
+          </div>
+        </div>
+
+        <div class="settings-section">
           <h3>开机自启</h3>
           <div class="setting-item">
             <label>开机时自动启动</label>
@@ -120,7 +136,7 @@
         <div class="settings-section">
           <h3>关于</h3>
           <div class="about-info">
-            <p><strong>Prompt Pocket</strong> v0.2.2</p>
+            <p><strong>Prompt Pocket</strong> v0.2.3</p>
             <p>本地 Prompt 与消息收纳工具</p>
             <p class="hint-text">所有数据保存在本地，不会上传到任何服务器</p>
           </div>
@@ -157,6 +173,40 @@
       <div class="modal-footer">
         <button class="btn-secondary" data-action="close-modal">取消</button>
         <button class="btn-primary" data-action="save-edit">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="completion-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>完成待办</h3>
+        <button class="btn-close" data-action="close-completion-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="completion-note-id">
+        <label for="completion-title">标题</label>
+        <input type="text" id="completion-title" placeholder="标题（可选）">
+        <label for="completion-category">分类</label>
+        <input type="text" id="completion-category" placeholder="例如：工作 / 会议 / SQL / 灵感">
+        <label for="completion-priority">优先级</label>
+        <select id="completion-priority" class="sort-select modal-select">
+          <option value="urgent">紧急</option>
+          <option value="high">高</option>
+          <option value="medium">中</option>
+          <option value="low">低</option>
+        </select>
+        <label for="completion-content">完善当前消息</label>
+        <textarea id="completion-content" placeholder="完成前可补充本条消息内容..." rows="6"></textarea>
+        <div class="related-header">
+          <label>关联内容</label>
+          <button class="btn-secondary btn-inline" data-action="add-related-item">+ 添加关联内容</button>
+        </div>
+        <div id="related-items-list" class="related-items-list"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" data-action="close-completion-modal">取消</button>
+        <button class="btn-primary" data-action="confirm-completion">完成并归档</button>
       </div>
     </div>
   </div>
