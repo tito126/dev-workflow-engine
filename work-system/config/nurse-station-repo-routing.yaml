@@ -11,14 +11,14 @@ version: 1
 # 配置状态。
 # - draft: 草稿，未完成，禁止 skill 继续依赖本文件推进多仓扫描
 # - ready: 已确认可用，允许按本文件执行扫描路由
-status: draft
+status: ready
 
 project:
   # 项目名，仅用于说明当前 YAML 绑定的护士站代码域。
   name: "护士站仓库扫描路由"
 
   # 当前规则适用范围，例如住院护士站、门诊护士站、护理配置后台等。
-  scope: "TODO-请填写适用范围"
+  scope: "住院护士站"
 
 routing_policy:
   # 是否允许把“用户明确给出的仓库路径”作为首扫根。
@@ -36,11 +36,12 @@ routing_policy:
 roots:
   # 后端主仓。
   # 示例：E:\winning-code\akso5\winning-nis-ward
-  backend_main: "TODO-请填写后端主仓绝对路径"
+  backend_main: "E:\winning-code\akso5\winning-nis-ward"
 
-  # 前端住院执行域后台仓。
-  # 示例：E:\winning-code\frontend\webui-next\winning-webui-admin-execution-inpatient
-  frontend_admin_execution_inpatient: "TODO-请填写前端住院执行域仓绝对路径"
+  # 前端主根目录。
+  # 示例：E:\winning-code\frontend\webui-next
+  # 说明：具体页面仓或子项目应在该根目录下继续收窄，不要再把这里写成某个单独子项目名。
+  frontend_main: "E:\winning-code\frontend\webui-next"
 
   # 其他允许被扫描的候选仓。
   # 仅当任务确实需要，且上面两类仓不够时，才在这里补充。
@@ -67,7 +68,7 @@ keyword_routes:
       - "vue"
       - "路由"
     prefer_roots:
-      - "frontend_admin_execution_inpatient"
+      - "frontend_main"
       - "backend_main"
 
   # 接口 / Service / Repository / DTO / BO / Entity 类需求，优先尝试哪些根。
@@ -97,7 +98,7 @@ keyword_routes:
       - "帮助说明"
     prefer_roots:
       - "backend_main"
-      - "frontend_admin_execution_inpatient"
+      - "frontend_main"
 
 scan_record_template:
   # 供 locator / findings 使用的固定记录字段。
@@ -118,7 +119,7 @@ validation:
   fail_if_contains_todo: true
   require_non_empty_roots:
     - "backend_main"
-    - "frontend_admin_execution_inpatient"
+    - "frontend_main"
 
 notes:
   - "先首扫用户明确给的仓库，再决定是否扩扫。"
