@@ -1,0 +1,126 @@
+# 护士站仓库扫描路由配置
+#
+# 使用说明：
+# 1. 任何护士站任务在进入多仓扫描、定位、实现前，都应先维护本文件。
+# 2. 如果本文件未配置完成，skill 应停止继续推进，并明确要求用户先补全。
+# 3. 允许先用“用户明确给出的唯一路径”做首扫，但一旦要扩扫到第二个仓库，必须受本文件约束。
+# 4. 下方凡是带“TODO”或留空的字段，都视为“未配置完成”。
+
+version: 1
+
+# 配置状态。
+# - draft: 草稿，未完成，禁止 skill 继续依赖本文件推进多仓扫描
+# - ready: 已确认可用，允许按本文件执行扫描路由
+status: draft
+
+project:
+  # 项目名，仅用于说明当前 YAML 绑定的护士站代码域。
+  name: "护士站仓库扫描路由"
+
+  # 当前规则适用范围，例如住院护士站、门诊护士站、护理配置后台等。
+  scope: "TODO-请填写适用范围"
+
+routing_policy:
+  # 是否允许把“用户明确给出的仓库路径”作为首扫根。
+  allow_user_repo_as_primary: true
+
+  # 是否禁止在 YAML 未完成时继续扩扫到其他仓库。
+  block_multi_repo_scan_when_yaml_not_ready: true
+
+  # 是否强制把扩扫限制在本 YAML 白名单根内。
+  enforce_whitelist_on_expansion: true
+
+  # 是否要求 findings.md 记录实际扫描根、扩扫原因、排除根。
+  require_findings_scan_log: true
+
+roots:
+  # 后端主仓。
+  # 示例：E:\winning-code\akso5\winning-nis-ward
+  backend_main: "TODO-请填写后端主仓绝对路径"
+
+  # 前端住院执行域后台仓。
+  # 示例：E:\winning-code\frontend\webui-next\winning-webui-admin-execution-inpatient
+  frontend_admin_execution_inpatient: "TODO-请填写前端住院执行域仓绝对路径"
+
+  # 其他允许被扫描的候选仓。
+  # 仅当任务确实需要，且上面两类仓不够时，才在这里补充。
+  optional_allowed_roots: []
+
+exclude_roots:
+  # 明确禁止 skill 擅自扫描的根目录。
+  # 例如：历史导出目录、AI 实验目录、无关工具目录、个人临时目录等。
+  - "E:\\winning-code\\work"
+  - "E:\\winning-code\\ai"
+
+keyword_routes:
+  # 页面 / 文案 / 交互类需求，优先尝试哪些根。
+  ui_text_like:
+    keywords:
+      - "页面"
+      - "文案"
+      - "说明"
+      - "提示"
+      - "按钮"
+      - "弹窗"
+      - "tooltip"
+      - "popover"
+      - "vue"
+      - "路由"
+    prefer_roots:
+      - "frontend_admin_execution_inpatient"
+      - "backend_main"
+
+  # 接口 / Service / Repository / DTO / BO / Entity 类需求，优先尝试哪些根。
+  backend_like:
+    keywords:
+      - "接口"
+      - "controller"
+      - "service"
+      - "repository"
+      - "dto"
+      - "bo"
+      - "entity"
+      - "规则"
+      - "参数"
+      - "sql"
+    prefer_roots:
+      - "backend_main"
+
+  # 护士站配置 / 参数页 / 帮助说明类需求。
+  config_like:
+    keywords:
+      - "配置"
+      - "参数"
+      - "首日"
+      - "医嘱流向"
+      - "物资流向"
+      - "帮助说明"
+    prefer_roots:
+      - "backend_main"
+      - "frontend_admin_execution_inpatient"
+
+scan_record_template:
+  # 供 locator / findings 使用的固定记录字段。
+  required_fields:
+    - "yaml路由文件"
+    - "首扫根"
+    - "首扫根来源"
+    - "实际扫描根"
+    - "被排除的根"
+    - "扩扫触发原因"
+
+validation:
+  # 以下任一情况出现，都视为 YAML 未配置完成：
+  # 1. status != ready
+  # 2. 关键 roots 为空
+  # 3. 任意字段仍包含 TODO
+  # 4. 当前任务无法通过 keyword_routes 映射到明确候选根
+  fail_if_contains_todo: true
+  require_non_empty_roots:
+    - "backend_main"
+    - "frontend_admin_execution_inpatient"
+
+notes:
+  - "先首扫用户明确给的仓库，再决定是否扩扫。"
+  - "扩扫只能落在 YAML 白名单根内，不能凭记忆猜目录。"
+  - "如果当前任务只在用户给定的唯一路径内即可完成，可不依赖 YAML 扩扫。"
