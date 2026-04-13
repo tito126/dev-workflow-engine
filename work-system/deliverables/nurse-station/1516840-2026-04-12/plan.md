@@ -4,8 +4,8 @@
 - Task level: `medium`
 - Execution carrier: `ACP opencode`（若 ACP 不可用则降级 `exec opencode`）
 - Goal: 在住院护士站配置页的 `长期医嘱首日设置` 处补足一段可直接理解的参数说明，让用户明确“首日”标识的含义、作用范围、与医嘱物资流向配置的联动关系，以及典型示例，降低误配置和理解偏差
-- Repo: `E:\winning-code\akso5\winning-nis-ward`（按当前护士站默认仓库预估）
-- Module: 护士站配置 / 长期医嘱首日设置 / 参数说明承载区块（具体入口待 locator 落证）
+- Repo: 首扫根 `backend_main -> E:\winning-code\akso5\winning-nis-ward`，候选扩扫根 `frontend_main -> E:\winning-code\frontend\webui-next`
+- Module: 护士站配置 / 长期医嘱首日设置 / 参数说明承载区块（实际 UI 入口后续已定位到 `winning-webui-admin-execution-inpatient` 子项目）
 - In scope:
   - 定位 `长期医嘱首日设置` 对应的前端配置入口、展示组件、文案来源与可能的后端配置元数据
   - 明确当前页面如何承载说明文案（静态说明、tooltip、帮助区块、富文本区域等）
@@ -41,6 +41,7 @@
   - `implementation-result.md`：实际改动文件、说明落点、未决点
   - `verification-evidence.md`：对 success anchors 的逐条核对
   - `review-conclusion.md`：需求匹配与代码质量评审结论
+- YAML routing file: `work-system/config/nurse-station-repo-routing.yaml`
 - Runtime path: `work-system/deliverables/nurse-station/1516840-2026-04-12/`
 - Phases to mirror in later artifacts:
   - `findings.md`
@@ -49,6 +50,7 @@
   - `review-conclusion.md`
 - Expected findings capture:
   - `长期医嘱首日设置` 页面 / 组件入口
+  - 首扫根、扩扫根、扩扫原因与排除根记录
   - 说明文案当前是否已有占位、帮助提示或配置元数据
   - 文案是前端静态写死、后端返回、字典配置还是参数项 schema 驱动
   - 与 `医嘱流向配置` 相关的提示是否已有现成文案或跳转能力

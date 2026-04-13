@@ -1,14 +1,25 @@
 # 定位结果 - 1516840
 
 - 仓库：
-  - 后端主仓：`E:\winning-code\akso5\winning-nis-ward`
-  - 前端主仓：`E:\winning-code\frontend\webui-next\winning-webui-admin-execution-inpatient`
+  - 后端主根：`backend_main -> E:\winning-code\akso5\winning-nis-ward`
+  - 前端主根：`frontend_main -> E:\winning-code\frontend\webui-next`
+  - 本轮实际命中的前端子项目：`E:\winning-code\frontend\webui-next\winning-webui-admin-execution-inpatient`
 - 模块：
   - 前端页面：`LongOrderFirstMedicineExecRules`
   - 前端 store / API 配置：同名模块
   - 后端对外入口：`winning-ward-execution-order-api` 的首日规则接口
   - 后端配置域入口：`winning-ward-config-api` 的 MAS 首日规则接口
   - 下游业务关联：执行计划拆分 / 首日标识 / 物资流向相关逻辑
+- YAML 路由文件：`work-system/config/nurse-station-repo-routing.yaml`
+- 首扫根：`backend_main -> E:\winning-code\akso5\winning-nis-ward`
+- 首扫根来源：历史本轮用户给定仓库
+- 实际扫描根：
+  - `E:\winning-code\akso5\winning-nis-ward`
+  - `E:\winning-code\frontend\webui-next`
+- 被排除的根：
+  - `E:\winning-code\work`
+  - `E:\winning-code\ai`
+- 扩扫触发原因：首扫根内只命中后端规则链，未命中页面实现；结合“页面/文案类需求”特征，向前端主根定向收窄后命中实际子项目
 - 需要更新的发现章节：`findings.md`
 
 ## 可能入口文件
@@ -177,7 +188,7 @@
 
 ## 当前阶段结论
 
-- 是否已支持 implementer 进入窄范围实现：**是，但前提是实现仓库切到前端仓**
+- 是否已支持 implementer 进入窄范围实现：**是，但前提是实现仓库切到 `frontend_main` 下的目标子项目**
 - 推荐下一步：
   1. 默认按“前端静态说明块”进入 implementer
   2. 实现仓库切到：`E:\winning-code\frontend\webui-next\winning-webui-admin-execution-inpatient`

@@ -1,7 +1,8 @@
 # 实现结果 - 1516840
 
 - 实现方案：前端最小静态说明方案
-- 实现仓库：`E:\winning-code\frontend\webui-next\winning-webui-admin-execution-inpatient`
+- 前端主根：`frontend_main -> E:\winning-code\frontend\webui-next`
+- 实际实现仓库：`E:\winning-code\frontend\webui-next\winning-webui-admin-execution-inpatient`
 - 实现状态：已完成代码落地，待 verification
 
 ## 已改文件
