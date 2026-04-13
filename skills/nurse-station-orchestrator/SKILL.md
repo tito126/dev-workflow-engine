@@ -219,12 +219,15 @@ light 任务不需要创建 deliverables 目录，产物直接在聊天中流转
 |------|------|
 | 任务简单、改动量小、不需要外部工具 | direct edit |
 | 需要代码定位 / 分析 / 实现，ACP 可用 | ACP opencode |
-| 需要代码定位 / 分析 / 实现，ACP 不可用 | exec opencode |
+| 需要代码定位 / 分析 / 实现，经用户确认后允许降级 | exec opencode |
 | 用户明确指定用某个执行器 | 用户指定 |
 
 ACP 可用性检查：
 - 当前 Windows 环境依赖 2026-04-08 的本地手动补丁
 - 若 OpenClaw 升级后 ACP 再次报 `backend unavailable`，先检查补丁是否被覆盖
+- 若出现 `backend unavailable`、timeout、empty output、result relay 异常、child 有落盘但主会话无有效回传等情况，默认视为 **ACP 阻塞**
+- 一旦判定为 ACP 阻塞，主控必须先向用户报告阻塞，再等待用户确认是否降级 `exec opencode`
+- 未获用户确认前，不得主会话直接接管代码分析或改码
 
 ## 反模式
 

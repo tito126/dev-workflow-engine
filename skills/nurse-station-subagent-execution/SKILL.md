@@ -74,6 +74,9 @@ description: 当一个已澄清且已完成计划的护士站任务，需要从�
 - 如果使用 `opencode`，**必须优先以 `ACP opencode` 作为标准路径**。
 - 当前 Windows 环境下，只有在 `2026-04-08` 记录的本地 ACP 手动补丁仍然存在时，才把 `ACP opencode` 视为正式可用。
 - 如果 ACP 不可用、不健康，或升级后补丁被覆盖，才降级到裸 `exec opencode`。
+- 若 ACP 派发后出现 `backend unavailable`、timeout、empty output、relay 异常、child 有结果但 parent 无结果等情况，必须先报阻塞。
+- 未经用户明确确认，不得自动降级到 `exec opencode`。
+- 未经用户明确确认，不得由主控会话直接接管代码扫描、定位或改码。
 - 不要把基于 wrapper 的 `start-opencode-task.ps1` 当成护士站执行的默认或降级路径。
 
 ## 推荐派发载荷
@@ -125,7 +128,7 @@ description: 当一个已澄清且已完成计划的护士站任务，需要从�
 在 `nurse-station-writing-plans` 之后使用。
 对于复杂任务，优先派发带显式共享输入的工作，而不是只依赖聊天上下文。
 当选择 `opencode` 时，**必须优先用 `ACP opencode`**。
-若 ACP 不可用、不健康、或本地补丁被覆盖，才降级到裸 `exec opencode`。
+若 ACP 不可用、不健康、或本地补丁被覆盖，才在**用户确认后**降级到裸 `exec opencode`。
 完整的阶段顺序、派发规则和产物落地约定，见 `nurse-station-orchestrator`。
 在最终完成前，应自然与 `nurse-station-verification` 配合。
 完整的阶段顺序、派发规则和产物落地约定，见 `nurse-station-orchestrator`。
