@@ -13,8 +13,14 @@ description: 护士站任务统一入口。当收到任何护士站相关需求�
 
 ## YAML 前置配置（强制）
 
-在任何护士站任务进入仓库分析、定位、实现前，先检查并读取：
-`C:\Users\pc\.openclaw\workspace\work-system\config\nurse-station-repo-routing.yaml`
+在任何护士站任务进入仓库分析、定位、实现前，先检查并读取工作区文件：
+`work-system/config/nurse-station-repo-routing.yaml`
+
+如果该文件不存在：
+1. 由 `orchestrator` 自动创建一个 `draft` 模板
+2. 模板来源固定为：`skills/nurse-station-orchestrator/references/nurse-station-repo-routing.template.yaml`
+3. 创建完成后，**立即停止后续阶段**
+4. 明确要求用户先维护 YAML，再继续
 
 强制规则：
 1. 任何护士站代码任务在进入 planning / locator / implementer 前，都必须先检查上面的 YAML。
@@ -24,6 +30,7 @@ description: 护士站任务统一入口。当收到任何护士站相关需求�
 5. `status=draft` 只表示“模板已创建”，**不表示可继续执行**；draft 状态下只能停，不能侥幸扩扫、定位、实现或收口。
 
 换句话说：
+- **允许**由 orchestrator 自动创建 `draft` 模板
 - **允许**把用户给的路径当成 YAML 校验时的候选输入
 - **禁止**在 YAML 未配置完成时继续 planning / locator / implementer
 - **禁止**把“我记得前端大概在哪”当成正式规则

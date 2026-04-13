@@ -1,0 +1,112 @@
+# 护士站仓库扫描路由配置模板
+#
+# 使用方式：
+# 1. 当 orchestrator 发现工作区缺少 `work-system/config/nurse-station-repo-routing.yaml` 时，
+#    应自动把本模板复制过去。
+# 2. 复制后的文件默认保持 `status: draft`。
+# 3. 用户必须先补全必填项，并把 `status` 改成 `ready`，后续多仓 planning / locator / implementer 才允许继续。
+# 4. 任何保留 `TODO`、空值、占位值的字段，都视为“未配置完成”。
+
+version: 1
+status: draft
+
+project:
+  # 当前 YAML 适用的护士站范围，例如：住院护士站 / 门诊护士站 / 护理配置后台。
+  scope: "TODO-请填写适用范围"
+
+routing_policy:
+  # 是否允许把用户明确给出的仓库路径作为首扫根候选。
+  allow_user_repo_as_primary: true
+
+  # YAML 未 ready 时，是否阻断任何多仓扫描。
+  block_multi_repo_scan_when_yaml_not_ready: true
+
+  # 是否强制扩扫只允许落在白名单根内。
+  enforce_whitelist_on_expansion: true
+
+  # 是否要求 findings.md 记录首扫根、扩扫根、扩扫原因、排除根。
+  require_findings_scan_log: true
+
+roots:
+  # 后端主根目录。
+  # 示例：E:\winning-code\akso5\winning-nis-ward
+  backend_main: "TODO-请填写后端主仓绝对路径"
+
+  # 前端主根目录。
+  # 示例：E:\winning-code\frontend\webui-next
+  frontend_main: "TODO-请填写前端主根绝对路径"
+
+  # 其他允许被扫描的候选根。
+  optional_allowed_roots: []
+
+exclude_roots:
+  # 明确禁止 skill 擅自扫描的目录。
+  - "TODO-如无额外排除目录可删除本行并留空数组"
+
+keyword_routes:
+  # 页面 / 文案 / 交互类需求。
+  ui_text_like:
+    keywords:
+      - "页面"
+      - "文案"
+      - "说明"
+      - "提示"
+      - "按钮"
+      - "弹窗"
+      - "tooltip"
+      - "popover"
+      - "vue"
+      - "路由"
+    prefer_roots:
+      - "frontend_main"
+      - "backend_main"
+
+  # 接口 / service / repository / DTO / entity / SQL 类需求。
+  backend_like:
+    keywords:
+      - "接口"
+      - "controller"
+      - "service"
+      - "repository"
+      - "dto"
+      - "bo"
+      - "entity"
+      - "规则"
+      - "参数"
+      - "sql"
+    prefer_roots:
+      - "backend_main"
+
+  # 配置 / 参数 / 规则联动类需求。
+  config_like:
+    keywords:
+      - "配置"
+      - "参数"
+      - "首日"
+      - "医嘱流向"
+      - "物资流向"
+      - "帮助说明"
+    prefer_roots:
+      - "backend_main"
+      - "frontend_main"
+
+scan_record_template:
+  # findings.md 中必须记录的字段。
+  required_fields:
+    - "yaml路由文件"
+    - "首扫根"
+    - "首扫根来源"
+    - "实际扫描根"
+    - "被排除的根"
+    - "扩扫触发原因"
+
+validation:
+  fail_if_contains_todo: true
+  require_non_empty_roots:
+    - "backend_main"
+    - "frontend_main"
+
+notes:
+  - "先检查 YAML 是否 ready，再决定是否允许 planning / locator / implementer。"
+  - "draft 只代表模板已创建，不代表允许继续。"
+  - "扩扫只能落在白名单根内，不能凭记忆猜目录。"
