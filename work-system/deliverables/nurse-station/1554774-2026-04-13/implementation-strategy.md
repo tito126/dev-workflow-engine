@@ -8,18 +8,23 @@
 
 ## 1. 结论先行
 
-当前更推荐的最终方向不是继续保留 `union all`，而是：
+结合新增前提：
+- 后续主战场不是 MySQL，而是 Oracle / MSSQL / 国产数据库
+- 大多数场景下 `execDeptIdList` 为空
+- 本需求会同步补两条 flow 相关联合索引
 
-1. **将双分支 SQL 改成单条 SQL + `OR` 条件**
-2. **补上空 `execDeptIdList` / 空 `execDeptId` 场景的保护**
-3. **只有在现场确认“按执行科室 / 物资流向过滤”是高频慢点时，才考虑新增两条分支索引**
-4. **如果不能确认高频命中场景，就先改 SQL 结构，不急着上索引**
+当前更推荐的最终方向调整为：
+
+1. **默认走单条基础查询**，当 `execDeptId` 与 `execDeptIdList` 都为空时，不拼 `OR`，也不拼 `UNION`
+2. **仅在存在 flow 条件时，走双分支 `UNION` 查询**
+3. **不使用 `UNION ALL`**，避免两支结果重叠时产生重复记录
+4. **索引按 `EXEC_FLOW_ID` / `GOODS_FLOW_ID` 两条路径分别设计**，与 `UNION` 双分支一一对应
 
 简化表达就是：
 
-- **有 flow 条件时**：走 `OR`
-- **没有 flow 条件时**：走基础查询，不拼 `OR`，更不要拼 `union` / `union all`
-- **索引是否要建**：取决于现场真实命中频率与执行计划，不应只因为“字段存在”就默认落地
+- **无 flow 条件时**：走基础单查询
+- **有 flow 条件时**：走 `UNION`
+- **不推荐最终保留 `OR`**，因为当前索引设计和查询路径更适配“两支各走各的”
 
 ---
 
@@ -62,21 +67,36 @@
 
 ### 3.1 推荐结构
 
-当存在 `execDeptId` 或 `execDeptIdList` 时，推荐改成：
+#### 场景 A：无 flow 条件
+当 `execDeptId` 与 `execDeptIdList` 都为空时：
+- 只走基础单查询
+- 不拼 `OR`
+- 不拼 `UNION`
+
+#### 场景 B：有 flow 条件
+当存在 `execDeptId` 或 `execDeptIdList` 时：
+- 先沿用现有补齐逻辑，把 `execDeptId` 补到 `execDeptIdList`
+- 然后使用双分支 `UNION`
+
+推荐结构：
 
 ```sql
-and (
-    a.EXEC_FLOW_ID in (:execFlowId)
-    or a.GOODS_FLOW_ID in (:execFlowId)
-)
+select a.* from EXEC_PLAN a
+...
+where ...
+  and a.EXEC_FLOW_ID in (:execFlowId)
+
+union
+
+select a.* from EXEC_PLAN a
+...
+where ...
+  and a.GOODS_FLOW_ID in (:execFlowId)
 ```
 
 ### 3.2 推荐伪代码
 
 ```java
-boolean hasExecDeptFilter = CollectionUtils.isNotEmpty(input.getExecDeptIdList())
-        || input.getExecDeptId() != null;
-
 if (input.getExecDeptId() != null) {
     if (CollectionUtils.isEmpty(input.getExecDeptIdList())) {
         List<Long> deptList = new ArrayList<>();
@@ -92,16 +112,20 @@ sqlQuery.append(" select a.* from EXEC_PLAN a ");
 sqlQuery.append(" where a.IS_DEL = 0 and a.HOSPITAL_SOID in :hospitalSOID ");
 ...
 if (CollectionUtils.isNotEmpty(input.getExecDeptIdList())) {
-    sqlQuery.append(" and (a.EXEC_FLOW_ID in :execFlowId or a.GOODS_FLOW_ID in :execFlowId)");
+    sqlQuery.append(" and (a.EXEC_FLOW_ID in :execFlowId)");
+    sqlQuery.append(" union ");
+    sqlQuery.append(" select a.* from EXEC_PLAN a ");
+    ...
+    sqlQuery.append(" and (a.GOODS_FLOW_ID in :execFlowId)");
 }
 ```
 
 ### 3.3 要点
 
-- **有 flow 条件时**，才拼 `OR`
-- **没有 flow 条件时**，只走基础查询
-- 不再用 `union`
-- 不再用 `union all`
+- **大多数无 flow 条件的请求**，不应承担双分支查询成本
+- **少数有 flow 条件的请求**，才走 `UNION`
+- **不使用 `UNION ALL`**，防止重复记录
+- 当前索引思路与 `UNION` 双分支更匹配
 
 ---
 
@@ -137,48 +161,45 @@ if (CollectionUtils.isNotEmpty(input.getExecDeptIdList())) {
 
 ## 5. 索引建议
 
-### 5.1 当前更合理的两条索引
+### 5.1 当前更推荐的两条索引最终版
 
 ```sql
-CREATE NONCLUSTERED INDEX IDX_EXEC_PLN_EXEC_FLOW
-ON EXEC_PLAN (
-    IS_DEL ASC,
-    EXEC_FLOW_ID ASC,
-    PLANNED_EXEC_AT ASC
-);
-
 CREATE NONCLUSTERED INDEX IDX_EXEC_PLN_GOODS_FLOW
 ON EXEC_PLAN (
     IS_DEL ASC,
+    HOSPITAL_SOID ASC,
     GOODS_FLOW_ID ASC,
+    PLANNED_EXEC_AT ASC
+);
+
+CREATE NONCLUSTERED INDEX IDX_EXEC_PLN_EXEC_FLOW
+ON EXEC_PLAN (
+    IS_DEL ASC,
+    HOSPITAL_SOID ASC,
+    EXEC_FLOW_ID ASC,
     PLANNED_EXEC_AT ASC
 );
 ```
 
-### 5.2 为什么拆成两条更合理
-因为查询本质上是两条不同过滤路径：
-- 一条围绕 `EXEC_FLOW_ID`
-- 一条围绕 `GOODS_FLOW_ID`
+### 5.2 为什么是这版顺序
+这条查询的核心过滤结构是：
+- `IS_DEL = ?`
+- `HOSPITAL_SOID in / = ?`
+- `EXEC_FLOW_ID in (...)` 或 `GOODS_FLOW_ID in (...)`
+- `PLANNED_EXEC_AT between ...`
 
-如果希望数据库在 `OR` 场景下也能分别命中索引，更合理的做法是：
-- 左边条件有自己的前导列索引
-- 右边条件也有自己的前导列索引
+因此更自然的顺序是：
+1. 先放等值过滤 `IS_DEL`
+2. 再放等值过滤 `HOSPITAL_SOID`
+3. 再放 flow 字段（`EXEC_FLOW_ID` / `GOODS_FLOW_ID`）
+4. 最后放范围列 `PLANNED_EXEC_AT`
 
-而不是做一条把两个 flow 字段混在一起的复合索引。
+### 5.3 为什么这版更适配 `UNION`
+因为 `UNION` 本质是两条独立查询路径：
+- 第一支吃 `IDX_EXEC_PLN_EXEC_FLOW`
+- 第二支吃 `IDX_EXEC_PLN_GOODS_FLOW`
 
-### 5.3 为什么不推荐把两个 flow 字段塞进同一条混合索引
-像下面这种思路：
-
-```sql
-(IS_DEL, GOODS_FLOW_ID, PLANNED_EXEC_AT, EXEC_FLOW_ID)
-```
-
-问题是：
-- 对 `GOODS_FLOW_ID` 分支友好
-- 但对 `EXEC_FLOW_ID` 分支不够对称
-- 不像真正的“双路优化”
-
-因此，它不太像该查询的最优索引表达。
+与其把两列揉成一条 `OR` 让优化器决定，不如显式拆成两支，让每条支路各走各自索引。
 
 ---
 
@@ -215,26 +236,24 @@ ON EXEC_PLAN (
 
 ## 7. 最稳的实施顺序
 
-### 方案一：偏稳，推荐优先
-1. 先改 SQL 结构：`union all` → 单条 `OR`
-2. 补空 flow 条件保护
-3. 先不上索引
-4. 观察真实环境执行计划与耗时
-5. 若仍慢，再补两条索引
+### 方案一：当前最终推荐
+1. 保留“无 flow 条件时走单条基础查询”的保护
+2. 将“有 flow 条件时”的查询结构调整为 `UNION`
+3. 同步补两条 flow 索引
+4. 在目标数据库上观察执行计划与耗时
 
-### 方案二：偏激进
-1. 改 SQL 结构：`OR`
-2. 补空 flow 条件保护
-3. 同步新增两条分支索引
-4. 由 DBA / 现场再验证执行计划与收益
+### 方案二：保留 `OR`
+1. 保持单条 `OR` 查询
+2. 同步补两条 flow 索引
+3. 再观察目标数据库优化器是否稳定吃到理想执行计划
 
 ### 当前建议
-更建议先走 **方案一**。
+更建议走 **方案一**。
 
 原因：
-- 先把当前 `union all` 的结构性问题修掉
-- 先保证结果语义更稳
-- 索引是否新增，留给真实执行计划来决定
+- 大多数请求本来就没有 flow 条件，不应该承担双分支成本
+- 少数有 flow 条件的慢场景，更适合拆成两支显式吃索引
+- 你当前准备新增的两条索引，也更匹配 `UNION` 而不是 `OR`
 
 ---
 
@@ -243,31 +262,25 @@ ON EXEC_PLAN (
 ### 推荐最终改法
 
 #### SQL
-- 改成单条查询
-- 只在 flow 条件存在时拼：
-
-```sql
-and (
-    a.EXEC_FLOW_ID in (:execFlowId)
-    or a.GOODS_FLOW_ID in (:execFlowId)
-)
-```
+- **无 flow 条件时**：保持单条基础查询
+- **有 flow 条件时**：使用 `UNION` 双分支
+- **不要 `UNION ALL`**
 
 #### 空条件保护
 - `execDeptId` 有值但 `execDeptIdList` 空：补齐后再查
-- `execDeptId` 和 `execDeptIdList` 都空：不拼 flow 条件
+- `execDeptId` 和 `execDeptIdList` 都空：只走基础查询，不拼 flow 分支
 
 #### 索引
-如确认现场高频需要 flow 过滤，再考虑：
+最终建议与 SQL 双分支对应：
 
 ```sql
-CREATE NONCLUSTERED INDEX IDX_EXEC_PLN_EXEC_FLOW
-ON EXEC_PLAN (IS_DEL ASC, EXEC_FLOW_ID ASC, PLANNED_EXEC_AT ASC);
-
 CREATE NONCLUSTERED INDEX IDX_EXEC_PLN_GOODS_FLOW
-ON EXEC_PLAN (IS_DEL ASC, GOODS_FLOW_ID ASC, PLANNED_EXEC_AT ASC);
+ON EXEC_PLAN (IS_DEL ASC, HOSPITAL_SOID ASC, GOODS_FLOW_ID ASC, PLANNED_EXEC_AT ASC);
+
+CREATE NONCLUSTERED INDEX IDX_EXEC_PLN_EXEC_FLOW
+ON EXEC_PLAN (IS_DEL ASC, HOSPITAL_SOID ASC, EXEC_FLOW_ID ASC, PLANNED_EXEC_AT ASC);
 ```
 
 ### 一句话版本
 
-**先把 SQL 改对，再决定要不要建索引；当前最该先修的，不是索引本身，而是 `union all` 和空 flow 条件下的查询结构问题。**
+**大多数无 flow 条件的请求走单条基础查询，少数有 flow 条件的慢场景走 `UNION` 双分支，并分别命中 `EXEC_FLOW` / `GOODS_FLOW` 两条联合索引。**
