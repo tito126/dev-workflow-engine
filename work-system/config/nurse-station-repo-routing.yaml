@@ -47,6 +47,51 @@ roots:
   # 仅当任务确实需要，且上面两类仓不够时，才在这里补充。
   optional_allowed_roots: []
 
+# ──────────────────────────────────────────────────────────────────
+# Git 默认行为。
+# 为了降低维护门槛，普通使用者通常只需要维护 repo_profiles 里的 source_branch。
+# ──────────────────────────────────────────────────────────────────
+git_defaults:
+  auto_pull: true
+  fetch_first: true
+  use_worktree: true
+  worktree_base_dir: "C:\\Users\\pc\\.openclaw\\workspace\\.nurse-station-worktrees"
+
+# ──────────────────────────────────────────────────────────────────
+# 每个仓对应的最小 Git 配置。
+# 只需要填 source_branch：默认从哪条基线拉最新代码。
+# ──────────────────────────────────────────────────────────────────
+repo_profiles:
+  backend_main:
+    root_key: "backend_main"
+    git:
+      source_branch: "sr-next"
+
+  frontend_main:
+    root_key: "frontend_main"
+    git:
+      source_branch: "sr-next"
+
+# ──────────────────────────────────────────────────────────────────
+# 任务选择与分支命名规则。
+# prefer_split_tasks=true 表示在一个需求下若有前端/后端任务，
+# 优先选与当前仓匹配的任务。
+# ──────────────────────────────────────────────────────────────────
+task_policy:
+  prefer_split_tasks: true
+  branch_pattern: "feature/{taskId}"
+  auto_create_task_when_missing: false
+  frontend_task_keywords:
+    - "前端"
+    - "web"
+    - "vue"
+    - "页面"
+  backend_task_keywords:
+    - "后端"
+    - "java"
+    - "接口"
+    - "服务"
+
 exclude_roots:
   # 明确禁止 skill 擅自扫描的根目录。
   # 例如：历史导出目录、AI 实验目录、无关工具目录、个人临时目录等。
