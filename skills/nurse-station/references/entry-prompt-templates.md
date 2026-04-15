@@ -5,33 +5,22 @@
 ```text
 需求号：XXX
 
-先用 `tfs2018-integration` 拉取需求信息。
+先用 `tfs2018-integration` 拉取需求信息，
 然后进入 `nurse-station` 主流程处理。
 
-要求按下面顺序执行：
-1. 先读取并校验护士站 YAML 路由配置
-2. 先扫描当前需求下已有任务，并结合本轮目标 repo 选择合适任务：
-   - 前端仓优先选前端任务
-   - 后端仓优先选后端任务
-   - 如果只有一个通用任务，可直接复用
-   - 如果没有合适任务，先提醒我确认，不要直接空跑开发流程
-3. 再输出本轮路由与代码基线摘要，包括：
-   - 目标 repo key
-   - 实际扫描根
+要求：
+1. 先读取并校验 `nurse-station-repo-routing.yaml`
+2. 先扫描当前需求下已有任务，并结合目标 repo 选出本轮任务号；没有合适任务就先停下来提示
+3. 输出本轮路由与代码基线摘要，至少包含：
    - 任务号
+   - 目标 repo key
+   - 实际扫描根 / 本地修改目录
    - 基线分支
    - 当前 commit
-   - 本地修改目录
-   - 禁止扩扫根
+   - 任务分支 `feature/{taskId}`
 4. 如果需求边界还不清，不要直接改码，先输出需求澄清 / 设计摘要供我确认
 5. 只有在 YAML、任务号、代码基线、需求边界都明确后，才进入 locator / implementer
-6. 如果代码已改但效果未出现，先检查 UI 承载、弹层遮挡、显隐条件和入口挂载，不要直接判定为实现失败
-7. 所有产物按 `work-system/deliverables/nurse-station/{taskId}-{date}/` 落地
-8. 生成可直接给 `codex` / `opencode` / `cc` 执行的结构化输入，包括：
-   - 指定仓库目录
-   - 范围内 / 范围外
-   - 成功锚点
-   - 预期回传格式
+6. 所有产物按 `work-system/deliverables/nurse-station/{taskId}-{date}/` 落地
 ```
 
 ## 14.2 先出设计文档版
@@ -39,30 +28,33 @@
 ```text
 需求号：XXX
 
-先用 `tfs2018-integration` 拉需求，再走 `nurse-station` 主流程。
+先用 `tfs2018-integration` 拉取需求信息，
+然后进入 `nurse-station` 主流程处理。
+
 这次先不要直接改码。
 
 要求：
-1. 校验 YAML 配置
-2. 先扫描当前需求下已有任务，并选出本轮合适任务
-3. 输出路由与代码基线摘要
-4. 先产出需求澄清 + 设计摘要
-5. 同步给出可直接投喂 `codex` / `opencode` / `cc` 的执行输入
-6. 等我确认后，再进入 locator / implementer
+1. 先读取并校验 `nurse-station-repo-routing.yaml`
+2. 先扫描当前需求下已有任务，并结合目标 repo 选出本轮任务号；没有合适任务就先停下来提示
+3. 输出本轮路由与代码基线摘要
+4. 先产出需求澄清 / 设计摘要，明确范围内、范围外、成功锚点和待确认问题
+5. 等我确认后，再进入 locator / implementer
 ```
 
 ## 14.3 适合转发给同事的简化版
 
 ```text
 需求号：XXX
-先用 `tfs2018-integration` 获取需求。
+
+先用 `tfs2018-integration` 获取需求，
 再走 `nurse-station` 主流程。
 
 先给我：
 - 本轮选中的任务号
-- 本轮实际扫描根
+- 目标 repo key
+- 实际扫描根 / 本地修改目录
 - 基线分支和最新 commit
-- 本地修改目录
+- 任务分支 `feature/{taskId}`
 - 需求澄清结论
 
 如果需求还不清，先出设计摘要，不要直接改代码。
