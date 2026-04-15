@@ -16,7 +16,8 @@
 10. 执行顺序与任务拆解
 11. 编码前确认项
 12. 风险与回退点
-13. 执行载体选择（direct edit / ACP opencode / exec opencode）
+13. 执行载体选择（`codex` / `opencode` / `cc`）
+14. 执行器异常回退点（结果不完整时回退到哪一阶段）
 
 ## 规则
 
@@ -32,3 +33,5 @@
 完成后：
 - 默认把计划视为后续 locator / implementer / verification 的共享输入
 - 如果需要派发执行，流转到 `references/dispatch.md`
+- 计划里必须包含一段可直接转交 `codex` / `opencode` / `cc` 的结构化输入
+- 如果还没明确本轮使用哪个编码工具，本阶段不能把任务标记为可直接进入实现

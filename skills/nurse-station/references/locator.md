@@ -5,7 +5,7 @@
 ## 前提
 
 - YAML 已 ready
-- 本轮 scan root / taskId / worktree 已确定
+- 本轮 scan root / taskId / 本地仓库目录已确定
 - 已经过 brainstorming 或 planning
 
 ## 职责

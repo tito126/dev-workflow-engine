@@ -6,7 +6,7 @@
 
 - 需求已澄清
 - 任务号已确定
-- 基线分支与 worktree 已准备好
+- 基线分支与本地仓库目录已准备好
 - 可能变更的文件已知，或已完成 locator
 - 验证方式已识别
 - YAML 已存在且 status=ready
@@ -27,12 +27,14 @@
 
 ## 执行载体
 
-优先级：
-1. ACP opencode（优先）
-2. exec opencode（用户确认后的降级）
-3. 主控直接改码（仅 light 任务或用户明确要求）
+默认服务于 `codex` / `opencode` / `cc` 等编码工具。
 
-若 ACP 阻塞（backend unavailable / timeout / empty output / relay 异常），先报阻塞，等用户确认后再决定。
+进入实现前必须明确：
+- 使用哪个编码工具
+- 使用哪个本地仓库目录
+- 预期返回的结果结构
+
+若执行结果缺少“已修改文件 / 实际改动摘要 / 已执行验证 / 风险”中的关键项，先视为实现结果不完整，回退到 planning 或 locator 补齐输入。
 
 ## 产出
 
