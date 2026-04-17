@@ -1,5 +1,5 @@
-<mxfile host="app.diagrams.net" modified="2026-04-17T03:45:00.000Z" agent="OpenClaw" version="24.7.17">
-  <diagram id="outpatient-patient-list-layered-flow" name="4.2.4.2 核心数据流转图（分层版）">
+<mxfile host="app.diagrams.net" modified="2026-04-17T04:25:00.000Z" agent="OpenClaw" version="24.7.17">
+  <diagram id="outpatient-patient-list-layered-flow-v2" name="4.2.4.2 核心数据流转图（分层版）">
     <mxGraphModel dx="1800" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
@@ -9,127 +9,66 @@
           <mxGeometry x="430" y="20" width="940" height="40" as="geometry"/>
         </mxCell>
 
-        <mxCell id="note" value="说明：本图按 来源层、处理层、数据层、使用层 绘制。原型流程图仅辅助理解业务，表结构与数据流转以 4.2.4.1 功能设计为准。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;align=left;spacing=8;" vertex="1" parent="1">
-          <mxGeometry x="220" y="70" width="1360" height="60" as="geometry"/>
+        <mxCell id="note" value="说明：本版口径取消 outp_checkin_related_info，流转统一收敛到 outp_nurse_transfer；但患者列表当前态仍由 outp_nurse_checkin 承接。outp_nurse_checkin_order 承接 4.2.3.2.3.1.6 数据。" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;align=left;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="180" y="70" width="1440" height="60" as="geometry"/>
         </mxCell>
 
-        <mxCell id="layer1" value="来源层" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="180" width="100" height="30" as="geometry"/>
-        </mxCell>
-        <mxCell id="layer2" value="处理层" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="380" y="180" width="100" height="30" as="geometry"/>
-        </mxCell>
-        <mxCell id="layer3" value="数据层" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="900" y="180" width="100" height="30" as="geometry"/>
-        </mxCell>
-        <mxCell id="layer4" value="使用层" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
-          <mxGeometry x="1490" y="180" width="100" height="30" as="geometry"/>
-        </mxCell>
+        <mxCell id="layer1" value="来源层" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="40" y="180" width="100" height="30" as="geometry"/></mxCell>
+        <mxCell id="layer2" value="处理层" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="380" y="180" width="100" height="30" as="geometry"/></mxCell>
+        <mxCell id="layer3" value="数据层" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="900" y="180" width="100" height="30" as="geometry"/></mxCell>
+        <mxCell id="layer4" value="使用层" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="1490" y="180" width="100" height="30" as="geometry"/></mxCell>
 
-        <mxCell id="srcRehab" value="康复系统预约" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="40" y="250" width="230" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="srcHis" value="HIS Check In" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="40" y="360" width="230" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="srcRegister" value="患者登记 / 患者偏好" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="40" y="470" width="230" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="srcDoctor" value="医生站 / 医嘱 / 收费提醒" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="40" y="580" width="230" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="srcNurse" value="护士站操作&#xa;分流 / 示踪 / 回诊 / check out" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="40" y="690" width="230" height="80" as="geometry"/>
-        </mxCell>
-        <mxCell id="srcConfig" value="统一页面显示配置" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="40" y="810" width="230" height="70" as="geometry"/>
-        </mxCell>
+        <mxCell id="srcOrder" value="康复预约 / 住院医嘱 / 门诊医嘱来源" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="240" width="230" height="80" as="geometry"/></mxCell>
+        <mxCell id="srcHis" value="HIS Check In" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="350" width="230" height="70" as="geometry"/></mxCell>
+        <mxCell id="srcRegister" value="患者登记 / 患者偏好" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="460" width="230" height="70" as="geometry"/></mxCell>
+        <mxCell id="srcExt" value="门诊 / 分诊 / 医生站 / 检查系统接口回调" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="570" width="230" height="80" as="geometry"/></mxCell>
+        <mxCell id="srcNurse" value="护士站手工操作&#xa;示踪补录 / check out / 回本中心" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="690" width="230" height="80" as="geometry"/></mxCell>
+        <mxCell id="srcCfg" value="统一页面显示配置" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="40" y="810" width="230" height="70" as="geometry"/></mxCell>
 
-        <mxCell id="procRehab" value="预约接收并生成待 check in 记录" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="360" y="240" width="260" height="80" as="geometry"/>
-        </mxCell>
-        <mxCell id="procCheckin" value="接收 Check In 并生成接诊主记录" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="360" y="350" width="260" height="80" as="geometry"/>
-        </mxCell>
-        <mxCell id="procTag" value="登记/偏好解析与展示标签生成" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="360" y="460" width="260" height="80" as="geometry"/>
-        </mxCell>
-        <mxCell id="procRelated" value="医嘱/体征/病历/收费提醒聚合" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="360" y="570" width="260" height="80" as="geometry"/>
-        </mxCell>
-        <mxCell id="procNurse" value="分流、示踪、回诊、结束就诊处理" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="360" y="690" width="260" height="80" as="geometry"/>
-        </mxCell>
-        <mxCell id="procLog" value="标签变更留痕 / 状态留痕" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#f5f5f5;strokeColor=#666666;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="360" y="810" width="260" height="70" as="geometry"/>
-        </mxCell>
+        <mxCell id="procOrder" value="接收来源医嘱预约数据" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="360" y="240" width="270" height="80" as="geometry"/></mxCell>
+        <mxCell id="procCheckin" value="生成 / 更新接诊主记录" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="360" y="350" width="270" height="80" as="geometry"/></mxCell>
+        <mxCell id="procTag" value="登记标签解析与展示标签生成" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="360" y="460" width="270" height="80" as="geometry"/></mxCell>
+        <mxCell id="procTransfer" value="统一示踪接口写入&#xa;自动节点 / 手工补录 / 逆流程 / check out" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="360" y="580" width="270" height="90" as="geometry"/></mxCell>
+        <mxCell id="procSnapshot" value="根据最新有效事件回写当前态" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="360" y="710" width="270" height="80" as="geometry"/></mxCell>
+        <mxCell id="procLog" value="标签变更留痕" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#f5f5f5;strokeColor=#666666;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="360" y="820" width="270" height="70" as="geometry"/></mxCell>
 
-        <mxCell id="tblRehab" value="outp_rehab_appt_checkin&#xa;康复预约待 check in 表" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="860" y="220" width="240" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="tblCheckin" value="outp_nurse_checkin&#xa;门诊护士接诊表" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="1140" y="220" width="240" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="tblRelated" value="outp_checkin_related_info&#xa;门诊接诊关联信息表" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="860" y="350" width="240" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="tblTag" value="outp_checkin_tag&#xa;就诊标签表" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="1140" y="350" width="240" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="tblTrace" value="outp_patient_trace&#xa;患者示踪记录表" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="860" y="480" width="240" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="tblTagLog" value="outp_checkin_tag_log&#xa;就诊标签操作日志表" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="1140" y="480" width="240" height="70" as="geometry"/>
-        </mxCell>
-        <mxCell id="tblDisplay" value="统一页面显示配置&#xa;（复用既有配置）" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="1000" y="620" width="240" height="70" as="geometry"/>
-        </mxCell>
+        <mxCell id="tblOrder" value="outp_nurse_checkin_order&#xa;门诊接诊医嘱预约信息表" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="860" y="230" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="tblCheckin" value="outp_nurse_checkin&#xa;门诊护士接诊表（当前态）" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1140" y="230" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="tblTransfer" value="outp_nurse_transfer&#xa;门诊护士示踪/流转表（事件流）" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="860" y="390" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="tblTag" value="outp_checkin_tag&#xa;就诊标签表" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1140" y="390" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="tblTagLog" value="outp_checkin_tag_log&#xa;就诊标签操作日志表" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1000" y="550" width="250" height="70" as="geometry"/></mxCell>
+        <mxCell id="tblCfg" value="统一页面显示配置&#xa;（复用既有配置）" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=15;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1000" y="700" width="250" height="70" as="geometry"/></mxCell>
 
-        <mxCell id="useList" value="门诊患者列表页面&#xa;Tab / 筛选 / 检索 / 刷新 / 列表展示" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="1460" y="280" width="260" height="90" as="geometry"/>
-        </mxCell>
-        <mxCell id="useTrace" value="示踪弹窗 / 去向展示&#xa;过程记录查看" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="1460" y="430" width="260" height="90" as="geometry"/>
-        </mxCell>
-        <mxCell id="useAudit" value="标签追溯 / 问题排查&#xa;状态争议解释" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
-          <mxGeometry x="1460" y="580" width="260" height="90" as="geometry"/>
-        </mxCell>
+        <mxCell id="useList" value="门诊患者列表页面&#xa;Tab / 筛选 / 检索 / 刷新 / 列表展示" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1460" y="270" width="260" height="90" as="geometry"/></mxCell>
+        <mxCell id="useTrace" value="患者示踪弹窗 / 去向展示&#xa;时间轴节点查看" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1460" y="430" width="260" height="90" as="geometry"/></mxCell>
+        <mxCell id="useAudit" value="标签追溯 / 状态争议排查" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1460" y="590" width="260" height="90" as="geometry"/></mxCell>
 
-        <mxCell id="e1" value="预约写入" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="srcRehab" target="procRehab"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e2" value="生成待 check in 数据" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procRehab" target="tblRehab"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e3" value="HIS 读取预约并签到" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblRehab" target="srcHis"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1" value="来源入库" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="srcOrder" target="procOrder"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" value="写来源关联" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procOrder" target="tblOrder"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" value="check in 前读取 / check in 后回写" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblOrder" target="srcHis"><mxGeometry relative="1" as="geometry"/></mxCell>
 
-        <mxCell id="e4" value="签到结果" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="srcHis" target="procCheckin"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e5" value="生成主记录" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procCheckin" target="tblCheckin"><mxGeometry relative="1" as="geometry"/></mxCell>
-
+        <mxCell id="e4" value="check in 结果" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="srcHis" target="procCheckin"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" value="生成当前态" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procCheckin" target="tblCheckin"><mxGeometry relative="1" as="geometry"/></mxCell>
         <mxCell id="e6" value="登记/偏好来源" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="srcRegister" target="procTag"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e7" value="补全接诊字段" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procTag" target="tblCheckin"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e8" value="生成展示标签" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procTag" target="tblTag"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" value="生成标签" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procTag" target="tblTag"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" value="补全当前态字段" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procTag" target="tblCheckin"><mxGeometry relative="1" as="geometry"/></mxCell>
 
-        <mxCell id="e9" value="医嘱/提醒来源" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="srcDoctor" target="procRelated"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e10" value="写关联摘要" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procRelated" target="tblRelated"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e11" value="生成提醒/回诊标签" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procRelated" target="tblTag"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" value="接口回调" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="srcExt" target="procTransfer"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" value="手工补录 / check out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="srcNurse" target="procTransfer"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" value="写示踪事件" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procTransfer" target="tblTransfer"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" value="回写当前状态/去向/回诊/check out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procTransfer" target="procSnapshot"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" value="更新当前态" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procSnapshot" target="tblCheckin"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e14" value="生成去向/超时/回诊标签" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procSnapshot" target="tblTag"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e15" value="标签留痕" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=1;fontSize=13;strokeColor=#666666;" edge="1" parent="1" source="tblTag" target="procLog"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e16" value="写标签日志" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=1;fontSize=13;strokeColor=#666666;" edge="1" parent="1" source="procLog" target="tblTagLog"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e17" value="显示配置来源" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="srcCfg" target="tblCfg"><mxGeometry relative="1" as="geometry"/></mxCell>
 
-        <mxCell id="e12" value="护士业务操作" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="srcNurse" target="procNurse"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e13" value="更新状态/回诊/check out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procNurse" target="tblCheckin"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e14" value="写示踪轨迹" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procNurse" target="tblTrace"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e15" value="生成去向/超时标签" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procNurse" target="tblTag"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e16" value="补充去向摘要" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="procNurse" target="tblRelated"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="e17" value="标签留痕" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=1;fontSize=13;strokeColor=#666666;" edge="1" parent="1" source="tblTag" target="procLog"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e18" value="写操作日志" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=block;endFill=1;fontSize=13;strokeColor=#666666;" edge="1" parent="1" source="procLog" target="tblTagLog"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="e19" value="显示配置来源" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="srcConfig" target="tblDisplay"><mxGeometry relative="1" as="geometry"/></mxCell>
-
-        <mxCell id="e20" value="主数据查询" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblCheckin" target="useList"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e21" value="扩展信息展示" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblRelated" target="useList"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e22" value="标签回显" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblTag" target="useList"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e23" value="列宽/顺序/显示列" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblDisplay" target="useList"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e24" value="示踪过程 / 去向" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblTrace" target="useTrace"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e25" value="去向摘要" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblRelated" target="useTrace"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e26" value="标签问题追溯" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblTagLog" target="useAudit"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="e27" value="轨迹辅助排查" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblTrace" target="useAudit"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e18" value="主查询" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblCheckin" target="useList"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e19" value="标签回显" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblTag" target="useList"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e20" value="列宽/顺序/显示列" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblCfg" target="useList"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e21" value="示踪时间轴" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblTransfer" target="useTrace"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e22" value="标签/状态追溯" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblTagLog" target="useAudit"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e23" value="事件排查" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=13;" edge="1" parent="1" source="tblTransfer" target="useAudit"><mxGeometry relative="1" as="geometry"/></mxCell>
       </root>
     </mxGraphModel>
   </diagram>
