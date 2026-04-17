@@ -82,3 +82,11 @@ Use this file for reminders before they become a scheduled reminder or a tracked
 - Reason: 第一阶段知识库增强框架已打通，但还缺最后一环：把人工复核结果自动沉淀为候选知识条目（enabled=false），减少手工整理成本。
 - Status: pending
 - Next Handling: 实现 extract_feedback_candidates.py 或等价功能
+
+### [R-20260417-01] 补完香港养和门诊护士站 `4.2.7` 章节
+- Created: 2026-04-17 18:01
+- Due: TBD（今晚晚些时候）
+- Related Project: 香港养和门诊护士站详设
+- Reason: 今日已连续完成 `4.2.4.1` 至 `4.2.4.6` 相关核查、数据模型、输入输出、流程逻辑、流程图、时序图等材料，`4.2.7` 章节明确延后到晚些时候继续处理，需要避免只停留在口头约定。
+- Status: pending
+- Next Handling: follow manually
