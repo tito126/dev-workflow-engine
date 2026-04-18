@@ -20,9 +20,11 @@
    - 任务分支 `feature/{taskId}`
 4. 如果需求边界还不清，不要直接改码，先输出需求澄清 / 设计摘要供我确认
 5. 只有在 YAML、任务号、代码基线、需求边界都明确后，才进入 locator / implementer
-6. 实现后默认用 `acceptance.md` 收口，明确区分“代码完成 / 需求完成 / 效果已验证”
-7. 如果本轮产生新规则、返工原因或流程缺口，把候选模式补到 `work-system/frameworks/nurse-station/pattern-ledger.md`
-8. 所有任务级产物按 `work-system/deliverables/nurse-station/{taskId}-{date}/` 落地
+6. 如果任务涉及说明文案、提示文案、帮助文本、配置说明或产品给定原文，默认视为受保护文本，不得擅自改写
+7. 实现后默认用 `acceptance.md` 收口，明确区分“代码完成 / 需求完成 / 效果已验证”，并写出证据等级
+8. 文案类任务在验收时，必须拆分“位置验收”和“内容验收”，不能混写成一个笼统的“需求完成”
+9. 如果本轮产生新规则、返工原因或流程缺口，把候选模式补到 `work-system/frameworks/nurse-station/pattern-ledger.md`
+10. 所有任务级产物按 `work-system/deliverables/nurse-station/{taskId}-{date}/` 落地
 ```
 
 ## 14.2 先出设计文档版
@@ -84,12 +86,15 @@
 1. 先读取并校验 `nurse-station-repo-routing.yaml`
 2. 先确定本轮任务号、repo key、基线分支、本地修改目录，并输出路由摘要
 3. 需求不清时先停在 brainstorming / planning，不直接改码
-4. 实现完成后，默认输出 `acceptance.md`，明确：
+4. 如果任务涉及说明文案、提示文案、帮助文本、配置说明或产品给定原文，默认视为受保护文本，不得擅自改写
+5. 实现完成后，默认输出 `acceptance.md`，明确：
    - 代码完成
    - 需求完成
    - 效果已验证
+   - 证据等级
    - retro signals
-5. 如果本轮出现返工、新规则、流程缺口、路由误判或手工补锅，把候选模式追加到中央 `pattern-ledger.md`
-6. 只有在高风险或结论存在争议时，才额外进入 `review-gate.md`
-7. 只有在出现结构性新信息时，才额外进入 `retrospective.md`
+6. 文案类任务在验收时，必须拆分“位置验收”和“内容验收”
+7. 如果本轮出现返工、新规则、流程缺口、路由误判或手工补锅，把候选模式追加到中央 `pattern-ledger.md`
+8. 只有在高风险或结论存在争议时，才额外进入 `review-gate.md`
+9. 只有在出现结构性新信息时，才额外进入 `retrospective.md`
 ```
