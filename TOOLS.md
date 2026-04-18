@@ -328,3 +328,9 @@ exec(
 ---
 
 Add whatever helps you do your job. This is your cheat sheet.
+
+### `nurse-station` 本地执行约束（2026-04-18）
+
+- 后续护士站开发链路**不使用 worktree**。
+- 统一按 `nurse-station` 主技能与 `git-baseline-and-branch` 约束，直接在目标本地仓库目录修改、验证、收口。
+- 如果历史产物、旧蓝图、旧 reference 或中间分析里仍出现 `worktree` 口径，默认视为**历史残留**，需要在后续 skill 清理中消除，**不再作为可执行默认路径**。
