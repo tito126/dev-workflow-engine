@@ -2,13 +2,25 @@
 
 把一次真实运行转成框架层改进。复盘的核心价值不仅是"总结发生了什么"，还在于识别哪些做法真正减少了重复喂上下文和转述损耗，哪些环节仍然卡在消息流里出不来。
 
+## 触发规则
+
+retrospective 不是每单标配。满足任意一条再触发：
+
+1. 发生返工或阶段回退
+2. 产出了新的可复用规则
+3. 暴露出 skill 流程缺口或角色边界失效
+4. 路由 / 基线 / 验收机制被真实任务打脸
+5. 同一个任务需要 controller 多次手工补锅才能继续
+
+如果只是正常收口，没有结构性新信息，默认停在 `acceptance.md`，不额外生成 retrospective。
+
 ## 复盘维度
 
 1. 需求澄清质量：brainstorming 产物是否被后续阶段稳定复用，还是每段都在重新问
 2. 计划编写质量：计划是否起到了"共享底稿"作用，还是仍然只在聊天里存在
 3. 派发质量：controller 是否在做人肉转发器，还是上下文流转足够顺畅
 4. 定位质量：findings 是否可直接供 implementer 复用
-5. 实现质量：implementation result 是否可供 verification 直接引用
+5. 实现质量：implementation result 是否可供 acceptance 直接引用
 6. 验证质量：验证结论是否结构化且可沉淀
 7. 框架资产缺口：哪些环节缺少可复用模板或规则
 8. 角色边界清晰度：controller / locator / implementer / verifier 的职责是否真正分开
@@ -32,7 +44,7 @@
 - brainstorming 产物是否被 planning 直接复用：
 - planning 产物是否被 execution 直接复用：
 - locator findings 是否被 implementer 直接复用：
-- implementer 结果是否被 verification 直接引用：
+- implementer 结果是否被 acceptance 直接引用：
 - controller 在哪些环节做了不必要的转述：
 
 ### 资产决策
@@ -40,6 +52,12 @@
 - 哪个现有技能需要收紧：
 - 是否需要新模板：
 - 是否需要新交接规则：
+
+### 台账同步
+- 是否应新增到 `work-system/frameworks/nurse-station/pattern-ledger.md`：
+- 新增模式标题：
+- 影响阶段：
+- 后续要回写的 reference：
 
 ### 框架更新
 - 保留：

@@ -1,7 +1,7 @@
 ---
 name: nurse-station
 description: |
-  护士站任务统一主入口。用于护士站相关需求、缺陷、优化项、TFS 需求开发、代码定位、实现、验证、复盘，
+  护士站任务统一主入口。用于护士站相关需求、缺陷、优化项、TFS 需求开发、代码定位、实现、验收收口、复盘，
   以及需要按统一流程处理仓库路由、任务选择、代码基线、本地仓库修改、设计澄清和交付产物的场景。
   优先在任何护士站开发任务中使用本技能，而不是直接点名旧的 nurse-station-* 单阶段技能。
 ---
@@ -21,13 +21,14 @@ tfs2018-integration
     → resolve-task（选任务号，定 feature 分支名）
     → prepare-workspace（同步目标仓库基线分支到最新代码）
     → brainstorming
-    → planning
+    → planning（按需）
     → locator（按需）
     → implementer
-    → verification
-    → review-gate
-    → retrospective（按需）
+    → acceptance
+    → retrospective（触发式）
 ```
+
+重任务或高风险任务才额外进入 `review-gate` 深评审；`verification` 与 `review-gate` 不再作为默认双文件收口路径。
 
 ## 阶段与 references 映射
 
@@ -41,8 +42,8 @@ tfs2018-integration
 | 代码基线 | `references/git-baseline-and-branch.md` | 需要确认目标仓、基线分支和本地修改环境时 |
 | 代码定位 | `references/locator.md` | 需要追踪代码链路时 |
 | 代码实现 | `references/implementer.md` | 范围已清楚，准备改码时 |
-| 结果验收 | `references/verification.md` | 需要对照需求做验收时 |
-| 正式评审 | `references/review-gate.md` | 需要多闸门评审时 |
+| 验收收口 | `references/acceptance.md` | 默认收口阶段，需要判断是否完成、是否触发复盘时 |
+| 正式评审 | `references/review-gate.md` | 高风险、争议大或需要多闸门深评审时 |
 | 子任务派发 | `references/dispatch.md` | 需要生成给 `codex` / `opencode` / `cc` 的结构化执行输入时 |
 | 复盘 | `references/retrospective.md` | 一轮 MVP / 真实运行结束后 |
 | prompt 模板 | `references/entry-prompt-templates.md` | 自己用或转发给同事时 |
@@ -51,7 +52,7 @@ tfs2018-integration
 ## 能力边界
 
 本 skill 的职责是：
-- 统一护士站任务的路由、澄清、计划、基线准备、定位、实现、验证、评审、复盘顺序
+- 统一护士站任务的路由、澄清、计划、基线准备、定位、实现、验收收口、评审、复盘顺序
 - 把执行前置条件、范围边界、验收锚点、异常闸门显式化
 - 为 `codex`、`opencode`、`cc` 等编码工具生成可直接执行的结构化输入
 
@@ -90,17 +91,17 @@ tfs2018-integration
 ### light
 适用：小范围、本地化、目标清晰，改动目标已从 API 入口独立验证。
 
-通常可直接生成简洁的结构化执行输入，交给编码工具落地。
+通常可直接生成简洁的结构化执行输入，交给编码工具落地，并用 `acceptance.md` 收口。
 
 ### medium
 适用：边界可控，需要定位 / 窄范围实现 / 明确验证。
 
-通常先产出结构化计划、定位结果和实现输入，再交给编码工具执行。
+通常先产出结构化计划、定位结果和实现输入，再交给编码工具执行，最后统一进入 `acceptance.md`。
 
 ### heavy
 适用：多阶段、高不确定性、跨仓库、需要运行时跟踪。
 
-需要把阶段产物持续落盘，按闸门推进，必要时拆成多轮执行与复核。
+需要把阶段产物持续落盘，按闸门推进；只有出现返工、新规则、流程缺口或高风险争议时，才追加 `retrospective.md` / `review-gate.md`。
 
 ## 产物落地
 
@@ -115,6 +116,18 @@ work-system/deliverables/nurse-station/{taskId}-{date}/
 - `plan.md`（planning 产出）
 - `findings.md`（locator 产出）
 - `implementation-result.md`（implementer 产出）
-- `verification-evidence.md`（verification 产出）
-- `review-conclusion.md`（review-gate 产出）
-- `retrospective.md`（retrospective 产出）
+- `acceptance.md`（默认收口产出）
+
+按需文件：
+- `review-conclusion.md`（仅高风险 / 深评审任务使用）
+- `retrospective.md`（仅触发式复盘使用）
+
+## 中央模式台账
+
+跨任务可复用的模式、边界规则与流程缺口，统一沉淀到：
+
+```text
+work-system/frameworks/nurse-station/pattern-ledger.md
+```
+
+来源默认是各任务的 `acceptance.md` / `retrospective.md`，不要求每个使用者单独维护自己的模式台账。

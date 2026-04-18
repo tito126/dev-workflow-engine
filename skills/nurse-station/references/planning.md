@@ -21,7 +21,7 @@
 
 ## 规则
 
-- 计划应可直接给 locator / implementer / verification 复用，不需要重新从聊天里抽取上下文
+- 计划应可直接给 locator / implementer / acceptance 复用，不需要重新从聊天里抽取上下文
 - 需求边界、语义、分页、第三方依赖等关键口径变化时，必须回写计划
 - 任何会进入代码阶段的任务，都必须先确认 repo-routing YAML 已配置完成
 - 如果 YAML 仍是 draft，本阶段只能产出"先维护 YAML"的阻断结论
@@ -31,7 +31,7 @@
 ## 集成
 
 完成后：
-- 默认把计划视为后续 locator / implementer / verification 的共享输入
+- 默认把计划视为后续 locator / implementer / acceptance 的共享输入
 - 如果需要派发执行，流转到 `references/dispatch.md`
 - 计划里必须包含一段可直接转交 `codex` / `opencode` / `cc` 的结构化输入
 - 如果还没明确本轮使用哪个编码工具，本阶段不能把任务标记为可直接进入实现
